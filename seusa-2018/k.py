@@ -1,0 +1,1 @@
+print max([[i if sum([t[j][i]for j in range(n)])==i else -1 for i in range(n+1)]for t in[[[1 if i>=r[0]and i<=r[1]else 0 for i in range(n+1)]for r in[map(int,raw_input().split())for i in range(n)]]for n in[input()]]][0])

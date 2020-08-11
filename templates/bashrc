@@ -1,0 +1,12 @@
+function compile() {
+  g++ -o ${1/.cpp}.cpp -o ${1/.cpp} -std=c++11 -g -O2
+          -Wall -Wfatal-errors -Wshadow -Wno-sign-compare
+}
+alias f++='compile'
+alias c='compile'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias vim='vim +19'

@@ -1,0 +1,6 @@
+set nu
+set ts=2
+set sw=2
+set si
+set ruler
+set viminfo='20,<999
