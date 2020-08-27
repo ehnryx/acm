@@ -9,12 +9,12 @@ public class MainClass {
     PrintWriter out = new PrintWriter(outputStream);
     // new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
     Solver solver = new Solver();
-    solver.solve(in, out);
+    solver.run_solver(in, out);
     out.close();
   }
 
   static class Solver {
-    public void solve(InputReader in, PrintWriter out) {
+    public void run_solver(InputReader in, PrintWriter out) {
       
     }
   }
