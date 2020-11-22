@@ -22,7 +22,14 @@ const ll MOD = 1e9+7;
 const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-
+vector<int> manacher(const string& s) {
+  int n = s.size(); vector<int> len(2*n-1); len[0] = 1;
+  for(int d, i=1; i+1 < 2*n; i+=d) {
+    int &r = len[i], left = (i-r-1)/2, right = (i+r+1)/2;
+    while(0 <= left && right < n && s[left] == s[right]) {
+      --left; ++right; r += 2; }
+    for(d=1; len[i-d] < r-d; d++) len[i+d] = len[i-d];
+    len[i+d] = r-d; } return len; }
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
@@ -31,16 +38,18 @@ int main() {
 	for(string s;cin>>s;) {
 		set<string> ans;
 		int n = s.size();
-		for(int i=0;i<n;i++) {
-			for(int j=1;i-j>=0&&i+j<n&&s[i-j]==s[i+j];j++) {
-				ans.insert(s.substr(i-j,2*j+1));
-			}
-			if(i>0) {
-				for(int j=1;i-j>=0&&i+j-1<n&&s[i-j]==s[i+j-1];j++) {
-					ans.insert(s.substr(i-j,2*j));
-				}
-			}
-		}
+    vector<int> pals = manacher(s);
+    for(int i=0; i<2*n-1; i++) {
+      if(i%2) {
+        for(int j=2; j<=pals[i]; j+=2) {
+          ans.insert(s.substr(i/2-j/2+1, j));
+        }
+      } else {
+        for(int j=3; j<=pals[i]; j+=2) {
+          ans.insert(s.substr(i/2-j/2, j));
+        }
+      }
+    }
 		for(const string& it:ans) {
 			cout<<it<<nl;
 		}
