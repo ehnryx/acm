@@ -38,8 +38,9 @@ int main() {
 
   int n, r, k;
   cin >> n >> r >> k;
-  //cout << (r + max(n, max(r, 2*k - r)) + 1) / 2 * 2 << nl;
+  cout << (r + max(n, max(r, 2*k - r)) + 1) / 2 * 2 << nl;
 
+/* legible solution:
   if(r < k) {
     int ans = r + max(n, 2*k - r);
     cout << ans + ans % 2 << nl;
@@ -47,6 +48,7 @@ int main() {
     int ans = r + max(n, r);
     cout << ans + ans % 2 << nl;
   }
+*/
 
   return 0;
 }
