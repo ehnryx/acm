@@ -34,7 +34,16 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  int ans = 1;
+  for(int two = 1<<30; two>=1; two/=2) {
+    if(n >= two) {
+      ans *= 2;
+      n -= two;
+    }
+  }
+  cout << ans << nl;
 
   return 0;
 }

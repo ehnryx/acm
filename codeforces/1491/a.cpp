@@ -34,7 +34,31 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, m;
+  cin >> n >> m;
+  vector<int> a(n+1);
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+  }
+  int ones = count(a.begin(), a.end(), 1);
+  for(int i=0; i<m; i++) {
+    int t, v;
+    cin >> t >> v;
+    if(t == 1) {
+      a[v] ^= 1;
+      if(a[v]) {
+        ones++;
+      } else {
+        ones--;
+      }
+    } else {
+      if(v <= ones) {
+        cout << 1 << nl;
+      } else {
+        cout << 0 << nl;
+      }
+    }
+  }
 
   return 0;
 }

@@ -34,7 +34,20 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  int sum = accumulate(a.begin(), a.end(), 0);
+  for(int i=0; i<n; i++) {
+    if(sum - a[i] == a[i]) {
+      cout << a[i] << nl;
+      return 0;
+    }
+  }
+  cout << "BAD" << nl;
 
   return 0;
 }

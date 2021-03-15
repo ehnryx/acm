@@ -1,3 +1,5 @@
+//#pragma GCC optimize("O3")
+//#pragma GCC target("sse4,avx2,abm,fma,tune=native")
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
@@ -14,47 +16,56 @@ typedef long long ll;
 typedef long double ld;
 typedef complex<ld> pt;
 
-constexpr char nl = '\n';
-constexpr ll INF = 0x3f3f3f3f;
-constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
-constexpr ll MOD = 998244353;
-constexpr ld EPS = 1e-9L;
+const char nl = '\n';
+const ll INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const ll MOD = 998244353;
+const ld EPS = 1e-9;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
+void solve() {
+  int n, m;
+  cin >> n >> m;
+  vector<int> t(n);
+  for(int i=0; i<n; i++) {
+    cin >> t[i];
+  }
+  sort(t.begin(), t.end());
+  vector<int> order;
+  for(int i=0; i<m; i++) {
+    int c;
+    cin >> c;
+    if(c) {
+      order.push_back(c);
+    }
+  }
+  sort(order.begin(), order.end());
 
+  ll ans = 0;
+  int j = -1;
+  for(int c : order) {
+    ans += 20 * (c-1) + t[j += c];
+  }
+  cout << ans << nl;
+}
 
 // double-check correctness
 // read limits carefully
 // characterize valid solutions
 int main() {
-  cin.tie(0)->sync_with_stdio(0);
+  ios::sync_with_stdio(0); cin.tie(0);
   cout << fixed << setprecision(10);
 #if defined(ONLINE_JUDGE) && defined(FILENAME)
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n;
-  cin >> n;
-  vector<int> a(1<<n), sum((1<<n) + 1);
-  for(int i=0; i<1<<n; i++) {
-    int id = 0;
-    for(int j=0; j<n; j++) {
-      id |= ((i >> j) & 1) << (n-1-j);
-    }
-    cin >> a[id];
+  int T;
+  cin >> T;
+  for(int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ": ";
+    solve();
   }
-  partial_sum(a.begin(), a.end(), sum.begin() + 1);
-
-  int ans = 2*(1<<n) - 1;
-  for(int len=2; len<=1<<n; len*=2) {
-    for(int i=0; i<1<<n; i+=len) {
-      if(sum[i+len] - sum[i] == 0 || sum[i+len] - sum[i] == len) {
-        ans -= 2;
-      }
-    }
-  }
-  cout << ans << nl;
 
   return 0;
 }

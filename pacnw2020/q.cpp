@@ -34,7 +34,24 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  sort(a.begin(), a.end());
+  ll ans = 0;
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<i; j++) {
+      for(int k=0; k<j; k++) {
+        if(a[j] + a[k] > a[i]) {
+          ans += 1LL << (i-j-1);
+        }
+      }
+    }
+  }
+  cout << ans << nl;
 
   return 0;
 }

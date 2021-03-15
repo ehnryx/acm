@@ -34,7 +34,31 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int na, nb, nc;
+  cin >> na >> nb >> nc;
+  vector<int> a(na), b(nb), c(nc);
+  for(int i=0; i<na; i++) {
+    cin >> a[i];
+  }
+  for(int i=0; i<nb; i++) {
+    cin >> b[i];
+  }
+  for(int i=0; i<nc; i++) {
+    cin >> c[i];
+  }
+
+  int ans = max(a.size(), max(b.size(), c.size()));
+  vector<int> ab, bc, ca;
+  set_intersection(a.begin(), a.end(), b.begin(), b.end(), back_inserter(ab));
+  set_intersection(b.begin(), b.end(), c.begin(), c.end(), back_inserter(bc));
+  set_intersection(c.begin(), c.end(), a.begin(), a.end(), back_inserter(ca));
+
+  vector<int> ab_bc, abc;
+  set_union(ab.begin(), ab.end(), bc.begin(), bc.end(), back_inserter(ab_bc));
+  set_union(ab_bc.begin(), ab_bc.end(), ca.begin(), ca.end(), back_inserter(abc));
+  ans = max(ans, (int)abc.size());
+
+  cout << ans << nl;
 
   return 0;
 }

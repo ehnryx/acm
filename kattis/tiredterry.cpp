@@ -34,7 +34,19 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, p, d;
+  cin >> n >> p >> d;
+  string s;
+  cin >> s;
+  s += s;
+  int ans = 0;
+  int sleep = count(s.begin(), s.begin() + p, 'Z');
+  for(int i=0; i<n; i++) {
+    ans += (sleep < d);
+    sleep -= (s[i] == 'Z');
+    sleep += (s[i+p] == 'Z');
+  }
+  cout << ans << nl;
 
   return 0;
 }

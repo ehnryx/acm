@@ -34,7 +34,29 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, k;
+  cin >> n >> k;
+  vector<int> a;
+  for(int i=0; i<n; i++) {
+    string s;
+    cin >> s;
+    int bm = 0;
+    for(int j=0; j<k; j++) {
+      if(s[j] == 'T') {
+        bm |= 1 << j;
+      }
+    }
+    a.push_back(bm);
+  }
+  int ans = 0;
+  for(int bm=0; bm<1<<k; bm++) {
+    int bad = 0;
+    for(int it : a) {
+      bad = max(bad, __builtin_popcount(it ^ bm));
+    }
+    ans = max(ans, k - bad);
+  }
+  cout << ans << nl;
 
   return 0;
 }

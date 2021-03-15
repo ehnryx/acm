@@ -34,7 +34,31 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, u, v;
+    cin >> n >> u >> v;
+    bool con = true;
+    int last = -1;
+    set<int> pos;
+    for(int i=0; i<n; i++) {
+      int a;
+      cin >> a;
+      pos.insert(a);
+      if(last != -1 && abs(last - a) > 1) {
+        con = false;
+      }
+      last = a;
+    }
+    if(!con) {
+      cout << 0 << nl;
+    } else if(pos.size() > 1) {
+      cout << min(u, v) << nl;
+    } else {
+      cout << v + min(u, v) << nl;
+    }
+  }
 
   return 0;
 }

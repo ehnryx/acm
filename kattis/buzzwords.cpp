@@ -34,7 +34,37 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  for(string line; getline(cin, line) && !line.empty(); ) {
+    string arr;
+    for(char c : line) {
+      if(!isspace(c)) {
+        arr.push_back(c);
+      }
+    }
+
+    int n = arr.size();
+    vector<map<pair<int,int>,int>> cnt(n);
+    for(int i=0; i<n; i++) {
+      static const int p1 = 37, p2 = 101;
+      static const int m1 = 1e9 + 7, m2 = 1e9 + 9;
+      ll h1 = 0, h2 = 0;
+      for(int j=i; j<n; j++) {
+        h1 = (h1 * p1 + arr[j]) % m1;
+        h2 = (h2 * p2 + arr[j]) % m2;
+        cnt[j - i][pair(h1, h2)] += 1;
+      }
+    }
+
+    for(int i=0; i<n; i++) {
+      int best = 0;
+      for(auto [_, c] : cnt[i]) {
+        best = max(best, c);
+      }
+      if(best == 1) break;
+      cout << best << nl;
+    }
+    cout << nl;
+  }
 
   return 0;
 }

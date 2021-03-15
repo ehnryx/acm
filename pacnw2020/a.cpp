@@ -34,7 +34,20 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  sort(a.begin(), a.end());
+  ll ans = 0;
+  for(int i=0; i<n; i++) {
+    if(i == 0 || a[i] != a[i-1] + 1) {
+      ans += a[i];
+    }
+  }
+  cout << ans << nl;
 
   return 0;
 }

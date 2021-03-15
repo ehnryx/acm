@@ -34,7 +34,21 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  vector<int> a(n+2);
+  for(int i=2; i<=n+1; i++) {
+    cin >> a[i];
+  }
+
+  vector<int> dp(n+2);
+  for(int i=2; i<=n+1; i++) {
+    dp[i] = max(dp[i], dp[i-1]);
+    for(int j=2; j<i; j++) {
+      dp[i] = max(dp[i], dp[j-2] + a[i] - a[j]);
+    }
+  }
+  cout << dp[n+1] << nl;
 
   return 0;
 }

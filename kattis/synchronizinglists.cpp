@@ -34,7 +34,35 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  for(int n; cin >> n && n; ) {
+
+    vector<int> a(n);
+    vector<pair<int,int>> aord;
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+      aord.emplace_back(a[i], i);
+    }
+    sort(aord.begin(), aord.end());
+
+    vector<int> b(n);
+    vector<pair<int,int>> bord;
+    for(int i=0; i<n; i++) {
+      cin >> b[i];
+      bord.emplace_back(b[i], i);
+    }
+    sort(bord.begin(), bord.end());
+
+    vector<int> aidx(n), bidx(n);
+    for(int i=0; i<n; i++) {
+      aidx[aord[i].second] = i;
+      bidx[bord[i].second] = i;
+    }
+
+    for(int i=0; i<n; i++) {
+      cout << bord[aidx[i]].first << nl;
+    }
+    cout << nl;
+  }
 
   return 0;
 }

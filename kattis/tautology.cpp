@@ -34,7 +34,38 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  for(string s; cin >> s && s != "0"; ) {
+    reverse(s.begin(), s.end());
+    vector<bool> have(2);
+    for(int bm=0; bm<1<<5; bm++) {
+      stack<bool> stk;
+      for(char c : s) {
+        if(islower(c)) {
+          stk.push(bm >> (c - 'p') & 1);
+        } else if(c == 'N') {
+          stk.top() = !stk.top();
+        } else {
+          bool tmp = stk.top();
+          stk.pop();
+          if(c == 'K') {
+            stk.top() &= tmp;
+          } else if(c == 'A') {
+            stk.top() |= tmp;
+          } else if(c == 'E') {
+            stk.top() = (stk.top() == tmp);
+          } else {
+            stk.top() |= !tmp;
+          }
+        }
+      }
+      have[stk.top()] = true;
+    }
+    if(have[0]) {
+      cout << "not" << nl;
+    } else {
+      cout << "tautology" << nl;
+    }
+  }
 
   return 0;
 }

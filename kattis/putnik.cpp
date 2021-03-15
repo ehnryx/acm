@@ -34,7 +34,29 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  vector adj(n, vector<int>(n));
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      cin >> adj[i][j];
+    }
+  }
+
+  vector dp(n, vector<int>(n, INF));
+  dp[0][0] = 0;
+  for(int i=0; i<n-1; i++) {
+    for(int j=0; j<=i; j++) {
+      dp[i+1][j] = min(dp[i+1][j], adj[i][i+1] + dp[i][j]);
+      dp[i+1][i] = min(dp[i+1][i], adj[j][i+1] + dp[i][j]);
+    }
+  }
+
+  int ans = INF;
+  for(int i=0; i<n; i++) {
+    ans = min(ans, dp[n-1][i]);
+  }
+  cout << ans << nl;
 
   return 0;
 }

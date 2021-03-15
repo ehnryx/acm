@@ -34,7 +34,26 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  static const int N = 100 + 1;
+
+  string line;
+  getline(cin, line);
+  int branch = stoi(line);
+
+  vector<int> down(N, -1);
+  while(getline(cin, line)) {
+    istringstream in(line);
+    int cur;
+    in >> cur;
+    for(int v; in >> v; ) {
+      down[v] = cur;
+    }
+  }
+
+  for(int u=branch; u!=-1; u=down[u]) {
+    cout << u << " ";
+  }
+  cout << nl;
 
   return 0;
 }

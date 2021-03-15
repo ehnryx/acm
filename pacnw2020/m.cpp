@@ -34,7 +34,35 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, m;
+  cin >> n >> m;
+  vector<int> v(n);
+  for(int i=0; i<n; i++) {
+    cin >> v[i];
+  }
+  sort(v.begin(), v.end());
+  vector<int> pref(n+1);
+  partial_sum(v.begin(), v.end(), pref.begin() + 1);
+
+  int ans = m;
+  if(pref[n] <= m) {
+    ans = min(ans, pref[n]);
+  }
+  vector<bool> have(m+1);
+  have[0] = true;
+  for(int i=n-1; i>=0; i--) {
+    for(int j=m; j>=v[i]; j--) {
+      have[j] = have[j] | have[j-v[i]];
+    }
+    if(pref[i] <= m) {
+      for(int j=m-pref[i]; j>=0; j--) {
+        if(have[j] && m-pref[i]-j < v[i]) {
+          ans = min(ans, pref[i] + j);
+        }
+      }
+    }
+  }
+  cout << ans << nl;
 
   return 0;
 }

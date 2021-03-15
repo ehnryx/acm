@@ -34,7 +34,31 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int cx, cy, n;
+  cin >> cx >> cy >> n;
+  vector<tuple<int,int,int>> v;
+  for(int i=0; i<n; i++) {
+    int x, y, r;
+    cin >> x >> y >> r;
+    v.emplace_back(x, y, r);
+  }
+
+  ld l = 0;
+  ld r = INF;
+  for(int bs=0; bs<200; bs++) {
+    ld m = (l + r) / 2;
+    int cnt = 0;
+    for(auto [x, y, d] : v) {
+      cnt += (hypot(x-cx, y-cy) < d + m);
+    }
+    if(cnt > 2) {
+      r = m;
+    } else {
+      l = m;
+    }
+  }
+
+  cout << (int)floor(r) << nl;
 
   return 0;
 }

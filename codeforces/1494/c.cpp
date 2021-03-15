@@ -21,7 +21,28 @@ constexpr ll MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
+int solve(vector<int> a, vector<int> b) {
+  sort(a.begin(), a.end());
+  sort(b.begin(), b.end());
 
+  vector<bool> good;
+  for(int x : b) {
+    auto it = lower_bound(a.begin(), a.end(), x);
+    good.push_back(it != a.end() && *it == x);
+  }
+
+  int ans = 0;
+  int other = accumulate(good.begin(), good.end(), 0);
+  for(int i=0, j=0; i<b.size(); i++) {
+    while(j<a.size() && a[j]<=b[i]) {
+      j++;
+    }
+    int first = upper_bound(b.begin(), b.end(), b[i] - j) - b.begin();
+    other -= good[i];
+    ans = max(ans, i - first + 1 + other);
+  }
+  return ans;
+}
 
 // double-check correctness
 // read limits carefully
@@ -34,27 +55,26 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n;
-  cin >> n;
-  vector<int> a(1<<n), sum((1<<n) + 1);
-  for(int i=0; i<1<<n; i++) {
-    int id = 0;
-    for(int j=0; j<n; j++) {
-      id |= ((i >> j) & 1) << (n-1-j);
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    vector<int> la, ra, lb, rb;
+    for(int i=0; i<n; i++) {
+      int a;
+      cin >> a;
+      if(a < 0) la.push_back(-a);
+      else ra.push_back(a);
     }
-    cin >> a[id];
-  }
-  partial_sum(a.begin(), a.end(), sum.begin() + 1);
-
-  int ans = 2*(1<<n) - 1;
-  for(int len=2; len<=1<<n; len*=2) {
-    for(int i=0; i<1<<n; i+=len) {
-      if(sum[i+len] - sum[i] == 0 || sum[i+len] - sum[i] == len) {
-        ans -= 2;
-      }
+    for(int i=0; i<m; i++) {
+      int b;
+      cin >> b;
+      if(b < 0) lb.push_back(-b);
+      else rb.push_back(b);
     }
+    cout << solve(la, lb) + solve(ra, rb) << nl;
   }
-  cout << ans << nl;
 
   return 0;
 }

@@ -34,7 +34,33 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<int> v(4);
+    for(int i=0; i<4; i++) {
+      cin >> v[i];
+    }
+    bool good = false;
+    for(int bm=0; bm<1<<4; bm++) {
+      vector<int> cur = v;
+      for(int i=0; i<4; i++) {
+        if(bm & 1<<i) {
+          cur[i]--;
+          cur[(i+1)%4]--;
+        }
+      }
+      sort(cur.begin(), cur.end());
+      good |= (cur.front() >= 0 && cur.back() <= n-2);
+    }
+    if(good) {
+      cout << "YES" << nl;
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
   return 0;
 }

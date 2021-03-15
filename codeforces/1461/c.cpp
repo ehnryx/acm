@@ -34,7 +34,33 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    vector<int> a(n);
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+    while(!a.empty() && a.back() == n) {
+      a.pop_back();
+      n--;
+    }
+    double bad = 1;
+    for(int i=0; i<m; i++) {
+      int r;
+      double p;
+      cin >> r >> p;
+      if(r >= n) {
+        bad *= (1 - p);
+      }
+    }
+    if(n == 0) {
+      bad = 0;
+    }
+    cout << 1 - bad << nl;
+  }
 
   return 0;
 }

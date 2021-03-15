@@ -34,7 +34,27 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  for(int tc=1; ; tc++) {
+    string s;
+    cin >> s;
+    if(s == "END") break;
+    s.pop_back();
+    if(s.empty()) {
+      cout << tc << " " << "EVEN" << nl;
+      continue;
+    }
+
+    int black = count(s.begin(), s.end(), '*');
+    bool ok = (s.size() % black == 0);
+    if(ok) {
+      int len = s.size() / black;
+      string pat = s.substr(0, len);
+      for(int i=len; i<s.size(); i+=len) {
+        ok &= (s.substr(i, len) == pat);
+      }
+    }
+    cout << tc << " " << (ok ? "EVEN" : "NOT EVEN") << nl;
+  }
 
   return 0;
 }

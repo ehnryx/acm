@@ -34,7 +34,34 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  for(string s; cin >> s && s != "0"; ) {
+    vector<char> variable, unary, binary;
+    for(char c : s) {
+      if(islower(c)) {
+        variable.push_back(c);
+      } else if(c == 'N') {
+        unary.push_back(c);
+      } else {
+        binary.push_back(c);
+      }
+    }
+    if(variable.empty()) {
+      cout << "no WFF possible" << nl;
+    } else {
+      string ans;
+      ans.push_back(variable.back());
+      variable.pop_back();
+      while(!variable.empty() && !binary.empty()) {
+        ans.push_back(variable.back());
+        ans.push_back(binary.back());
+        variable.pop_back();
+        binary.pop_back();
+      }
+      ans.insert(ans.end(), unary.begin(), unary.end());
+      reverse(ans.begin(), ans.end());
+      cout << ans << nl;
+    }
+  }
 
   return 0;
 }

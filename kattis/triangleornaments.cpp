@@ -34,7 +34,19 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  ld ans = 0;
+  for(int i=0; i<n; i++) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    ld s = (ld)(a + b + c) / 2;
+    ld area = sqrt(s * (s-a) * (s-b) * (s-c));
+    ld median = sqrt(2 * (a*a + b*b) - c*c) / 2;
+    ld length = 2 * area / median;
+    ans += length;
+  }
+  cout << ans << nl;
 
   return 0;
 }

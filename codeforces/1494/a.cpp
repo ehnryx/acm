@@ -34,7 +34,37 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    string s;
+    cin >> s;
+    bool good = false;
+    for(int bm=0; bm<1<<3; bm++) {
+      string t;
+      transform(s.begin(), s.end(), back_inserter(t), [=](char c) {
+        if(bm & 1 << (c - 'A')) {
+          return '(';
+        } else {
+          return ')';
+        }
+      });
+      bool ok = true;
+      int cur = 0;
+      for(char c : t) {
+        if(c == '(') cur++;
+        else cur--;
+        ok &= (cur >= 0);
+      }
+      ok &= (cur == 0);
+      good |= ok;
+    }
+    if(good) {
+      cout << "YES" << nl;
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
   return 0;
 }

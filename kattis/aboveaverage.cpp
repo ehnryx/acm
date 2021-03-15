@@ -28,13 +28,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // characterize valid solutions
 int main() {
   cin.tie(0)->sync_with_stdio(0);
-  cout << fixed << setprecision(10);
+  cout << fixed << setprecision(3);
 #if defined(ONLINE_JUDGE) && defined(FILENAME)
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+    int sum = accumulate(a.begin(), a.end(), 0);
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+      ans += (a[i] * n > sum);
+    }
+    cout << (ld) ans / n * 100 << "%" << nl;
+  }
 
   return 0;
 }

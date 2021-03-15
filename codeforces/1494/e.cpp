@@ -34,7 +34,46 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, m;
+  cin >> n >> m;
+
+  int same = 0;
+  int loop = 0;
+  map<pair<int,int>,char> g;
+  for(int i=0; i<m; i++) {
+    char t;
+    cin >> t;
+    if(t == '+') {
+      int a, b;
+      char c;
+      cin >> a >> b >> c;
+      g[pair(a, b)] = c;
+      if(g.count(pair(b, a))) {
+        loop++;
+        if(g[pair(b, a)] == c) {
+          same++;
+        }
+      }
+    } else if(t == '-') {
+      int a, b;
+      cin >> a >> b;
+      if(g.count(pair(b, a))) {
+        loop--;
+        if(g[pair(b, a)] == g[pair(a, b)]) {
+          same--;
+        }
+      }
+      g.erase(pair(a, b));
+    } else {
+      int k;
+      cin >> k;
+      if(k % 2 == 0) {
+        cout << (same ? "YES" : "NO") << nl;
+      } else {
+        cout << (loop ? "YES" : "NO") << nl;
+      }
+    }
+  }
 
   return 0;
 }

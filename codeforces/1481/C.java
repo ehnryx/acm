@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.math.*;
 
-public class MainClass {
+public class C {
   public static void main(String[] args) {
     InputStream inputStream = System.in;
     OutputStream outputStream = System.out;
@@ -19,7 +19,39 @@ public class MainClass {
 
   static class Solver {
     public void run_solver(InputReader in, PrintWriter out) {
-      
+      int n = in.nextInt();
+      int m = in.nextInt();
+      int[] a = read_array(n, in);
+      int[] b = read_array(n, in);
+      int[] c = read_array(m, in);
+      int[] cnt = new int[n + 1];
+      boolean have = new boolean[n + 1];
+
+      for(int i=0; i<n; i++) {
+        cnt[a[i]] -= 1;
+        cnt[b[i]] += 1;
+        have[b[i]] = true;
+      }
+
+      for(int i=0; i<m; i++) {
+        cnt[c[i]] -= 1;
+      }
+
+      boolean ok = have[c[m-1]];
+      for(int i=1; i<=n; i++) {
+        if(cnt[i] > 0) {
+          ok = false;
+          break;
+        }
+      }
+    }
+
+    int[] read_array(int n, InputReader in) {
+      int[] a = new int[n];
+      for(int i=0; i<n; i++) {
+        a[i] = in.nextInt();
+      }
+      return a;
     }
   }
 

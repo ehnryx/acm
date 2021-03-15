@@ -34,7 +34,36 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  const int N = 1000;
+  string nonpal;
+  for(int i=0; i<N; i++) {
+    for(int c=0; c<26; c++) {
+      nonpal.push_back(c + 'a');
+      bool bad = false;
+      for(int j=0; j<i; j++) {
+        string s = nonpal.substr(j);
+        string t = s;
+        reverse(t.begin(), t.end());
+        if(s == t) {
+          bad = true;
+          break;
+        }
+      }
+      if(bad) {
+        nonpal.pop_back();
+      } else {
+        break;
+      }
+    }
+  }
+
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+    cout << string(k, 'c') << nonpal.substr(0, n-k) << nl;
+  }
 
   return 0;
 }

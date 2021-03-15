@@ -34,27 +34,53 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n;
-  cin >> n;
-  vector<int> a(1<<n), sum((1<<n) + 1);
-  for(int i=0; i<1<<n; i++) {
-    int id = 0;
-    for(int j=0; j<n; j++) {
-      id |= ((i >> j) & 1) << (n-1-j);
-    }
-    cin >> a[id];
+  int n, m;
+  cin >> n >> m;
+  vector<pair<int,int>> up, down;
+  int total = 0;
+  for(int i=0; i<n; i++) {
+    int h, t;
+    cin >> h >> t;
+    up.emplace_back(h, t);
+    total += h;
   }
-  partial_sum(a.begin(), a.end(), sum.begin() + 1);
+  for(int i=0; i<m; i++) {
+    int h, t;
+    cin >> h >> t;
+    down.emplace_back(h, t);
+  }
 
-  int ans = 2*(1<<n) - 1;
-  for(int len=2; len<=1<<n; len*=2) {
-    for(int i=0; i<1<<n; i+=len) {
-      if(sum[i+len] - sum[i] == 0 || sum[i+len] - sum[i] == len) {
-        ans -= 2;
+  ld l = 0;
+  ld r = 500000;
+  for(int bs=0; bs<100; bs++) {
+    ld v = (l+r) / 2;
+    ld uval = 0, ut = 0;
+    for(int i=0; i<n; i++) {
+      if(ut + up[i].second < v) {
+        ut += up[i].second;
+        uval += up[i].first;
+      } else {
+        uval += (v - ut) / up[i].second * up[i].first;
+        break;
       }
     }
+    ld dval = total, dt = 0;
+    for(int i=0; i<m; i++) {
+      if(dt + down[i].second < v) {
+        dt += down[i].second;
+        dval -= down[i].first;
+      } else {
+        dval -= (v - dt) / down[i].second * down[i].first;
+        break;
+      }
+    }
+    if(uval >= dval - EPS) {
+      r = v;
+    } else {
+      l = v;
+    }
   }
-  cout << ans << nl;
+  cout << r << nl;
 
   return 0;
 }

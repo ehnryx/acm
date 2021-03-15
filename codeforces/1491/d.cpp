@@ -34,7 +34,28 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  for(int i=0; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    int ls = 0;
+    int rs = 0;
+    for(int j=30; j>=0; j--) {
+      if(b >> j & 1) {
+        ls++;
+        rs++;
+      }
+      if(a >> j & 1) {
+        ls = max(ls-1, 0);
+      }
+    }
+    if(ls == 0 && a <= b) {
+      cout << "YES" << nl;
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
   return 0;
 }

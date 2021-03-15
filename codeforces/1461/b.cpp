@@ -34,7 +34,33 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    vector grid(n, vector<char>(m));
+    for(int i=0; i<n; i++) {
+      for(int j=0; j<m; j++) {
+        cin >> grid[i][j];
+      }
+    }
+
+    int ans = 0;
+    vector dp(n, vector<int>(m));
+    for(int i=n-1; i>=0; i--) {
+      for(int j=0; j<m; j++) {
+        if(grid[i][j] == '*') {
+          dp[i][j] = 1;
+          if(i+1 < n && j+1 < m && j > 0) {
+            dp[i][j] = 1 + min(dp[i+1][j], min(dp[i+1][j-1], dp[i+1][j+1]));
+          }
+        }
+        ans += dp[i][j];
+      }
+    }
+    cout << ans << nl;
+  }
 
   return 0;
 }

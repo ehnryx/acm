@@ -34,7 +34,31 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  ll n;
+  int k;
+  cin >> n >> k;
+  n++;
+  while(__builtin_popcountll(n) > k) {
+    bool ones = false;
+    for(int i=0; ; i++) {
+      if(n & 1LL<<i) {
+        n ^= 1LL<<i;
+        ones = true;
+      } else if(ones) {
+        n ^= 1LL<<i;
+        break;
+      }
+    }
+  }
+  while(__builtin_popcountll(n) < k) {
+    for(int i=0; ; i++) {
+      if(!(n & 1LL<<i)) {
+        n ^= 1LL<<i;
+        break;
+      }
+    }
+  }
+  cout << n << nl;
 
   return 0;
 }

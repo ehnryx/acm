@@ -34,7 +34,45 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    vector<int> a(n);
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+
+    unordered_set<ll> have;
+    vector<vector<int>> all(1, a);
+    while(!all.empty()) {
+      vector<vector<int>> nxt;
+      for(vector<int>& v : all) {
+        have.insert(accumulate(v.begin(), v.end(), (ll)0));
+        int hi = *max_element(v.begin(), v.end());
+        int lo = *min_element(v.begin(), v.end());
+        if(hi == lo) continue;
+        auto it = stable_partition(v.begin(), v.end(), [=](int x) {
+          return x <= (hi + lo) / 2;
+        });
+        assert(it != v.end());
+        nxt.emplace_back(v.begin(), it);
+        nxt.emplace_back(it, v.end());
+      }
+      all = move(nxt);
+    }
+
+    for(int i=0; i<m; i++) {
+      int x;
+      cin >> x;
+      if(have.count(x)) {
+        cout << "Yes" << nl;
+      } else {
+        cout << "No" << nl;
+      }
+    }
+  }
 
   return 0;
 }

@@ -34,7 +34,21 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, x, y, z, c, r;
+  cin >> n >> x >> y >> z >> c >> r;
+  vector<ld> dp(n+1);
+  dp[0] = x;
+  for(int i=1; i<=n; i++) {
+    for(int j=0; j<i; j++) {
+      ld donate = (ld)(i-j) * y;
+      ld cur = dp[j] - donate;
+      if(donate > z) {
+        cur += (donate - z) * (ld)c/100;
+      }
+      dp[i] = max(dp[i], cur * pow(1 + (ld)r/100, i-j));
+    }
+  }
+  cout << dp[n] << nl;
 
   return 0;
 }

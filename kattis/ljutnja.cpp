@@ -34,7 +34,43 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int m, n;
+  cin >> m >> n;
+
+  vector<ll> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+
+  ll l = 0;
+  ll r = *max_element(a.begin(), a.end());
+  while(l < r) {
+    ll v = (l + r) / 2;
+    ll need = 0;
+    for(int i=0; i<n; i++) {
+      if(a[i] > v) {
+        need += a[i] - v;
+      }
+    }
+    if(need <= m) {
+      r = v;
+    } else {
+      l = v + 1;
+    }
+  }
+
+  __int128 ans = 0;
+  for(int i=0; i<n; i++) {
+    if(a[i] > r) {
+      ans += r * r;
+      m -= a[i] - r;
+    } else {
+      ans += a[i] * a[i];
+    }
+  }
+  ans -= m * (2*r - 1);
+
+  cout << (unsigned long long) ans << nl;
 
   return 0;
 }

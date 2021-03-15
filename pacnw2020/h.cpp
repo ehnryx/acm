@@ -34,7 +34,24 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n;
+  cin >> n;
+  vector<pair<int,int>> order;
+  for(int i=0; i<n; i++) {
+    int a;
+    cin >> a;
+    order.emplace_back(a, i);
+  }
+  sort(order.begin(), order.end(), greater<pair<int,int>>());
+
+  set<int> have;
+  int ans = 0;
+  for(auto [_, i] : order) {
+    auto it = have.insert(i).first;
+    ans += (it != have.begin());
+    ans += (next(it) != have.end());
+  }
+  cout << ans << nl;
 
   return 0;
 }

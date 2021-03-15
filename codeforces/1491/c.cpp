@@ -34,7 +34,28 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    ll ans = 0;
+    vector<ll> add(n);
+    ll dec = 0;
+    for(int i=0; i<n; i++) {
+      int a;
+      cin >> a;
+      ans += max(a - dec, (ll)1) - 1;
+      if(i+1 < n) add[i+1]++;
+      if(i+a < n) add[i+a]--;
+      if(dec >= a && i+1 < n) {
+        add[i] += dec - a + 1;
+        add[i+1] -= dec - a + 1;
+      }
+      dec += add[i];
+    }
+    cout << ans << nl;
+  }
 
   return 0;
 }

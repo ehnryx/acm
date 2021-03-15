@@ -34,7 +34,21 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, m;
+  cin >> n >> m;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  sort(a.begin(), a.end());
+
+  ll ans = 0;
+  for(int i=0; i<m; i++) {
+    int v;
+    cin >> v;
+    ans += *lower_bound(a.begin(), a.end(), v) - v;
+  }
+  cout << ans << nl;
 
   return 0;
 }

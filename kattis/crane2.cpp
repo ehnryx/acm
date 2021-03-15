@@ -34,7 +34,39 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<int> a(n+1);
+    for(int i=1; i<=n; i++) {
+      cin >> a[i];
+    }
+
+    vector<pair<int,int>> ans;
+    for(int i=1; i<=n; i++) {
+      int j = find(a.begin() + i, a.end(), i) - a.begin();
+      while(j != i) {
+        if((j - i) % 2 == 0) {
+          ans.emplace_back(i+1, j);
+        } else {
+          ans.emplace_back(i, j);
+        }
+        int len = (j - i + 1) / 2;
+        assert(len > 0);
+        for(int k=0; k<len; k++) {
+          swap(a[j-k], a[j-k-len]);
+        }
+        j -= len;
+      }
+    }
+
+    cout << ans.size() << nl;
+    for(auto [x, y] : ans) {
+      cout << x << " " << y << nl;
+    }
+  }
 
   return 0;
 }

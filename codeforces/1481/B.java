@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.math.*;
 
-public class MainClass {
+public class B {
   public static void main(String[] args) {
     InputStream inputStream = System.in;
     OutputStream outputStream = System.out;
@@ -10,16 +10,43 @@ public class MainClass {
     PrintWriter out = new PrintWriter(outputStream);
     // new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
     Solver solver = new Solver();
-    int T = 1; //in.nextInt();
-    for(int tt = 1; tt <= T; tt++) {
-      solver.run_solver(in, out);
-    }
+    solver.run_solver(in, out);
     out.close();
   }
 
   static class Solver {
     public void run_solver(InputReader in, PrintWriter out) {
-      
+      int T = in.nextInt();
+      while(T-- > 0) {
+        solve_case(in, out);
+      }
+    }
+
+    void solve_case(InputReader in, PrintWriter out) {
+      int n = in.nextInt();
+      int k = in.nextInt();
+      int[] h = new int[n];
+      for(int i=0; i<n; i++) {
+        h[i] = in.nextInt();
+      }
+
+      int last = 0;
+      for(int t=0; t<k; t++) {
+        boolean stop = false;
+        for(int i=0; i+1<n; i++) {
+          if(h[i] < h[i+1]) {
+            h[i] += 1;
+            last = i + 1;
+            stop = true;
+            break;
+          }
+        }
+        if(!stop) {
+          last = -1;
+          break;
+        }
+      }
+      out.println(last);
     }
   }
 

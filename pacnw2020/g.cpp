@@ -34,7 +34,33 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  string s;
+  cin >> s;
+  vector cnt(10, vector<int>(10));
+  for(int i=1; i<s.size(); i++) {
+    int a = s[i-1] - '0';
+    int b = s[i] - '0';
+    if(a > b) swap(a, b);
+    cnt[a][b] += 1;
+  }
+
+  vector<int> perm(10);
+  iota(perm.begin(), perm.end(), 0);
+  int ans = INF;
+  do {
+    vector<int> pos(10);
+    for(int i=0; i<10; i++) {
+      pos[perm[i]] = i;
+    }
+    int res = pos[s[0]-'0'] + s.size();
+    for(int i=0; i<10; i++) {
+      for(int j=0; j<=i; j++) {
+        res += cnt[j][i] * abs(pos[i] - pos[j]);
+      }
+    }
+    ans = min(ans, res);
+  } while(next_permutation(perm.begin(), perm.end()));
+  cout << ans << nl;
 
   return 0;
 }
