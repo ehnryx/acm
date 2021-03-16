@@ -31,14 +31,12 @@ pair<vector<ld>,vector<bool>> solve(vector<vector<ld>> a, bool verbose=false) {
 
   vector<int> pivot;
   for(int j=0, r=0; j<m; j++) {
-    bool found = false;
+    pair<ld,int> best(0, -1);
     for(int i=r; i<n; i++) {
-      if(is_zero(a[i][j])) continue;
-      found = true;
-      swap(a[i], a[r]);
-      break;
+      best = max(best, pair(abs(a[i][j]), i));
     }
-    if(found) {
+    if(best.first > EPS) {
+      swap(a[r], a[best.second]);
       for(int i=r+1; i<n; i++) {
         ld f = a[i][j] / a[r][j];
         for(int k=j; k<=m; k++) {
