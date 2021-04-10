@@ -25,34 +25,6 @@ int add(int a, int b) {
   return a+b < MOD ? a+b : a+b - MOD;
 }
 
-bool good(int left, int right, int lb, int rb) {
-  bool ok = false;
-  if(right <= lb || rb <= left) ok = true;
-  if(left <= lb && rb <= right) ok = true;
-  if(lb <= left && right <= rb) ok = true;
-  return ok;
-}
-
-vector<vector<pair<int,int>>> all;
-int cnt = 0;
-void generate(int n, int r, vector<pair<int,int>> have) {
-  if(n == -1) { all.push_back(have); return; }
-  if(r == 0) return generate(n-1, 5, have);
-  generate(n, r-1, have);
-  int left = n - r;
-  int right = n + r;
-  bool ok = left < 5;
-  for(auto [c, v] : have) {
-    int lb = c - v;
-    int rb = c + v;
-    ok &= good(left, right, lb, rb);
-  }
-  if(ok) {
-    have.emplace_back(n, r);
-    generate(n, r-1, have);
-  }
-}
-
 // double-check correctness
 // read limits carefully
 // characterize valid solutions
@@ -64,87 +36,76 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  generate(10, 5, {});
-  sort(begin(all), end(all));
-  assert(all[0].empty());
-  int m = size(all);
-  //cerr << "valid: " << m << nl;
-
-  vector transition(m, vector<int>(6));
-  vector allowed(m, vector<bool>(6));
-  vector<int> shift(m);
-  for(int j=0; j<m; j++) {
-    for(int r=1; r<=5; r++) {
-      auto nxt = all[j];
-      nxt.emplace_back(0, r);
-      transition[j][r] = lower_bound(begin(all), end(all), nxt) - begin(all);
-      //assert(transition[j][r] < m && all[transition[j][r]] == nxt);
-      bool ok = true;
-      for(auto [x, v] : all[j]) {
-        ok &= good(-r, r, x - v, x + v);
-        ok &= pair(0, r) < pair(x, v);
-      }
-      allowed[j][r] = ok;
-    }
-    vector<pair<int,int>> nxt;
-    for(auto [x, v] : all[j]) {
-      x += 1;
-      if(x - v < 5) {
-        nxt.emplace_back(x, v);
-      }
-    }
-    shift[j] = lower_bound(begin(all), end(all), nxt) - begin(all);
-    assert(shift[j] < m && all[shift[j]] == nxt);
-  }
-
-  int n, k;
-  cin >> n >> k;
-  vector<pair<int,int>> have;
-  for(int i=0; i<k; i++) {
+  int n, m;
+  cin >> n >> m;
+  set<pair<int,int>> must;
+  vector<pair<int,int>> circles;
+  for(int i=0; i<m; i++) {
     int c, r;
     cin >> c >> r;
-    have.emplace_back(c, r);
+    must.insert(pair(c-r, c+r));
   }
 
-  vector dp(2, vector(6, vector<int>(m)));
-  dp[1][0][0] = 1;
+  vector<pair<int,int>> all;
   for(int i=1; i<n; i++) {
-    int t = i & 1;
-    for(int r=5; r>=1; r--) {
-      bool put = (0 <= i-r && i+r <= n);
-      bool eq = false;
-      for(auto [j, v] : have) {
-        put &= good(i - r, i + r, j - v, j + v);
-        eq |= (tie(i, r) == tie(j, v));
+    for(int j=1; j<=5; j++) {
+      if(0 <= i-j && i+j <= n) {
+        all.emplace_back(i-j, i+j);
       }
-      //cerr << i << " " << r << " -> put eq : " << put << " " << eq << nl;
-      for(int j=0; j<m; j++) {
-        int pr = r+1 <= 5 ? r+1 : 0;
-        dp[t][r][j] = (eq ? 0 : dp[t][pr][j]);
-      }
-      if(!put) continue;
+    }
+  }
+  sort(begin(all), end(all), [](const auto& x, const auto& y) {
+    if(x.first != y.first) return x.first < y.first;
+    else return x.second > y.second;
+  });
+  all.insert(begin(all), pair(0, 42));
 
-      for(int j=0; j<m; j++) {
-        if(allowed[j][r]) {
-          int nj = transition[j][r];
-          int pr = r+1 <= 5 ? r+1 : 0;
-          dp[t][r][nj] = add(dp[t][r][nj], dp[t][pr][j]);
+  const int L = 11;
+  int len = size(all);
+
+  vector dp(len, vector<int>(1<<L));
+  dp[0][0] = 1;
+  for(int i=1; i<len; i++) {
+    if(!must.count(all[i])) {
+      if(all[i].first == all[i-1].first) {
+        dp[i] = dp[i-1];
+      } else {
+        for(int bm=0; bm<1<<(L-1); bm++) {
+          dp[i][bm] = add(dp[i-1][bm<<1], dp[i-1][bm<<1|1]);
         }
       }
     }
 
-    // bring i to i+1;
-    fill(begin(dp[t^1][0]), end(dp[t^1][0]), 0);
-    for(int j=0; j<m; j++) {
-      int nj = shift[j];
-      dp[t^1][0][nj] = add(dp[t^1][0][nj], dp[t][1][j]);
+    bool put = true;
+    for(auto [l, r] : must) {
+      bool ok = false;
+      ok |= (all[i].second <= l || r <= all[i].first);
+      ok |= (l <= all[i].first && all[i].second <= r);
+      ok |= (all[i].first <= l && r <= all[i].second);
+      put &= ok;
     }
-    //cerr << i+1 << " :: " << accumulate(begin(dp[t^1][0]), end(dp[t^1][0]), (ll)0) << nl;
+    if(!put) {
+      continue;
+    }
+
+    int diam = all[i].second - all[i].first;
+    for(int bm=0; bm<1<<L; bm++) {
+      int om = (bm >> (all[i].first != all[i-1].first)) | 1 << diam;
+      bool bad = false;
+      for(int j=1; j<diam; j++) {
+        if(om & 1<<j) {
+          bad = true;
+          break;
+        }
+      }
+      if(bad) continue;
+      dp[i][om] = add(dp[i][om], dp[i-1][bm]);
+    }
   }
 
   int ans = 0;
-  for(int j=0; j<m; j++) {
-    ans = add(ans, dp[n&1][0][j]);
+  for(int bm=0; bm<1<<L; bm++) {
+    ans = add(ans, dp[len-1][bm]);
   }
   cout << ans << nl;
 
