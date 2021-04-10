@@ -1,8 +1,8 @@
-//#pragma GCC optimize("O3")
-//#pragma GCC target("sse4,avx2,abm,fma")
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
+
+//#define FILENAME sadcactus
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -13,58 +13,60 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 typedef long long ll;
 typedef long double ld;
 typedef complex<ld> pt;
-typedef vector<int> vi;
 
-const char nl = '\n';
-const ll INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9+7;
-const ld EPS = 1e-9;
+constexpr char nl = '\n';
+constexpr ll INF = 0x3f3f3f3f;
+constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
+constexpr ll MOD = 998244353;
+constexpr ld EPS = 1e-9L;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-ll modpow(ll n, ll e, ll mod) {
-	ll r = 1;
-	for(;e;e/=2) {
-		if(e&1) r = r*n % mod;
-		n = n*n % mod;
-	}
-	return r;
+ll modpow(ll n, ll e, ll m) {
+  ll r = 1;
+  for(;e;e/=2) {
+    if(e&1) r = r*n % m;
+    n = n*n % m;
+  }
+  return r;
 }
 
-const ll mod = (119<<23) + 1, root = 62;
-typedef vector<ll> vl;
-void ntt(vl& a, vl& rt, vl& rev, int n) {
-	for(int i=0; i<n; i++) if(i<rev[i]) swap(a[i], a[rev[i]]);
-	for(int k=1; k<n; k*=2)
-		for(int i=0; i<n; i+=2*k) for(int j=0; j<k; j++) {
-			ll z = rt[j+k] * a[i+j+k] % mod, &ai = a[i+j];
-			a[i+j+k] = (z > ai ? ai-z+mod : ai-z);
-			ai += (ai + z >= mod ? z-mod : z);
-		}
+template <ll M, ll R, bool dit = 0> void ntt(vector<ll>& a) {
+  static vector<ll> w(2, 1); int n = a.size();
+  for (static int k = 2; k < n; k *= 2) {
+    w.resize(n, 1); ll c = modpow(R, M/2/k * (dit ? M-2 : 1), M);
+    for (int i = k+1; i < 2*k; i++) w[i] = w[i-1]*c % M; }
+  for (int t = 1; t < n; t *= 2) {
+    int k = (dit ? t : n/2/t);
+    for (int i = 0; i < n; i += k*2) for (int j = 0; j < k; j++) {
+      ll &c = a[i+j], &d = a[i+j+k], e = w[j+k], f = d;
+      d = (dit ? c - (f = f*e % M) : (c-f)*e % M); if (d < 0) d += M;
+      if ((c += f) >= M) c -= M;
+    }
+  }
 }
-vl conv(const vl& a, const vl& b) {
-	if(a.empty() || b.empty()) return {};
-	int s = a.size()+b.size()-1, B = 32-__builtin_clz(s), n=1<<B;
-	vl L(a), R(b), out(n), rt(n, 1), rev(n);
-	L.resize(n), R.resize(n);
-	for(int i=0; i<n; i++) rev[i] = (rev[i/2]|(i&1)<<B)/2;
-	ll curL = mod/2, inv = modpow(n, mod-2, mod);
-	for(int k=2; k<n; k*=2) {
-		ll z[] = {1, modpow(root, curL/=2, mod)};
-		for(int i=k; i<2*k; i++) rt[i] = rt[i/2] * z[i&1] % mod;
-	}
-	ntt(L, rt, rev, n); ntt(R, rt, rev, n);
-	for(int i=0; i<n; i++) out[-i&(n-1)] = L[i]*R[i] % mod * inv % mod;
-	ntt(out, rt, rev, n);
-	return {out.begin(), out.begin()+s};
+template <ll M = (119<<23)+1, ll R = 31>
+vector<ll> conv(vector<ll> a, vector<ll> b, int cut = INF) {
+  if(a.empty() || b.empty()) return {};
+  int len = a.size() + b.size() - 1, n = 1 << (32 - __builtin_clz(len));
+  ll inv = modpow(n, M-2, M);
+  a.resize(n); b.resize(n); ntt<M,R>(a); ntt<M,R>(b);
+  for(int i=0; i<n; i++) a[i] = a[i]*b[i] % M * inv % M;
+  ntt<M,R,1>(a); a.resize(min(len, cut)); return a;
 }
 
+// double-check correctness
+// read limits carefully
+// characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  cin.tie(0)->sync_with_stdio(0);
+  cout << fixed << setprecision(10);
+#if defined(ONLINE_JUDGE) && defined(FILENAME)
+  freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".out", "w", stdout);
+#endif
 
-	const int M = 26;
-	int p[M];
+	static const int M = 26;
+	vector<int> p(M);
 	for(int i=0; i<M; i++) {
 		cin >> p[i];
 		p[i]--;
@@ -79,19 +81,8 @@ int main() {
 	for(int i=0; i<m; i++) t[i] = T[i] - 'a';
 	reverse(s.begin(), s.end());
 
-/* brute force
-	for(int j=0; j+n<=m; j++) {
-		ll res = 0;
-		for(int i=0; i<n; i++) {
-			res += llround(pow(s[i]-t[n-1-i+j], 2) * pow(p[s[i]]-t[n-1-i+j], 2));
-		}
-		cout << !res;
-	}
-	cout << nl;
-*/
-
 	vector<ll> res(n+m-1);
-	vl a(n), b(m), c;
+	vector<ll> a(n), b(m), c;
 	ll sum = 0;
 
 	// (s^2 * p^2) * t^0
@@ -108,6 +99,7 @@ int main() {
 	}
 	c = conv(a, b);
 	for(int i=0; i<n+m-1; i++) {
+    assert(c[i] >= 0 && c[i] < INF);
 		res[i] += -2 * c[i];
 	}
 
@@ -120,6 +112,7 @@ int main() {
 	}
 	c = conv(a, b);
 	for(int i=0; i<n+m-1; i++) {
+    assert(c[i] >= 0 && c[i] < INF);
 		res[i] += c[i];
 	}
 
@@ -132,6 +125,7 @@ int main() {
 	}
 	c = conv(a, b);
 	for(int i=0; i<n+m-1; i++) {
+    assert(c[i] >= 0 && c[i] < INF);
 		res[i] += -2 * c[i];
 	}
 
@@ -143,10 +137,10 @@ int main() {
 
 	// output
 	for(int i=n-1; i<m; i++) {
-		ll val = (res[i] + sum + pref[i+1] - pref[i-n+1]) % mod;
+		ll val = (res[i] + sum + pref[i+1] - pref[i-n+1]) % MOD;
 		cout << !val;
 	}
 	cout << nl;
 
-	return 0;
+  return 0;
 }

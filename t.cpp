@@ -19,7 +19,7 @@ constexpr ll INF = 0x3f3f3f3f;
 constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
 constexpr ll MOD = 998244353;
 constexpr ld EPS = 1e-9L;
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+random_device _rd; mt19937 rng(_rd());
 
 
 

@@ -1,109 +1,99 @@
-//#pragma GCC optimize("O3")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-//#pragma GCC optimize("unroll-loops")
+#pragma GCC optimize("O3")
+#pragma GCC target("sse2,sse4,tune=native")
 
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
 
-typedef long long ll;
-typedef double ld;
-typedef pair<int,int> pii;
-typedef complex<ld> pt;
-typedef vector<pt> pol;
+//#define FILENAME sadcactus
 
-const char nl = '\n';
-const int INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9+7;
-const ld EPS = 1e-10;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+template <typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+typedef long long ll;
+typedef /*long*/ double ld;
+typedef complex<ld> pt;
+
+constexpr char nl = '\n';
+constexpr ll INF = 0x3f3f3f3f;
+constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
+constexpr ll MOD = 998244353;
+constexpr ld EPS = 1e-9L;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-const ld dx = 9e-3;
+const int M = 1.4e5;
 
-struct Circle {
-	int x, y, r, sign;
-	inline pair<ld,ld> query(const ld& v) const {
-		ld dsqr = r*r - (x-v)*(x-v);
-		if (dsqr < EPS) return pair<ld,ld>(0,0);
-		dsqr = sqrt(dsqr);
-		return pair<ld,ld>(y-dsqr, y+dsqr);
-	}
-};
+template<class F>
+ld quad(ld a, ld b, F f, const int n = M) {
+	ld h = (b - a) / 2 / n, v = f(a) + f(b);
+  for (int i = 1; i < n*2; i++)
+		v += f(a + i*h) * (i&1 ? 4 : 2);
+	return v * h / 3;
+}
 
-const int N = 1e4;
-pair<ld,int> p[N];
-Circle circ[N];
-pii ep[N];
-pii vals[N];
-
-//#define FILEIO
+// double-check correctness
+// read limits carefully
+// characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-#ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  cin.tie(0)->sync_with_stdio(0);
+  cout << fixed << setprecision(10);
+#if defined(ONLINE_JUDGE) && defined(FILENAME)
+  freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
+  for(int tc=1; tc<=T; tc++) {
+    cout << "Case " << tc << ": ";
 
-	for (int num=1; num<=T; num++) {
-		int n, x, y, a, b;
-		cin >> n;
-		int numcirc = 0;
-		int epcnt = 0;
-		for (int i=0; i<n; i++) {
-			cin >> x >> y >> a >> b;
-			circ[numcirc++] = Circle{x,y,a+b,1};
-			if (a-b > 0) circ[numcirc++] = Circle{x,y,a-b,-1};
-			ep[epcnt++] = pii(max(-1000,x-a-b),1);
-			ep[epcnt++] = pii(min(1000,x+a+b),-1);
-		}
-		sort(ep, ep+epcnt);
+    int n;
+    cin >> n;
+    vector<tuple<int,int,int,int>> circs;
+    for(int i=0; i<n; i++) {
+      int x, y, mid, rad;
+      cin >> x >> y >> mid >> rad;
+      int in = abs(mid - rad);
+      int out = mid + rad;
+      circs.emplace_back(x, y, in, out);
+    }
 
-		int pre;
-		int cnt = 0;
-		int vcnt = 0;
-		for (int i=0; i<epcnt; i++) {
-			if (cnt == 0) {
-				pre = ep[i].first;
-			}
-			cnt += ep[i].second;
-			if (cnt == 0) {
-				vals[vcnt++] = pii(pre, ep[i].first);
-			}
-		}
+    ld ans = quad(-1000, 1000, [=](ld x) {
+      vector<pair<ld,ld>> segs;
+      for(auto [cx, cy, in, out] : circs) {
+        ld dx = abs(x - cx);
+        if(dx >= out) continue;
+        if(dx > in) {
+          ld h = sqrt(out*out - dx*dx);
+          segs.emplace_back(cy - h, cy + h);
+        } else {
+          ld h_out = sqrt(out*out - dx*dx);
+          ld h_in = sqrt(in*in - dx*dx);
+          segs.emplace_back(cy - h_out, cy - h_in);
+          segs.emplace_back(cy + h_in, cy + h_out);
+        }
+      }
+      sort(segs.begin(), segs.end());
 
-		ld ans = 0;
-		for (int j=0; j<vcnt; j++) {
-			for (ld x = vals[j].first+dx/2; x < vals[j].second; x += dx) {
-				int id = 0;
-				for (int i = 0; i < numcirc; i++) {
-					const Circle& c = circ[i];
-					if (abs(c.x-x) > c.r) continue;
-					ld s, t;
-					tie(s,t) = c.query(x);
-					if (s != t) {
-						p[id++] = pair<ld,int>(s, c.sign);
-						p[id++] = pair<ld,int>(t, -c.sign);
-					}
-				}
-				sort(p, p+id);
+      ld res = 0;
+      ld top = -INF;
+      for(auto [l, r] : segs) {
+        if(top < l) {
+          res += r - l;
+          top = r;
+        } else if(top < r) {
+          res += r - top;
+          top = r;
+        }
+      }
+      return res;
+    });
 
-				int cnt = 1;
-				for (int i=1; i<id; i++) {
-					if (cnt > 0) {
-						ans += p[i].first-p[i-1].first;
-					}
-					cnt += p[i].second;
-				}
-			}
-		}
-		cout << "Case " << num << ": " << ans*dx << nl;
-	}
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }
