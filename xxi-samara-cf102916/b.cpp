@@ -4,13 +4,6 @@ using namespace std;
 
 //#define FILENAME sadcactus
 
-#define USE_SCC_DAG
-#ifdef HENRYX
-#include "../../lca/graph/strongly_connected.h"
-#else
-#include "strongly_connected.h"
-#endif
-
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -41,35 +34,28 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n, m;
-  cin >> n >> m;
-  vector<vector<int>> adj(n+1);
-  for(int i=1; i<=n; i++) {
-    int k;
-    cin >> k;
-    for(int j=0; j<k; j++) {
-      int v;
-      cin >> v;
-      adj[v].push_back(i);
-    }
+  int n;
+  cin >> n;
+  vector<int> a(n), b(n), c(n), d(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i] >> b[i] >> c[i] >> d[i];
   }
 
-  strongly_connected scc(adj);
-  vector<bool> vis;
-  function<int(int)> run = [&](int u) {
-    if(vis[u]) return 0;
-    vis[u] = true;
-    int res = size(scc.group[u]);
-    for(int v : scc.dag[u]) {
-      res += run(v);
+  ld l = 0;
+  ld r = 1e9;
+  for(int bs=0; bs<99; bs++) {
+    ld v = (l+r) / 2;
+    ld ans = 0;
+    for(int i=0; i<n; i++) {
+      ans += max(b[i] - v*a[i], d[i] - v*c[i]);
     }
-    return res;
-  };
-
-  for(int i=1; i<=n; i++) {
-    vis = vector<bool>(scc.size(), false);
-    cout << (run(scc[i]) > m) << nl;
+    if(ans < 0) {
+      r = v;
+    } else {
+      l = v;
+    }
   }
+  cout << r << nl;
 
   return 0;
 }

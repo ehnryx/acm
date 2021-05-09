@@ -1,3 +1,6 @@
+#pragma GCC optimize("O3,fast-math")
+#pragma GCC target("sse4,avx2")
+
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
@@ -11,7 +14,7 @@ template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 typedef long long ll;
-typedef long double ld;
+typedef double ld;
 typedef complex<ld> pt;
 
 constexpr char nl = '\n';
@@ -21,7 +24,8 @@ constexpr ll MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-const int M = 42 + 1;
+const int BS = 30;
+const int M = 25 + 1;
 ld pow2[M];
 
 pair<ld,int> solve(int n, const vector<int>& a, const vector<int>& x, const ld& cost) {
@@ -76,7 +80,7 @@ int main() {
 
   ld l = 0;
   ld r = 1e3;
-  for(int bs=0; bs<42; bs++) {
+  for(int bs=0; bs<BS; bs++) {
     ld v = (l+r) / 2;
     int cnt = solve(n, a, x, v).second;
     if(cnt > m) {

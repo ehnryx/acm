@@ -61,8 +61,7 @@ int main() {
 
   int n;
   cin >> n;
-  int total = 0;
-  set<tuple<int,int,int>> have;
+  vector<int> have;
   while(n--) {
     string h, m, s;
     cin >> h >> m >> s;
@@ -72,13 +71,15 @@ int main() {
     for(int i : hours) {
       for(int j : minutes) {
         for(int k : seconds) {
-          have.insert(tuple(i, j, k));
-          total++;
+          have.push_back(i*60*60 + j*60 + k);
         }
       }
     }
   }
-  cout << size(have) << " " << total << nl;
+  int total = size(have);
+  sort(begin(have), end(have));
+  int times = unique(begin(have), end(have)) - begin(have);
+  cout << times << " " << total << nl;
 
   return 0;
 }

@@ -10,7 +10,7 @@ using namespace std;
 #define USE_INT128
 #define USE_RATIONAL_POINTS
 
-#include "../../lca/numbers/fraction.h"
+#include "../../lca/number/fraction.h"
 #include "../../lca/geometry2d/point.h"
 #include "../../lca/geometry2d/general.h"
 

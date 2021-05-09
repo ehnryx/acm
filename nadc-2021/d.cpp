@@ -1,3 +1,6 @@
+#pragma GCC optimize("O3")
+#pragma GCC target("sse4,avx2")
+
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES

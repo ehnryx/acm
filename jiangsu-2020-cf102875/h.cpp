@@ -4,13 +4,6 @@ using namespace std;
 
 //#define FILENAME sadcactus
 
-#define USE_SCC_DAG
-#ifdef HENRYX
-#include "../../lca/graph/strongly_connected.h"
-#else
-#include "strongly_connected.h"
-#endif
-
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -28,7 +21,11 @@ constexpr ll MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-
+int add(int a, int b, int m) {
+  a += b;
+  while(a > m+1) a -= m;
+  return a;
+}
 
 // double-check correctness
 // read limits carefully
@@ -41,34 +38,35 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n, m;
-  cin >> n >> m;
-  vector<vector<int>> adj(n+1);
-  for(int i=1; i<=n; i++) {
-    int k;
-    cin >> k;
-    for(int j=0; j<k; j++) {
-      int v;
-      cin >> v;
-      adj[v].push_back(i);
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    vector<string> s(m);
+    for(int i=0; i<m; i++) {
+      char _;
+      cin >> _ >> s[i];
     }
-  }
-
-  strongly_connected scc(adj);
-  vector<bool> vis;
-  function<int(int)> run = [&](int u) {
-    if(vis[u]) return 0;
-    vis[u] = true;
-    int res = size(scc.group[u]);
-    for(int v : scc.dag[u]) {
-      res += run(v);
+    string t;
+    cin >> t;
+    vector<int> dp(n + 1);
+    dp[0] = 1;
+    for(int i=1; i<=n; i++) {
+      for(const string& pat : s) {
+        if(size(pat) > i) continue;
+        int start = i - size(pat);
+        if(t.substr(start, size(pat)) != pat) continue;
+        dp[i] = add(dp[i], dp[start], 128);
+      }
     }
-    return res;
-  };
-
-  for(int i=1; i<=n; i++) {
-    vis = vector<bool>(scc.size(), false);
-    cout << (run(scc[i]) > m) << nl;
+    if(dp[n] == 0) {
+      cout << "nonono" << nl;
+    } else if(dp[n] == 1) {
+      cout << "happymorsecode" << nl;
+    } else {
+      cout << "puppymousecat" << " " << dp[n] % 128 << nl;
+    }
   }
 
   return 0;

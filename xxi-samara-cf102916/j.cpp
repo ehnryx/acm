@@ -4,13 +4,6 @@ using namespace std;
 
 //#define FILENAME sadcactus
 
-#define USE_SCC_DAG
-#ifdef HENRYX
-#include "../../lca/graph/strongly_connected.h"
-#else
-#include "strongly_connected.h"
-#endif
-
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
@@ -41,35 +34,35 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n, m;
-  cin >> n >> m;
-  vector<vector<int>> adj(n+1);
-  for(int i=1; i<=n; i++) {
-    int k;
-    cin >> k;
-    for(int j=0; j<k; j++) {
-      int v;
-      cin >> v;
-      adj[v].push_back(i);
+  int n;
+  cin >> n;
+  vector<int> a(n), b(n);
+
+  ll sum = 0;
+  int zeros = 0;
+  int zsum = 0;
+  vector<pair<int,int>> order;
+  for(int i=0; i<n; i++) {
+    cin >> a[i] >> b[i];
+    if(b[i]) {
+      order.emplace_back(a[i] - b[i] + 1, a[i]);
+      sum += a[i];
+    } else {
+      zeros++;
+      zsum = a[i];
     }
   }
-
-  strongly_connected scc(adj);
-  vector<bool> vis;
-  function<int(int)> run = [&](int u) {
-    if(vis[u]) return 0;
-    vis[u] = true;
-    int res = size(scc.group[u]);
-    for(int v : scc.dag[u]) {
-      res += run(v);
-    }
-    return res;
-  };
-
-  for(int i=1; i<=n; i++) {
-    vis = vector<bool>(scc.size(), false);
-    cout << (run(scc[i]) > m) << nl;
+  if(zeros == 1) {
+    order.emplace_back(numeric_limits<int>::max(), zsum);
+    sum += zsum;
   }
+
+  sort(begin(order), end(order));
+  int ans = order.back().first;
+  if(zeros <= 1 && size(order) > 1) {
+    ans = min(ans, order[size(order)-2].first + 1);
+  }
+  cout << ans << " " << sum << nl;
 
   return 0;
 }
