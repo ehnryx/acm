@@ -59,6 +59,14 @@ int main() {
   vector<int> ans;
   ans.reserve(n);
   for(int i=n-1; i>=0; i--) {
+    /*
+    int v = a[i] + 1;
+    int j = st.search_left(0, n-1, v);
+    assert(v == a[i] + 1);
+    int k = st.search_left_mutable(0, n-1, v);
+    assert(j == k);
+    assert(v == 1);
+    */
     int j = st.search_left(0, n-1, a[i] + 1);
     st.update_point(j, 0);
     ans.push_back(j);

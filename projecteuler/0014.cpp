@@ -23,13 +23,12 @@ const ll MOD = 998244353;
 const ld EPS = 1e-9;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-unordered_map<int,int> ans;
-int solve(int n) {
-  if(ans.count(n)) return ans[n];
-  if(n % 2) return ans[n] = 1 + solve(3*n+1);
-  else return ans[n] = 1 + solve(n/2);
+unordered_map<ll, int> ans;
+int solve(ll n) {
+  if (ans.count(n)) return ans[n];
+  if (n % 2) return ans[n] = 1 + solve(3 * n + 1);
+  else return ans[n] = 1 + solve(n / 2);
 };
-
 
 // double-check correctness
 // read limits carefully
@@ -45,13 +44,16 @@ int main() {
   ans[1] = 1;
 
   int best = 1;
-  for(int i=1; i<1'000'000; i++) {
-    if(solve(i) > ans[best]) {
+  for (int i = 1; i < 1'000'000; i++) {
+    if (i % 100'000 == 0) cerr << "solve " << i << " , best so far: " << best << nl;
+    if (solve(i) > ans[best]) {
       best = i;
     }
   }
   cout << best << nl;
   cout << "length: " << ans[best] << nl;
+
+  cerr << "length of 13: " << ans[13] << nl;
 
   return 0;
 }

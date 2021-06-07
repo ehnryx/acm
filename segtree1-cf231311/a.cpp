@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define USE_NO_PUSH
 #include "../../lca/data_structure/segment_tree.h"
 
 constexpr char nl = '\n';
@@ -36,7 +35,7 @@ int main() {
     cin >> a[i].first;
   }
 
-  segment_tree<Node, int> st(a);
+  segment_tree<Node, int, false> st(a);
   for(int i=0; i<m; i++) {
     int x, v;
     cin >> x >> v;

@@ -5,7 +5,7 @@ using namespace std;
 #include "../../lca/number/mod_int.h"
 
 constexpr char nl = '\n';
-using Int = mod_int<(int)1e9+7>
+using Int = mod_int<(int)1e9+7>;
 
 struct Node {
   Int value;

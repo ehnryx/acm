@@ -87,7 +87,7 @@ int main() {
       int left = remap[x[j]];
       int right = prev(remap.upper_bound(x[j] + t[j]))->second;
       int leaf = have.search_left(left, right);
-      while (leaf != -1) {
+      while (leaf != have.lim) {
         for(int add : have[leaf + have.length].all) {
           cnt[j]++;
           t[j] += add;

@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define USE_NO_PUSH
 #include "../../lca/data_structure/segment_tree.h"
 
 constexpr char nl = '\n';
@@ -30,7 +29,7 @@ int main() {
   sort(begin(order), end(order));
 
   vector<int> smaller(n);
-  segment_tree<Node, int> st(n), lt(n);
+  segment_tree<Node, int, false> st(n), lt(n);
   for(auto [_, i] : order) {
     smaller[i] = st.query(i+1, n-1);
     st.update_point(i, 1);

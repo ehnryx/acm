@@ -44,7 +44,7 @@ int main() {
     } else {
       int i = lower_bound(begin(points), end(points), pair(x+1, 0)) - begin(points);
       int j = st.search_left(i, n-1, y);
-      if(j == -1) {
+      if(j == st.lim) {
         cout << -1 << nl;
       } else {
         cout << points[j].first << " " << points[j].second << nl;
