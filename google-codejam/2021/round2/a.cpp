@@ -25,7 +25,7 @@ constexpr ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-  return os << '(' << v.first << ", " << v.second << ')';
+	return os << '(' << v.first << ", " << v.second << ')';
 }
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
@@ -34,13 +34,13 @@ ostream& operator << (ostream& os, const vector<T>& v) {
 }
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-  os << "{ "; for (const T& it : v) { os << it << " , "; }
-  return os << '}';
+	os << "{ "; for (const T& it : v) { os << it << " , "; }
+	return os << '}';
 }
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-  os << "{ "; for (const pair<T,U>& it : v) { os << it << " , "; }
-  return os << '}';
+	os << "{ "; for (const pair<T,U>& it : v) { os << it << " , "; }
+	return os << '}';
 }
 
 template <class T, class U>
@@ -77,40 +77,53 @@ vector<vector<T>> read_grid(int n, int m, int s=0, int t=0) {
   return a;
 }
 
-void solve_case();
+void solve_case(int);
 void initialize();
 
 ////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-  ios::sync_with_stdio(0); cin.tie(0);
-  cout << fixed << setprecision(10);
+	ios::sync_with_stdio(0); cin.tie(0);
+	cout << fixed << setprecision(10);
 
   initialize();
 
-  int T;
-  cin >> T;
-  for (int cc = 1; cc <= T; cc++) {
+	int T, N;
+	cin >> T >> N;
+	for (int cc = 1; cc <= T; cc++) {
     auto start = chrono::steady_clock::now();
-    cout << "Case #" << cc << ": ";
-    solve_case();
+		//cout << "Case #" << cc << ": ";
+		solve_case(N);
     if(argc > 1 && argv[1][0] == 't') {
       cerr << "Time: " << (chrono::steady_clock::now() - start) / 1.0s << "s" << nl << nl;
     }
-  }
+	}
 
-  return 0;
+	return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 
 
-void solve_case() {
+void solve_case(int n) {
 
-  
+  int res;
+  for(int i=1; i<n; i++) {
+    cout << "M " << i << " " << n << endl;
+    int pos;
+    cin >> pos;
+    if(pos > i) {
+      cout << "S " << i << " " << pos << endl;
+      cin >> res;
+      assert(res == 1);
+    }
+  }
+  cout << "D" << endl;
+  cin >> res;
+  assert(res == 1);
 
-  return;
+	return;
 }
 
 void initialize() {

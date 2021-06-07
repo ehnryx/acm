@@ -104,15 +104,30 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
-
+const int M = 1e6 + 1;
+int length[M];
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  int ans = 0;
+  for(int d=3; d<=n; d++) {
+    if(n % d == 0) {
+      ans = max(ans, length[n/d]);
+    }
+  }
+  cout << ans << nl;
 
   return;
 }
 
 void initialize() {
+  length[1] = 1;
+  for(int i=1; i<M; i++) {
+    for(int k=2; k*i+1<M; k++) {
+      length[k*i+1] = max(length[k*i+1], length[i] + 1);
+    }
+  }
 }
 

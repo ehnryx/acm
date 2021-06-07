@@ -18,7 +18,7 @@ typedef vector<pt> pol;
 random_device _rd; mt19937 rng(_rd());
 
 constexpr char nl = '\n';
-constexpr ll INF = 0x3f3f3f3f;
+constexpr int INF = 0x3f3f3f3f;
 constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
 constexpr ll MOD = 1e9+7;
 constexpr ld EPS = 1e-9;
@@ -104,11 +104,107 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
+const int M = 10;
 
+ll solve(vector<int> cnt, bool have) {
+  int half = accumulate(begin(cnt), end(cnt), 0) / 2 - 1;
+  if(half < 0) return 0;
+  ll ans = INFLL;
+  for(int a=1; a<M; a++) {
+    if(cnt[a] == 0) continue;
+    int b = a - 1;
+    while(b >= 0 && cnt[b] == 0) {
+      b--;
+    }
+    if(b < 0) continue;
+    if(b == 0 && !have) continue;
+    vector<int> memo = cnt;
+    string big, small;
+    big.push_back(a + '0');
+    small.push_back(b + '0');
+    cnt[a]--;
+    cnt[b]--;
+    for(int i=0, got=0; got<half; i++) {
+      while(cnt[i] && got<half) {
+        cnt[i]--;
+        got++;
+        big.push_back(i + '0');
+      }
+    }
+    for(int i=M-1; i>=0; i--) {
+      while(cnt[i]) {
+        cnt[i]--;
+        small.push_back(i + '0');
+      }
+    }
+    ans = min(ans, stoll(big) - stoll(small));
+    cnt = move(memo);
+  }
+  return ans;
+}
 
 void solve_case() {
 
-  
+  string s;
+  cin >> s;
+  vector<int> cnt(M);
+  for(char c : s) {
+    cnt[c - '0'] += 1;
+  }
+
+  if(s.size() % 2) {
+    string big, small;
+    for(int i=1; i<M; i++) {
+      if(cnt[i]) {
+        cnt[i]--;
+        big.push_back(i + '0');
+        break;
+      }
+    }
+    for(int i=0, got=0; i<M && got<s.size()/2; i++) {
+      while(cnt[i] && got<s.size()/2) {
+        cnt[i]--;
+        big.push_back(i + '0');
+        got++;
+      }
+    }
+    for(int i=M-1; i>=0; i--) {
+      while(cnt[i]) {
+        cnt[i]--;
+        small.push_back(i + '0');
+      }
+    }
+    cout << stoll(big) - stoll(small) << nl;
+    return;
+  }
+
+  vector<int> match;
+  for(int i=0; i<M; i++) {
+    while(cnt[i] >= 2) {
+      match.push_back(i);
+      cnt[i] -= 2;
+    }
+  }
+
+  ll ans = INFLL;
+  int m = match.size();
+  for(int bm=0; bm<1<<m; bm++) {
+    vector<int> nums = cnt;
+    bool ok = true;
+    int nonzero = 0;
+    for(int i=0; i<m; i++) {
+      if(!(bm >> i & 1)) {
+        nums[match[i]] += 2;
+      } else {
+        nonzero += (match[i] > 0);
+        ok &= (i == 0 || (bm >> (i-1) & 1) || match[i] != match[i-1]);
+      }
+    }
+    if(!ok) continue;
+    if(nonzero == 0 && bm > 0) continue;
+    ans = min(ans, solve(nums, bm > 0));
+  }
+  cout << ans << nl;
 
   return;
 }

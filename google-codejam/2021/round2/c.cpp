@@ -104,15 +104,94 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
-
+ll ncr(int, int);
+ll interleave(int a, int b) {
+  return ncr(a + b, b);
+}
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  bool ok = true;
+  vector<int> a(n+1);
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+    ok &= (1 <= a[i] && a[i] <= n);
+    ok &= (a[i] - a[i-1] <= 1);
+  }
+  if(!ok) {
+    cout << 0 << nl;
+    return;
+  }
+
+  vector<int> par(n+1), stk;
+  stk.push_back(0);
+  for(int i=1; i<=n; i++) {
+    if(a[i] > a[i-1]) {
+      par[i] = stk.back();
+      stk.push_back(i);
+    } else {
+      for(int j=0; j<a[i-1]-a[i]; j++) {
+        stk.pop_back();
+      }
+      par[stk.back()] = i;
+      stk.pop_back();
+      par[i] = stk.back();
+      stk.push_back(i);
+    }
+  }
+
+  vector<int> deg(n+1), cnt(n+1);
+  vector<ll> val(n+1, 1);
+  for(int i=1; i<=n; i++) {
+    deg[par[i]]++;
+  }
+
+  queue<int> bfs;
+  for(int i=1; i<=n; i++) {
+    if(deg[i] == 0) {
+      bfs.push(i);
+    }
+  }
+  while(!empty(bfs)) {
+    int u = bfs.front();
+    bfs.pop();
+    if(u == 0) break;
+    cnt[u]++;
+    ll add = val[u] * interleave(cnt[u], cnt[par[u]]) % MOD;
+    val[par[u]] = val[par[u]] * add % MOD;
+    cnt[par[u]] += cnt[u];
+    if(--deg[par[u]] == 0) {
+      bfs.push(par[u]);
+    }
+  }
+
+  cout << val[0] << nl;
 
   return;
 }
 
+const int N = 2e5 + 7;
+ll fact[N], invf[N];
+
+ll modpow(ll n, ll e, ll m) {
+  ll r = 1;
+  for(;e;e/=2, n = n*n % m) {
+    if(e&1) r = r*n % m;
+  } return r;
+}
+
+ll ncr(int n, int r) {
+  if(r<0 || n<r) return 0;
+  return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
+}
+
 void initialize() {
+  fact[0] = invf[0] = 1;
+  for(int i=1; i<N; i++) {
+    fact[i] = fact[i-1] * i % MOD;
+    invf[i] = modpow(fact[i], MOD - 2, MOD);
+  }
 }
 
