@@ -34,7 +34,16 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int n, m, k;
+  cin >> n >> m >> k;
+  int yellow = 0;
+  for(int i=0; i<n+m; i++) {
+    int v;
+    cin >> v;
+    yellow += (v == 0);
+  }
+  cin >> k;
+  cout << abs(yellow - m) << nl;
 
   return 0;
 }

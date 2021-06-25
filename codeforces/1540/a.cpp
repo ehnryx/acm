@@ -34,7 +34,24 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<ll> a(n), sum(n);
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+    sort(begin(a), end(a));
+    partial_sum(begin(a), end(a), begin(sum));
+    ll ans = 0;
+    for(int i=1; i<n; i++) {
+      ans += a[i] - a[i-1];
+      ans -= a[i] * i - (sum[i-1] - sum[0]);
+    }
+    cout << ans << nl;
+  }
 
   return 0;
 }

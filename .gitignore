@@ -8,3 +8,6 @@ z_*
 *.sh
 *.class
 to_submit.cpp
+
+META-INF
+.vscode

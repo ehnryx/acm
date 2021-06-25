@@ -10,14 +10,14 @@ using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-using ll = long long;
-using ld = long double;
-using pt = complex<ld>;
+typedef long long ll;
+typedef long double ld;
+typedef complex<ld> pt;
 
 constexpr char nl = '\n';
-constexpr int INF = 0x3f3f3f3f;
+constexpr ll INF = 0x3f3f3f3f;
 constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
-constexpr int MOD = 998244353;
+constexpr ll MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
@@ -34,7 +34,29 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
+    string s;
+    cin >> s;
+
+    m = min(n, m);
+    for (int i = 0; i < m; i++) {
+      string nxt = s;
+      for (int j = 0; j < n; j++) {
+        if (s[j] == '0') {
+          int cnt = (j > 0 && s[j - 1] == '1') + (j + 1 < n && s[j + 1] == '1');
+          if (cnt == 1) {
+            nxt[j] = '1';
+          }
+        }
+      }
+      s = move(nxt);
+    }
+    cout << s << nl;
+  }
 
   return 0;
 }

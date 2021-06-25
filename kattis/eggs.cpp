@@ -10,14 +10,14 @@ using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-using ll = long long;
-using ld = long double;
-using pt = complex<ld>;
+typedef long long ll;
+typedef long double ld;
+typedef complex<ld> pt;
 
 constexpr char nl = '\n';
-constexpr int INF = 0x3f3f3f3f;
+constexpr ll INF = 0x3f3f3f3f;
 constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
-constexpr int MOD = 998244353;
+constexpr ll MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
@@ -34,7 +34,9 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  
+  for(int n, v; cin >> n >> v && n; ) {
+
+  }
 
   return 0;
 }
