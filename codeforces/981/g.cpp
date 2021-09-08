@@ -49,7 +49,7 @@ struct interval_set { set<pii> s;
   pii find(int x) { if (s.empty()) return {INF, INF};
     auto it1 = s.upper_bound({x, INF});
     if (it1 == s.begin()) return {INF, INF}; --it1;
-    if ((*it1).second <= x) return {INF, INF}; return *it1; } 
+    if ((*it1).second <= x) return {INF, INF}; return *it1; }
 };
 
 const int N = 1<<18;

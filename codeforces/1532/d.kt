@@ -1,12 +1,15 @@
 import java.io.*;
 import java.util.*;
+import kotlin.collections.*;
 
 fun main() = output {
-  val T = readInt();
-  repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+  val n = readInt();
+  val a = readInts(n).sorted();
+  var ans = 0;
+  for (i in 1..n step 2) {
+    ans += a[i] - a[i-1];
   }
+  println(ans);
 }
 
 @JvmField val INPUT = System.`in`

@@ -3,9 +3,14 @@ import java.util.*;
 
 fun main() = output {
   val T = readInt();
-  repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+  for (testnum in 1..T) {
+    val (n, k) = readInts(2);
+    val sb = StringBuilder();
+    for (i in 0..n-1) {
+      //sb.append(((i % k) + 'a'.toInt()).toChar());
+      sb.append(((i % k) + 'a'.code).toChar());
+    }
+    println(sb);
   }
 }
 

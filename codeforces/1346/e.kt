@@ -1,14 +1,26 @@
 import java.io.*;
 import java.util.*;
+import kotlin.math.*;
 
 fun main() = output {
-  val T = readInt();
-  repeat(T) {
+  val inf = Int.MAX_VALUE / 2;
+  val (n, m, k) = readInts(3);
+  val ans = Array<Int>(n + 1) { _ -> inf; }
+  ans[k] = 0;
+  repeat(m) {
     val (a, b) = readInts(2);
-    println(a + b);
+    ans[a] = min(ans[a] + 1, ans[b]).also {
+      ans[b] = min(ans[a], ans[b] + 1);
+    }
   }
+  println(
+    ans.map {
+      if (it >= inf) return@map -1;
+      else return@map it;
+    }.slice(IntRange(1, n)).joinToString(" "));
 }
 
+//  Fast I/O  ///////
 @JvmField val INPUT = System.`in`
 @JvmField val OUTPUT = System.out
 

@@ -1,14 +1,56 @@
 import java.io.*;
 import java.util.*;
+import kotlin.math.*;
 
 fun main() = output {
   val T = readInt();
   repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+    val (n, m) = readInts(2);
+    val edges = mutableListOf<Edge>();
+    repeat(m) {
+      val (a, b, c) = readInts(3);
+      edges.add(Edge(a, b, c));
+    }
+    edges.sortDescending();
+
+    val ans = Array<Int>(n + 1) { _ -> 0; }
+    var ok = true;
+    for ((a, b, c) in edges) {
+      ans[a] = max(ans[a], c);
+      ans[b] = max(ans[b], c);
+      if (c != min(ans[a], ans[b])) {
+        ok = false;
+        break;
+      }
+    }
+
+    if (ok) {
+      println("YES");
+      println(ans.slice(IntRange(1, n)).joinToString(" "));
+    } else {
+      println("NO");
+    }
   }
 }
 
+class Edge: Comparable<Edge> {
+  val a: Int;
+  val b: Int;
+  val c: Int;
+  constructor(a: Int, b: Int, c: Int) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+  }
+  override operator fun compareTo(other: Edge): Int {
+    return this.c - other.c;
+  }
+  operator fun component1(): Int { return a; }
+  operator fun component2(): Int { return b; }
+  operator fun component3(): Int { return c; }
+};
+
+//  Fast I/O  ///////
 @JvmField val INPUT = System.`in`
 @JvmField val OUTPUT = System.out
 

@@ -1,14 +1,32 @@
 import java.io.*;
 import java.util.*;
+import kotlin.math.*;
 
 fun main() = output {
   val T = readInt();
   repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+    val (n, k, x, y) = readLongs(4);
+    val a = readLongs(n.toInt()).sortedDescending();
+
+    var ansx = 0L;
+    var ansy = y;
+    var sum = a.sum();
+    val threshold = n * k;
+    for (v in a) {
+      if (v > k) {
+        ansx += x;
+      }
+      if (sum > threshold) {
+        sum -= v;
+        ansy += x;
+      }
+    }
+
+    println(min(ansx, ansy));
   }
 }
 
+//  Fast I/O  ///////
 @JvmField val INPUT = System.`in`
 @JvmField val OUTPUT = System.out
 

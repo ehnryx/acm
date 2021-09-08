@@ -1,14 +1,17 @@
 import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 fun main() = output {
   val T = readInt();
   repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+    val (n, k) = readInts(2);
+    val s = n / (1 + k + k*k + k*k*k);
+    println(listOf(s, s*k, s*k*k, s*k*k*k).joinToString(" "));
   }
 }
 
+//  Fast I/O  ///////
 @JvmField val INPUT = System.`in`
 @JvmField val OUTPUT = System.out
 

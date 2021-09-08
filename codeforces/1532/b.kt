@@ -3,9 +3,9 @@ import java.util.*;
 
 fun main() = output {
   val T = readInt();
-  repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+  for (testnum in 1..T) {
+    val (a, b, k) = readInts(3);
+    println(a.toLong() * ((k+1)/2) - b.toLong() * (k/2));
   }
 }
 

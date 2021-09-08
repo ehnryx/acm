@@ -2,11 +2,24 @@ import java.io.*;
 import java.util.*;
 
 fun main() = output {
-  val T = readInt();
-  repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
-  }
+  val n = readInt();
+  val a = readLongs(n);
+  val cnt = mutableMapOf<Long, Int>();
+  a.forEach {
+    cnt.set(it, cnt.getOrDefault(it, 0) + 1);
+  };
+  val sum = a.sum();
+  val ans = mutableListOf<Int>();
+  a.forEachIndexed { i, value ->
+    val rem = sum - value;
+    if (rem % 2 != 0L) return@forEachIndexed;
+    if ((rem / 2 == value && cnt.getOrDefault(rem / 2, 0) >= 2)
+        || (rem / 2 != value && cnt.getOrDefault(rem / 2, 0) >= 1)) {
+      ans.add(i + 1);
+    }
+  };
+  println(ans.size);
+  println(ans.joinToString(" "));
 }
 
 @JvmField val INPUT = System.`in`

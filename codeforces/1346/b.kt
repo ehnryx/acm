@@ -1,14 +1,21 @@
 import java.io.*;
 import java.util.*;
+import kotlin.math.*;
 
 fun main() = output {
   val T = readInt();
   repeat(T) {
-    val (a, b) = readInts(2);
-    println(a + b);
+    val (_, k1, k2) = readInts(3);
+    val blocks = read().split("0").map { it.length };
+    var ans = 0;
+    for (s in blocks) {
+      ans += (s + 1) / 2 * k1 + s / 2 * min(k1, k2 - k1);
+    }
+    println(ans);
   }
 }
 
+//  Fast I/O  ///////
 @JvmField val INPUT = System.`in`
 @JvmField val OUTPUT = System.out
 
