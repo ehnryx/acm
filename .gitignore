@@ -2,7 +2,7 @@
 *.out*
 *.ans*
 *.txt*
-*.pdf
+
 z_*
 .nfs*
 *.sh
