@@ -23,66 +23,66 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll power(ll n, ll e) {
-	ll res = 1;
-	for(;e;e/=2) {
-		if(e&1) res = res*n % MOD;
-		n = n*n % MOD;
-	}
-	return res;
+  ll res = 1;
+  for(;e;e/=2) {
+    if(e&1) res = res*n % MOD;
+    n = n*n % MOD;
+  }
+  return res;
 }
 
 ll inverse(ll n) {
-	return power(n, MOD-2);
+  return power(n, MOD-2);
 }
 
 const int N = 5e3+2;
 ll dpl[N][N], dpr[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, r, h;
-	cin >> n >> r >> h;
+  int n, r, h;
+  cin >> n >> r >> h;
 
-	ll invrh = inverse(r+h);
-	ll rdie = r*invrh % MOD;
-	ll hdie = h*invrh % MOD;
+  ll invrh = inverse(r+h);
+  ll rdie = r*invrh % MOD;
+  ll hdie = h*invrh % MOD;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	int a, b;
-	cin >> a >> b;
+  int a, b;
+  cin >> a >> b;
 
-	dpl[0][b] = 1;
-	for(int i=1; i<=n; i++) {
-		for(int j=0; j<=n; j++) {
-			if(s[i-1] == 'H') {
-				dpl[i][j] = dpl[i-1][j+1];
-			} else if(j>0) {
-				dpl[i][j] = (dpl[i-1][j] * rdie + dpl[i][j-1] * hdie) % MOD;
-			}
-		}
-	}
+  dpl[0][b] = 1;
+  for(int i=1; i<=n; i++) {
+    for(int j=0; j<=n; j++) {
+      if(s[i-1] == 'H') {
+        dpl[i][j] = dpl[i-1][j+1];
+      } else if(j>0) {
+        dpl[i][j] = (dpl[i-1][j] * rdie + dpl[i][j-1] * hdie) % MOD;
+      }
+    }
+  }
 
-	dpr[n+1][a] = 1;
-	for(int i=n; i>=1; i--) {
-		for(int j=0; j<=n; j++) {
-			if(s[i-1] == 'R') {
-				dpr[i][j] = dpr[i+1][j+1];
-			} else if(j>0) {
-				dpr[i][j] = (dpr[i+1][j] * hdie + dpr[i][j-1] * rdie) % MOD;
-			}
-		}
-	}
+  dpr[n+1][a] = 1;
+  for(int i=n; i>=1; i--) {
+    for(int j=0; j<=n; j++) {
+      if(s[i-1] == 'R') {
+        dpr[i][j] = dpr[i+1][j+1];
+      } else if(j>0) {
+        dpr[i][j] = (dpr[i+1][j] * hdie + dpr[i][j-1] * rdie) % MOD;
+      }
+    }
+  }
 
-	ll ans = 0;
-	for(int i=0; i<=n; i++) {
-		ans += dpl[i][0] * dpr[i+1][0] % MOD;
-	}
-	ans = (ans % MOD + MOD) % MOD;
-	cout << ans << nl;
+  ll ans = 0;
+  for(int i=0; i<=n; i++) {
+    ans += dpl[i][0] * dpr[i+1][0] % MOD;
+  }
+  ans = (ans % MOD + MOD) % MOD;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

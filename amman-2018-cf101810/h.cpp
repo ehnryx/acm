@@ -19,27 +19,27 @@ const int N = 2000 + 1;
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		for (int i=1; i<=2*n; i++) {
-			cin >> a[i];
-		}
+    for (int i=1; i<=2*n; i++) {
+      cin >> a[i];
+    }
 
-		int ans = 0;
-		for (int i=1; i<=2*n; i++) {
-			ans = max(ans, a[i] + a[2*n-i+1]);
-		}
+    int ans = 0;
+    for (int i=1; i<=2*n; i++) {
+      ans = max(ans, a[i] + a[2*n-i+1]);
+    }
 
-		cout << ans << nl;
-	}
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

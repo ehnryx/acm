@@ -31,28 +31,28 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin>>s;
-	string ans=" ";
-	for(int i=1;i<s.size();i++) {
-		for(int j=0;j<i;j++) {
-			string t = s;
-			swap(t[i],t[j]);
-			if(t[0]!='0' && t<s) {
-				ans = max(ans, t);
-			}
-		}
-	}
+  string s;
+  cin>>s;
+  string ans=" ";
+  for(int i=1;i<s.size();i++) {
+    for(int j=0;j<i;j++) {
+      string t = s;
+      swap(t[i],t[j]);
+      if(t[0]!='0' && t<s) {
+        ans = max(ans, t);
+      }
+    }
+  }
 
-	if(ans==" ") {
-		cout << -1 << nl;
-	} else {
-		cout << ans << nl;
-	}
+  if(ans==" ") {
+    cout << -1 << nl;
+  } else {
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

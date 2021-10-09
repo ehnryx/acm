@@ -27,54 +27,54 @@ int col[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	while (T--) {
-		int n;
-		cin >> n;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		int dis = 0;
-		FOR(i,1,n-2) {
-			int c = rng()%2;
-			if (c) cout << i << " " << i+1 << " " << i << " " << i+2 << endl;
-			else cout << i << " " << i+2 << " " << i << " " << i+1 << endl;
-			cin >> col[i];
-			col[i] ^= !c;
-			if (i>1 && col[i] == col[i-1]) {
-				dis = i+1;
-				i++;
-			}
-		}
+    int dis = 0;
+    FOR(i,1,n-2) {
+      int c = rng()%2;
+      if (c) cout << i << " " << i+1 << " " << i << " " << i+2 << endl;
+      else cout << i << " " << i+2 << " " << i << " " << i+1 << endl;
+      cin >> col[i];
+      col[i] ^= !c;
+      if (i>1 && col[i] == col[i-1]) {
+        dis = i+1;
+        i++;
+      }
+    }
 
-		if (dis == 0 || dis == n-1) {
-			// pray to paul
-			if (rng()%2) cout << n << " " << n-1 << " " << n << " " << n-2 << endl;
-			else cout << n << " " << n-2 << " " << n << " " << n-1 << endl;
-			cin >> col[n];
-		} else {
-			// blessed by paul
-			cout << n << " " << n-1 << " " << n << " " << dis << endl;
-			cin >> col[n];
-			if (col[n] != col[n-2]) {
-				cout << dis << " " << dis+1 << " " << dis << " " << dis+2 << endl;
-				cin >> col[n];
-			} else {
-				cout << n-1 << " " << dis << " " << n-1 << " " << dis-2 << endl;
-				cin >> col[n];
-			}
-		}
-	}
+    if (dis == 0 || dis == n-1) {
+      // pray to paul
+      if (rng()%2) cout << n << " " << n-1 << " " << n << " " << n-2 << endl;
+      else cout << n << " " << n-2 << " " << n << " " << n-1 << endl;
+      cin >> col[n];
+    } else {
+      // blessed by paul
+      cout << n << " " << n-1 << " " << n << " " << dis << endl;
+      cin >> col[n];
+      if (col[n] != col[n-2]) {
+        cout << dis << " " << dis+1 << " " << dis << " " << dis+2 << endl;
+        cin >> col[n];
+      } else {
+        cout << n-1 << " " << dis << " " << n-1 << " " << dis-2 << endl;
+        cin >> col[n];
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }
 
 // paul pls

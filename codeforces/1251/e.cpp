@@ -25,38 +25,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		map<int,vector<int>> vals;
-		for (int i=0;i<n;i++) {
-			int m, p;
-			cin >> m >> p;
-			vals[m].push_back(p);
-		}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    map<int,vector<int>> vals;
+    for (int i=0;i<n;i++) {
+      int m, p;
+      cin >> m >> p;
+      vals[m].push_back(p);
+    }
 
-		priority_queue<int> nxt;
-		int left = n;
-		int bought = 0;
-		ll ans = 0;
-		for (auto it=vals.rbegin(); it!=vals.rend(); it++) {
-			left -= it->second.size();
-			for(auto jt:it->second) {
-				nxt.push(-jt);
-			}
-			while (left + bought < it->first) {
-				ans += -nxt.top();
-				nxt.pop();
-				bought++;
-			}
-		}
-		cout << ans << nl;
-	}
+    priority_queue<int> nxt;
+    int left = n;
+    int bought = 0;
+    ll ans = 0;
+    for (auto it=vals.rbegin(); it!=vals.rend(); it++) {
+      left -= it->second.size();
+      for(auto jt:it->second) {
+        nxt.push(-jt);
+      }
+      while (left + bought < it->first) {
+        ans += -nxt.top();
+        nxt.pop();
+        bought++;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

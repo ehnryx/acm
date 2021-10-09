@@ -25,36 +25,36 @@ const int N = 200;
 const int M = 128;
 int dp[N][N][128];
 int solve(int l, int r, int c, const string& s) {
-	if(l > r) return 0;
-	if(dp[l][r][c] != -1) return dp[l][r][c];
-	if(s[l] == c) {
-		return dp[l][r][c] = 1 + solve(l+1, r, c, s);
-	} else if(s[r] == c) {
-		return dp[l][r][c] = 1 + solve(l, r-1, c, s);
-	} else {
-		int res = 2 + min(solve(l, r, s[l], s), solve(l, r, s[r], s));
-		for(int i=l; i<r; i++) {
-			res = min(res, solve(l, i, c, s) + solve(i+1, r, c, s));
-		}
-		return dp[l][r][c] = res;
-	}
+  if(l > r) return 0;
+  if(dp[l][r][c] != -1) return dp[l][r][c];
+  if(s[l] == c) {
+    return dp[l][r][c] = 1 + solve(l+1, r, c, s);
+  } else if(s[r] == c) {
+    return dp[l][r][c] = 1 + solve(l, r-1, c, s);
+  } else {
+    int res = 2 + min(solve(l, r, s[l], s), solve(l, r, s[r], s));
+    for(int i=l; i<r; i++) {
+      res = min(res, solve(l, i, c, s) + solve(i+1, r, c, s));
+    }
+    return dp[l][r][c] = res;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	string s;
-	getline(cin, s);
-	while(T--) {
-		memset(dp, -1, sizeof dp);
-		getline(cin, s);
-		int n = s.size();
-		int ans = 2 + min(solve(0, n-1, s[0], s), solve(0, n-1, s[n-1], s));
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  string s;
+  getline(cin, s);
+  while(T--) {
+    memset(dp, -1, sizeof dp);
+    getline(cin, s);
+    int n = s.size();
+    int ans = 2 + min(solve(0, n-1, s[0], s), solve(0, n-1, s[n-1], s));
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

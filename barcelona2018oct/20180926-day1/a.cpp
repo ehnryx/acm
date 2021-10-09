@@ -19,36 +19,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	int res = 0;
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-		res ^= a[i];
-	}
+  int a[n];
+  int res = 0;
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+    res ^= a[i];
+  }
 
-	if (res == 1) {
-		cout << "Bob" << nl;
-	} else if (res > 1) {
-		cout << "Alice" << nl;
-	} else {
-		bool alice = false;
-		for (int i=0; i<n; i++) {
-			alice |= ((a[i]^1) < a[i]);
-		}
-		if (alice) cout << "Alice" << nl;
-		else cout << "Bob" << nl;
-	}
+  if (res == 1) {
+    cout << "Bob" << nl;
+  } else if (res > 1) {
+    cout << "Alice" << nl;
+  } else {
+    bool alice = false;
+    for (int i=0; i<n; i++) {
+      alice |= ((a[i]^1) < a[i]);
+    }
+    if (alice) cout << "Alice" << nl;
+    else cout << "Bob" << nl;
+  }
 
-	return 0;
+  return 0;
 }

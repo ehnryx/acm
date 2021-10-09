@@ -27,34 +27,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<int> a(n);
-	vector<int> cnt(20);
-	for(int i=0; i<n; i++) {
-		cin >> a[i];
-		for(int j=0; j<20; j++) {
-			if(a[i] & 1<<j) {
-				cnt[j]++;
-			}
-		}
-	}
+  int n;
+  cin >> n;
+  vector<int> a(n);
+  vector<int> cnt(20);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+    for(int j=0; j<20; j++) {
+      if(a[i] & 1<<j) {
+        cnt[j]++;
+      }
+    }
+  }
 
-	ll ans = 0;
-	for(int i=0; i<n; i++) {
-		int cur = 0;
-		for(int j=0; j<20; j++) {
-			if(cnt[j]) {
-				cur |= 1<<j;
-				cnt[j]--;
-			}
-		}
-		ans += (ll)cur*cur;
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for(int i=0; i<n; i++) {
+    int cur = 0;
+    for(int j=0; j<20; j++) {
+      if(cnt[j]) {
+        cur |= 1<<j;
+        cnt[j]--;
+      }
+    }
+    ans += (ll)cur*cur;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

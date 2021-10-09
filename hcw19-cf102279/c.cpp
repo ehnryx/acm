@@ -38,48 +38,48 @@ int dp[N][N];
 int n,p,q;
 
 bool valid(int w) {
-	jp[0] = jq[0] = 0;
-	for(int i=1;i<=n;i++) {
-		jp[i] = upper_bound(a,a+n+1,a[i]+w-1) - a - 1;
-		jq[i] = upper_bound(a,a+n+1,a[i]+2*w-1) - a - 1;
-	}
-	memset(dp,0,sizeof dp);
-	for(int i=0;i<=p;i++) {
-		for(int j=0;j<=q;j++) {
-			if(!i&&!j) continue;
-			if(i>0) dp[i][j] = max(dp[i][j], jp[dp[i-1][j]+1]);
-			if(j>0) dp[i][j] = max(dp[i][j], jq[dp[i][j-1]+1]);
-			if (dp[i][j]==n) return true;
-		}
-	}
-	return false;
+  jp[0] = jq[0] = 0;
+  for(int i=1;i<=n;i++) {
+    jp[i] = upper_bound(a,a+n+1,a[i]+w-1) - a - 1;
+    jq[i] = upper_bound(a,a+n+1,a[i]+2*w-1) - a - 1;
+  }
+  memset(dp,0,sizeof dp);
+  for(int i=0;i<=p;i++) {
+    for(int j=0;j<=q;j++) {
+      if(!i&&!j) continue;
+      if(i>0) dp[i][j] = max(dp[i][j], jp[dp[i-1][j]+1]);
+      if(j>0) dp[i][j] = max(dp[i][j], jq[dp[i][j-1]+1]);
+      if (dp[i][j]==n) return true;
+    }
+  }
+  return false;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	cin>>n>>p>>q;
-	p = min(n,p);
-	q = min(n,q);
-	a[0] = -INFLL;
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-	}
-	sort(a,a+n+1);
+  cin>>n>>p>>q;
+  p = min(n,p);
+  q = min(n,q);
+  a[0] = -INFLL;
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+  }
+  sort(a,a+n+1);
 
-	ll l=1;
-	ll r=1e9;
-	while(l<r) {
-		ll m = (l+r)/2;
-		if(valid(m)) {
-			r = m;
-		} else {
-			l = m+1;
-		}
-	}
-	cout << l << nl;
+  ll l=1;
+  ll r=1e9;
+  while(l<r) {
+    ll m = (l+r)/2;
+    if(valid(m)) {
+      r = m;
+    } else {
+      l = m+1;
+    }
+  }
+  cout << l << nl;
 
-	return 0;
+  return 0;
 }

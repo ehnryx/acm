@@ -27,36 +27,36 @@ vector<int> adj[N];
 int lv[N], rv[N];
 
 int solve(int u, int p, int id) {
-	int ccnt = adj[u].size() - (p>0);
-	rv[u] = id + ccnt + 1;
-	int cpos = rv[u];
-	int nxt = rv[u];
-	for(int v:adj[u]) {
-		if(v==p) continue;
-		lv[v] = --cpos;
-		nxt = solve(v, u, nxt);
-	}
-	return nxt;
+  int ccnt = adj[u].size() - (p>0);
+  rv[u] = id + ccnt + 1;
+  int cpos = rv[u];
+  int nxt = rv[u];
+  for(int v:adj[u]) {
+    if(v==p) continue;
+    lv[v] = --cpos;
+    nxt = solve(v, u, nxt);
+  }
+  return nxt;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	lv[1] = 1;
-	solve(1, 0, 1);
+  int n;
+  cin >> n;
+  for(int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  lv[1] = 1;
+  solve(1, 0, 1);
 
-	for(int i=1; i<=n; i++) {
-		cout << lv[i] << " " << rv[i] << nl;
-	}
+  for(int i=1; i<=n; i++) {
+    cout << lv[i] << " " << rv[i] << nl;
+  }
 
-	return 0;
+  return 0;
 }

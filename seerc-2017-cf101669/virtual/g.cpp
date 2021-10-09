@@ -13,25 +13,25 @@ int n;
 vector<pair<int, int>> a, ap;
 inline ld sq(ld x) { return x*x; }
 ld calc(const vector<pair<int, int>>& vs) {
-	ld ans = 0, v = 0;
-	for (const auto& p : vs) {
-		ans += v * p.second + (ld) p.first * sq(p.second) / 2;
-		v += (ld) p.second * p.first;
-	}
-	return ans;
+  ld ans = 0, v = 0;
+  for (const auto& p : vs) {
+    ans += v * p.second + (ld) p.first * sq(p.second) / 2;
+    v += (ld) p.second * p.first;
+  }
+  return ans;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	cin >> n; a.resize(n);
-	for (int i = 0; i < n; i++) {
-		cin >> a[i].first >> a[i].second;
-	}
-	ap = a;
-	sort(ap.rbegin(), ap.rend());
-	cout << fixed << setprecision(1) << calc(ap) - calc(a) << nl;
+  cin >> n; a.resize(n);
+  for (int i = 0; i < n; i++) {
+    cin >> a[i].first >> a[i].second;
+  }
+  ap = a;
+  sort(ap.rbegin(), ap.rend());
+  cout << fixed << setprecision(1) << calc(ap) - calc(a) << nl;
 
-	return 0;
+  return 0;
 }

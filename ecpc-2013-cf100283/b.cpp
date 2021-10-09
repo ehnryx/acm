@@ -18,10 +18,10 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int a, b, dist;
-	bool operator < (const Edge& o) const {
-		return dist < o.dist;
-	}
+  int a, b, dist;
+  bool operator < (const Edge& o) const {
+    return dist < o.dist;
+  }
 };
 
 const int N = 1e5+1;
@@ -96,71 +96,71 @@ node* append(node* ref, node* other) { if (splay(ref)==null) return other;
 
 int root[N], sz[N];
 int find(int i) {
-	if (root[i] == -1) return i;
-	return root[i] = find(root[i]);
+  if (root[i] == -1) return i;
+  return root[i] = find(root[i]);
 }
 bool link(int i, int j) {
-	i=find(i); j=find(j);
-	if (i==j) return false;
-	root[i] = j;
-	sz[j] += sz[i];
-	return true;
+  i=find(i); j=find(j);
+  if (i==j) return false;
+  root[i] = j;
+  sz[j] += sz[i];
+  return true;
 }
 
 node* nptr[N];
 
 void init(int n) {
-	memset(root,-1,sizeof root);
-	fill(sz,sz+n+1,1);
-	for (int i=1; i<=n; i++) {
-		nptr[i] = new node(i, i, 0);
-	}
+  memset(root,-1,sizeof root);
+  fill(sz,sz+n+1,1);
+  for (int i=1; i<=n; i++) {
+    nptr[i] = new node(i, i, 0);
+  }
 }
 
 void solve() {
-	int n, m;
-	cin >> n >> m;
-	init(n);
+  int n, m;
+  cin >> n >> m;
+  init(n);
 
-	vector<Edge> edges;
-	for (int i=0; i<m; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		edges.push_back({a,b,c});
-	}
-	sort(edges.begin(), edges.end());
+  vector<Edge> edges;
+  for (int i=0; i<m; i++) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    edges.push_back({a,b,c});
+  }
+  sort(edges.begin(), edges.end());
 
-	for (const Edge& e : edges) {
-		int a = find(e.a);
-		int b = find(e.b);
-		if (a != b) {
-			SplayTree::rUpdate(nptr[a], null, null, sz[b]*e.dist);
-			SplayTree::rUpdate(nptr[b], null, null, sz[a]*e.dist);
-			SplayTree::append(nptr[a], nptr[b]);
-			link(a,b);
-		}
-	}
+  for (const Edge& e : edges) {
+    int a = find(e.a);
+    int b = find(e.b);
+    if (a != b) {
+      SplayTree::rUpdate(nptr[a], null, null, sz[b]*e.dist);
+      SplayTree::rUpdate(nptr[b], null, null, sz[a]*e.dist);
+      SplayTree::append(nptr[a], nptr[b]);
+      link(a,b);
+    }
+  }
 
-	for (int i=1; i<=n; i++) {
-		cout << SplayTree::pQuery(nptr[i]) << nl;
-	}
+  for (int i=1; i<=n; i++) {
+    cout << SplayTree::pQuery(nptr[i]) << nl;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
-	freopen(TESTFILE ".in", "r", stdin);
+  freopen(TESTFILE ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	for (int tt=1; tt<=T; tt++) {
-		cout << "Case " << tt << ":" << nl;
-		solve();
-	}
+  for (int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ":" << nl;
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

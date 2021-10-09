@@ -61,32 +61,32 @@ struct Int {
 const int N = 1e5+1;
 Int frac[N], invf[N];
 Int ncr(int n, int r) {
-	return frac[n] * invf[r] * invf[n-r];
+  return frac[n] * invf[r] * invf[n-r];
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	frac[0] = invf[0] = 1;
-	for (int i=1; i<N; i++) {
-		frac[i] = frac[i-1] * Int(i);
-		invf[i] = frac[i].inv();
-	}
+  frac[0] = invf[0] = 1;
+  for (int i=1; i<N; i++) {
+    frac[i] = frac[i-1] * Int(i);
+    invf[i] = frac[i].inv();
+  }
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m;
-		cin >> n >> m;
-		cout << ncr(n, n-m+1) << " " << ncr(n-1, m-1) << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
+    cout << ncr(n, n-m+1) << " " << ncr(n-1, m-1) << nl;
+  }
 
-	return 0;
+  return 0;
 }

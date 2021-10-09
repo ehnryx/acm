@@ -24,15 +24,15 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, h;
-	cin >> n >> h;
-	for(int i=1; i<n; i++) {
-		cout << h * sqrt((ld)i/n) << " ";
-	}
-	cout << nl;
+  int n, h;
+  cin >> n >> h;
+  for(int i=1; i<n; i++) {
+    cout << h * sqrt((ld)i/n) << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

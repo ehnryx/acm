@@ -27,62 +27,62 @@ vector<int> st[2*N];
 
 int dsu[N];
 int find(int i) {
-	if(dsu[i]==-1) return i;
-	return dsu[i] = find(dsu[i]);
+  if(dsu[i]==-1) return i;
+  return dsu[i] = find(dsu[i]);
 }
 void link(int i, int j) {
-	if(find(i)!=find(j)) dsu[find(i)] = find(j);
+  if(find(i)!=find(j)) dsu[find(i)] = find(j);
 }
 
 void build() {
-	for(int i=N-1; i>0; i--) {
-		st[i] = st[2*i];
-		for(int j:st[2*i+1]) st[i].push_back(j);
-		sort(st[i].begin(), st[i].end());
-	}
+  for(int i=N-1; i>0; i--) {
+    st[i] = st[2*i];
+    for(int j:st[2*i+1]) st[i].push_back(j);
+    sort(st[i].begin(), st[i].end());
+  }
 }
 
 void count(int i, int v, int& tot) {
-	for(int j=(int)st[i].size()-1; tot>=0 && j>=0 && st[i][j]>v; j--) {
-		link(v, st[i][j]);
-		tot--;
-	}
+  for(int j=(int)st[i].size()-1; tot>=0 && j>=0 && st[i][j]>v; j--) {
+    link(v, st[i][j]);
+    tot--;
+  }
 }
 
 void query(int l, int r, int v, int& tot) {
-	for(l+=N, r+=N; tot>=0 && l<r; l/=2, r/=2) {
-		if(l&1) count(l++, v, tot);
-		if(r&1) count(--r, v, tot);
-	}
+  for(l+=N, r+=N; tot>=0 && l<r; l/=2, r/=2) {
+    if(l&1) count(l++, v, tot);
+    if(r&1) count(--r, v, tot);
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int l[n], r[n];
-	for(int i=0; i<n; i++) {
-		cin >> l[i] >> r[i];
-		st[N+l[i]].push_back(r[i]);
-	}
-	build();
+  int n;
+  cin >> n;
+  int l[n], r[n];
+  for(int i=0; i<n; i++) {
+    cin >> l[i] >> r[i];
+    st[N+l[i]].push_back(r[i]);
+  }
+  build();
 
-	memset(dsu,-1,sizeof dsu);
-	int res = n-1;
-	for(int i=0; i<n; i++) {
-		query(l[i],r[i],r[i],res);
-	}
-	int roots = 0;
-	for(int i=0; i<n; i++) {
-		roots += (find(r[i]) == r[i]);
-	}
-	if(res==0 && roots==1) {
-		cout << "YES" << nl;
-	} else {
-		cout << "NO" << nl;
-	}
+  memset(dsu,-1,sizeof dsu);
+  int res = n-1;
+  for(int i=0; i<n; i++) {
+    query(l[i],r[i],r[i],res);
+  }
+  int roots = 0;
+  for(int i=0; i<n; i++) {
+    roots += (find(r[i]) == r[i]);
+  }
+  if(res==0 && roots==1) {
+    cout << "YES" << nl;
+  } else {
+    cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

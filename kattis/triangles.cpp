@@ -37,49 +37,49 @@ inline p3d pl_inter(const p3d &p, const p3d &n, const p3d &a1, const p3d &a2){
 ////////////////////////////////////////////////////////////////////////////////
 
 bool pt_in_polygon(const p3d& p, const vector<p3d>& v, const p3d& n) {
-	ld res = 0;
-	for (int i=v.size()-1,j=0; j<v.size(); i=j++) {
-		res += atan2(dot(n,cross(v[i]-p,v[j]-p)), dot(v[i]-p,v[j]-p));
-	}
-	return abs(res) > 1;
+  ld res = 0;
+  for (int i=v.size()-1,j=0; j<v.size(); i=j++) {
+    res += atan2(dot(n,cross(v[i]-p,v[j]-p)), dot(v[i]-p,v[j]-p));
+  }
+  return abs(res) > 1;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		vector<p3d> p[2];
-		p3d normal[2];
-		for (int t=0; t<2; t++) {
-			for (int i=0; i<3; i++) {
-				int x,y,z;
-				cin >> x >> y >> z;
-				p[t].push_back({x,y,z});
-			}
-			normal[t] = cross(p[t][1]-p[t][0], p[t][2]-p[t][0]);
-			normal[t] = normal[t] / abs(normal[t]);
-		}
-		int cnt = 0;
-		for (int i=0; i<3; i++) {
-			int j = (i+1<3 ? i+1 : 0);
-			if (abs(dot(p[0][i]-p[0][j], normal[1])) > EPS) {
-				p3d it = pl_inter(p[1][0], normal[1], p[0][i], p[0][j]);
-				if (abs(it-p[0][i]) + abs(it-p[0][j]) < abs(p[0][i]-p[0][j])+EPS) {
-					cnt += pt_in_polygon(it, p[1], normal[1]);
-				}
-			}
-		}
-		cout << (cnt%2==1 ? "YES" : "NO") << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    vector<p3d> p[2];
+    p3d normal[2];
+    for (int t=0; t<2; t++) {
+      for (int i=0; i<3; i++) {
+        int x,y,z;
+        cin >> x >> y >> z;
+        p[t].push_back({x,y,z});
+      }
+      normal[t] = cross(p[t][1]-p[t][0], p[t][2]-p[t][0]);
+      normal[t] = normal[t] / abs(normal[t]);
+    }
+    int cnt = 0;
+    for (int i=0; i<3; i++) {
+      int j = (i+1<3 ? i+1 : 0);
+      if (abs(dot(p[0][i]-p[0][j], normal[1])) > EPS) {
+        p3d it = pl_inter(p[1][0], normal[1], p[0][i], p[0][j]);
+        if (abs(it-p[0][i]) + abs(it-p[0][j]) < abs(p[0][i]-p[0][j])+EPS) {
+          cnt += pt_in_polygon(it, p[1], normal[1]);
+        }
+      }
+    }
+    cout << (cnt%2==1 ? "YES" : "NO") << nl;
+  }
 
-	return 0;
+  return 0;
 }

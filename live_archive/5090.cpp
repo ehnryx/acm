@@ -74,38 +74,38 @@ namespace Hull3 { // change shift and mask values for >1024 verts
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	vector<p3d> p;
-	for(int n; cin >> n; ) {
-		p.resize(n);
-		for(int i=0; i<n; i++) {
-			cin >> p[i].x >> p[i].y >> p[i].z;
-		}
-		Hull3::build(p);
-		vector<p3d> ans;
-		for(int i=0; i<Hull3::faces.size(); i++) {
-			p3d a = Hull3::v[Hull3::faces[i].a];
-			p3d b = Hull3::v[Hull3::faces[i].b];
-			p3d c = Hull3::v[Hull3::faces[i].c];
-			p3d normal = cross(b-a, c-a);
-			assert(abs(normal) > EPS);
-			normal = normal / abs(normal);
-			assert(abs(abs(normal)-1) < EPS);
-			bool ok = true;
-			for(const p3d& it : ans) {
-				if(abs(it - normal) < EPS) {
-					ok = false;
-					break;
-				}
-			}
-			if(ok) {
-				ans.push_back(normal);
-			}
-		}
-		cout << ans.size() << nl;
-	}
+  vector<p3d> p;
+  for(int n; cin >> n; ) {
+    p.resize(n);
+    for(int i=0; i<n; i++) {
+      cin >> p[i].x >> p[i].y >> p[i].z;
+    }
+    Hull3::build(p);
+    vector<p3d> ans;
+    for(int i=0; i<Hull3::faces.size(); i++) {
+      p3d a = Hull3::v[Hull3::faces[i].a];
+      p3d b = Hull3::v[Hull3::faces[i].b];
+      p3d c = Hull3::v[Hull3::faces[i].c];
+      p3d normal = cross(b-a, c-a);
+      assert(abs(normal) > EPS);
+      normal = normal / abs(normal);
+      assert(abs(abs(normal)-1) < EPS);
+      bool ok = true;
+      for(const p3d& it : ans) {
+        if(abs(it - normal) < EPS) {
+          ok = false;
+          break;
+        }
+      }
+      if(ok) {
+        ans.push_back(normal);
+      }
+    }
+    cout << ans.size() << nl;
+  }
 
-	return 0;
+  return 0;
 }

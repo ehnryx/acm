@@ -27,27 +27,27 @@ int a[N];
 ll s[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	For(i,n) {
-		cin >> a[i];
-	}
-	s[n] = 0;
-	Down(i,n) {
-		s[i] = s[i+1] + a[i];
-	}
+  For(i,n) {
+    cin >> a[i];
+  }
+  s[n] = 0;
+  Down(i,n) {
+    s[i] = s[i+1] + a[i];
+  }
 
-	ll ans = s[0];
-	sort(s+1, s+n, greater<ll>());
-	FOR(i,1,k-1) {
-		ans += s[i];
-	}
-	cout << ans << nl;
+  ll ans = s[0];
+  sort(s+1, s+n, greater<ll>());
+  FOR(i,1,k-1) {
+    ans += s[i];
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

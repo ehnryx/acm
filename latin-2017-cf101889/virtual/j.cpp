@@ -21,42 +21,42 @@ bool vis[N];
 string s; int n;
 
 bool dfs(int sz) {
-	if (can[sz] != -1) return can[sz];
-	memset(vis, 0, sizeof vis);
-	for (int i = 0; i < sz; i++) {
-		bool shit = 0;
-		for (int j = i; !vis[j]; j = (j + sz)%n) {
-			if (s[j] == 'P') {
-				shit = 1;
-				break;
-			}
-			vis[j] = 1;
-		}
-		if (!shit) {
-			return (can[sz] = 1);
-		}
-	}
-	return (can[sz] = 0);
+  if (can[sz] != -1) return can[sz];
+  memset(vis, 0, sizeof vis);
+  for (int i = 0; i < sz; i++) {
+    bool shit = 0;
+    for (int j = i; !vis[j]; j = (j + sz)%n) {
+      if (s[j] == 'P') {
+        shit = 1;
+        break;
+      }
+      vis[j] = 1;
+    }
+    if (!shit) {
+      return (can[sz] = 1);
+    }
+  }
+  return (can[sz] = 0);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	memset(can, -1, sizeof can);
-	cin >> s;
-	n = s.size();
-	int ans = 0;
-	for (int i = 1; i < n; i++) {
-		ans += dfs(__gcd(i, n));
-	}
-	cout << ans << endl;
+  memset(can, -1, sizeof can);
+  cin >> s;
+  n = s.size();
+  int ans = 0;
+  for (int i = 1; i < n; i++) {
+    ans += dfs(__gcd(i, n));
+  }
+  cout << ans << endl;
 
-	return 0;
+  return 0;
 }

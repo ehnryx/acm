@@ -19,32 +19,32 @@ ll sqr(ll x) { return x*x; }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	while (n--) {
-		ll a, b, c, d;
-		cin >> a >> b >> c >> d;
-		ll ans = 0;
-		for (int i=0; i<42; i++) {
-			for (int j=0; j<42; j++) {
-				if (i+j>d) continue;
-				int k = d-i-j;
-				ans = max(ans, sqr(a+i)+sqr(b+j)+sqr(c+k)+7*(min(a+i,min(b+j,c+k))));
-				ans = max(ans, sqr(a+j)+sqr(b+k)+sqr(c+i)+7*(min(a+j,min(b+k,c+i))));
-				ans = max(ans, sqr(a+k)+sqr(b+i)+sqr(c+j)+7*(min(a+k,min(b+i,c+j))));
-			}
-		}
-		cout << ans << nl;
-	}
+  while (n--) {
+    ll a, b, c, d;
+    cin >> a >> b >> c >> d;
+    ll ans = 0;
+    for (int i=0; i<42; i++) {
+      for (int j=0; j<42; j++) {
+        if (i+j>d) continue;
+        int k = d-i-j;
+        ans = max(ans, sqr(a+i)+sqr(b+j)+sqr(c+k)+7*(min(a+i,min(b+j,c+k))));
+        ans = max(ans, sqr(a+j)+sqr(b+k)+sqr(c+i)+7*(min(a+j,min(b+k,c+i))));
+        ans = max(ans, sqr(a+k)+sqr(b+i)+sqr(c+j)+7*(min(a+k,min(b+i,c+j))));
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

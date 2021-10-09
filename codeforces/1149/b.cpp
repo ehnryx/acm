@@ -32,94 +32,94 @@ int p[3];
 char val[3][M];
 
 vector<function<void(void)>> update = {
-	[&] () {
-		int c, n=N;
-		int i = p[0];
-		FOR(j,0,p[1]) {
-			FOR(k,0,p[2]) {
-				dp[i][j][k] = INF;
-				c = val[0][i]-'a';
-				if (i>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i-1][j][k])));
-				c = val[1][j]-'a';
-				if (j>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j-1][k])));
-				c = val[2][k]-'a';
-				if (k>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j][k-1])));
-			}
-		}
-	},
-	[&] () {
-		int c, n=N;
-		int j = p[1];
-		FOR(i,0,p[0]) {
-			FOR(k,0,p[2]) {
-				dp[i][j][k] = INF;
-				c = val[0][i]-'a';
-				if (i>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i-1][j][k])));
-				c = val[1][j]-'a';
-				if (j>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j-1][k])));
-				c = val[2][k]-'a';
-				if (k>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j][k-1])));
-			}
-		}
-	},
-	[&] () {
-		int c, n=N;
-		int k = p[2];
-		FOR(i,0,p[0]) {
-			FOR(j,0,p[1]) {
-				dp[i][j][k] = INF;
-				c = val[0][i]-'a';
-				if (i>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i-1][j][k])));
-				c = val[1][j]-'a';
-				if (j>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j-1][k])));
-				c = val[2][k]-'a';
-				if (k>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j][k-1])));
-			}
-		}
-	}
+  [&] () {
+    int c, n=N;
+    int i = p[0];
+    FOR(j,0,p[1]) {
+      FOR(k,0,p[2]) {
+        dp[i][j][k] = INF;
+        c = val[0][i]-'a';
+        if (i>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i-1][j][k])));
+        c = val[1][j]-'a';
+        if (j>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j-1][k])));
+        c = val[2][k]-'a';
+        if (k>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j][k-1])));
+      }
+    }
+  },
+  [&] () {
+    int c, n=N;
+    int j = p[1];
+    FOR(i,0,p[0]) {
+      FOR(k,0,p[2]) {
+        dp[i][j][k] = INF;
+        c = val[0][i]-'a';
+        if (i>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i-1][j][k])));
+        c = val[1][j]-'a';
+        if (j>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j-1][k])));
+        c = val[2][k]-'a';
+        if (k>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j][k-1])));
+      }
+    }
+  },
+  [&] () {
+    int c, n=N;
+    int k = p[2];
+    FOR(i,0,p[0]) {
+      FOR(j,0,p[1]) {
+        dp[i][j][k] = INF;
+        c = val[0][i]-'a';
+        if (i>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i-1][j][k])));
+        c = val[1][j]-'a';
+        if (j>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j-1][k])));
+        c = val[2][k]-'a';
+        if (k>0) dp[i][j][k] = min(dp[i][j][k], *upper_bound(idx[c].begin(), idx[c].end(), min(n,dp[i][j][k-1])));
+      }
+    }
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	For(i,n) {
-		idx[s[i]-'a'].push_back(i+1);
-	}
-	For(i,26) {
-		idx[i].push_back(INF);
-	}
+  For(i,n) {
+    idx[s[i]-'a'].push_back(i+1);
+  }
+  For(i,26) {
+    idx[i].push_back(INF);
+  }
 
-	For(i,m) {
-		char t; int id;
-		cin >> t >> id;
-		--id;
+  For(i,m) {
+    char t; int id;
+    cin >> t >> id;
+    --id;
 
-		if (t == '+') {
-			cin >> val[id][++p[id]];
-			update[id]();
-		} else {
-			--p[id];
-		}
+    if (t == '+') {
+      cin >> val[id][++p[id]];
+      update[id]();
+    } else {
+      --p[id];
+    }
 
-		if (dp[p[0]][p[1]][p[2]] <= n) {
-			cout << "YES" << nl;
-		} else {
-			cout << "NO" << nl;
-		}
-	}
+    if (dp[p[0]][p[1]][p[2]] <= n) {
+      cout << "YES" << nl;
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

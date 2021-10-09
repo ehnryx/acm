@@ -26,30 +26,30 @@ const int N = 500+1;
 int g[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	if(max(n,m) == 1) {
-		cout << 0 << nl;
-	} else {
-		bool s = n<m;
-		if(s) swap(n,m);
-		for(int i=1; i<=n; i++) {
-			for(int j=1; j<=m; j++) {
-				if(s) g[j][i] = (i+m)*j;
-				else g[i][j] = (i+m)*j;
-			}
-		}
-		if(s) swap(n,m);
-		for(int i=1; i<=n; i++) {
-			for(int j=1; j<=m; j++) {
-				cout << g[i][j] << " ";
-			}
-			cout << nl;
-		}
-	}
+  int n, m;
+  cin >> n >> m;
+  if(max(n,m) == 1) {
+    cout << 0 << nl;
+  } else {
+    bool s = n<m;
+    if(s) swap(n,m);
+    for(int i=1; i<=n; i++) {
+      for(int j=1; j<=m; j++) {
+        if(s) g[j][i] = (i+m)*j;
+        else g[i][j] = (i+m)*j;
+      }
+    }
+    if(s) swap(n,m);
+    for(int i=1; i<=n; i++) {
+      for(int j=1; j<=m; j++) {
+        cout << g[i][j] << " ";
+      }
+      cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

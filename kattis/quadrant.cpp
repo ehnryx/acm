@@ -24,12 +24,12 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int x, y;
-	cin >> x >> y;
-	cout << (x>0 ? (y>0 ? 1 : 4) : (y<0 ? 3 : 2)) << nl;
+  int x, y;
+  cin >> x >> y;
+  cout << (x>0 ? (y>0 ? 1 : 4) : (y<0 ? 3 : 2)) << nl;
 
-	return 0;
+  return 0;
 }

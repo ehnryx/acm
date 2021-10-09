@@ -21,62 +21,62 @@ vector<int> adj[N];
 int par[N], h[N], a[N], s[N];
 
 void dfs(int cur) {
-	int minv = INF;
-	for (int x : adj[cur]) {
-		dfs(x);
-		minv = min(minv, s[x]);
-	}
-	if (s[cur] == -1) {
-		if (minv == INF) {
-			s[cur] = s[par[cur]];
-		} else {
-			s[cur] = minv;
-		}
-	}
+  int minv = INF;
+  for (int x : adj[cur]) {
+    dfs(x);
+    minv = min(minv, s[x]);
+  }
+  if (s[cur] == -1) {
+    if (minv == INF) {
+      s[cur] = s[par[cur]];
+    } else {
+      s[cur] = minv;
+    }
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
 
-	h[1] = 1;
-	for (int i=2; i<=n; i++) {
-		cin >> par[i];
-		h[i] = h[par[i]]+1;
-		adj[par[i]].push_back(i);
-	}
+  h[1] = 1;
+  for (int i=2; i<=n; i++) {
+    cin >> par[i];
+    h[i] = h[par[i]]+1;
+    adj[par[i]].push_back(i);
+  }
 
-	for (int i=1; i<=n; i++) {
-		cin >> s[i];
-		if (s[i] == -1 && h[i]%2) goto gulag;
-		if (s[i] != -1 && h[i]%2 == 0) goto gulag;
-	}
-	a[1] = s[1];
+  for (int i=1; i<=n; i++) {
+    cin >> s[i];
+    if (s[i] == -1 && h[i]%2) goto gulag;
+    if (s[i] != -1 && h[i]%2 == 0) goto gulag;
+  }
+  a[1] = s[1];
 
-	{
-		dfs(1);
-		ll sum = a[1];
-		for (int i=2; i<=n; i++) {
-			if (s[i] < s[par[i]]) goto gulag;
-			sum += s[i] - s[par[i]];
-		}
-		cout << sum << nl;
-	}
+  {
+    dfs(1);
+    ll sum = a[1];
+    for (int i=2; i<=n; i++) {
+      if (s[i] < s[par[i]]) goto gulag;
+      sum += s[i] - s[par[i]];
+    }
+    cout << sum << nl;
+  }
 
-	return 0;
+  return 0;
 
 gulag:
-	cout << -1 << nl;
+  cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

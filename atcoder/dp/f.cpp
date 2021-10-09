@@ -33,42 +33,42 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s, t;
-	cin >> s >> t;
-	int n = s.size();
-	int m = t.size();
+  string s, t;
+  cin >> s >> t;
+  int n = s.size();
+  int m = t.size();
 
-	int dp[n+1][m+1];
-	pii p[n+1][m+1];
-	memset(dp, 0, sizeof dp);
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<m; j++) {
-			if (s[i] == t[j]) {
-				dp[i+1][j+1] = dp[i][j] + 1;
-				p[i+1][j+1] = pii(i,j);
-			} else {
-				dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j]);
-				if (dp[i+1][j+1] == dp[i][j+1]) {
-					p[i+1][j+1] = pii(i,j+1);
-				} else {
-					p[i+1][j+1] = pii(i+1,j);
-				}
-			}
-		}
-	}
+  int dp[n+1][m+1];
+  pii p[n+1][m+1];
+  memset(dp, 0, sizeof dp);
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<m; j++) {
+      if (s[i] == t[j]) {
+        dp[i+1][j+1] = dp[i][j] + 1;
+        p[i+1][j+1] = pii(i,j);
+      } else {
+        dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j]);
+        if (dp[i+1][j+1] == dp[i][j+1]) {
+          p[i+1][j+1] = pii(i,j+1);
+        } else {
+          p[i+1][j+1] = pii(i+1,j);
+        }
+      }
+    }
+  }
 
-	string ans;
-	for (int i=n,j=m; i>0 && j>0; tie(i,j)=p[i][j]) {
-		if (p[i][j].first != i && p[i][j].second != j) {
-			ans.push_back(s[i-1]);
-		}
-	}
-	reverse(ans.begin(), ans.end());
-	cout << ans << nl;
+  string ans;
+  for (int i=n,j=m; i>0 && j>0; tie(i,j)=p[i][j]) {
+    if (p[i][j].first != i && p[i][j].second != j) {
+      ans.push_back(s[i-1]);
+    }
+  }
+  reverse(ans.begin(), ans.end());
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

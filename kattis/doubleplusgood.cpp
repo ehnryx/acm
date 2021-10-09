@@ -24,46 +24,46 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	vector<int> p;
-	for(int i=0; i<s.size(); i++) {
-		if(s[i] == '+') {
-			p.push_back(i);
-		}
-	}
+  string s;
+  cin >> s;
+  vector<int> p;
+  for(int i=0; i<s.size(); i++) {
+    if(s[i] == '+') {
+      p.push_back(i);
+    }
+  }
 
-	int n = p.size();
-	set<ll> all;
-	for(int bm=0; bm<1<<n; bm++) {
-		for(int i=0; i<n; i++) {
-			if(bm & 1<<i) {
-				s[p[i]] = '.';
-			}
-		}
-		ll cur = 0;
-		ll res = 0;
-		for(int i=0; i<s.size(); i++) {
-			if(s[i] == '+') {
-				res += cur;
-				cur = 0;
-			} else if(s[i] != '.') {
-				cur = cur*10 + s[i]-'0';
-			}
-		}
-		res += cur;
-		all.insert(res);
-		for(int i=0; i<n; i++) {
-			if(bm & 1<<i) {
-				s[p[i]] = '+';
-			}
-		}
-	}
+  int n = p.size();
+  set<ll> all;
+  for(int bm=0; bm<1<<n; bm++) {
+    for(int i=0; i<n; i++) {
+      if(bm & 1<<i) {
+        s[p[i]] = '.';
+      }
+    }
+    ll cur = 0;
+    ll res = 0;
+    for(int i=0; i<s.size(); i++) {
+      if(s[i] == '+') {
+        res += cur;
+        cur = 0;
+      } else if(s[i] != '.') {
+        cur = cur*10 + s[i]-'0';
+      }
+    }
+    res += cur;
+    all.insert(res);
+    for(int i=0; i<n; i++) {
+      if(bm & 1<<i) {
+        s[p[i]] = '+';
+      }
+    }
+  }
 
-	cout << all.size() << nl;
+  cout << all.size() << nl;
 
-	return 0;
+  return 0;
 }

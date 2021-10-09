@@ -30,42 +30,42 @@ ll dp[N][N];
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	for(int i=1; i<=n; i++) {
-		cin >> A[i] >> B[i];
-		sum[i] = sum[i-1] + A[i] + B[i];
-		mod[i] = sum[i] % k;
-	}
+  int n, k;
+  cin >> n >> k;
+  for(int i=1; i<=n; i++) {
+    cin >> A[i] >> B[i];
+    sum[i] = sum[i-1] + A[i] + B[i];
+    mod[i] = sum[i] % k;
+  }
 
-	memset(dp, 0xff^0x3f, sizeof dp);
-	dp[0][0] = 0;
-	for(int i=1; i<=n; i++) {
-		int tmod = (A[i] + B[i]) % k;
-		for(int r=0; r<k; r++) {
-			int b = mod[i] - r;
-			if(b < 0) b += k;
-			for(int red=0; red<k; red++) {
-				int blue = tmod - red;
-				if(blue < 0) blue += k;
-				if(red > A[i] || blue > B[i]) continue;
-				int pr = (r - red);
-				int pb = (b - blue);
-				if(pr < 0) pr += k;
-				if(pb < 0) pb += k;
-				dp[i][r] = max(dp[i][r], dp[i-1][pr] + (pr > r) + (pb > b) + (A[i]+B[i]-(red+blue))/k);
-			}
-		}
-	}
+  memset(dp, 0xff^0x3f, sizeof dp);
+  dp[0][0] = 0;
+  for(int i=1; i<=n; i++) {
+    int tmod = (A[i] + B[i]) % k;
+    for(int r=0; r<k; r++) {
+      int b = mod[i] - r;
+      if(b < 0) b += k;
+      for(int red=0; red<k; red++) {
+        int blue = tmod - red;
+        if(blue < 0) blue += k;
+        if(red > A[i] || blue > B[i]) continue;
+        int pr = (r - red);
+        int pb = (b - blue);
+        if(pr < 0) pr += k;
+        if(pb < 0) pb += k;
+        dp[i][r] = max(dp[i][r], dp[i-1][pr] + (pr > r) + (pb > b) + (A[i]+B[i]-(red+blue))/k);
+      }
+    }
+  }
 
-	ll ans = 0;
-	for(int r=0; r<k; r++) {
-		ans = max(ans, dp[n][r]);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for(int r=0; r<k; r++) {
+    ans = max(ans, dp[n][r]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

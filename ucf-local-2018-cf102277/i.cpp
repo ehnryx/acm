@@ -35,46 +35,46 @@ int a[N];
 char dp[1<<N][3];
 int n,m; string s;
 char solve(int i, int bm, int done) {
-	if(dp[bm][done]!=-1) return dp[bm][done];
-	if(i==m) return dp[bm][done]=(done?INF:0);
-	if(s[i]=='0') return dp[bm][done]=0;
-	{
-		int c=s[i]-'0';
-		for(int j=lower_bound(a,a+n,c)-a;j<n&&a[j]==c;j++) {
-			if(bm&1<<j) continue;
-			int r=solve(i+1,bm|1<<j,done);
-			if(r) return r;
-		}
-	}
-	if(i+1<m) {
-		int c=10*(s[i]-'0')+s[i+1]-'0';
-		for(int j=lower_bound(a,a+n,c)-a;j<n&&a[j]==c;j++) {
-			if(bm&1<<j) continue;
-			int r=solve(i+2,bm|1<<j,done);
-			if(r) return r;
-		}
-	}
-	if(!done) {
-		if(solve(i+1,bm,1)) return s[i]-'0';
-		if(i+1<m&&solve(i+2,bm,2)) return 10*(s[i]-'0')+s[i+1]-'0';
-	}
-	return dp[bm][done]=0;
+  if(dp[bm][done]!=-1) return dp[bm][done];
+  if(i==m) return dp[bm][done]=(done?INF:0);
+  if(s[i]=='0') return dp[bm][done]=0;
+  {
+    int c=s[i]-'0';
+    for(int j=lower_bound(a,a+n,c)-a;j<n&&a[j]==c;j++) {
+      if(bm&1<<j) continue;
+      int r=solve(i+1,bm|1<<j,done);
+      if(r) return r;
+    }
+  }
+  if(i+1<m) {
+    int c=10*(s[i]-'0')+s[i+1]-'0';
+    for(int j=lower_bound(a,a+n,c)-a;j<n&&a[j]==c;j++) {
+      if(bm&1<<j) continue;
+      int r=solve(i+2,bm|1<<j,done);
+      if(r) return r;
+    }
+  }
+  if(!done) {
+    if(solve(i+1,bm,1)) return s[i]-'0';
+    if(i+1<m&&solve(i+2,bm,2)) return 10*(s[i]-'0')+s[i+1]-'0';
+  }
+  return dp[bm][done]=0;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	cin>>s;
-	m = s.size();
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
-	sort(a,a+n);
-	memset(dp,-1,sizeof dp);
-	cout<<!!solve(0,0,0)<<nl;
+  cin>>s;
+  m = s.size();
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
+  sort(a,a+n);
+  memset(dp,-1,sizeof dp);
+  cout<<!!solve(0,0,0)<<nl;
 
-	return 0;
+  return 0;
 }

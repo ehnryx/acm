@@ -36,36 +36,36 @@ ll dp[N][M];
 unordered_set<int> bad[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, e, k;
-	cin >> n >> e >> k;
+  int n, e, k;
+  cin >> n >> e >> k;
 
-	for (int i=0; i<k; i++) {
-		int a, b;
-		cin >> a >> b;
-		bad[a].insert(b);
-	}
+  for (int i=0; i<k; i++) {
+    int a, b;
+    cin >> a >> b;
+    bad[a].insert(b);
+  }
 
-	dp[0][0] = 1;
-	for (int i=1; i<=n; i++) {
-		for (int bm=0; bm<M; bm++) {
-			for (int j=0; j<=2*e; j++) {
-				int id = i-e+j;
-				if (id<=0 || id>n) continue;
-				if (!(bm>>1&1<<j) && !bad[i].count(i-e+j)) {
-					dp[i][bm>>1^1<<j] = (dp[i][bm>>1^1<<j] + dp[i-1][bm]) % MOD;
-				}
-			}
-		}
-	}
-	ll ans = 0;
-	for (int bm=0; bm<M; bm++) {
-		ans += dp[n][bm];
-	}
-	cout << ans % MOD << nl;
+  dp[0][0] = 1;
+  for (int i=1; i<=n; i++) {
+    for (int bm=0; bm<M; bm++) {
+      for (int j=0; j<=2*e; j++) {
+        int id = i-e+j;
+        if (id<=0 || id>n) continue;
+        if (!(bm>>1&1<<j) && !bad[i].count(i-e+j)) {
+          dp[i][bm>>1^1<<j] = (dp[i][bm>>1^1<<j] + dp[i-1][bm]) % MOD;
+        }
+      }
+    }
+  }
+  ll ans = 0;
+  for (int bm=0; bm<M; bm++) {
+    ans += dp[n][bm];
+  }
+  cout << ans % MOD << nl;
 
-	return 0;
+  return 0;
 }

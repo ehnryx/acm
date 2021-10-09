@@ -15,21 +15,21 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int a = 0, b = 0;
-	map<char, int> wrong;
-	int t;
-	while (cin >> t) {
-		if (t == -1) break;
-		char c; string s; cin >> c >> s;
-		if (s[0] == 'r')
-			a++, b += t + wrong[c] * 20;
-		else
-			wrong[c]++;
-	}
-	cout << a << " " << b << endl;
+  int a = 0, b = 0;
+  map<char, int> wrong;
+  int t;
+  while (cin >> t) {
+    if (t == -1) break;
+    char c; string s; cin >> c >> s;
+    if (s[0] == 'r')
+      a++, b += t + wrong[c] * 20;
+    else
+      wrong[c]++;
+  }
+  cout << a << " " << b << endl;
 
-	return 0;
+  return 0;
 }

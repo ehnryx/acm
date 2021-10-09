@@ -24,14 +24,14 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	unordered_set<int> binary;
-	vector<int> a;
+  unordered_set<int> binary;
+  vector<int> a;
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	return 0;
+  return 0;
 }

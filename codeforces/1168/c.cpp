@@ -29,46 +29,46 @@ int dp[N][L];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, q;
-	cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
 
-	FOR(i,1,n) {
-		cin >> a[i];
-	}
+  FOR(i,1,n) {
+    cin >> a[i];
+  }
 
-	vector<int> memo[L];
-	FOR(i,1,n) {
-		For(j,L) {
-			if (a[i]&1<<j) {
-				dp[i][j] = i;
-				if (!memo[j].empty()) {
-					For(k,L) {
-						dp[i][k] = max(dp[i][k], dp[memo[j].back()][k]);
-					}
-				}
-				memo[j].push_back(i);
-			}
-		}
-	}
+  vector<int> memo[L];
+  FOR(i,1,n) {
+    For(j,L) {
+      if (a[i]&1<<j) {
+        dp[i][j] = i;
+        if (!memo[j].empty()) {
+          For(k,L) {
+            dp[i][k] = max(dp[i][k], dp[memo[j].back()][k]);
+          }
+        }
+        memo[j].push_back(i);
+      }
+    }
+  }
 
-	while (q--) {
-		int x, y;
-		cin >> x >> y;
-		bool ok = false;
-		For(j,L) {
-			ok |= ((a[x]&1<<j) && dp[y][j] >= x);
-		}
-		if (ok) cout << "Shi" << nl;
-		else cout << "Fou" << nl;
-	}
+  while (q--) {
+    int x, y;
+    cin >> x >> y;
+    bool ok = false;
+    For(j,L) {
+      ok |= ((a[x]&1<<j) && dp[y][j] >= x);
+    }
+    if (ok) cout << "Shi" << nl;
+    else cout << "Fou" << nl;
+  }
 
-	return 0;
+  return 0;
 }

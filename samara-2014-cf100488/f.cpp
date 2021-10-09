@@ -19,19 +19,19 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int a, b, c;
-	cin >> a >> b >> c;
+  int a, b, c;
+  cin >> a >> b >> c;
 
-	if (c > b) cout << "Stay with this envelope" << nl;
-	else cout << "Take another envelope" << nl;
+  if (c > b) cout << "Stay with this envelope" << nl;
+  else cout << "Take another envelope" << nl;
 
-	return 0;
+  return 0;
 }

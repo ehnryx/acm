@@ -24,7 +24,7 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 /*
 struct node { node *l, *r, *p; int key, cnt;
-	node(int k=0);
+  node(int k=0);
   inline int dir() { return this == p->l; }
   inline void set_cld(node* c, bool left) { (left?l:r) = c; c->p = this; }
 } _null, *null;
@@ -55,14 +55,14 @@ int rank(node* x) { return splay(x)->l->cnt; } // for size, remove '->l'
 }
 
 struct Tree {
-	node* root;
-	Tree(): root(SplayTree::insert(null, new node(INF))) {}
-	void insert(int v) {
-		root = SplayTree::insert(root, new node(v));
-	}
-	int order_of_key(int v) {
-		return SplayTree::rank(SplayTree::lower_bound(root, v));
-	}
+  node* root;
+  Tree(): root(SplayTree::insert(null, new node(INF))) {}
+  void insert(int v) {
+    root = SplayTree::insert(root, new node(v));
+  }
+  int order_of_key(int v) {
+    return SplayTree::rank(SplayTree::lower_bound(root, v));
+  }
 };
 */
 
@@ -70,48 +70,48 @@ const int N = 1<<18;
 ordered_set<int> st[2*N];
 //Tree st[2*N];
 void insert(int x, int v) {
-	st[x+=N].insert(v);
-	for(x/=2;x;x/=2) {
-		st[x].insert(v);
-	}
+  st[x+=N].insert(v);
+  for(x/=2;x;x/=2) {
+    st[x].insert(v);
+  }
 }
 int query(int l, int r, int v) {
-	int res = 0;
-	for(l+=N,r+=N;l<r;l/=2,r/=2) {
-		if(l&1) res += st[l++].order_of_key(v);
-		if(r&1) res += st[--r].order_of_key(v);
-	}
-	return res;
+  int res = 0;
+  for(l+=N,r+=N;l<r;l/=2,r/=2) {
+    if(l&1) res += st[l++].order_of_key(v);
+    if(r&1) res += st[--r].order_of_key(v);
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n],b[n],c[n],inv[n+1],id[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		inv[a[i]] = i;
-	}
-	for(int i=0;i<n;i++) {
-		cin>>b[i];
-		b[i] = inv[b[i]];
-	}
-	for(int i=0;i<n;i++) {
-		cin>>c[i];
-		c[i] = inv[c[i]];
-		id[c[i]] = i;
-	}
+  int n;
+  cin>>n;
+  int a[n],b[n],c[n],inv[n+1],id[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    inv[a[i]] = i;
+  }
+  for(int i=0;i<n;i++) {
+    cin>>b[i];
+    b[i] = inv[b[i]];
+  }
+  for(int i=0;i<n;i++) {
+    cin>>c[i];
+    c[i] = inv[c[i]];
+    id[c[i]] = i;
+  }
 
-	ll ans = 0;
-	for(int i=0;i<n;i++) {
-		int j = id[b[i]];
-		ans += query(0,j,b[i]);
-		insert(j,b[i]);
-	}
-	cout<<ans<<nl;
+  ll ans = 0;
+  for(int i=0;i<n;i++) {
+    int j = id[b[i]];
+    ans += query(0,j,b[i]);
+    insert(j,b[i]);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

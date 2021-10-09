@@ -36,14 +36,14 @@ inline bool cmp_lex(const pt& a, const pt& b) {
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 
 //ld cp(const pt& a, const pt& b) { return imag(conj(a)*b); }
 int sgn(const ld& x) { return x<-EPS?-1:x>EPS?1:0; }
 
 pt line_inter(const pt& a, const pt& b, const pt& c, const pt& d) {
-	return a + cp(c-a,d-c)/cp(b-a,d-c) * (b-a);
+  return a + cp(c-a,d-c)/cp(b-a,d-c) * (b-a);
 }
 
 bool seg_x_seg(pt a1, pt a2, pt b1, pt b2) {
@@ -59,93 +59,93 @@ bool seg_x_seg(pt a1, pt a2, pt b1, pt b2) {
 } //change to < to exclude endpoints
 
 struct Rectangle {
-	pt w, x, y, z;
-	vector<pt> v;
-	Rectangle(int x1, int y1, int x2, int y2):
-		w(x1-E,y1-E), x(x1-E,y2+E), y(x2+E,y2+E), z(x2+E,y1-E), v({w,x,y,z}) {}
-	vector<pt> intersect(const pt& a, const pt& b) const {
-		vector<pt> out;
-		if (seg_x_seg(a,b,w,x)) out.push_back(line_inter(a,b,w,x));
-		if (seg_x_seg(a,b,x,y)) out.push_back(line_inter(a,b,x,y));
-		if (seg_x_seg(a,b,y,z)) out.push_back(line_inter(a,b,y,z));
-		if (seg_x_seg(a,b,z,w)) out.push_back(line_inter(a,b,z,w));
-		return out;
-	}
+  pt w, x, y, z;
+  vector<pt> v;
+  Rectangle(int x1, int y1, int x2, int y2):
+    w(x1-E,y1-E), x(x1-E,y2+E), y(x2+E,y2+E), z(x2+E,y1-E), v({w,x,y,z}) {}
+  vector<pt> intersect(const pt& a, const pt& b) const {
+    vector<pt> out;
+    if (seg_x_seg(a,b,w,x)) out.push_back(line_inter(a,b,w,x));
+    if (seg_x_seg(a,b,x,y)) out.push_back(line_inter(a,b,x,y));
+    if (seg_x_seg(a,b,y,z)) out.push_back(line_inter(a,b,y,z));
+    if (seg_x_seg(a,b,z,w)) out.push_back(line_inter(a,b,z,w));
+    return out;
+  }
 };
 vector<Rectangle> rect;
 
 int solve(const pt& s, const pt& t, int len) {
-	vector<pair<ld,int>> line;
-	pt dir = (t-s)/abs(t-s);
-	pt left = s-(ld)1e5*dir;
-	pt right = s+(ld)1e5*dir;
-	for (const Rectangle& r : rect) {
-		vector<pt> cur = r.intersect(left,right);
-		if (!cur.empty()) {
-			pt lb = right;
-			pt ub = left;
-			for (const pt& it : cur) {
-				if (abs(left-it) < abs(left-lb)) lb = it;
-				if (abs(left-it) > abs(left-ub)) ub = it;
-			}
-			line.push_back(pair<ld,int>(abs(left-lb),-1));
-			line.push_back(pair<ld,int>(abs(left-ub),1));
-		}
-	}
-	line.push_back(pair<ld,int>(-1e42,1));
-	sort(line.begin(), line.end());
+  vector<pair<ld,int>> line;
+  pt dir = (t-s)/abs(t-s);
+  pt left = s-(ld)1e5*dir;
+  pt right = s+(ld)1e5*dir;
+  for (const Rectangle& r : rect) {
+    vector<pt> cur = r.intersect(left,right);
+    if (!cur.empty()) {
+      pt lb = right;
+      pt ub = left;
+      for (const pt& it : cur) {
+        if (abs(left-it) < abs(left-lb)) lb = it;
+        if (abs(left-it) > abs(left-ub)) ub = it;
+      }
+      line.push_back(pair<ld,int>(abs(left-lb),-1));
+      line.push_back(pair<ld,int>(abs(left-ub),1));
+    }
+  }
+  line.push_back(pair<ld,int>(-1e42,1));
+  sort(line.begin(), line.end());
 
-	int res = 0;
-	int n = line.size();
-	int j = 0;
-	for (int i=0; i<n; i++) {
-		if (line[i].second == -1) {
-			while (j<i && line[i].first-line[j].first > len) {
-				j++;
-			}
-			res = max(res, (i-j+1)/2);
-		}
-	}
-	return res;
+  int res = 0;
+  int n = line.size();
+  int j = 0;
+  for (int i=0; i<n; i++) {
+    if (line[i].second == -1) {
+      while (j<i && line[i].first-line[j].first > len) {
+        j++;
+      }
+      res = max(res, (i-j+1)/2);
+    }
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, len;
-	cin >> n >> len;
+  int n, len;
+  cin >> n >> len;
 
-	int x1, y1, x2, y2;
-	vector<pt> p;
-	for (int i=0; i<n; i++) {
-		cin >> x1 >> y1 >> x2 >> y2;
-		rect.push_back(Rectangle(x1,y1,x2,y2));
-		p.push_back(pt(x1,y1));
-		p.push_back(pt(x1,y2));
-		p.push_back(pt(x2,y2));
-		p.push_back(pt(x2,y1));
-	}
+  int x1, y1, x2, y2;
+  vector<pt> p;
+  for (int i=0; i<n; i++) {
+    cin >> x1 >> y1 >> x2 >> y2;
+    rect.push_back(Rectangle(x1,y1,x2,y2));
+    p.push_back(pt(x1,y1));
+    p.push_back(pt(x1,y2));
+    p.push_back(pt(x2,y2));
+    p.push_back(pt(x2,y1));
+  }
 
-	vector<pt> ang;
-	for (int j=0; j<MAGIC; j++) {
-		ang.push_back(polar(1,PI*j/MAGIC));
-	}
+  vector<pt> ang;
+  for (int j=0; j<MAGIC; j++) {
+    ang.push_back(polar(1,PI*j/MAGIC));
+  }
 
-	n = p.size();
-	int ans = 0;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<i; j++) {
-			ans = max(ans, solve(p[i],p[j],len));
-		}
-	}
-	for (int i=0; i<n; i++) {
-		for (const pt& it : ang) {
-			ans = max(ans, solve(p[i],p[i]+it,len));
-		}
-	}
-	cout << ans+1 << nl;
+  n = p.size();
+  int ans = 0;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<i; j++) {
+      ans = max(ans, solve(p[i],p[j],len));
+    }
+  }
+  for (int i=0; i<n; i++) {
+    for (const pt& it : ang) {
+      ans = max(ans, solve(p[i],p[i]+it,len));
+    }
+  }
+  cout << ans+1 << nl;
 
-	return 0;
+  return 0;
 }

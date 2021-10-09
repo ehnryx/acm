@@ -28,62 +28,62 @@ vector<string> ans[N];
 unordered_set<int> have[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	unordered_map<string,int> idx;
-	vector<string> name;
-	int id = 0;
-	for(int i=0; i<n; i++) {
-		int k;
-		cin >> k;
-		for(int j=0; j<k; j++) {
-			string s;
-			cin >> s;
-			if(!idx.count(s)) {
-				idx[s] = id++;
-				name.push_back(s);
-			}
-			pref[i].push(idx[s]);
-			have[i].insert(idx[s]);
-		}
-	}
-	int k;
-	cin >> k;
-	for(int i=0; i<k; i++) {
-		string s;
-		cin >> s;
-		if(!idx.count(s)) {
-			idx[s] = id++;
-			name.push_back(s);
-		}
-		for(int j=0; j<n; j++) {
-			if(!have[j].count(idx[s])) {
-				pref[j].push(idx[s]);
-			}
-		}
-	}
+  int n, m;
+  cin >> n >> m;
+  unordered_map<string,int> idx;
+  vector<string> name;
+  int id = 0;
+  for(int i=0; i<n; i++) {
+    int k;
+    cin >> k;
+    for(int j=0; j<k; j++) {
+      string s;
+      cin >> s;
+      if(!idx.count(s)) {
+        idx[s] = id++;
+        name.push_back(s);
+      }
+      pref[i].push(idx[s]);
+      have[i].insert(idx[s]);
+    }
+  }
+  int k;
+  cin >> k;
+  for(int i=0; i<k; i++) {
+    string s;
+    cin >> s;
+    if(!idx.count(s)) {
+      idx[s] = id++;
+      name.push_back(s);
+    }
+    for(int j=0; j<n; j++) {
+      if(!have[j].count(idx[s])) {
+        pref[j].push(idx[s]);
+      }
+    }
+  }
 
-	unordered_set<int> vis;
-	for(int t=0; t<m; t++) {
-		for(int i=0; i<n; i++) {
-			while(vis.count(pref[i].front())) {
-				pref[i].pop();
-			}
-			vis.insert(pref[i].front());
-			ans[i].push_back(name[pref[i].front()]);
-			pref[i].pop();
-		}
-	}
+  unordered_set<int> vis;
+  for(int t=0; t<m; t++) {
+    for(int i=0; i<n; i++) {
+      while(vis.count(pref[i].front())) {
+        pref[i].pop();
+      }
+      vis.insert(pref[i].front());
+      ans[i].push_back(name[pref[i].front()]);
+      pref[i].pop();
+    }
+  }
 
-	for(int i=0; i<n; i++) {
-		for(const string& s : ans[i]) {
-			cout << s << " ";
-		}
-		cout << nl;
-	}
+  for(int i=0; i<n; i++) {
+    for(const string& s : ans[i]) {
+      cout << s << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

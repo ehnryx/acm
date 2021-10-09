@@ -32,32 +32,32 @@ const int N = 1e6+1;
 int a[N], b[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int ag = 0;
-	For(i,n) {
-		cin >> a[i];
-		if (i>0 && a[i]!=a[i-1]) {
-			ag = __gcd(ag, abs(a[i]-a[i-1]));
-		}
-	}
+  int ag = 0;
+  For(i,n) {
+    cin >> a[i];
+    if (i>0 && a[i]!=a[i-1]) {
+      ag = __gcd(ag, abs(a[i]-a[i-1]));
+    }
+  }
 
-	int bg = 0;
-	For(i,m) {
-		cin >> b[i];
-		bg = __gcd(bg, b[i]);
-	}
+  int bg = 0;
+  For(i,m) {
+    cin >> b[i];
+    bg = __gcd(bg, b[i]);
+  }
 
-	if (ag%bg == 0) {
-		cout << "Yes" << nl;
-	} else {
-		cout << "No" << nl;
-	}
+  if (ag%bg == 0) {
+    cout << "Yes" << nl;
+  } else {
+    cout << "No" << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -26,62 +26,62 @@ vector<int> v = { 4, 8, 15, 16, 23, 42 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int m12, m34, m15, m36;
+  int m12, m34, m15, m36;
 
-	cout << "? " << 1 << " " << 2 << endl;
-	cin >> m12;
-	cout << "? " << 3 << " " << 4 << endl;
-	cin >> m34;
-	cout << "? " << 1 << " " << 5 << endl;
-	cin >> m15;
-	cout << "? " << 3 << " " << 6 << endl;
-	cin >> m36;
+  cout << "? " << 1 << " " << 2 << endl;
+  cin >> m12;
+  cout << "? " << 3 << " " << 4 << endl;
+  cin >> m34;
+  cout << "? " << 1 << " " << 5 << endl;
+  cin >> m15;
+  cout << "? " << 3 << " " << 6 << endl;
+  cin >> m36;
 
-	const int n = 6;
-	int ans[n+1];
-	for (int i=0; i<n; i++) {
-		int two, five;
-		two = five = 0;
-		for (int j=0; j<n; j++) {
-			if (i==j) continue;
-			if (v[i]*v[j] == m12) two = v[j];
-			if (v[i]*v[j] == m15) five = v[j];
-		}
-		if (two && five) {
-			ans[1] = v[i];
-			ans[2] = two;
-			ans[5] = five;
-		}
-	}
+  const int n = 6;
+  int ans[n+1];
+  for (int i=0; i<n; i++) {
+    int two, five;
+    two = five = 0;
+    for (int j=0; j<n; j++) {
+      if (i==j) continue;
+      if (v[i]*v[j] == m12) two = v[j];
+      if (v[i]*v[j] == m15) five = v[j];
+    }
+    if (two && five) {
+      ans[1] = v[i];
+      ans[2] = two;
+      ans[5] = five;
+    }
+  }
 
-	for (int i=0; i<n; i++) {
-		int four, six;
-		four = six = 0;
-		for (int j=0; j<n; j++) {
-			if (i==j) continue;
-			if (v[i]*v[j] == m34) four = v[j];
-			if (v[i]*v[j] == m36) six = v[j];
-		}
-		if (four && six) {
-			ans[3] = v[i];
-			ans[4] = four;
-			ans[6] = six;
-		}
-	}
+  for (int i=0; i<n; i++) {
+    int four, six;
+    four = six = 0;
+    for (int j=0; j<n; j++) {
+      if (i==j) continue;
+      if (v[i]*v[j] == m34) four = v[j];
+      if (v[i]*v[j] == m36) six = v[j];
+    }
+    if (four && six) {
+      ans[3] = v[i];
+      ans[4] = four;
+      ans[6] = six;
+    }
+  }
 
-	cout << "!";
-	for (int i=1; i<=n; i++) {
-		cout << " " << ans[i];
-	}
-	cout << endl;
+  cout << "!";
+  for (int i=1; i<=n; i++) {
+    cout << " " << ans[i];
+  }
+  cout << endl;
 
-	return 0;
+  return 0;
 }

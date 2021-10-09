@@ -27,37 +27,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m,a,c,x0;
-	cin>>n>>m>>a>>c>>x0;
-	int x[n+1];
-	x[0] = x0;
-	for(int i=1;i<=n;i++) {
-		x[i] = ((ll)a*x[i-1]+c) % m;
-	}
+  int n,m,a,c,x0;
+  cin>>n>>m>>a>>c>>x0;
+  int x[n+1];
+  x[0] = x0;
+  for(int i=1;i<=n;i++) {
+    x[i] = ((ll)a*x[i-1]+c) % m;
+  }
 
-	int ans = 0;
-	for(int i=1;i<=n;i++) {
-		int low = 1;
-		int high = n;
-		bool ok = false;
-		while(low<=high) {
-			int mid = (low+high)/2;
-			if(x[mid] == x[i]) {
-				ok = true;
-				break;
-			}
-			if(x[i]<x[mid]) {
-				high = mid-1;
-			} else {
-				low = mid+1;
-			}
-		}
-		ans += ok;
-	}
-	cout<<ans<<nl;
+  int ans = 0;
+  for(int i=1;i<=n;i++) {
+    int low = 1;
+    int high = n;
+    bool ok = false;
+    while(low<=high) {
+      int mid = (low+high)/2;
+      if(x[mid] == x[i]) {
+        ok = true;
+        break;
+      }
+      if(x[i]<x[mid]) {
+        high = mid-1;
+      } else {
+        low = mid+1;
+      }
+    }
+    ans += ok;
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

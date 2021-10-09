@@ -30,66 +30,66 @@ int in[N][N], d[N][N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	while (T--) {
-		int n;
-		cin >> n;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		For(i,n) {
-			For(j,n) {
-				cin >> in[i][j];
-				d[i][j] = (in[i][j] == -1 ? INF : in[i][j]);
-			}
-		}
+    For(i,n) {
+      For(j,n) {
+        cin >> in[i][j];
+        d[i][j] = (in[i][j] == -1 ? INF : in[i][j]);
+      }
+    }
 
-		For(i,n) {
-			if (d[i][i] == INF) d[i][i] = 0;
-			if (d[i][i] != 0) goto bad;
-			For(j,i) {
-				if (d[i][j] == INF) d[i][j] = d[j][i];
-				if (d[j][i] == INF) d[j][i] = d[i][j];
-				if (d[i][j] != d[j][i]) goto bad;
-			}
-		}
+    For(i,n) {
+      if (d[i][i] == INF) d[i][i] = 0;
+      if (d[i][i] != 0) goto bad;
+      For(j,i) {
+        if (d[i][j] == INF) d[i][j] = d[j][i];
+        if (d[j][i] == INF) d[j][i] = d[i][j];
+        if (d[i][j] != d[j][i]) goto bad;
+      }
+    }
 
-		For(k,n) {
-			For(i,n) {
-				For(j,n) {
-					if (in[i][j] == -1) d[i][j] = min(d[i][j], d[i][k]+d[k][j]);
-				}
-			}
-		}
+    For(k,n) {
+      For(i,n) {
+        For(j,n) {
+          if (in[i][j] == -1) d[i][j] = min(d[i][j], d[i][k]+d[k][j]);
+        }
+      }
+    }
 
-		For(i,n) {
-			For(j,n) {
-				For(k,n) {
-					if (d[i][j] > d[i][k]+d[k][j]) goto bad;
-				}
-			}
-		}
+    For(i,n) {
+      For(j,n) {
+        For(k,n) {
+          if (d[i][j] > d[i][k]+d[k][j]) goto bad;
+        }
+      }
+    }
 
-		cout << "YES" << nl;
-		For(i,n) {
-			For(j,n) {
-				cout << (d[i][j] == INF ? INF/2 : d[i][j]) << " ";
-			}
-			cout << nl;
-		}
-		continue;
+    cout << "YES" << nl;
+    For(i,n) {
+      For(j,n) {
+        cout << (d[i][j] == INF ? INF/2 : d[i][j]) << " ";
+      }
+      cout << nl;
+    }
+    continue;
 
-		bad:
-		cout << "NO" << nl;
-	}
+    bad:
+    cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

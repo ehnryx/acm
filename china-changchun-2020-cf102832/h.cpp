@@ -33,8 +33,8 @@ void init(int n=N) {
 void clear_flow(int n=N) {
   for(int i=0; i<n; i++) for(auto& e : adj[i]) e.f = 0; }
 void add_edge(int a, int b, int c=1) {
-	adj[a].push_back({b,sz[b]++,0,c});
-	adj[b].push_back({a,sz[a]++,0,0}); }
+  adj[a].push_back({b,sz[b]++,0,c});
+  adj[b].push_back({a,sz[a]++,0,0}); }
 int L[N], cur[N], Q[N];
 bool bfs(int s, int t) {
   memset(L, INF, sizeof L); memset(cur, 0, sizeof cur);

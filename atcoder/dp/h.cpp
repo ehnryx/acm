@@ -33,29 +33,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	string grid[n];
-	For(i,n) {
-		cin >> grid[i];
-	}
+  int n, m;
+  cin >> n >> m;
+  string grid[n];
+  For(i,n) {
+    cin >> grid[i];
+  }
 
-	int dp[n+1][m+1];
-	memset(dp, 0, sizeof dp);
-	For(i,n) {
-		For(j,m) {
-			if (i == 0 && j == 0) {
-				dp[i+1][j+1] = 1;
-			} else if (grid[i][j] == '.') {
-				dp[i+1][j+1] = (dp[i][j+1] + dp[i+1][j]) % MOD;
-			}
-		}
-	}
-	cout << dp[n][m] << nl;
+  int dp[n+1][m+1];
+  memset(dp, 0, sizeof dp);
+  For(i,n) {
+    For(j,m) {
+      if (i == 0 && j == 0) {
+        dp[i+1][j+1] = 1;
+      } else if (grid[i][j] == '.') {
+        dp[i+1][j+1] = (dp[i][j+1] + dp[i+1][j]) % MOD;
+      }
+    }
+  }
+  cout << dp[n][m] << nl;
 
-	return 0;
+  return 0;
 }

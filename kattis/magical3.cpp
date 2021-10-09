@@ -24,27 +24,27 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(ll n; cin >> n && n; ) {
-		if(n == 3) {
-			cout << 4 << nl;
-		} else {
-			ll res = n;
-			for(ll j=1; j*j<=n-3; j++) {
-				if((n-3) % j == 0) {
-					if(j > 3) res = min(res, j);
-					if((n-3)/j > 3) res = min(res, (n-3)/j);
-				}
-			}
-			if(res == n) {
-				cout << "No such base" << nl;
-			} else {
-				cout << res << nl;
-			}
-		}
-	}
+  for(ll n; cin >> n && n; ) {
+    if(n == 3) {
+      cout << 4 << nl;
+    } else {
+      ll res = n;
+      for(ll j=1; j*j<=n-3; j++) {
+        if((n-3) % j == 0) {
+          if(j > 3) res = min(res, j);
+          if((n-3)/j > 3) res = min(res, (n-3)/j);
+        }
+      }
+      if(res == n) {
+        cout << "No such base" << nl;
+      } else {
+        cout << res << nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

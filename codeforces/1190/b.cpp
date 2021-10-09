@@ -29,54 +29,54 @@ const int N = 1e5+1;
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	For(i,n) {
-		cin >> a[i];
-	}
-	sort(a, a+n);
+  For(i,n) {
+    cin >> a[i];
+  }
+  sort(a, a+n);
 
-	if (a[n-1] == 0) {
-		cout << Second << nl;
-		return 0;
-	}
+  if (a[n-1] == 0) {
+    cout << Second << nl;
+    return 0;
+  }
 
-	if (n == 1) {
-		if (a[0]%2 == 1) {
-			cout << First << nl;
-		} else {
-			cout << Second << nl;
-		}
-		return 0;
-	}
+  if (n == 1) {
+    if (a[0]%2 == 1) {
+      cout << First << nl;
+    } else {
+      cout << Second << nl;
+    }
+    return 0;
+  }
 
-	bool bad = false;
-	int cnt = 0;
-	For(i,n-1) {
-		if (a[i] == a[i+1]) {
-			if (i>0 && a[i-1] == a[i]-1) bad = true;
-			if (a[i] == 0) bad = true;
-			cnt++;
-		}
-	}
-	if (cnt>1) bad = true;
+  bool bad = false;
+  int cnt = 0;
+  For(i,n-1) {
+    if (a[i] == a[i+1]) {
+      if (i>0 && a[i-1] == a[i]-1) bad = true;
+      if (a[i] == 0) bad = true;
+      cnt++;
+    }
+  }
+  if (cnt>1) bad = true;
 
-	ll par = 0;
-	For(i,n) {
-		par += a[i]-i;
-	}
-	if (par%2 == 0) bad = true;
+  ll par = 0;
+  For(i,n) {
+    par += a[i]-i;
+  }
+  if (par%2 == 0) bad = true;
 
-	if (bad) {
-		cout << Second << nl;
-	} else {
-		cout << First << nl;
-	}
+  if (bad) {
+    cout << Second << nl;
+  } else {
+    cout << First << nl;
+  }
 
-	return 0;
+  return 0;
 }

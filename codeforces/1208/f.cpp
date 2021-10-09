@@ -35,50 +35,50 @@ const int M = (1<<L)-1;
 
 int r1[1<<L], r2[1<<L];
 void update(int v, int i) {
-	if(i>r1[v]) {
-		r2[v]=r1[v];
-		r1[v]=i;
-	} else if(i>r2[v]) {
-		r2[v]=i;
-	}
+  if(i>r1[v]) {
+    r2[v]=r1[v];
+    r1[v]=i;
+  } else if(i>r2[v]) {
+    r2[v]=i;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n+1];
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-		update(M^a[i],i);
-	}
+  int n;
+  cin>>n;
+  int a[n+1];
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+    update(M^a[i],i);
+  }
 
-	for(int j=0;j<L;j++) {
-		for(int bm=0;bm<1<<L;bm++) {
-			if(bm&1<<j) {
-				update(bm,r1[bm^1<<j]);
-				update(bm,r2[bm^1<<j]);
-			}
-		}
-	}
+  for(int j=0;j<L;j++) {
+    for(int bm=0;bm<1<<L;bm++) {
+      if(bm&1<<j) {
+        update(bm,r1[bm^1<<j]);
+        update(bm,r2[bm^1<<j]);
+      }
+    }
+  }
 
-	int ans = 0;
-	for(int i=1;i<=n-2;i++) {
-		int b = M^a[i];
-		int cur = 0;
-		for(int j=L-1;j>=0;j--) {
-			if(b&1<<j) {
-				if(r2[M^(cur|1<<j)]>i) {
-					cur |= 1<<j;
-				}
-			}
-		}
-		ans = max(ans,a[i]|cur);
-	}
-	cout<<ans<<nl;
+  int ans = 0;
+  for(int i=1;i<=n-2;i++) {
+    int b = M^a[i];
+    int cur = 0;
+    for(int j=L-1;j>=0;j--) {
+      if(b&1<<j) {
+        if(r2[M^(cur|1<<j)]>i) {
+          cur |= 1<<j;
+        }
+      }
+    }
+    ans = max(ans,a[i]|cur);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

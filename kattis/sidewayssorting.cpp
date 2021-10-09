@@ -25,41 +25,41 @@ const int N = 17;
 char g[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int n, m; cin >> n >> m; ) {
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<m; j++) {
-				cin >> g[j][i];
-			}
-		}
-		for(int i=0; i<m; i++) {
-			for(int j=i-1; j>=0; j--) {
-				bool s = false;
-				for(int k=0; k<n; k++) {
-					if(tolower(g[j+1][k]) < tolower(g[j][k])) {
-						s = true;
-						break;
-					} else if(tolower(g[j+1][k]) > tolower(g[j][k])) {
-						break;
-					}
-				}
-				if(s) {
-					swap(g[j], g[j+1]);
-				} else {
-					break;
-				}
-			}
-		}
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<m; j++) {
-				cout << g[j][i];
-			}
-			cout << nl;
-		}
-		cout << nl;
-	}
+  for(int n, m; cin >> n >> m; ) {
+    for(int i=0; i<n; i++) {
+      for(int j=0; j<m; j++) {
+        cin >> g[j][i];
+      }
+    }
+    for(int i=0; i<m; i++) {
+      for(int j=i-1; j>=0; j--) {
+        bool s = false;
+        for(int k=0; k<n; k++) {
+          if(tolower(g[j+1][k]) < tolower(g[j][k])) {
+            s = true;
+            break;
+          } else if(tolower(g[j+1][k]) > tolower(g[j][k])) {
+            break;
+          }
+        }
+        if(s) {
+          swap(g[j], g[j+1]);
+        } else {
+          break;
+        }
+      }
+    }
+    for(int i=0; i<n; i++) {
+      for(int j=0; j<m; j++) {
+        cout << g[j][i];
+      }
+      cout << nl;
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

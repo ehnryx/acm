@@ -19,7 +19,7 @@ struct Frac {
         }
         else {
             ll g = __gcd(x,y);
-			if (g == 0) for(;;);
+      if (g == 0) for(;;);
             n = x/g, d = y/g;
             if (d < 0) n = -n, d = -d;
         }

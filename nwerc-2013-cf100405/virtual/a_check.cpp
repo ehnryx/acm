@@ -19,33 +19,33 @@ const int N = 20;
 int adj[N][N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(adj, INF, sizeof adj);
-	for (int i = 0; i < N; i++) {
-		adj[i][i] = 0;
-	}
+  memset(adj, INF, sizeof adj);
+  for (int i = 0; i < N; i++) {
+    adj[i][i] = 0;
+  }
 
-	int n = 0;
-	int a, b, c;
-	while (cin >> a >> b >> c) {
-		n = max(n, max(a,b));
-		adj[a][b] = adj[b][a] = c;
-	}
+  int n = 0;
+  int a, b, c;
+  while (cin >> a >> b >> c) {
+    n = max(n, max(a,b));
+    adj[a][b] = adj[b][a] = c;
+  }
 
-	for (int k = 1; k <= n; k++)
-		for (int i = 1; i <= n; i++) 
-			for (int j = 1; j <= n; j++)
-				adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
+  for (int k = 1; k <= n; k++)
+    for (int i = 1; i <= n; i++) 
+      for (int j = 1; j <= n; j++)
+        adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
 
-	for (int i = 1; i <= n; i++) {
-		for (int j=1; j<=n; j++) {
-			cout << adj[i][j] << " ";
-		}
-		cout << nl;
-	}
+  for (int i = 1; i <= n; i++) {
+    for (int j=1; j<=n; j++) {
+      cout << adj[i][j] << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

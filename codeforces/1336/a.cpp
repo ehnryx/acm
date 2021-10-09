@@ -30,57 +30,57 @@ int val[N];
 int deg[N];
 
 void build(int u, int p) {
-	depth[u] = depth[p] + 1;
-	par[u] = p;
-	for(int v : adj[u]) {
-		if(v == p) continue;
-		build(v, u);
-		deg[v]--;
-	}
+  depth[u] = depth[p] + 1;
+  par[u] = p;
+  for(int v : adj[u]) {
+    if(v == p) continue;
+    build(v, u);
+    deg[v]--;
+  }
 }
 
 // TODO
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	for(int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-		deg[a]++;
-		deg[b]++;
-	}
-	depth[0] = -1;
-	build(1, 0);
+  int n, k;
+  cin >> n >> k;
+  for(int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+    deg[a]++;
+    deg[b]++;
+  }
+  depth[0] = -1;
+  build(1, 0);
 
-	priority_queue<pair<int,int>> dijk;
-	for(int i=1; i<=n; i++) {
-		val[i] = depth[i];
-		if(deg[i] == 0) {
-			dijk.push(make_pair(val[i], i));
-		}
-	}
-	ll ans = 0;
-	while(!dijk.empty() && k > 0) {
-		auto [d, u] = dijk.top();
-		dijk.pop();
-		if(deg[u] || d != val[u]) continue;
-		ans += d;
-		--k;
-		sub[par[u]] += sub[u] + 1;
-		if(depth[par[u]] - sub[par[u]] < val[par[u]]) {
-			val[par[u]] = depth[par[u]] - sub[par[u]];
-			dijk.push(make_pair(val[par[u]], par[u]));
-		}
-		deg[par[u]]--;
-	}
-	cout << ans << nl;
+  priority_queue<pair<int,int>> dijk;
+  for(int i=1; i<=n; i++) {
+    val[i] = depth[i];
+    if(deg[i] == 0) {
+      dijk.push(make_pair(val[i], i));
+    }
+  }
+  ll ans = 0;
+  while(!dijk.empty() && k > 0) {
+    auto [d, u] = dijk.top();
+    dijk.pop();
+    if(deg[u] || d != val[u]) continue;
+    ans += d;
+    --k;
+    sub[par[u]] += sub[u] + 1;
+    if(depth[par[u]] - sub[par[u]] < val[par[u]]) {
+      val[par[u]] = depth[par[u]] - sub[par[u]];
+      dijk.push(make_pair(val[par[u]], par[u]));
+    }
+    deg[par[u]]--;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

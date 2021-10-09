@@ -38,31 +38,31 @@ struct SegTree { int n; int *s, *t; // EXAMPLE
   SegTree(int len) { n = 1<<(32-__builtin_clz(len));
     s = new int[2*n]; fill(s, s+2*n, -INF);
     t = new int[2*n]; fill(t, t+2*n, INF);
-	}
-	void insert(int x, int v) {
-		x += n;
-		s[x] = t[x] = v;
-		for (x/=2; x>0; x/=2) {
-			s[x] = max(s[2*x], s[2*x+1]);
-			t[x] = min(t[2*x], t[2*x+1]);
-		}
-	}
-	int qmin(int l, int r) {
-		int res = INF;
-		for (l+=n,r+=n+1; l<r; l/=2,r/=2) {
-			if (l&1) res = min(res, t[l++]);
-			if (r&1) res = min(res, t[--r]);
-		}
-		return res;
-	}
-	int qmax(int l, int r) {
-		int res = -INF;
-		for (l+=n,r+=n+1; l<r; l/=2,r/=2) {
-			if (l&1) res = max(res, s[l++]);
-			if (r&1) res = max(res, s[--r]);
-		}
-		return res;
-	}
+  }
+  void insert(int x, int v) {
+    x += n;
+    s[x] = t[x] = v;
+    for (x/=2; x>0; x/=2) {
+      s[x] = max(s[2*x], s[2*x+1]);
+      t[x] = min(t[2*x], t[2*x+1]);
+    }
+  }
+  int qmin(int l, int r) {
+    int res = INF;
+    for (l+=n,r+=n+1; l<r; l/=2,r/=2) {
+      if (l&1) res = min(res, t[l++]);
+      if (r&1) res = min(res, t[--r]);
+    }
+    return res;
+  }
+  int qmax(int l, int r) {
+    int res = -INF;
+    for (l+=n,r+=n+1; l<r; l/=2,r/=2) {
+      if (l&1) res = max(res, s[l++]);
+      if (r&1) res = max(res, s[--r]);
+    }
+    return res;
+  }
 };
 
 namespace HLD { SegTree* segt[N];
@@ -76,60 +76,60 @@ namespace HLD { SegTree* segt[N];
   void build(int r) { d[0] = dn = cn = 0; dfs(r,0); hld(r,0);
     for (int i=0; i<cn; i++) segt[i] = new SegTree(sz[i]); }
   int query_path(int a, int b, int t) {
-		if (a==b) return false;
-		int u = a, v = b;
-		bool ok = true;
-		int s = 0;
+    if (a==b) return false;
+    int u = a, v = b;
+    bool ok = true;
+    int s = 0;
     while (ch[a] != ch[b]) { if (d[root[ch[a]]] < d[root[ch[b]]]) { swap(a,b); s^=1; }
-			if (s) ok &= segt[ch[a]]->qmin(0, pos[a]);
-			else ok &= !segt[ch[a]]->qmax(0, pos[a]);
-			a = par[root[ch[a]]]; }
+      if (s) ok &= segt[ch[a]]->qmin(0, pos[a]);
+      else ok &= !segt[ch[a]]->qmax(0, pos[a]);
+      a = par[root[ch[a]]]; }
     if (pos[a] != pos[b]) { if (d[a] < d[b]) { swap(a,b); s^=1; }
-			if (s) ok &= segt[ch[a]]->qmin(pos[b]+1, pos[a]);
-			else ok &= !segt[ch[a]]->qmax(pos[b]+1, pos[a]);
-		}
-		ok &= !!b;
-		if (t==1) {
-			ok &= (b == v);
-		} else {
-			ok &= (b != v);
-		}
-		return ok;
-	}
-	void insert_node(int a, int v) {
-		segt[ch[a]]->insert(pos[a], v);
-	}
+      if (s) ok &= segt[ch[a]]->qmin(pos[b]+1, pos[a]);
+      else ok &= !segt[ch[a]]->qmax(pos[b]+1, pos[a]);
+    }
+    ok &= !!b;
+    if (t==1) {
+      ok &= (b == v);
+    } else {
+      ok &= (b != v);
+    }
+    return ok;
+  }
+  void insert_node(int a, int v) {
+    segt[ch[a]]->insert(pos[a], v);
+  }
 } // returns lca
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	FOR(i,1,n) {
-		cin >> p[i] >> ty[i];
-		if (p[i]==-1) p[i]=0;
-		adj[p[i]].push_back(i);
-	}
-	HLD::build(0);
+  int n;
+  cin >> n;
+  FOR(i,1,n) {
+    cin >> p[i] >> ty[i];
+    if (p[i]==-1) p[i]=0;
+    adj[p[i]].push_back(i);
+  }
+  HLD::build(0);
 
-	FOR(i,1,n) {
-		HLD::insert_node(i,ty[i]);
-	}
+  FOR(i,1,n) {
+    HLD::insert_node(i,ty[i]);
+  }
 
-	int q;
-	cin >> q;
-	while (q--) {
-		int t, u, v;
-		cin >> t >> u >> v;
-		if (t==1) {
-			cout << (HLD::query_path(v,u,t) ? "YES" : "NO") << nl;
-		} else {
-			cout << (HLD::query_path(u,v,t) ? "YES" : "NO") << nl;
-		}
-	}
+  int q;
+  cin >> q;
+  while (q--) {
+    int t, u, v;
+    cin >> t >> u >> v;
+    if (t==1) {
+      cout << (HLD::query_path(v,u,t) ? "YES" : "NO") << nl;
+    } else {
+      cout << (HLD::query_path(u,v,t) ? "YES" : "NO") << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

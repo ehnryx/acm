@@ -25,23 +25,23 @@ const int N = 2e5 + 1;
 int wz[N], pre[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, p, d;
-	cin >> n >> p >> d;
-	string s;
-	cin >> s;
-	s += s;
-	transform(s.begin(), s.end(), wz, [] (char c) {
-		return (c == 'Z' ? 1 : 0);
-	});
-	partial_sum(wz, wz+2*n, pre+1);
-	int ans = 0;
-	for(int i=n+1; i<=2*n; i++) {
-		ans += (pre[i] - pre[i-p] < d);
-	}
-	cout << ans << nl;
+  int n, p, d;
+  cin >> n >> p >> d;
+  string s;
+  cin >> s;
+  s += s;
+  transform(s.begin(), s.end(), wz, [] (char c) {
+    return (c == 'Z' ? 1 : 0);
+  });
+  partial_sum(wz, wz+2*n, pre+1);
+  int ans = 0;
+  for(int i=n+1; i<=2*n; i++) {
+    ans += (pre[i] - pre[i-p] < d);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -26,52 +26,52 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	ll k, r;
-	cin >> k >> r;
+  ll k, r;
+  cin >> k >> r;
 
-	int len[n+1];
-	for (int i=1; i<=n; i++) {
-		cin >> len[i];
-	}
+  int len[n+1];
+  for (int i=1; i<=n; i++) {
+    cin >> len[i];
+  }
 
-	ll c[n+1], s[n+1];
-	for (int i=1; i<n; i++) {
-		cin >> s[i] >> c[i];
-	}
+  ll c[n+1], s[n+1];
+  for (int i=1; i<n; i++) {
+    cin >> s[i] >> c[i];
+  }
 
-	ll dp[2*n+1][m+1];
-	memset(dp, INF, sizeof dp);
-	dp[1][1] = 0;
-	for (int i=1; i<=n; i++) {
-		// straight
-		for (int j=1; j<=m; j++) {
-			for (int t=1; t<=m; t++) {
-				if (abs(j-t)*k <= len[i]) {
-					dp[2*i][t] = min(dp[2*i][t], dp[2*i-1][j] + len[i] + r*abs(j-t));
-				}
-			}
-		}
+  ll dp[2*n+1][m+1];
+  memset(dp, INF, sizeof dp);
+  dp[1][1] = 0;
+  for (int i=1; i<=n; i++) {
+    // straight
+    for (int j=1; j<=m; j++) {
+      for (int t=1; t<=m; t++) {
+        if (abs(j-t)*k <= len[i]) {
+          dp[2*i][t] = min(dp[2*i][t], dp[2*i-1][j] + len[i] + r*abs(j-t));
+        }
+      }
+    }
 
-		// curve
-		if (i<n) {
-			for (int j=1; j<=m; j++) {
-				dp[2*i+1][j] = min(dp[2*i+1][j], dp[2*i][j] + s[i]+c[i]*j);
-			}
-		}
-	}
+    // curve
+    if (i<n) {
+      for (int j=1; j<=m; j++) {
+        dp[2*i+1][j] = min(dp[2*i+1][j], dp[2*i][j] + s[i]+c[i]*j);
+      }
+    }
+  }
 
-	cout << dp[2*n][1] << nl;
+  cout << dp[2*n][1] << nl;
 
-	return 0;
+  return 0;
 }

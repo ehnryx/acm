@@ -25,31 +25,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	string s,t;
-	cin>>s>>t;
-	int cs = 0, ct = 0;
-	for(int i=0;i<n;i++) {
-		if(s[i]!=s[(i+1)%n]) cs++;
-		if(t[i]!=t[(i+1)%n]) ct++;
-	}
+  int n;
+  cin>>n;
+  string s,t;
+  cin>>s>>t;
+  int cs = 0, ct = 0;
+  for(int i=0;i<n;i++) {
+    if(s[i]!=s[(i+1)%n]) cs++;
+    if(t[i]!=t[(i+1)%n]) ct++;
+  }
 
-	if(ct<cs) {
-		cout<<"yes"<<nl;
-	} else if(ct==cs && cs!=n) {
-		if(cs>1 || s[0]==t[0]) {
-			cout<<"yes"<<nl;
-		} else {
-			cout<<"no"<<nl;
-		}
-	} else {
-		cout<<"no"<<nl;
-	}
+  if(ct<cs) {
+    cout<<"yes"<<nl;
+  } else if(ct==cs && cs!=n) {
+    if(cs>1 || s[0]==t[0]) {
+      cout<<"yes"<<nl;
+    } else {
+      cout<<"no"<<nl;
+    }
+  } else {
+    cout<<"no"<<nl;
+  }
 
-	return 0;
+  return 0;
 }

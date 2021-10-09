@@ -19,33 +19,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	string s, t;
-	cin >> s;
-	cin >> t;
+  string s, t;
+  cin >> s;
+  cin >> t;
 
-	int i = s.find('*');
-	if (i == -1) {
-		cout << (s == t ? "YES" : "NO") << nl;
-	}
-	else {
-		if (n-1 > m) {
-			cout << "NO" << nl;
-		} else {
-			int right = n-(i+1);
-			cout << (s.substr(0,i) == t.substr(0,i) && s.substr(i+1,right) == t.substr(m-right, right) ? "YES" : "NO") << nl;
-		}
-	}
+  int i = s.find('*');
+  if (i == -1) {
+    cout << (s == t ? "YES" : "NO") << nl;
+  }
+  else {
+    if (n-1 > m) {
+      cout << "NO" << nl;
+    } else {
+      int right = n-(i+1);
+      cout << (s.substr(0,i) == t.substr(0,i) && s.substr(i+1,right) == t.substr(m-right, right) ? "YES" : "NO") << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

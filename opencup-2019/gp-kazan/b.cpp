@@ -35,22 +35,22 @@ int lc[N], rc[N];
 ll sum[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n; ll x;
-	cin>>n>>x;
-	ll a[n];
-	for (int i=0;i<n;i++) {
-		cin>>a[i];
-	}
-	sort(a,a+n);
+  int n; ll x;
+  cin>>n>>x;
+  ll a[n];
+  for (int i=0;i<n;i++) {
+    cin>>a[i];
+  }
+  sort(a,a+n);
 
-	ll dp[n];
-	for(int i=0;i<n;i++) {
-		dp[i] = query(a[i])+1;
-	}
+  ll dp[n];
+  for(int i=0;i<n;i++) {
+    dp[i] = query(a[i])+1;
+  }
 
-	return 0;
+  return 0;
 }

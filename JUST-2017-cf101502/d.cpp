@@ -19,36 +19,36 @@ const int N = 1e4+1;
 int dp[N][7];
 
 void init() {
-	memset(dp, -1, sizeof dp);
+  memset(dp, -1, sizeof dp);
 }
 
 int solve(int n, int f=1) {
-	if (n < 0) return INF;
-	if (n == 0) return 0;
-	if (dp[n][f] != -1) return dp[n][f];
+  if (n < 0) return INF;
+  if (n == 0) return 0;
+  if (dp[n][f] != -1) return dp[n][f];
 
-	int res = INF;
-	for (int i=1; i<=6; i++) {
-		if (i == f || i+f == 7) continue;
-		res = min(res, solve(n-i, i) + 1);
-	}
+  int res = INF;
+  for (int i=1; i<=6; i++) {
+    if (i == f || i+f == 7) continue;
+    res = min(res, solve(n-i, i) + 1);
+  }
 
-	return dp[n][f] = res;
+  return dp[n][f] = res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		cout << (solve(n)==INF ? -1 : solve(n)) << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    cout << (solve(n)==INF ? -1 : solve(n)) << nl;
+  }
 
-	return 0;
+  return 0;
 }

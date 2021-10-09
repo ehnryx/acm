@@ -24,17 +24,17 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m;
-		cin >> n >> m;
-		if(n%m == 0) cout << "YES" << nl;
-		else cout << "NO" << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    if(n%m == 0) cout << "YES" << nl;
+    else cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

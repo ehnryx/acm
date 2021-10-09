@@ -19,24 +19,24 @@ ld sqr(ld x) { return (ld)x*x; }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		ld a, b, c, x;
-		cin >> a >> b >> c >> x;
-		ld first = sqrt(sqr(b+c+c)+sqr(a));
-		ld dist = sqrt(sqr(a)+sqr(b));
-		ld second = dist*((ld)x/100) + sqrt(sqr(b*(1-(ld)x/100)+c+c)+sqr(a*(1-(ld)x/100)));
-		cout << first+second << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    ld a, b, c, x;
+    cin >> a >> b >> c >> x;
+    ld first = sqrt(sqr(b+c+c)+sqr(a));
+    ld dist = sqrt(sqr(a)+sqr(b));
+    ld second = dist*((ld)x/100) + sqrt(sqr(b*(1-(ld)x/100)+c+c)+sqr(a*(1-(ld)x/100)));
+    cout << first+second << nl;
+  }
 
-	return 0;
+  return 0;
 }

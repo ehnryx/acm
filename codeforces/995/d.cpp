@@ -19,28 +19,28 @@ const int N = 1<<18;
 int val[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, r;
-	cin >> n >> r;
-	int tot = 1<<n;
+  int n, r;
+  cin >> n >> r;
+  int tot = 1<<n;
 
-	ld expected = 0;
-	for (int i=0; i<tot; i++) {
-		cin >> val[i];
-		expected += (ld) val[i] / tot;
-	}
+  ld expected = 0;
+  for (int i=0; i<tot; i++) {
+    cin >> val[i];
+    expected += (ld) val[i] / tot;
+  }
 
-	cout << expected << nl;
-	while (r--) {
-		int id, x;
-		cin >> id >> x;
-		expected += (ld) (x - val[id]) / tot;
-		val[id] = x;
-		cout << expected << nl;
-	}
+  cout << expected << nl;
+  while (r--) {
+    int id, x;
+    cin >> id >> x;
+    expected += (ld) (x - val[id]) / tot;
+    val[id] = x;
+    cout << expected << nl;
+  }
 
-	return 0;
+  return 0;
 }

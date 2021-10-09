@@ -25,40 +25,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		string s, t;
-		cin >> s >> t;
+  int T;
+  cin >> T;
+  while(T--) {
+    string s, t;
+    cin >> s >> t;
 
-		int n = s.size();
-		int m = t.size();
-		if(m<n) {
-			cout << "NO" << nl;
-			continue;
-		}
+    int n = s.size();
+    int m = t.size();
+    if(m<n) {
+      cout << "NO" << nl;
+      continue;
+    }
 
-		vector<int> scnt(26,0);
-		for(char c:s) {
-			scnt[c-'a']++;
-		}
+    vector<int> scnt(26,0);
+    for(char c:s) {
+      scnt[c-'a']++;
+    }
 
-		vector<int> tcnt(26,0);
-		for(int i=0; i<n; i++) {
-			tcnt[t[i]-'a']++;
-		}
-		bool ok = (tcnt == scnt);
-		for(int i=n; i<m; i++) {
-			tcnt[t[i]-'a']++;
-			tcnt[t[i-n]-'a']--;
-			ok |= (tcnt == scnt);
-		}
-		if(ok) cout << "YES" << nl;
-		else cout << "NO" << nl;
-	}
+    vector<int> tcnt(26,0);
+    for(int i=0; i<n; i++) {
+      tcnt[t[i]-'a']++;
+    }
+    bool ok = (tcnt == scnt);
+    for(int i=n; i<m; i++) {
+      tcnt[t[i]-'a']++;
+      tcnt[t[i-n]-'a']--;
+      ok |= (tcnt == scnt);
+    }
+    if(ok) cout << "YES" << nl;
+    else cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -56,23 +56,23 @@ vector<int> kmp(const string& s, const string& t) {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
+  ios::sync_with_stdio(0);
 
-	for (string s,t; getline(cin,s),getline(cin,t); ) {
-		/* z value string matching
-		vector<int> z = zvalue(s+t);
-		for (int i=s.size(); i<z.size(); i++) {
-			if (z[i] >= s.size()) cout << i-s.size() << " ";
-		}
-		cout << nl;
-		*/
-		///* KMP string matching
-		for (int i : kmp(t,s)) {
-			cout << i << " ";
-		}
-		cout << nl;
-		//*/
-	}
+  for (string s,t; getline(cin,s),getline(cin,t); ) {
+    /* z value string matching
+    vector<int> z = zvalue(s+t);
+    for (int i=s.size(); i<z.size(); i++) {
+      if (z[i] >= s.size()) cout << i-s.size() << " ";
+    }
+    cout << nl;
+    */
+    ///* KMP string matching
+    for (int i : kmp(t,s)) {
+      cout << i << " ";
+    }
+    cout << nl;
+    //*/
+  }
 
-	return 0;
+  return 0;
 }

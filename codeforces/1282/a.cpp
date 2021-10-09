@@ -23,23 +23,23 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int intersect(int a, int b, int x, int y) {
-	int lb = max(a,x);
-	int rb = min(b,y);
-	return max(0, rb-lb);
+  int lb = max(a,x);
+  int rb = min(b,y);
+  return max(0, rb-lb);
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int a,b,c,r;
-		cin>>a>>b>>c>>r;
-		if(a>b) swap(a,b);
-		cout << b-a - intersect(a,b,c-r,c+r) << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int a,b,c,r;
+    cin>>a>>b>>c>>r;
+    if(a>b) swap(a,b);
+    cout << b-a - intersect(a,b,c-r,c+r) << nl;
+  }
 
-	return 0;
+  return 0;
 }

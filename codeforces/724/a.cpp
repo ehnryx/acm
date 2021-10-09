@@ -24,33 +24,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	unordered_map<string,int> ans;
-	ans["sunday"]=0;
-	ans["monday"]=1;
-	ans["tuesday"]=2;
-	ans["wednesday"]=3;
-	ans["thursday"]=4;
-	ans["friday"]=5;
-	ans["saturday"]=6;
+  unordered_map<string,int> ans;
+  ans["sunday"]=0;
+  ans["monday"]=1;
+  ans["tuesday"]=2;
+  ans["wednesday"]=3;
+  ans["thursday"]=4;
+  ans["friday"]=5;
+  ans["saturday"]=6;
 
-	map<int,int> good;
-	good[0] = good[3] = good[2] = true;
+  map<int,int> good;
+  good[0] = good[3] = good[2] = true;
 
-	string s, t;
-	cin >> s >> t;
-	if (good[(ans[t]+7-ans[s])%7]) {
-		cout << "YES" << nl;
-	} else {
-		cout << "NO" << nl;
-	}
+  string s, t;
+  cin >> s >> t;
+  if (good[(ans[t]+7-ans[s])%7]) {
+    cout << "YES" << nl;
+  } else {
+    cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

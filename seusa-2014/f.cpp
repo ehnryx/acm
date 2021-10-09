@@ -41,10 +41,10 @@ struct Int {
     ll x;
     Int (ll n=0) { x = n % MOD; if (x < 0) x += MOD; }
     operator ll() { return x; }
-		ll fix() {
-			x %= MOD; if (x < 0) x += MOD;
-			return x;
-		}
+    ll fix() {
+      x %= MOD; if (x < 0) x += MOD;
+      return x;
+    }
     Int operator + (const Int& n) const { return Int(x + n.x); }
     Int operator - (const Int& n) const { return Int(x - n.x); }
     Int operator * (const Int& n) const { return Int(x * n.x); }
@@ -104,69 +104,69 @@ template <class T> struct Matrix {
 
     // operations
     void operator *= (const Matrix<T>& other) {
-				vector<vector<T>> res(rows, vector<T>(cols));
+        vector<vector<T>> res(rows, vector<T>(cols));
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 res[i][j] = 0;
                 for (int k = 0; k < cols; k++)
                     res[i][j] += a[i][k] * other.a[k][j];
-								res[i][j].fix();
+                res[i][j].fix();
             }
         }
-				a = res;
+        a = res;
     }
 };
 //*/
 
 bool hit(int bm, int n, int j) {
-	if (j>=2 && (bm&1<<(n+j-2))) return true;
-	if (j+2<n && (bm&1<<(n+j+2))) return true;
-	if (j>=1 && (bm&1<<(j-1))) return true;
-	if (j+1<n && (bm&1<<(j+1))) return true;
-	return false;
+  if (j>=2 && (bm&1<<(n+j-2))) return true;
+  if (j+2<n && (bm&1<<(n+j+2))) return true;
+  if (j>=1 && (bm&1<<(j-1))) return true;
+  if (j+1<n && (bm&1<<(j+1))) return true;
+  return false;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	Matrix<Int> mat(1<<2*n,1<<2*n,0);
-	for (int bm=0; bm<1<<2*n; bm++) {
-		int nxt = bm>>n;
-		for (int i=0; i<1<<n; i++) {
-			bool ok = true;
-			for (int j=0; j<n; j++) {
-				if ((i&1<<j) && hit(bm,n,j)) {
-					ok = false;
-					break;
-				}
-			}
-			if (ok) {
-				mat[nxt|i<<n][bm] = 1;
-			}
-		}
-	}
+  Matrix<Int> mat(1<<2*n,1<<2*n,0);
+  for (int bm=0; bm<1<<2*n; bm++) {
+    int nxt = bm>>n;
+    for (int i=0; i<1<<n; i++) {
+      bool ok = true;
+      for (int j=0; j<n; j++) {
+        if ((i&1<<j) && hit(bm,n,j)) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) {
+        mat[nxt|i<<n][bm] = 1;
+      }
+    }
+  }
 
-	Matrix<Int> ans(1<<2*n,1<<2*n,1);
-	for (int i=m; i>0; i/=2) {
-		if (i&1) ans *= mat;
-		mat *= mat;
-	}
+  Matrix<Int> ans(1<<2*n,1<<2*n,1);
+  for (int i=m; i>0; i/=2) {
+    if (i&1) ans *= mat;
+    mat *= mat;
+  }
 
-	Int res = 0;
-	for (int i=0; i<1<<2*n; i++) {
-		res += ans[i][0];
-	}
-	cout << res.fix() << nl;
+  Int res = 0;
+  for (int i=0; i<1<<2*n; i++) {
+    res += ans[i][0];
+  }
+  cout << res.fix() << nl;
 
-	return 0;
+  return 0;
 }

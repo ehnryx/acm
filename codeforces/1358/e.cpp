@@ -27,39 +27,39 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int half = (n+1)/2;
-	vector<ll> a(n+1);
-	for(int i=1; i<=half; i++) {
-		cin >> a[i];
-	}
-	int x;
-	cin >> x;
-	for(int i=half+1; i<=n; i++) {
-		a[i] = x;
-	}
+  int n;
+  cin >> n;
+  int half = (n+1)/2;
+  vector<ll> a(n+1);
+  for(int i=1; i<=half; i++) {
+    cin >> a[i];
+  }
+  int x;
+  cin >> x;
+  for(int i=half+1; i<=n; i++) {
+    a[i] = x;
+  }
 
-	vector<ll> step(n+1);
-	for(int i=1; i<=n; i++) {
-		step[i] = x - a[i];
-	}
-	partial_sum(a.begin(), a.end(), a.begin());
-	partial_sum(step.begin(), step.end(), step.begin());
-	partial_sum(step.begin(), step.end(), step.begin(), [](ll c, ll v) {
-		return min(c, v);
-	});
+  vector<ll> step(n+1);
+  for(int i=1; i<=n; i++) {
+    step[i] = x - a[i];
+  }
+  partial_sum(a.begin(), a.end(), a.begin());
+  partial_sum(step.begin(), step.end(), step.begin());
+  partial_sum(step.begin(), step.end(), step.begin(), [](ll c, ll v) {
+    return min(c, v);
+  });
 
-	for(int i=n/2+1; i<=n; i++) {
-		if(a[i] + step[n-i] > 0) {
-			cout << i << nl;
-			return 0;
-		}
-	}
-	cout << -1 << nl;
+  for(int i=n/2+1; i<=n; i++) {
+    if(a[i] + step[n-i] > 0) {
+      cout << i << nl;
+      return 0;
+    }
+  }
+  cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

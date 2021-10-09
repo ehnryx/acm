@@ -24,30 +24,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	unordered_set<string> have;
-	for(int i=0; i<n; i++) {
-		string s;
-		cin >> s;
-		have.insert(s);
-	}
-	int ans = 0;
-	for(int i=0; i<m; i++) {
-		int k;
-		cin >> k;
-		bool ok = true;
-		for(int j=0; j<k; j++) {
-			string s;
-			cin >> s;
-			ok &= have.count(s);
-		}
-		ans += ok;
-	}
-	cout << ans << nl;
+  int n, m;
+  cin >> n >> m;
+  unordered_set<string> have;
+  for(int i=0; i<n; i++) {
+    string s;
+    cin >> s;
+    have.insert(s);
+  }
+  int ans = 0;
+  for(int i=0; i<m; i++) {
+    int k;
+    cin >> k;
+    bool ok = true;
+    for(int j=0; j<k; j++) {
+      string s;
+      cin >> s;
+      ok &= have.count(s);
+    }
+    ans += ok;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

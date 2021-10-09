@@ -34,7 +34,7 @@ inline void modifyNode(pn x, ll v) { if (x != nil) {
 inline void setpp(pn x, pn pp) { if(x!=nil) x->pp = pp; }  // LCT
 inline void push(pn x) {
   if (x->rev) { rev(x->l); rev(x->r); x->rev=0; }                  // REV
-	setpp(x->l, x->pp); setpp(x->r, x->pp);  // LCT
+  setpp(x->l, x->pp); setpp(x->r, x->pp);  // LCT
   modifyNode(x->l, x->lazy); modifyNode(x->r, x->lazy); x->lazy=0; //RMQ
 }
 //%%== call pushTo before using node if ancestor may have unpushed lazy
@@ -97,62 +97,62 @@ pn append(pn l, pn r) { if (splay(l) == nil) return r;
   push(r); x->setc(r,1); pull(x->r); pull(x); return x; }
 
 struct LinkCutTree {
-	vector<pn> nds;
-	void init(int n) { nds.resize(n, nil);
-		for(int i=0;i<n;i++) nds[i] = new_node(i); }
-	pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
-		x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
-	pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
-		for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
-			if(w->r!=nil) { splitAfter(w)->pp=w; } append(w,x); } return x; }
-	void link(int x, int y) { append(access(nds[y]), reroot(nds[x])); }
-	void cut(int x, int y){ reroot(nds[y]); splitBefore(access(nds[x])); }
-	int lca(int x, int y) { return lca(nds[x], nds[y])->key; }
-	pn lca(pn x, pn y) { access(x); access(y); splay(x);
-		return (x->pp == nil ? x : x->pp); }
-	void reroot(int x) { reroot(nds[x]); }
-	pn reroot(pn x) { rev(access(x)); push(x); return x; }
-	int findroot(int x) { return findroot(nds[x])->key; }
-	pn findroot(pn x) { return first(access(x)); }
+  vector<pn> nds;
+  void init(int n) { nds.resize(n, nil);
+    for(int i=0;i<n;i++) nds[i] = new_node(i); }
+  pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
+    x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
+  pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
+    for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
+      if(w->r!=nil) { splitAfter(w)->pp=w; } append(w,x); } return x; }
+  void link(int x, int y) { append(access(nds[y]), reroot(nds[x])); }
+  void cut(int x, int y){ reroot(nds[y]); splitBefore(access(nds[x])); }
+  int lca(int x, int y) { return lca(nds[x], nds[y])->key; }
+  pn lca(pn x, pn y) { access(x); access(y); splay(x);
+    return (x->pp == nil ? x : x->pp); }
+  void reroot(int x) { reroot(nds[x]); }
+  pn reroot(pn x) { rev(access(x)); push(x); return x; }
+  int findroot(int x) { return findroot(nds[x])->key; }
+  pn findroot(pn x) { return first(access(x)); }
 
-	void insert_path(int x, int y, ll v) {
-		reroot(nds[x]); access(nds[y]); rUpdate(nds[x], nil, nil, v); }
-	ll query_path(int x, int y) { reroot(nds[x]); access(nds[y]);
-		return rQuery(nds[x], nil, nil); }
-	void insert_node(int x, ll v) { pUpdate(nds[x], v); }
-	ll query_node(int x) { return pQuery(nds[x]); }
+  void insert_path(int x, int y, ll v) {
+    reroot(nds[x]); access(nds[y]); rUpdate(nds[x], nil, nil, v); }
+  ll query_path(int x, int y) { reroot(nds[x]); access(nds[y]);
+    return rQuery(nds[x], nil, nil); }
+  void insert_node(int x, ll v) { pUpdate(nds[x], v); }
+  ll query_node(int x) { return pQuery(nds[x]); }
 };
 
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int n, q;
-	cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
 
-	SplayTree::LinkCutTree lct;
-	lct.init(n+1);
+  SplayTree::LinkCutTree lct;
+  lct.init(n+1);
 
-	int a, b, c, d;
-	for (int i=1; i<n; i++) {
-		cin >> a >> b;
-		lct.link(a,b);
-	}
+  int a, b, c, d;
+  for (int i=1; i<n; i++) {
+    cin >> a >> b;
+    lct.link(a,b);
+  }
 
-	while (q--) {
-		cin >> a >> b >> c >> d;
-		// set
-		lct.insert_path(a,b,1);
-		// query
-		int ans = lct.query_path(c,d);
-		// reset
-		lct.insert_path(a,b,-1);
-		// output
-		cout << ans << endl;
-	}
+  while (q--) {
+    cin >> a >> b >> c >> d;
+    // set
+    lct.insert_path(a,b,1);
+    // query
+    int ans = lct.query_path(c,d);
+    // reset
+    lct.insert_path(a,b,-1);
+    // output
+    cout << ans << endl;
+  }
 
-	return 0;
+  return 0;
 }
 

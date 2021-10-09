@@ -31,68 +31,68 @@ unordered_set<int> memo[N];
 bool done[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
+  int n;
+  cin>>n;
 
-	unordered_map<string,int> idx;
-	int id = 0;
-	for(int i=0;i<n;i++) {
-		string s,t;
-		cin>>s>>t;
-		if(!idx.count(s)) idx[s] = id++;
-		if(!idx.count(t)) idx[t] = id++;
-		g[idx[t]].push_back(idx[s]);
-		hob[idx[s]].insert(idx[t]);
-	}
+  unordered_map<string,int> idx;
+  int id = 0;
+  for(int i=0;i<n;i++) {
+    string s,t;
+    cin>>s>>t;
+    if(!idx.count(s)) idx[s] = id++;
+    if(!idx.count(t)) idx[t] = id++;
+    g[idx[t]].push_back(idx[s]);
+    hob[idx[s]].insert(idx[t]);
+  }
 
-	int m;
-	cin>>m;
-	for(int i=0;i<m;i++) {
-		string as, bs;
-		cin >> as >> bs;
-		int a = idx[as];
-		int b = idx[bs];
-		bool ok = false;
+  int m;
+  cin>>m;
+  for(int i=0;i<m;i++) {
+    string as, bs;
+    cin >> as >> bs;
+    int a = idx[as];
+    int b = idx[bs];
+    bool ok = false;
 
-		if(done[a]) {
-			ok = memo[a].count(b);
-		} else if(done[b]) {
-			ok = memo[b].count(a);
-		} else {
-			if(hob[a].size() < M) {
-				for(int s:hob[a]) {
-					if(hob[b].count(s)) {
-						ok = true;
-						break;
-					}
-				}
-			} else if(hob[b].size() < M) {
-				for(int s:hob[b]) {
-					if(hob[a].count(s)) {
-						ok = true;
-						break;
-					}
-				}
-			} else {
-				for(int s:hob[a]) {
-					for(int t:g[s]) {
-						memo[a].insert(t);
-					}
-				}
-				ok = memo[a].count(b);
-				done[a] = true;
-			}
-		}
+    if(done[a]) {
+      ok = memo[a].count(b);
+    } else if(done[b]) {
+      ok = memo[b].count(a);
+    } else {
+      if(hob[a].size() < M) {
+        for(int s:hob[a]) {
+          if(hob[b].count(s)) {
+            ok = true;
+            break;
+          }
+        }
+      } else if(hob[b].size() < M) {
+        for(int s:hob[b]) {
+          if(hob[a].count(s)) {
+            ok = true;
+            break;
+          }
+        }
+      } else {
+        for(int s:hob[a]) {
+          for(int t:g[s]) {
+            memo[a].insert(t);
+          }
+        }
+        ok = memo[a].count(b);
+        done[a] = true;
+      }
+    }
 
-		if(ok) {
-			cout<<"Yes"<<nl;
-		} else {
-			cout<<"No"<<nl;
-		}
-	}
+    if(ok) {
+      cout<<"Yes"<<nl;
+    } else {
+      cout<<"No"<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

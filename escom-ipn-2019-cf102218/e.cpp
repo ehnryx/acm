@@ -26,36 +26,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	unordered_map<string,int> id;
-	id["Monday"] = 0;
-	id["Tuesday"] = 1;
-	id["Wednesday"] = 2;
-	id["Thursday"] = 3;
-	id["Friday"] = 4;
-	id["Saturday"] = 5;
-	id["Sunday"] = 6;
+  unordered_map<string,int> id;
+  id["Monday"] = 0;
+  id["Tuesday"] = 1;
+  id["Wednesday"] = 2;
+  id["Thursday"] = 3;
+  id["Friday"] = 4;
+  id["Saturday"] = 5;
+  id["Sunday"] = 6;
 
-	int n, t;
-	string s;
-	cin >> n >> s >> t;
+  int n, t;
+  string s;
+  cin >> n >> s >> t;
 
-	int d = id[s];
-	int ans = 0;
-	For(i,n) {
-		int v;
-		cin >> v;
-		ans += (d<5 && v>=t);
-		d = (d+1)%7;
-	}
-	cout << ans << nl;
+  int d = id[s];
+  int ans = 0;
+  For(i,n) {
+    int v;
+    cin >> v;
+    ans += (d<5 && v>=t);
+    d = (d+1)%7;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

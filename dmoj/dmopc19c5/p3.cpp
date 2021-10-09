@@ -24,31 +24,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	ll ans = ((ll)n*(n-1)/2) * ((ll)m*(m-1)/2);
+  ll ans = ((ll)n*(n-1)/2) * ((ll)m*(m-1)/2);
 
-	--n; --m;
-	for(int x=1; x<=n; x++) {
-		for(int y=1; y<=m; y++) {
-			if(__gcd(x,y) != 1) continue;
-			ll cur = 0;
-			for(int a=1; a<=(n+m)/(x+y); a++) {
-				if(a*x > n || a*y > m) break;
-				int b = min((n-a*x)/y, (m-a*y)/x);
-				for(int j=1; j<=b; j++) {
-					ans += (ll) (n-(a*x+j*y)+1) * (m-(a*y+j*x)+1);
-					cur += (ll) (n-(a*x+j*y)+1) * (m-(a*y+j*x)+1);
-				}
-			}
-		}
-	}
+  --n; --m;
+  for(int x=1; x<=n; x++) {
+    for(int y=1; y<=m; y++) {
+      if(__gcd(x,y) != 1) continue;
+      ll cur = 0;
+      for(int a=1; a<=(n+m)/(x+y); a++) {
+        if(a*x > n || a*y > m) break;
+        int b = min((n-a*x)/y, (m-a*y)/x);
+        for(int j=1; j<=b; j++) {
+          ans += (ll) (n-(a*x+j*y)+1) * (m-(a*y+j*x)+1);
+          cur += (ll) (n-(a*x+j*y)+1) * (m-(a*y+j*x)+1);
+        }
+      }
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -19,72 +19,72 @@ const int N = 1001;
 unordered_set<int> succ[N];
 
 struct Node {
-	int id, sz;
-	Node(){}
-	Node(int i, int s): id(i), sz(s) {}
-	bool operator < (const Node& n) const {
-		return sz < n.sz;
-	}
+  int id, sz;
+  Node(){}
+  Node(int i, int s): id(i), sz(s) {}
+  bool operator < (const Node& n) const {
+    return sz < n.sz;
+  }
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<Node> nodes;
-	for (int i = 1; i <= n; i++) {
-		int k;
-		cin >> k;
-		nodes.push_back(Node(i, k));
+  vector<Node> nodes;
+  for (int i = 1; i <= n; i++) {
+    int k;
+    cin >> k;
+    nodes.push_back(Node(i, k));
 
-		int a;
-		for (int j = 0; j < k; j++) {
-			cin >> a;
-			succ[i].insert(a);
-		}
-	}
-	sort(nodes.begin(), nodes.end());
+    int a;
+    for (int j = 0; j < k; j++) {
+      cin >> a;
+      succ[i].insert(a);
+    }
+  }
+  sort(nodes.begin(), nodes.end());
 
-	vector<pii> edges;
-	unordered_set<int> roots;
-	for (const Node& it : nodes) {
-		unordered_set<int> add;
-		unordered_set<int> rem;
-		for (int r : roots) {
-			if (succ[it.id].count(r)) {
-				rem.insert(r);
-				add.insert(r);
-				for (int j : succ[r]) {
-					add.insert(j);
-				}
-			}
-		}
+  vector<pii> edges;
+  unordered_set<int> roots;
+  for (const Node& it : nodes) {
+    unordered_set<int> add;
+    unordered_set<int> rem;
+    for (int r : roots) {
+      if (succ[it.id].count(r)) {
+        rem.insert(r);
+        add.insert(r);
+        for (int j : succ[r]) {
+          add.insert(j);
+        }
+      }
+    }
 
-		if (add != succ[it.id]) {
-			cout << "NO" << nl;
-			return 0;
-		}
-		else {
-			for (int r : rem) {
-				edges.push_back(pii(it.id, r));
-				roots.erase(r);
-			}
-			roots.insert(it.id);
-		}
-	}
+    if (add != succ[it.id]) {
+      cout << "NO" << nl;
+      return 0;
+    }
+    else {
+      for (int r : rem) {
+        edges.push_back(pii(it.id, r));
+        roots.erase(r);
+      }
+      roots.insert(it.id);
+    }
+  }
 
-	if (roots.size() > 1) {
-		cout << "NO" << nl;
-	} else {
-		cout << "YES" << nl;
-		for (const pii& e : edges) {
-			cout << e.first << " " << e.second << nl;
-		}
-	}
+  if (roots.size() > 1) {
+    cout << "NO" << nl;
+  } else {
+    cout << "YES" << nl;
+    for (const pii& e : edges) {
+      cout << e.first << " " << e.second << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -25,19 +25,19 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const ld PI = acos((ld)-1);
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(5);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(5);
 
-	freopen("baklava.in","r",stdin);
+  freopen("baklava.in","r",stdin);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n;
-		cin>>n;
-		ld r = cos(PI/n);
-		cout<<(ld)10000/(1-r*r)<<nl;
-	}
+  int T;
+  cin>>T;
+  while(T--) {
+    int n;
+    cin>>n;
+    ld r = cos(PI/n);
+    cout<<(ld)10000/(1-r*r)<<nl;
+  }
 
-	return 0;
+  return 0;
 }

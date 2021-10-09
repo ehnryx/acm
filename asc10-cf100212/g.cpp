@@ -32,8 +32,8 @@ int val[N][M];
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
@@ -75,5 +75,5 @@ int main() {
   int best = min_element(val[n-1], val[n-1] + m) - val[n-1];
   cout << dp[n-1][best] << nl;
 
-	return 0;
+  return 0;
 }

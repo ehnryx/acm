@@ -16,13 +16,13 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Int {
-	int l, r, m;
-	Int(int l=0, int r=0, int m=0): l(l), r(r), m(m) {}
-	Int(char c): l(0), r(0), m(0) { (c=='(' ? l : r) = 1; }
-	Int operator + (const Int& o) const {
-		int mid = min(l, o.r);
-		return Int(l+o.l-mid, r+o.r-mid, m+o.m+2*mid);
-	}
+  int l, r, m;
+  Int(int l=0, int r=0, int m=0): l(l), r(r), m(m) {}
+  Int(char c): l(0), r(0), m(0) { (c=='(' ? l : r) = 1; }
+  Int operator + (const Int& o) const {
+    int mid = min(l, o.r);
+    return Int(l+o.l-mid, r+o.r-mid, m+o.m+2*mid);
+  }
 };
 
 struct node { node *l, *r, *p; ll id, key, cnt; Int val, acc;
@@ -94,36 +94,36 @@ node* append(node* ref, node* other) { if (splay(ref)==null) return other;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	using namespace SplayTree;
+  using namespace SplayTree;
 
-	string s;
-	cin >> s;
-	int n = s.size();
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	int m;
-	cin >> m;
+  int m;
+  cin >> m;
 
-	node* root = null;
-	node* arr[n+1];
-	arr[0] = null;
-	for (int i=1; i<=n; i++) {
-		arr[i] = new node(i,i,Int(s[i-1]));
-		root = insert(root, arr[i]);
-	}
+  node* root = null;
+  node* arr[n+1];
+  arr[0] = null;
+  for (int i=1; i<=n; i++) {
+    arr[i] = new node(i,i,Int(s[i-1]));
+    root = insert(root, arr[i]);
+  }
 
-	for (int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		cout << rQuery(root, arr[a-1], arr[(b+1)%(n+1)]).m << nl;
-	}
+  for (int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    cout << rQuery(root, arr[a-1], arr[(b+1)%(n+1)]).m << nl;
+  }
 
-	return 0;
+  return 0;
 }

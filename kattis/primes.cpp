@@ -20,51 +20,51 @@ int p[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for(int n, x, y;;) {
-		cin >> n;
-		if (!n) break;
+  for(int n, x, y;;) {
+    cin >> n;
+    if (!n) break;
 
-		for (int i=0; i<n; i++) {
-			cin >> p[i];
-		}
-		cin >> x >> y;
+    for (int i=0; i<n; i++) {
+      cin >> p[i];
+    }
+    cin >> x >> y;
 
-		unordered_set<int> vis;
-		vector<int> ans;
-		queue<ll> bfs;
-		bfs.push(1);
-		vis.insert(1);
-		while (!bfs.empty()) {
-			ll cur = bfs.front();
-			bfs.pop();
-			if (cur >= x) ans.push_back(cur);
-			for (int i=0; i<n; i++) {
-				ll nxt = cur*p[i];
-				if (!vis.count(nxt) && nxt <= y) {
-					bfs.push(nxt);
-					vis.insert(nxt);
-				}
-			}
-		}
-		if (ans.empty()) {
-			cout << "none" << nl;
-		} else {
-			sort(ans.begin(), ans.end());
-			cout << ans[0];
-			for (int i=1; i<ans.size(); i++) {
-				cout << ',' << ans[i];
-			}
-			cout << nl;
-		}
-	}
+    unordered_set<int> vis;
+    vector<int> ans;
+    queue<ll> bfs;
+    bfs.push(1);
+    vis.insert(1);
+    while (!bfs.empty()) {
+      ll cur = bfs.front();
+      bfs.pop();
+      if (cur >= x) ans.push_back(cur);
+      for (int i=0; i<n; i++) {
+        ll nxt = cur*p[i];
+        if (!vis.count(nxt) && nxt <= y) {
+          bfs.push(nxt);
+          vis.insert(nxt);
+        }
+      }
+    }
+    if (ans.empty()) {
+      cout << "none" << nl;
+    } else {
+      sort(ans.begin(), ans.end());
+      cout << ans[0];
+      for (int i=1; i<ans.size(); i++) {
+        cout << ',' << ans[i];
+      }
+      cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

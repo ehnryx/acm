@@ -17,21 +17,21 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -40,19 +40,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -99,59 +99,59 @@ struct Int {
 //*/
 
 struct Point {
-	int x, y;
-	Point(){}
-	Point(int x, int y): x(x), y(y);
+  int x, y;
+  Point(){}
+  Point(int x, int y): x(x), y(y);
 };
 
 void caseinit() {
 }
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	int n, s, e;
-	cin >> n >> s >> e;
+  int n, s, e;
+  cin >> n >> s >> e;
 
-	vector<Point> p;
-	for (int i = 0; i < n; i++) {
-		cin >> x >> y;
-		p.push_back(Point(x,y));
-	}
+  vector<Point> p;
+  for (int i = 0; i < n; i++) {
+    cin >> x >> y;
+    p.push_back(Point(x,y));
+  }
 
-	Int left, right, mid;
-	left = right = mid = 0;
+  Int left, right, mid;
+  left = right = mid = 0;
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < i; j++) {
-			if (p[i].y > s && p[j].y > s) {
-				if (p[i].y > p[j].y && p[i].x < p[j].x 
-						|| p[i].y < p[j].y && p[i].x > p[j].x) {
-					left += Int(1);
-				}
-			}
-			else if (p[i].y < s && p[j].y < s) {
-				if (p[i].y < p[j].y && p[i].x < p[j].x 
-						|| p[i].y > p[j].y && p[i].x > p[j].x) {
-					left += Int(1);
-				}
-			}
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+      if (p[i].y > s && p[j].y > s) {
+        if (p[i].y > p[j].y && p[i].x < p[j].x 
+            || p[i].y < p[j].y && p[i].x > p[j].x) {
+          left += Int(1);
+        }
+      }
+      else if (p[i].y < s && p[j].y < s) {
+        if (p[i].y < p[j].y && p[i].x < p[j].x 
+            || p[i].y > p[j].y && p[i].x > p[j].x) {
+          left += Int(1);
+        }
+      }
 
-			if (p[i].y > e && p[j].y > e) {
-				if (p[i].y < p[j].y && p[i].x < p[j].x 
-						|| p[i].y > p[j].y && p[i].x > p[j].x) {
-					right += Int(1);
-				}
-			}
-			else if (p[i].y < e && p[j].y < e) {
-				if (p[i].y > p[j].y && p[i].x < p[j].x 
-						|| p[i].y < p[j].y && p[i].x > p[j].x) {
-					right += Int(1);
-				}
-			}
-		}
-	}
+      if (p[i].y > e && p[j].y > e) {
+        if (p[i].y < p[j].y && p[i].x < p[j].x 
+            || p[i].y > p[j].y && p[i].x > p[j].x) {
+          right += Int(1);
+        }
+      }
+      else if (p[i].y < e && p[j].y < e) {
+        if (p[i].y > p[j].y && p[i].x < p[j].x 
+            || p[i].y < p[j].y && p[i].x > p[j].x) {
+          right += Int(1);
+        }
+      }
+    }
+  }
 
-	return;
+  return;
 }
 

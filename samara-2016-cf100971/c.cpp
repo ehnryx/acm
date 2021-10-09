@@ -19,29 +19,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int len[n];
-	for (int i=0; i<n; i++) {
-		cin >> len[i];
-	}
-	sort(len, len+n);
+  int len[n];
+  for (int i=0; i<n; i++) {
+    cin >> len[i];
+  }
+  sort(len, len+n);
 
-	if ((len[0]+len[1]) - (len[n-1]-len[0]) < 2) {
-		cout << "NO" << nl;
-	} else {
-		cout << "YES" << nl;
-		cout << len[0]+len[1]-1 << nl;
-	}
+  if ((len[0]+len[1]) - (len[n-1]-len[0]) < 2) {
+    cout << "NO" << nl;
+  } else {
+    cout << "YES" << nl;
+    cout << len[0]+len[1]-1 << nl;
+  }
 
-	return 0;
+  return 0;
 }

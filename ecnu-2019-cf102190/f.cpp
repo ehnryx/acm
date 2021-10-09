@@ -26,36 +26,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string line;
-	getline(cin, line);
+  string line;
+  getline(cin, line);
 
-	unordered_map<string,int> cnt;
-	For(i,n) {
-		getline(cin, line);
-		istringstream ss(line);
-		string a;
-		for (string s; ss >> s; ) {
-			a.push_back(s[0]);
-		}
-		cnt[a]++;
-	}
+  unordered_map<string,int> cnt;
+  For(i,n) {
+    getline(cin, line);
+    istringstream ss(line);
+    string a;
+    for (string s; ss >> s; ) {
+      a.push_back(s[0]);
+    }
+    cnt[a]++;
+  }
 
-	ll ans = 0;
-	for (const pair<string,int>& it : cnt) {
-		ans += (ll)it.second*(it.second-1)/2;
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for (const pair<string,int>& it : cnt) {
+    ans += (ll)it.second*(it.second-1)/2;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

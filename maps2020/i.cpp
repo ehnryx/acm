@@ -27,55 +27,55 @@ int cnt[N], in[N];
 int low[N], vis[N], scomp[N], scompNum, I;
 vector<int> adj[N]; stack<int> verts;
 void scc(int u) {
-	low[u] = vis[u] = ++I; verts.push(u);
-	for(int v : adj[u]) {
-		if(!vis[v]) scc(v);
-		if(scomp[v] == -1) low[u] = min(low[u], low[v]);
-	}
-	if(vis[u] <= low[u]) {
-		int v;
-		do {
-			v = verts.top(); verts.pop();
-			scomp[v] = scompNum;
-		} while(v != u);
-		++scompNum;
-	}
+  low[u] = vis[u] = ++I; verts.push(u);
+  for(int v : adj[u]) {
+    if(!vis[v]) scc(v);
+    if(scomp[v] == -1) low[u] = min(low[u], low[v]);
+  }
+  if(vis[u] <= low[u]) {
+    int v;
+    do {
+      v = verts.top(); verts.pop();
+      scomp[v] = scompNum;
+    } while(v != u);
+    ++scompNum;
+  }
 }
 void get_scc(int n) {
-	memset(vis, 0, sizeof vis);
-	memset(scomp, -1, sizeof scomp);
-	scompNum = I = 0;
-	for(int i=0; i<n; ++i) if(!vis[i]) scc(i);
+  memset(vis, 0, sizeof vis);
+  memset(scomp, -1, sizeof scomp);
+  scompNum = I = 0;
+  for(int i=0; i<n; ++i) if(!vis[i]) scc(i);
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	for(int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-	}
-	get_scc(n);
+  int n, m;
+  cin >> n >> m;
+  for(int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+  }
+  get_scc(n);
 
-	for(int i=0; i<n; i++) {
-		cnt[scomp[i]]++;
-		for(int j : adj[i]) {
-			if(scomp[i] == scomp[j]) continue;
-			in[scomp[j]]++;
-		}
-	}
+  for(int i=0; i<n; i++) {
+    cnt[scomp[i]]++;
+    for(int j : adj[i]) {
+      if(scomp[i] == scomp[j]) continue;
+      in[scomp[j]]++;
+    }
+  }
 
-	ll ans = 0;
-	int seen = 0;
-	for(int i=0; i<scompNum; i++) {
-		seen += cnt[i];
-		ans += (ll)cnt[i] * (n-seen) - in[i];
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  int seen = 0;
+  for(int i=0; i<scompNum; i++) {
+    seen += cnt[i];
+    ans += (ll)cnt[i] * (n-seen) - in[i];
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

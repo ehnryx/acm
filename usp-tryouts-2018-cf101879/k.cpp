@@ -66,29 +66,29 @@ struct Int {
 // 3. dsu.find(i) to find the root of the set containing i
 //*!
 struct DSU {
-	vector<int> root;
-	vector<int> sz;
-	DSU(int n) {
-		root.resize(n, -1);
-		sz.resize(n, 1);
-	}
-	int find(int i) {
-		if (root[i] == -1) return i;
-		return root[i] = find(root[i]);
-	}
-	// returns true if we combine two sets
-	bool link(int i, int j) {
-		i = find(i);
-		j = find(j);
-		if (i == j) return false;
-		if (sz[i] < sz[j]) swap(i,j);
-		root[j] = i;
-		sz[i] += sz[j];
-		return true;
-	}
-	int size(int i) {
-		return sz[find(i)];
-	}
+  vector<int> root;
+  vector<int> sz;
+  DSU(int n) {
+    root.resize(n, -1);
+    sz.resize(n, 1);
+  }
+  int find(int i) {
+    if (root[i] == -1) return i;
+    return root[i] = find(root[i]);
+  }
+  // returns true if we combine two sets
+  bool link(int i, int j) {
+    i = find(i);
+    j = find(j);
+    if (i == j) return false;
+    if (sz[i] < sz[j]) swap(i,j);
+    root[j] = i;
+    sz[i] += sz[j];
+    return true;
+  }
+  int size(int i) {
+    return sz[find(i)];
+  }
 };
 //*/
 
@@ -97,84 +97,84 @@ Int fact[N];
 Int invf[N];
 
 void init() {
-	fact[0] = invf[0] = 1;
-	for (int i=1; i<N; i++) {
-		fact[i] = Int(i)*fact[i-1];
-		invf[i] = fact[i].inv();
-	}
+  fact[0] = invf[0] = 1;
+  for (int i=1; i<N; i++) {
+    fact[i] = Int(i)*fact[i-1];
+    invf[i] = fact[i].inv();
+  }
 }
 
 Int ncr(int n, int r) {
-	return fact[n] * invf[r] * invf[n-r];
+  return fact[n] * invf[r] * invf[n-r];
 }
 
 Int f(int t, int v) {
-	Int b = v;
-	Int res = fact[t-1];
-	for (int i=t-1; i>0; i/=2) {
-		if (i%2 == 1) res *= b;
-		b *= b;
-	}
-	return res;
+  Int b = v;
+  Int res = fact[t-1];
+  for (int i=t-1; i>0; i/=2) {
+    if (i%2 == 1) res *= b;
+    b *= b;
+  }
+  return res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
-	init();
+  init();
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	DSU dsu(n+1);
-	vector<int> a(n+1);
-	for (int i=1; i<=n; i++) {
-		cin >> a[i];
-		dsu.link(i,a[i]);
-	}
+  DSU dsu(n+1);
+  vector<int> a(n+1);
+  for (int i=1; i<=n; i++) {
+    cin >> a[i];
+    dsu.link(i,a[i]);
+  }
 
-	vector<int> cnt(n+1, 0);
-	for (int i=1; i<=n; i++) {
-		cnt[dsu.size(i)]++;
-	}
+  vector<int> cnt(n+1, 0);
+  for (int i=1; i<=n; i++) {
+    cnt[dsu.size(i)]++;
+  }
 
-	Int ans = 1;
-	for (int i=1; i<=n; i++) {
-		if (!cnt[i]) continue;
-		int m = cnt[i]/i;
-		//cerr << "SOLVE " << m << " groups of " << i << nl;
+  Int ans = 1;
+  for (int i=1; i<=n; i++) {
+    if (!cnt[i]) continue;
+    int m = cnt[i]/i;
+    //cerr << "SOLVE " << m << " groups of " << i << nl;
 
-		// find transitions
-		vector<int> trans;
-		for (int j=1; j<=m; j++) {
-			if (__gcd(k, j*i) == j) {
-				//cerr << "transition: " << j << nl;
-				trans.push_back(j);
-			}
-		}
+    // find transitions
+    vector<int> trans;
+    for (int j=1; j<=m; j++) {
+      if (__gcd(k, j*i) == j) {
+        //cerr << "transition: " << j << nl;
+        trans.push_back(j);
+      }
+    }
 
-		// solve dp
-		vector<Int> dp(m+1, 0);
-		dp[0] = 1;
-		for (int j=0; j<m; j++) {
-			for (int t : trans) {
-				if (j+t <= m) {
-					dp[j+t] += ncr(j+t-1,t-1) * dp[j] * f(t,i);
-				}
-			}
-		}
-		ans *= dp[m];
-		//cerr << dp[m] << " for case " << i << nl;
-		//cerr << nl;
-	}
+    // solve dp
+    vector<Int> dp(m+1, 0);
+    dp[0] = 1;
+    for (int j=0; j<m; j++) {
+      for (int t : trans) {
+        if (j+t <= m) {
+          dp[j+t] += ncr(j+t-1,t-1) * dp[j] * f(t,i);
+        }
+      }
+    }
+    ans *= dp[m];
+    //cerr << dp[m] << " for case " << i << nl;
+    //cerr << nl;
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

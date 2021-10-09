@@ -59,16 +59,16 @@ struct Int {
 //*/
 
 struct Edge {
-	int id;
-	ld dist;
-	int num;
-	Int val;
-	Edge(){}
-	Edge(int i, ld d, int n, Int v): id(i), dist(d), num(n), val(v) {}
-	bool operator < (const Edge& o) const {
-		if (abs(dist-o.dist) < EPS) return num > o.num;
-		else return dist < o.dist;
-	}
+  int id;
+  ld dist;
+  int num;
+  Int val;
+  Edge(){}
+  Edge(int i, ld d, int n, Int v): id(i), dist(d), num(n), val(v) {}
+  bool operator < (const Edge& o) const {
+    if (abs(dist-o.dist) < EPS) return num > o.num;
+    else return dist < o.dist;
+  }
 };
 
 const int N = 5e4+1;
@@ -76,40 +76,40 @@ vector<Edge> adj[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, a, b, c;
-	cin >> n >> m;
+  int n, m, a, b, c;
+  cin >> n >> m;
 
-	for (int i=0; i<m; i++) {
-		cin >> a >> b >> c;
-		adj[a].push_back(Edge(b,(ld)c/100,1,c));
-	}
+  for (int i=0; i<m; i++) {
+    cin >> a >> b >> c;
+    adj[a].push_back(Edge(b,(ld)c/100,1,c));
+  }
 
-	bitset<N> vis;
-	priority_queue<Edge> dk;
-	dk.push(Edge(1,1,1,1));
-	while (!dk.empty()) {
-		Edge cur = dk.top();
-		dk.pop();
-		if (cur.id == n) {
-			assert(cur.val != 1);
-			cout << cur.val << nl;
-			break;
-		}
-		if (!vis[cur.id]) {
-			vis[cur.id] = true;
-			for (const Edge& e : adj[cur.id]) {
-				dk.push(Edge(e.id, cur.dist*e.dist, cur.num+e.num, cur.val*e.val));
-			}
-		}
-	}
+  bitset<N> vis;
+  priority_queue<Edge> dk;
+  dk.push(Edge(1,1,1,1));
+  while (!dk.empty()) {
+    Edge cur = dk.top();
+    dk.pop();
+    if (cur.id == n) {
+      assert(cur.val != 1);
+      cout << cur.val << nl;
+      break;
+    }
+    if (!vis[cur.id]) {
+      vis[cur.id] = true;
+      for (const Edge& e : adj[cur.id]) {
+        dk.push(Edge(e.id, cur.dist*e.dist, cur.num+e.num, cur.val*e.val));
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

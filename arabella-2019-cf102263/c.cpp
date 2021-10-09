@@ -31,44 +31,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	string ans;
-	getline(cin, ans);
-	getline(cin, ans);
-	assert(!isspace(ans.back()));
+  int n;
+  cin >> n;
+  string ans;
+  getline(cin, ans);
+  getline(cin, ans);
+  assert(!isspace(ans.back()));
 
-	int m;
-	cin >> m;
-	string res;
-	bool caps = false;
-	while (m--) {
-		string s;
-		cin >> s;
-		switch (s[0]) {
-			case 'C':
-				caps ^= 1;
-				break;
-			case 'S':
-				res.push_back(' ');
-				break;
-			case 'B':
-				if (!res.empty()) {
-					res.pop_back();
-				}
-				break;
-			default:
-				if (caps) res.push_back(toupper(s[0]));
-				else res.push_back(s[0]);
-				break;
-		}
-	}
+  int m;
+  cin >> m;
+  string res;
+  bool caps = false;
+  while (m--) {
+    string s;
+    cin >> s;
+    switch (s[0]) {
+      case 'C':
+        caps ^= 1;
+        break;
+      case 'S':
+        res.push_back(' ');
+        break;
+      case 'B':
+        if (!res.empty()) {
+          res.pop_back();
+        }
+        break;
+      default:
+        if (caps) res.push_back(toupper(s[0]));
+        else res.push_back(s[0]);
+        break;
+    }
+  }
 
-	cout << (res == ans ? "Correct" : "Incorrect") << nl;
+  cout << (res == ans ? "Correct" : "Incorrect") << nl;
 
-	return 0;
+  return 0;
 }

@@ -65,25 +65,25 @@ pn first(pn c) { if (splay(c) != nil)
   while (push(c), c->l != nil) c=c->l; return splay(c); }
 
 struct LinkCutTree { vector<pn> nds;
-	LinkCutTree(int n=0) { init(n); }
+  LinkCutTree(int n=0) { init(n); }
   void init(int n) { nds.resize(n, nil);
     for(int i=0;i<n;i++) nds[i] = new_node(i); }
   pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
     x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
-	void join(pn l, pn r) { pn x = splay(first(r)); x->pp = l->pp;
-		push(x); push(splay(l)); x->setc(l,0); pull(x->l); pull(x); }
+  void join(pn l, pn r) { pn x = splay(first(r)); x->pp = l->pp;
+    push(x); push(splay(l)); x->setc(l,0); pull(x->l); pull(x); }
   pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
     for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
       if(w->r!=nil) { splitAfter(w)->pp=w; } join(w,x); } return x; }
   void link(int x, int y) { join(access(nds[y]), reroot(nds[x])); }
   void cut(int x, int y) { reroot(nds[x]); access(nds[y]);
-		splitAfter(splay(nds[x]))->pp = nil; }
+    splitAfter(splay(nds[x]))->pp = nil; }
   void reroot(int x) { reroot(nds[x]); }
   pn reroot(pn x) { rev(access(x)); push(x); return x; }
   int findroot(int x) { return findroot(nds[x])->key; }
   pn findroot(pn x) { return first(access(x)); }
-	int depth(int x) { return depth(nds[x]); }
-	int depth(pn x) { return splay(access(x))->l->cnt; }
+  int depth(int x) { return depth(nds[x]); }
+  int depth(pn x) { return splay(access(x))->l->cnt; }
 }; }
 
 SplayTree::LinkCutTree lct;
@@ -92,89 +92,89 @@ int ans[N];
 vector<pair<int,int>> add[2*N];
 
 void add_range(int l, int r, pair<int,int> v, int i=1, int s=0, int e=N-1) {
-	if(r<s || e<l) return;
-	if(l<=s && e<=r) {
-		add[i].push_back(v);
-		return;
-	}
-	int m = (s+e) / 2;
-	add_range(l, r, v, 2*i, s, m);
-	add_range(l, r, v, 2*i+1, m+1, e);
+  if(r<s || e<l) return;
+  if(l<=s && e<=r) {
+    add[i].push_back(v);
+    return;
+  }
+  int m = (s+e) / 2;
+  add_range(l, r, v, 2*i, s, m);
+  add_range(l, r, v, 2*i+1, m+1, e);
 }
 
 bool link(int a, int b, vector<pair<int,int>>& memo) {
-	lct.reroot(a);
-	if(lct.findroot(b) != a) {
-		lct.link(a, b);
-		memo.emplace_back(a, b);
-		return true;
-	} else {
-		return lct.depth(b) % 2;
-	}
+  lct.reroot(a);
+  if(lct.findroot(b) != a) {
+    lct.link(a, b);
+    memo.emplace_back(a, b);
+    return true;
+  } else {
+    return lct.depth(b) % 2;
+  }
 }
 
 void unlink(int a, int b) {
-	lct.cut(a, b);
+  lct.cut(a, b);
 }
 
 void solve(int l, int r, bool cur=true, int i=1, int s=0, int e=N-1) {
-	if(r<s || e<l) return;
-	vector<pair<int,int>> memo;
-	for(auto [a, b] : add[i]) {
-		cur &= link(a, b, memo);
-	}
+  if(r<s || e<l) return;
+  vector<pair<int,int>> memo;
+  for(auto [a, b] : add[i]) {
+    cur &= link(a, b, memo);
+  }
 
-	if(s == e) {
-		ans[s] = cur;
-	} else {
-		int m = (s+e) / 2;
-		solve(l, r, cur, 2*i, s, m);
-		solve(l, r, cur, 2*i+1, m+1, e);
-	}
+  if(s == e) {
+    ans[s] = cur;
+  } else {
+    int m = (s+e) / 2;
+    solve(l, r, cur, 2*i, s, m);
+    solve(l, r, cur, 2*i+1, m+1, e);
+  }
 
-	for(auto [a, b] : memo) {
-		unlink(a, b);
-	}
+  for(auto [a, b] : memo) {
+    unlink(a, b);
+  }
 }
 
 // double-check correctness
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	lct.init(n+1);
+  int n, m;
+  cin >> n >> m;
+  lct.init(n+1);
 
-	map<pair<int,int>,vector<int>> edges;
-	for(int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		edges[make_pair(a, b)].push_back(i);
-	}
+  map<pair<int,int>,vector<int>> edges;
+  for(int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    edges[make_pair(a, b)].push_back(i);
+  }
 
-	for(auto& [e, it] : edges) {
-		sort(it.begin(), it.end());
-		int pre = -1;
-		for(int i : it) {
-			if(pre == -1) {
-				pre = i;
-			} else {
-				add_range(pre, i-1, e);
-				pre = -1;
-			}
-		}
-		if(pre != -1) {
-			add_range(pre, m-1, e);
-		}
-	}
-	solve(0, m-1);
+  for(auto& [e, it] : edges) {
+    sort(it.begin(), it.end());
+    int pre = -1;
+    for(int i : it) {
+      if(pre == -1) {
+        pre = i;
+      } else {
+        add_range(pre, i-1, e);
+        pre = -1;
+      }
+    }
+    if(pre != -1) {
+      add_range(pre, m-1, e);
+    }
+  }
+  solve(0, m-1);
 
-	for(int i=0; i<m; i++) {
-		cout << (ans[i] ? "YES" : "NO") << nl;
-	}
+  for(int i=0; i<m; i++) {
+    cout << (ans[i] ? "YES" : "NO") << nl;
+  }
 
-	return 0;
+  return 0;
 }

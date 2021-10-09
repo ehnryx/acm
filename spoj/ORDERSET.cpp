@@ -34,18 +34,18 @@ inline void rot(node* x) { node *p = x->p; fix(p), fix(x); bool d = x->dir();
 // splays node x until it is a child of node to
 node* splay(node* x, node* to=null) { if (x==null) return x; while(x->p != to)
   if(x->p->p==to) rot(x); else { x->dir()==x->p->dir() ? rot(x->p) : rot(x);
-	rot(x); } return x; }
+  rot(x); } return x; }
 node* del(node* y) { node* x=splay(y)->r; if (x==null) x=y->l; else {
-	while (fix(x), x->l != null) x = x->l; splay(x,y)->set_cld(y->l,1); }
-	x->p=null; update(x); return x; }
+  while (fix(x), x->l != null) x = x->l; splay(x,y)->set_cld(y->l,1); }
+  x->p=null; update(x); return x; }
 //%%== BST methods (lb, find, insert) (conflicts with other features, see above)
 node* lb(node* c, ll k) { if (c == null) return c; fix(c); // c MUST BE THE ROOT
   if(c->key>=k) { node* l=lb(c->l,k); return l==null?c:l; } return lb(c->r,k); }
 node* lower_bound(node* ref, ll k) { return lb(splay(ref), k); }
 node* find(node* c, ll k) { c=lb(splay(c),k); return c->key!=k?null:splay(c); }
 node* insert(node* c, node* x) { if (splay(c) == null) return x;
-	ll k=x->key; node* p; while(c!=null) { fix(c); p=c; c=(p->key>k?p->l:p->r); }
-	p->set_cld(x,p->key>k); return splay(x); }
+  ll k=x->key; node* p; while(c!=null) { fix(c); p=c; c=(p->key>k?p->l:p->r); }
+  p->set_cld(x,p->key>k); return splay(x); }
 //%%== Utility code (rank, nth order statistic) (requires count maintained)
 int size(node* x) { return splay(x)->cnt; }
 int Srank(node* x) { return splay(x)->l->cnt; }
@@ -70,21 +70,21 @@ ll pQuery(node* x) { splay(x); return x->val; }
 ll rQuery(node* c, node* l, node* r) { return rGet(c, l, r)->acc; }
 void pUpdate(node* x, ll v) { splay(x); x->val += v; update(x); }          //RMQ
 void rUpdate(node* c, node* l, node* r, ll v) {
-	node* u = rGet(c, l, r); modifyNode(u, v); splay(u); }
+  node* u = rGet(c, l, r); modifyNode(u, v); splay(u); }
 //%%== Rope operations: split and merge, null = right end
 node* splitBefore(node* x) { if (splay(x) == null) return null;
-	fix(x); if (x->l != null) fix(x->l); node* ret = x->l; x->l = x->l->p = null;
-	update(ret); update(x); return ret; }
+  fix(x); if (x->l != null) fix(x->l); node* ret = x->l; x->l = x->l->p = null;
+  update(ret); update(x); return ret; }
 void append(node* ref, node* other) { splay(ref); splay(other);
-	if (ref == null || other == null) return; node* x = splay(rbegin(ref));
-	fix(x); fix(other); x->set_cld(other,0); update(x->r); update(x); }
+  if (ref == null || other == null) return; node* x = splay(rbegin(ref));
+  fix(x); fix(other); x->set_cld(other,0); update(x->r); update(x); }
 /* END code archive splay tree */
 
 #define nl '\n'
 int main() {
     int nq; scanf("%d", &nq);
     int nn = 0;
-		node* root = null;
+    node* root = null;
     while (nq--) {
         char c; int x; scanf(" %c %d", &c, &x);
         if (c == 'I') {
@@ -106,20 +106,20 @@ int main() {
         } else if (c == 'C') {
             node* cur = lower_bound(root, x);
             if (cur == null) {
-								//cerr << "NULL" << nl;
+                //cerr << "NULL" << nl;
                 printf("%d\n", size(root));
             } else {
-								//cerr << "cur->key" << " " << cur->key << nl;
+                //cerr << "cur->key" << " " << cur->key << nl;
                 printf("%d\n", Srank(cur));
             }
         }
-				//cerr << "root: " << root->key << "  ";
-				//if (root->p == null) cerr << "child: " << root->l->key << " " << root->r->key << nl;
-				//else cerr << "parent: " << root->p->key << nl;
-				//cerr << "SPLAY TREE" << nl; for (node* x=begin(root); x!=null; x=nxt(x)) {
-					//cerr << x->key << " "; }
-				//cerr << nl;
+        //cerr << "root: " << root->key << "  ";
+        //if (root->p == null) cerr << "child: " << root->l->key << " " << root->r->key << nl;
+        //else cerr << "parent: " << root->p->key << nl;
+        //cerr << "SPLAY TREE" << nl; for (node* x=begin(root); x!=null; x=nxt(x)) {
+          //cerr << x->key << " "; }
+        //cerr << nl;
     }
-		//assert(null->l == null && null->r == null && null->p == null);
+    //assert(null->l == null && null->r == null && null->p == null);
     return 0;
 }

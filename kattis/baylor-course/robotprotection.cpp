@@ -31,25 +31,25 @@ pol chull(pol p) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int n;;) {
-		cin >> n;
-		if (!n) break;
-		int a, b;
-		pol p;
-		for (int i=0; i<n; i++) {
-			cin >> a >> b;
-			p.push_back(pt(a,b));
-		}
-		cout << area(chull(p)) << nl;
-	}
+  for (int n;;) {
+    cin >> n;
+    if (!n) break;
+    int a, b;
+    pol p;
+    for (int i=0; i<n; i++) {
+      cin >> a >> b;
+      p.push_back(pt(a,b));
+    }
+    cout << area(chull(p)) << nl;
+  }
 
-	return 0;
+  return 0;
 }

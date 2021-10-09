@@ -22,29 +22,29 @@ const ld EPS = 1e-9;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll pos(int n, ll x) {
-	ll cur = 1;
-	for(int i=0; i<n; i++) {
-		if(x & 1LL<<i) {
-			cur = (1LL<<i) + (1LL<<i) + 1 - cur;
-		}
-	}
-	return cur;
+  ll cur = 1;
+  for(int i=0; i<n; i++) {
+    if(x & 1LL<<i) {
+      cur = (1LL<<i) + (1LL<<i) + 1 - cur;
+    }
+  }
+  return cur;
 }
 
 // TODO
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	string s, t;
-	cin >> s >> t;
-	ll a = stoll(s, 0, 2);
-	ll b = stoll(t, 0, 2);
-	cout << abs(pos(n, a) - pos(n, b)) - 1 << nl;
+  int n;
+  cin >> n;
+  string s, t;
+  cin >> s >> t;
+  ll a = stoll(s, 0, 2);
+  ll b = stoll(t, 0, 2);
+  cout << abs(pos(n, a) - pos(n, b)) - 1 << nl;
 
-	return 0;
+  return 0;
 }

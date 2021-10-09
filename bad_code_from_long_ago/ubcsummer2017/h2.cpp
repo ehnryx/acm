@@ -9,18 +9,18 @@ const int INF = 0x3f3f3f3f;
 //#define USE_MAGIC_IO
 #ifdef USE_MAGIC_IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 inline void read(int &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 #else
 #define get() getchar()
@@ -63,54 +63,54 @@ ll dfs(int u, int t, ll f) {
 }
 
 struct Bear {
-	int x, y;
-	int r;
-	int val;
+  int x, y;
+  int r;
+  int val;
 };
 
 int sqr(int x) { return x*x; }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	FLOW::init();
+  FLOW::init();
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int sum = 0;
-	// add edges
-	pii berry[n];
-	for (int i = 0; i < n; i++) {
-		cin >> berry[i].first >> berry[i].second;
-		FLOW::add_edge(50+i+1, 2551, 1);
-	}
-	Bear bear[m];
-	for (int i = 0; i < m; i++) {
-		cin >> bear[i].x >> bear[i].y >> bear[i].r >> bear[i].val;
-		sum += bear[i].val;
-		FLOW::add_edge(0, i+1, bear[i].val);
-		for (int j = 0; j < n; j++)
-			if (sqr(berry[j].first-bear[i].x) + sqr(berry[j].second-bear[i].y) <= sqr(bear[i].r))
-				FLOW::add_edge(i+1, 50+j+1, 1);
-	}
-	int ans = -1;
-	for (int i = 0; i < m; i++) {
-		int flow = 0;
-		memset(FLOW::flo, 0, sizeof(FLOW::flo));
-		while (FLOW::bfs(0, i+1))
-			FLOW::dfs(0, i+1, INF);
-		while (FLOW::bfs(0, 2551))
-			flow += FLOW::dfs(0, 2551, INF);
-		//cerr << "flow: " << flow << nl;
-		//cerr << "sum: " << sum << nl;
-		//cerr << "bear[i].val: " << bear[i].val << nl;
-		if (flow == sum - bear[i].val) {
-			ans = max(ans, n-flow);
-		}
-	}
-	cout << ans << nl;
+  int sum = 0;
+  // add edges
+  pii berry[n];
+  for (int i = 0; i < n; i++) {
+    cin >> berry[i].first >> berry[i].second;
+    FLOW::add_edge(50+i+1, 2551, 1);
+  }
+  Bear bear[m];
+  for (int i = 0; i < m; i++) {
+    cin >> bear[i].x >> bear[i].y >> bear[i].r >> bear[i].val;
+    sum += bear[i].val;
+    FLOW::add_edge(0, i+1, bear[i].val);
+    for (int j = 0; j < n; j++)
+      if (sqr(berry[j].first-bear[i].x) + sqr(berry[j].second-bear[i].y) <= sqr(bear[i].r))
+        FLOW::add_edge(i+1, 50+j+1, 1);
+  }
+  int ans = -1;
+  for (int i = 0; i < m; i++) {
+    int flow = 0;
+    memset(FLOW::flo, 0, sizeof(FLOW::flo));
+    while (FLOW::bfs(0, i+1))
+      FLOW::dfs(0, i+1, INF);
+    while (FLOW::bfs(0, 2551))
+      flow += FLOW::dfs(0, 2551, INF);
+    //cerr << "flow: " << flow << nl;
+    //cerr << "sum: " << sum << nl;
+    //cerr << "bear[i].val: " << bear[i].val << nl;
+    if (flow == sum - bear[i].val) {
+      ans = max(ans, n-flow);
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -58,64 +58,64 @@ struct Int {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, p;
-	cin >> n;
+  int n, p;
+  cin >> n;
 
-	map<int,int> type; // -1, 0, 1
-	type[0] = -1;
-	type[INF] = 1;
+  map<int,int> type; // -1, 0, 1
+  type[0] = -1;
+  type[INF] = 1;
 
-	Int ans = 1;
-	string s;
-	for (int i = 0; i < n; i++) {
-		cin >> s >> p;
-		if (s == "ADD") {
-			map<int,int>::iterator cur = type.insert(pii(p, 0)).first;
-			if (next(cur)->second == -1) cur->second = -1;
-			if (prev(cur)->second == 1) cur->second = 1;
-		}
-		else {
-			map<int,int>::iterator cur = type.find(p);
-			if (cur->second == -1) {
-				if (next(cur)->second == -1) {
-					cout << 0 << nl;
-					return 0;
-				}
-			}
-			else if (cur->second == 1) {
-				if (prev(cur)->second == 1) {
-					cout << 0 << nl;
-					return 0;
-				}
-			}
-			else {
-				ans *= 2;
-				for (auto it = next(cur); it->second == 0; it++) {
-					it->second = 1;
-				}
-				for (auto it = prev(cur); it->second == 0; it--) {
-					it->second = -1;
-				}
-			}
-			type.erase(cur);
-		}
-	}
+  Int ans = 1;
+  string s;
+  for (int i = 0; i < n; i++) {
+    cin >> s >> p;
+    if (s == "ADD") {
+      map<int,int>::iterator cur = type.insert(pii(p, 0)).first;
+      if (next(cur)->second == -1) cur->second = -1;
+      if (prev(cur)->second == 1) cur->second = 1;
+    }
+    else {
+      map<int,int>::iterator cur = type.find(p);
+      if (cur->second == -1) {
+        if (next(cur)->second == -1) {
+          cout << 0 << nl;
+          return 0;
+        }
+      }
+      else if (cur->second == 1) {
+        if (prev(cur)->second == 1) {
+          cout << 0 << nl;
+          return 0;
+        }
+      }
+      else {
+        ans *= 2;
+        for (auto it = next(cur); it->second == 0; it++) {
+          it->second = 1;
+        }
+        for (auto it = prev(cur); it->second == 0; it--) {
+          it->second = -1;
+        }
+      }
+      type.erase(cur);
+    }
+  }
 
-	for (const auto& it : type) {
-		if (it.second == 0) {
-			ans *= 2;
-		}
-	}
+  for (const auto& it : type) {
+    if (it.second == 0) {
+      ans *= 2;
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

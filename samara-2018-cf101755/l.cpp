@@ -18,43 +18,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	int n = s.size();
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	vector<int> index[26];
-	for (int i = 0; i < n; i++) {
-		index[s[i]-'a'].push_back(i);
-	}
-	for (int i = 0; i < 26; i++) {
-		index[i].push_back(n);
-	}
+  vector<int> index[26];
+  for (int i = 0; i < n; i++) {
+    index[s[i]-'a'].push_back(i);
+  }
+  for (int i = 0; i < 26; i++) {
+    index[i].push_back(n);
+  }
 
-	stack<int> cur;
-	cur.push(-1);
+  stack<int> cur;
+  cur.push(-1);
 
-	int q;
-	cin >> q;
-	for (int i = 0; i < q; i++) {
-		string t;
-		char c;
-		cin >> t;
+  int q;
+  cin >> q;
+  for (int i = 0; i < q; i++) {
+    string t;
+    char c;
+    cin >> t;
 
-		if (t == "push") {
-			cin >> c;
-			auto it = upper_bound(index[c-'a'].begin(), index[c-'a'].end(), cur.top());
-			if (it == index[c-'a'].end()) cur.push(n);
-			else cur.push(*it);
-		} else {
-			cur.pop();
-		}
+    if (t == "push") {
+      cin >> c;
+      auto it = upper_bound(index[c-'a'].begin(), index[c-'a'].end(), cur.top());
+      if (it == index[c-'a'].end()) cur.push(n);
+      else cur.push(*it);
+    } else {
+      cur.pop();
+    }
 
-		cout << (cur.top() == n ? "NO" : "YES") << nl;
-	}
+    cout << (cur.top() == n ? "NO" : "YES") << nl;
+  }
 
-	return 0;
+  return 0;
 }

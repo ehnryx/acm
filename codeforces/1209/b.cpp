@@ -33,32 +33,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	string s;
-	cin>>s;
-	int a[n],b[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i]>>b[i];
-	}
-	int best = 0;
-	for(int t=1;t<200;t++) {
-		int cur = 0;
-		for(char c:s) {
-			cur += (c=='1');
-		}
-		best = max(best, cur);
-		for(int i=0;i<n;i++) {
-			if(t>=b[i] && (t-b[i])%a[i]==0) {
-				s[i] = (s[i]=='1' ? '0' : '1');
-			}
-		}
-	}
-	cout<<best<<nl;
+  int n;
+  cin>>n;
+  string s;
+  cin>>s;
+  int a[n],b[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i]>>b[i];
+  }
+  int best = 0;
+  for(int t=1;t<200;t++) {
+    int cur = 0;
+    for(char c:s) {
+      cur += (c=='1');
+    }
+    best = max(best, cur);
+    for(int i=0;i<n;i++) {
+      if(t>=b[i] && (t-b[i])%a[i]==0) {
+        s[i] = (s[i]=='1' ? '0' : '1');
+      }
+    }
+  }
+  cout<<best<<nl;
 
-	return 0;
+  return 0;
 }

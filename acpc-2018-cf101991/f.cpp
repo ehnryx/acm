@@ -28,40 +28,40 @@ ld p[N][N];
 ld ncr[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(5);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(5);
 
-	freopen("fetiera.in", "r", stdin);
+  freopen("fetiera.in", "r", stdin);
 
-	for(int i=0;i<N;i++) {
-		ncr[i][0] = ncr[i][i] = 1;
-		for(int j=1;j<i;j++) {
-			ncr[i][j] = ncr[i-1][j-1] + ncr[i-1][j];
-		}
-	}
+  for(int i=0;i<N;i++) {
+    ncr[i][0] = ncr[i][i] = 1;
+    for(int j=1;j<i;j++) {
+      ncr[i][j] = ncr[i-1][j-1] + ncr[i-1][j];
+    }
+  }
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n,k;
-		cin>>n>>k;
-		ld D = (ld)n*(n+1)*n*(n+1)/4;
-		ld ans = 0;
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				cin>>g[i][j];
-				p[i][j] = (ld)(i+1)*(j+1)*(n-i)*(n-j)/D;
-				ld cur = 0;
-				if(g[i][j]) {
-					cur += (1 + pow(1-p[i][j]-p[i][j],k)) / 2;
-				} else {
-					cur += (1 - pow(1-p[i][j]-p[i][j],k)) / 2;
-				}
-				ans += cur;
-			}
-		}
-		cout<<ans<<nl;
-	}
+  int T;
+  cin>>T;
+  while(T--) {
+    int n,k;
+    cin>>n>>k;
+    ld D = (ld)n*(n+1)*n*(n+1)/4;
+    ld ans = 0;
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<n;j++) {
+        cin>>g[i][j];
+        p[i][j] = (ld)(i+1)*(j+1)*(n-i)*(n-j)/D;
+        ld cur = 0;
+        if(g[i][j]) {
+          cur += (1 + pow(1-p[i][j]-p[i][j],k)) / 2;
+        } else {
+          cur += (1 - pow(1-p[i][j]-p[i][j],k)) / 2;
+        }
+        ans += cur;
+      }
+    }
+    cout<<ans<<nl;
+  }
 
-	return 0;
+  return 0;
 }

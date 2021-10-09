@@ -23,26 +23,26 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	freopen("popcorn.in", "r", stdin);
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  freopen("popcorn.in", "r", stdin);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	ll ncr[21][21];
-	memset(ncr, 0, sizeof(ncr));
-	for (int i = 0; i <= 20; i++) {
-		ncr[i][i] = ncr[i][0] = 1;
-		for (int j = 1; j < i; j++) {
-			ncr[i][j] = ncr[i-1][j-1] + ncr[i-1][j];
-		}
-	}
+  ll ncr[21][21];
+  memset(ncr, 0, sizeof(ncr));
+  for (int i = 0; i <= 20; i++) {
+    ncr[i][i] = ncr[i][0] = 1;
+    for (int j = 1; j < i; j++) {
+      ncr[i][j] = ncr[i-1][j-1] + ncr[i-1][j];
+    }
+  }
 
-	int n, m;
-	int T;
-	cin >> T;
-	while (T--) {
-		cin >> n >> m;
-		cout << ncr[n][m] << nl;
-	}
+  int n, m;
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> n >> m;
+    cout << ncr[n][m] << nl;
+  }
 
-	return 0;
+  return 0;
 }

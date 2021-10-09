@@ -27,21 +27,21 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T, a, b, n;
-	cin >> T;
-	while(T--) {
-		cin >> a >> b >> n;
-		int ans = 0;
-		while(max(a, b) <= n) {
-			if(a > b) swap(a, b);
-			a += b;
-			ans++;
-		}
-		cout << ans << nl;
-	}
+  int T, a, b, n;
+  cin >> T;
+  while(T--) {
+    cin >> a >> b >> n;
+    int ans = 0;
+    while(max(a, b) <= n) {
+      if(a > b) swap(a, b);
+      a += b;
+      ans++;
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

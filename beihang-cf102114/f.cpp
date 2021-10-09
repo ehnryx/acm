@@ -20,29 +20,29 @@ int a[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		for (int i=0; i<n; i++) {
-			cin >> a[i];
-		}
-		sort(a,a+n);
-		ll ans = 1;
-		for (int j=0; j<n-1; j++) {
-			ans = ans*a[j] % MOD;
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    for (int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+    sort(a,a+n);
+    ll ans = 1;
+    for (int j=0; j<n-1; j++) {
+      ans = ans*a[j] % MOD;
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

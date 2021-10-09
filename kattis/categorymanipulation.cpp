@@ -22,10 +22,10 @@ const ld EPS = 1e-9;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct p3d {
-	ld x, y, z;
+  ld x, y, z;
   friend ostream& operator<< (ostream& os, const p3d& p) {
-		return os << "(" << p.x << "," << p.y << "," << p.z << ")";
-	}
+    return os << "(" << p.x << "," << p.y << "," << p.z << ")";
+  }
 };
 p3d operator - (const p3d& a, const p3d& o) { return { a.x-o.x, a.y-o.y, a.z-o.z }; }
 p3d operator + (const p3d& a, const p3d& o) { return { a.x+o.x, a.y+o.y, a.z+o.z }; }
@@ -74,42 +74,42 @@ namespace Hull3 { // change shift and mask values for >1024 verts
 }
 
 ld triple_product(const p3d& a, const p3d& b, const p3d& c) {
-	ld A = abs(a), B = abs(b), C = abs(c);
-	if(A<EPS || B<EPS || C<EPS) return 0;
-	return dot(a/A, cross(b/B, c/C));
+  ld A = abs(a), B = abs(b), C = abs(c);
+  if(A<EPS || B<EPS || C<EPS) return 0;
+  return dot(a/A, cross(b/B, c/C));
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		vector<p3d> p;
-		for(int i=0; i<n; i++) {
-			int a, b, c;
-			cin >> a >> b >> c;
-			p.push_back({a,b,c});
-		}
-		Hull3::build(p);
-		for(const p3d& v : p) {
-			bool ok = false;
-			for(const auto& [a, b, c] : Hull3::faces) {
-				const p3d& A = Hull3::v[a] + Hull3::base;
-				const p3d& B = Hull3::v[b] + Hull3::base;
-				const p3d& C = Hull3::v[c] + Hull3::base;
-				if(abs(triple_product(v-A, B-A, C-A)) < EPS) {
-					ok = true;
-					break;
-				}
-			}
-			cout << (ok ? 'T' : 'F');
-		}
-		cout << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<p3d> p;
+    for(int i=0; i<n; i++) {
+      int a, b, c;
+      cin >> a >> b >> c;
+      p.push_back({a,b,c});
+    }
+    Hull3::build(p);
+    for(const p3d& v : p) {
+      bool ok = false;
+      for(const auto& [a, b, c] : Hull3::faces) {
+        const p3d& A = Hull3::v[a] + Hull3::base;
+        const p3d& B = Hull3::v[b] + Hull3::base;
+        const p3d& C = Hull3::v[c] + Hull3::base;
+        if(abs(triple_product(v-A, B-A, C-A)) < EPS) {
+          ok = true;
+          break;
+        }
+      }
+      cout << (ok ? 'T' : 'F');
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

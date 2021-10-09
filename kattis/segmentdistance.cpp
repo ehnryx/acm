@@ -55,28 +55,28 @@ inline ld lsp_dist(const pt &a, const pt &b, const pt &p) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(2);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(2);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
-	for (int i=0; i<n; i++) {
-		int a,b,c,d,e,f,g,h;
-		cin >> a >> b >> c >> d >> e >> f >> g >> h;
-		if (seg_x_seg(pt(a,b),pt(c,d),pt(e,f),pt(g,h))) {
-			cout << "0.00" << nl;
-		} else {
-			cout << min(
-				min(lsp_dist(pt(a,b),pt(c,d),pt(e,f)), lsp_dist(pt(a,b),pt(c,d),pt(g,h))),
-				min(lsp_dist(pt(e,f),pt(g,h),pt(a,b)), lsp_dist(pt(e,f),pt(g,h),pt(c,d)))
-			) << nl;
-		}
-	}
+  int n;
+  cin >> n;
+  for (int i=0; i<n; i++) {
+    int a,b,c,d,e,f,g,h;
+    cin >> a >> b >> c >> d >> e >> f >> g >> h;
+    if (seg_x_seg(pt(a,b),pt(c,d),pt(e,f),pt(g,h))) {
+      cout << "0.00" << nl;
+    } else {
+      cout << min(
+        min(lsp_dist(pt(a,b),pt(c,d),pt(e,f)), lsp_dist(pt(a,b),pt(c,d),pt(g,h))),
+        min(lsp_dist(pt(e,f),pt(g,h),pt(a,b)), lsp_dist(pt(e,f),pt(g,h),pt(c,d)))
+      ) << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

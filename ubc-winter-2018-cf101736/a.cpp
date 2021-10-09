@@ -33,28 +33,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int a[n], b[n], rmp[n+1];
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-		rmp[a[i]] = i;
-	}
-	for (int i=0; i<n; i++) {
-		cin >> b[i];
-		b[i] = rmp[b[i]];
-	}
+  int n;
+  cin >> n;
+  int a[n], b[n], rmp[n+1];
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+    rmp[a[i]] = i;
+  }
+  for (int i=0; i<n; i++) {
+    cin >> b[i];
+    b[i] = rmp[b[i]];
+  }
 
-	int lis[n];
-	memset(lis, INF, sizeof lis);
-	for (int i=0; i<n; i++) {
-		*lower_bound(lis,lis+n,b[i]) = b[i];
-	}
-	cout << lower_bound(lis,lis+n,INF) - lis << nl;
+  int lis[n];
+  memset(lis, INF, sizeof lis);
+  for (int i=0; i<n; i++) {
+    *lower_bound(lis,lis+n,b[i]) = b[i];
+  }
+  cout << lower_bound(lis,lis+n,INF) - lis << nl;
 
-	return 0;
+  return 0;
 }

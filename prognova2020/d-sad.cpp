@@ -26,11 +26,11 @@ const int N = 2e5+7;
 int val[N], p[N];
 
 struct Item {
-	int v, i, j;
-	bool operator < (const Item& o) const {
-		if(v == o.v) return v < o.v;
-		return v < o.v;
-	}
+  int v, i, j;
+  bool operator < (const Item& o) const {
+    if(v == o.v) return v < o.v;
+    return v < o.v;
+  }
 };
 
 struct node; using pn = node*;
@@ -125,71 +125,71 @@ pn append(pn l, pn r) { if (splay(l) == nil) return r;
 pn nds[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	unordered_map<string,int> idx;
-	for(int i=1; i<=n; i++) {
-		string s;
-		cin >> s >> val[i];
-		if(isdigit(s.back())) {
-			if(s.back() == '1') {
-				s.pop_back();
-				idx[s] = i;
-			} else {
-				s.pop_back();
-				p[i] = idx[s];
-			}
-		}
-	}
+  int n, k;
+  cin >> n >> k;
+  unordered_map<string,int> idx;
+  for(int i=1; i<=n; i++) {
+    string s;
+    cin >> s >> val[i];
+    if(isdigit(s.back())) {
+      if(s.back() == '1') {
+        s.pop_back();
+        idx[s] = i;
+      } else {
+        s.pop_back();
+        p[i] = idx[s];
+      }
+    }
+  }
 
-	for(int i=1; i<=n; i++) {
-		nds[i] = new_node(i, val[i]);
-	}
+  for(int i=1; i<=n; i++) {
+    nds[i] = new_node(i, val[i]);
+  }
 
-	unordered_set<int> skip;
-	for(int i=1; i<=n; i++) {
-		if(p[i] && val[i] < val[p[i]]) {
-			skip.insert(p[i]);
-		}
-	}
-	vector<Item> pairs, nodes;
-	for(int i=1; i<=n; i++) {
-		if(skip.count(i)) continue;
-		if(p[i] && val[i] < val[p[i]]) {
-			pairs.push_back({val[i] + val[p[i]], i, p[i]});
-			nodes.push_back({val[p[i]], p[i]});
-		} else {
-			nodes.push_back({val[i], i});
-		}
-	}
-	sort(pairs.begin(), pairs.end());
-	sort(nodes.begin(), nodes.end());
+  unordered_set<int> skip;
+  for(int i=1; i<=n; i++) {
+    if(p[i] && val[i] < val[p[i]]) {
+      skip.insert(p[i]);
+    }
+  }
+  vector<Item> pairs, nodes;
+  for(int i=1; i<=n; i++) {
+    if(skip.count(i)) continue;
+    if(p[i] && val[i] < val[p[i]]) {
+      pairs.push_back({val[i] + val[p[i]], i, p[i]});
+      nodes.push_back({val[p[i]], p[i]});
+    } else {
+      nodes.push_back({val[i], i});
+    }
+  }
+  sort(pairs.begin(), pairs.end());
+  sort(nodes.begin(), nodes.end());
 
-	pn root = nil;
-	for(auto [v,i,_] : nodes) {
-		root = SplayTree::append(root, nds[i]);
-	}
+  pn root = nil;
+  for(auto [v,i,_] : nodes) {
+    root = SplayTree::append(root, nds[i]);
+  }
 
-	ll ans = INFLL;
-	if(k <= SplayTree::size(root)) {
-		pn r = SplayTree::nth(root, k);
-		ans = min(ans, SplayTree::rQuery(root, nil, r));
-	}
-	ll tot = 0;
-	for(auto [v,i,j] : pairs) {
-		tot += v;
-		k -= 2;
-		root = SplayTree::del(nds[j]);
-		if(k < 0) break;
-		if (k <= SplayTree::size(root)) {
-			pn r = SplayTree::nth(root, k);
-			ans = min(ans, tot + SplayTree::rQuery(root, nil, r));
-		}
-	}
-	cout << ans << nl;
+  ll ans = INFLL;
+  if(k <= SplayTree::size(root)) {
+    pn r = SplayTree::nth(root, k);
+    ans = min(ans, SplayTree::rQuery(root, nil, r));
+  }
+  ll tot = 0;
+  for(auto [v,i,j] : pairs) {
+    tot += v;
+    k -= 2;
+    root = SplayTree::del(nds[j]);
+    if(k < 0) break;
+    if (k <= SplayTree::size(root)) {
+      pn r = SplayTree::nth(root, k);
+      ans = min(ans, tot + SplayTree::rQuery(root, nil, r));
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

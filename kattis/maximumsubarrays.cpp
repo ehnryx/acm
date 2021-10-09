@@ -25,28 +25,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,k;
-	cin>>n>>k;
-	int a[n+1];
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-	}
+  int n,k;
+  cin>>n>>k;
+  int a[n+1];
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+  }
 
-	ll dp[n+1][k+1][2];
-	fill(&dp[0][0][0],&dp[0][0][0]+(n+1)*(k+1)*2,-INFLL);
-	dp[0][0][0] = 0;
-	for(int i=1;i<=n;i++) {
-		for(int j=0;j<=k;j++) {
-			if(j>0) dp[i][j][1] = dp[i-1][j-1][0]+a[i];
-			dp[i][j][1] = max(dp[i][j][1],dp[i-1][j][1]+a[i]);
-			dp[i][j][0] = max(dp[i-1][j][0],dp[i][j][1]);
-		}
-	}
-	cout<<dp[n][k][0]<<nl;
+  ll dp[n+1][k+1][2];
+  fill(&dp[0][0][0],&dp[0][0][0]+(n+1)*(k+1)*2,-INFLL);
+  dp[0][0][0] = 0;
+  for(int i=1;i<=n;i++) {
+    for(int j=0;j<=k;j++) {
+      if(j>0) dp[i][j][1] = dp[i-1][j-1][0]+a[i];
+      dp[i][j][1] = max(dp[i][j][1],dp[i-1][j][1]+a[i]);
+      dp[i][j][0] = max(dp[i-1][j][0],dp[i][j][1]);
+    }
+  }
+  cout<<dp[n][k][0]<<nl;
 
-	return 0;
+  return 0;
 }

@@ -25,32 +25,32 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll reverse(ll n) {
-	int len = 64 - __builtin_clzll(n);
-	ll res = 0;
-	for(int i=0;i<len;i++) {
-		res |= ((n>>i)&1)<<(len-1-i);
-	}
-	return res;
+  int len = 64 - __builtin_clzll(n);
+  ll res = 0;
+  for(int i=0;i<len;i++) {
+    res |= ((n>>i)&1)<<(len-1-i);
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	vector<ll> p;
-	p.push_back(1);
-	const int N = 1e5;
-	for(ll i=1;i<=N;i++) {
-		int len = 64 - __builtin_clzll(i);
-		p.push_back(i<<len|reverse(i));
-		p.push_back(i<<len<<1|reverse(i));
-		p.push_back(i<<len<<1|1<<len|reverse(i));
-	}
-	sort(p.begin(),p.end());
+  vector<ll> p;
+  p.push_back(1);
+  const int N = 1e5;
+  for(ll i=1;i<=N;i++) {
+    int len = 64 - __builtin_clzll(i);
+    p.push_back(i<<len|reverse(i));
+    p.push_back(i<<len<<1|reverse(i));
+    p.push_back(i<<len<<1|1<<len|reverse(i));
+  }
+  sort(p.begin(),p.end());
 
-	int n;
-	cin>>n;
-	cout<<p[n-1]<<nl;
+  int n;
+  cin>>n;
+  cout<<p[n-1]<<nl;
 
-	return 0;
+  return 0;
 }

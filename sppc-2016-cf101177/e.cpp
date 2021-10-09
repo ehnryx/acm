@@ -24,100 +24,100 @@ int root[N];
 int ans[N];
 
 void init() {
-	memset(root, -1, sizeof root);
-	memset(ans, -1, sizeof ans);
+  memset(root, -1, sizeof root);
+  memset(ans, -1, sizeof ans);
 }
 
 int find(int i) {
-	if (root[i] == -1) return i;
-	return root[i] = find(root[i]);
+  if (root[i] == -1) return i;
+  return root[i] = find(root[i]);
 }
 
 bool link(int i, int j) {
-	if (find(i) == find(j)) return false;
-	root[find(i)] = find(j);
-	return true;
+  if (find(i) == find(j)) return false;
+  root[find(i)] = find(j);
+  return true;
 }
 
 void dfs(int cur, int val = 0) {
-	if (ans[cur] != -1) return;
+  if (ans[cur] != -1) return;
 
-	ans[cur] = val;
-	for (int x : adj[cur]) {
-		dfs(x, val^1);
-	}
+  ans[cur] = val;
+  for (int x : adj[cur]) {
+    dfs(x, val^1);
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	for (int i=1; i<=n; i++) {
-		char t;
-		int k, a;
-		cin >> t >> k;
-		if (t == 'C') {
-			deg[i] = k;
-		} else {
-			deg[i] = n-1-k;
-			complement[i] = true;
-		}
-		if (deg[i] == 0) {
-			cout << "Impossible" << nl;
-			return 0;
-		}
+  for (int i=1; i<=n; i++) {
+    char t;
+    int k, a;
+    cin >> t >> k;
+    if (t == 'C') {
+      deg[i] = k;
+    } else {
+      deg[i] = n-1-k;
+      complement[i] = true;
+    }
+    if (deg[i] == 0) {
+      cout << "Impossible" << nl;
+      return 0;
+    }
 
-		for (int j=0; j<k; j++) {
-			cin >> a;
-			if (t == 'C') {
-				adj[i].insert(a);
-				adj[a].insert(i);
-				link(i,a);
-			} else {
-				out[i].insert(a);
-			}
-		}
-	}
+    for (int j=0; j<k; j++) {
+      cin >> a;
+      if (t == 'C') {
+        adj[i].insert(a);
+        adj[a].insert(i);
+        link(i,a);
+      } else {
+        out[i].insert(a);
+      }
+    }
+  }
 
-	const int cap = sqrt(n);
-	for (int i=1; i<=n; i++) {
-		if (complement[i]) {
-			if (deg[i] <= cap) {
-				for (int j=1; j<=n; j++) {
-					if (i == j) continue;
-					if (!out[i].count(j) && link(i,j)) {
-						adj[i].insert(j);
-						adj[j].insert(i);
-					}
-				}
-			}
-			else {
-				for (int j=1; j<=max(420,cap); j++) {
-					int a = 1 + rng()%n;
-					if (i == a) continue;
-					if (!out[i].count(a) && link(i,j)) {
-						adj[i].insert(a);
-						adj[a].insert(i);
-					}
-				}
-			}
-		}
-	}
+  const int cap = sqrt(n);
+  for (int i=1; i<=n; i++) {
+    if (complement[i]) {
+      if (deg[i] <= cap) {
+        for (int j=1; j<=n; j++) {
+          if (i == j) continue;
+          if (!out[i].count(j) && link(i,j)) {
+            adj[i].insert(j);
+            adj[j].insert(i);
+          }
+        }
+      }
+      else {
+        for (int j=1; j<=max(420,cap); j++) {
+          int a = 1 + rng()%n;
+          if (i == a) continue;
+          if (!out[i].count(a) && link(i,j)) {
+            adj[i].insert(a);
+            adj[a].insert(i);
+          }
+        }
+      }
+    }
+  }
 
-	for (int i=1; i<=n; i++) {
-		dfs(i);
-	}
+  for (int i=1; i<=n; i++) {
+    dfs(i);
+  }
 
-	for (int i=1; i<=n; i++) {
-		assert(ans[i] != -1);
-		cout << (ans[i] ? 'S' : 'V');
-	}
-	cout << nl;
+  for (int i=1; i<=n; i++) {
+    assert(ans[i] != -1);
+    cout << (ans[i] ? 'S' : 'V');
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

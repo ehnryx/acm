@@ -34,22 +34,22 @@ const int N = 1e5+1;
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		For(i,n) {
-			cin >> a[i];
-		}
-		sort(a,a+n);
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    For(i,n) {
+      cin >> a[i];
+    }
+    sort(a,a+n);
 
-		cout << min(a[n-2]-1, n-2) << nl;
-	}
+    cout << min(a[n-2]-1, n-2) << nl;
+  }
 
-	return 0;
+  return 0;
 }

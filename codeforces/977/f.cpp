@@ -21,57 +21,57 @@ int root[N];
 int sz[N];
 
 void init() {
-	memset(root, -1, sizeof root);
+  memset(root, -1, sizeof root);
 }
 
 int find(int i) {
-	if (root[i] == -1) return i;
-	return root[i] = find(root[i]);
+  if (root[i] == -1) return i;
+  return root[i] = find(root[i]);
 }
 
 // i <- j
 void link(int i, int j) {
-	if (find(i) != find(j)) {
-		sz[find(i)] += sz[find(j)] + 1;
-		root[find(j)] = find(i);
-	}
+  if (find(i) != find(j)) {
+    sz[find(i)] += sz[find(j)] + 1;
+    root[find(j)] = find(i);
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	map<int,int> index;
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-		if (index.count(a[i]-1)) {
-			link(index[a[i]-1], i);
-			index.erase(a[i]-1);
-		}
-		if (!index.count(a[i]) || sz[find(i)] > sz[find(index[a[i]])])
-			index[a[i]] = i;
-	}
+  int a[n];
+  map<int,int> index;
+  for (int i = 0; i < n; i++) {
+    cin >> a[i];
+    if (index.count(a[i]-1)) {
+      link(index[a[i]-1], i);
+      index.erase(a[i]-1);
+    }
+    if (!index.count(a[i]) || sz[find(i)] > sz[find(index[a[i]])])
+      index[a[i]] = i;
+  }
 
-	int best = 0;
-	for (int i = 1; i < n; i++) {
-		if (sz[find(i)] > sz[find(best)]) best = i;
-	}
+  int best = 0;
+  for (int i = 1; i < n; i++) {
+    if (sz[find(i)] > sz[find(best)]) best = i;
+  }
 
-	vector<int> ans;
-	for (int i = 0; i < n; i++) {
-		if (find(i) == find(best)) ans.push_back(i);
-	}
+  vector<int> ans;
+  for (int i = 0; i < n; i++) {
+    if (find(i) == find(best)) ans.push_back(i);
+  }
 
-	sort(ans.begin(), ans.end());
-	cout << ans.size() << nl;
-	for (int it : ans) cout << it+1 << " ";
-	cout << nl;
+  sort(ans.begin(), ans.end());
+  cout << ans.size() << nl;
+  for (int it : ans) cout << it+1 << " ";
+  cout << nl;
 
-	return 0;
+  return 0;
 }

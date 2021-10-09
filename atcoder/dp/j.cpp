@@ -36,33 +36,33 @@ ld dp[N][N][N];
 int cnt[4];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	For(i,n) {
-		int a;
-		cin >> a;
-		cnt[a]++;
-	}
+  For(i,n) {
+    int a;
+    cin >> a;
+    cnt[a]++;
+  }
 
-	dp[0][0][0] = 0;
-	for (int k=0; k<=n; k++) {
-		for (int j=0; j+k<=n; j++) {
-			for (int i=0; i+j+k<=n; i++) {
-				if (i==0 && j==0 && k==0) continue;
-				dp[i][j][k] = 1;
-				if (i>0) dp[i][j][k] += (ld)i/n * dp[i-1][j][k];
-				if (j>0 && i+1<=n) dp[i][j][k] += (ld)j/n * dp[i+1][j-1][k];
-				if (k>0 && j+1<=n) dp[i][j][k] += (ld)k/n * dp[i][j+1][k-1];
-				dp[i][j][k] /= (ld)(i+j+k)/n;
-			}
-		}
-	}
-	cout << dp[cnt[1]][cnt[2]][cnt[3]] << nl;
+  dp[0][0][0] = 0;
+  for (int k=0; k<=n; k++) {
+    for (int j=0; j+k<=n; j++) {
+      for (int i=0; i+j+k<=n; i++) {
+        if (i==0 && j==0 && k==0) continue;
+        dp[i][j][k] = 1;
+        if (i>0) dp[i][j][k] += (ld)i/n * dp[i-1][j][k];
+        if (j>0 && i+1<=n) dp[i][j][k] += (ld)j/n * dp[i+1][j-1][k];
+        if (k>0 && j+1<=n) dp[i][j][k] += (ld)k/n * dp[i][j+1][k-1];
+        dp[i][j][k] /= (ld)(i+j+k)/n;
+      }
+    }
+  }
+  cout << dp[cnt[1]][cnt[2]][cnt[3]] << nl;
 
-	return 0;
+  return 0;
 }

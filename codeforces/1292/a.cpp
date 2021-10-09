@@ -25,34 +25,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	set<int> on[2];
-	int bad = 0;
-	for(int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		--a;
-		if(on[a].count(b)) {
-			for(int j=b-1; j<=b+1; j++) {
-				if(on[a^1].count(j)) bad--;
-			}
-			on[a].erase(b);
-		} else {
-			on[a].insert(b);
-			for(int j=b-1; j<=b+1; j++) {
-				if(on[a^1].count(j)) bad++;
-			}
-		}
-		if(bad) {
-			cout << "No" << nl;
-		} else {
-			cout << "Yes" << nl;
-		}
-	}
+  int n, m;
+  cin >> n >> m;
+  set<int> on[2];
+  int bad = 0;
+  for(int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    --a;
+    if(on[a].count(b)) {
+      for(int j=b-1; j<=b+1; j++) {
+        if(on[a^1].count(j)) bad--;
+      }
+      on[a].erase(b);
+    } else {
+      on[a].insert(b);
+      for(int j=b-1; j<=b+1; j++) {
+        if(on[a^1].count(j)) bad++;
+      }
+    }
+    if(bad) {
+      cout << "No" << nl;
+    } else {
+      cout << "Yes" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

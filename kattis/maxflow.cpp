@@ -16,7 +16,7 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace Flow {
-	const int N = 500;
+  const int N = 500;
   // data structures and helper functions common to all flow routines
   struct Edge { int v, r; ll f, c; };
   vector<Edge> adj[N]; int sz[N]; ll mc;
@@ -46,42 +46,42 @@ namespace Flow {
 }
 
 struct Edge {
-	int a,b,c;
+  int a,b,c;
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n,m,s,t;
-	cin>>n>>m>>s>>t;
-	for(int i=0;i<m;i++) {
-		int a,b,c;
-		cin>>a>>b>>c;
-		Flow::add_edge(a,b,c);
-	}
+  int n,m,s,t;
+  cin>>n>>m>>s>>t;
+  for(int i=0;i<m;i++) {
+    int a,b,c;
+    cin>>a>>b>>c;
+    Flow::add_edge(a,b,c);
+  }
 
-	ll f = Flow::flow(s,t,true);
-	int id = 0;
-	Edge ans[m];
-	for(int i=0;i<n;i++) {
-		for(const Flow::Edge& e:Flow::adj[i]) {
-			if(e.f>0) {
-				ans[id++] = {i,e.v,e.f};
-			}
-		}
-	}
+  ll f = Flow::flow(s,t,true);
+  int id = 0;
+  Edge ans[m];
+  for(int i=0;i<n;i++) {
+    for(const Flow::Edge& e:Flow::adj[i]) {
+      if(e.f>0) {
+        ans[id++] = {i,e.v,e.f};
+      }
+    }
+  }
 
-	cout<<n<<" "<<f<<" "<<id<<nl;
-	for(int i=0;i<id;i++) {
-		cout<<ans[i].a<<" "<<ans[i].b<<" "<<ans[i].c<<nl;
-	}
+  cout<<n<<" "<<f<<" "<<id<<nl;
+  for(int i=0;i<id;i++) {
+    cout<<ans[i].a<<" "<<ans[i].b<<" "<<ans[i].c<<nl;
+  }
 
-	return 0;
+  return 0;
 }

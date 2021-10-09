@@ -134,68 +134,68 @@ struct suff_arr { // integer rep, suffix array, inverse array, adjacent lcp
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int n;;) {
-		cin >> n;
-		if (!n) break;
+  for (int n;;) {
+    cin >> n;
+    if (!n) break;
 
-		string s;
-		cin >> s;
-		int m = s.size();
+    string s;
+    cin >> s;
+    int m = s.size();
 
-		if (n==1) {
-			cout << m << " " << 0 << nl;
-			continue;
-		}
+    if (n==1) {
+      cout << m << " " << 0 << nl;
+      continue;
+    }
 
-		/* O(nlog^2)
-		suff_array sa(s);
-		const auto& idx = sa.get_sarray();
-		for (int i=0; i<m; i++) {
-			id[idx[i]] = i;
-		}
-		*/
-		/* O(n) */
-		suff_arr sa(s);
-		const auto& id = sa.sa;
-		const auto& lcp = sa.lcp;
+    /* O(nlog^2)
+    suff_array sa(s);
+    const auto& idx = sa.get_sarray();
+    for (int i=0; i<m; i++) {
+      id[idx[i]] = i;
+    }
+    */
+    /* O(n) */
+    suff_arr sa(s);
+    const auto& id = sa.sa;
+    const auto& lcp = sa.lcp;
 
-		RMQ<int> window(m), index(m);
-		for (int i=0; i<m; i++) {
-			window.set(i,lcp[i]);
-			index.set(i,-id[i]);
-		}
-		window.build();
-		index.build();
+    RMQ<int> window(m), index(m);
+    for (int i=0; i<m; i++) {
+      window.set(i,lcp[i]);
+      index.set(i,-id[i]);
+    }
+    window.build();
+    index.build();
 
-		int len = 0;
-		int last = -1;
-		for (int i=n-1; i<m; i++) {
-			int cur = window.query(i-n+2, i);
-			int val = -index.query(i-n+1, i);
-			if (cur == len) {
-				last = max(last, val);
-			}
-			if (cur > len) {
-				len = cur;
-				last = val;
-			}
-		}
+    int len = 0;
+    int last = -1;
+    for (int i=n-1; i<m; i++) {
+      int cur = window.query(i-n+2, i);
+      int val = -index.query(i-n+1, i);
+      if (cur == len) {
+        last = max(last, val);
+      }
+      if (cur > len) {
+        len = cur;
+        last = val;
+      }
+    }
 
-		if (len == 0) {
-			cout << "none" << nl;
-		} else {
-			assert(last != -1);
-			cout << len << " " << last << nl;
-		}
-	}
+    if (len == 0) {
+      cout << "none" << nl;
+    } else {
+      assert(last != -1);
+      cout << len << " " << last << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

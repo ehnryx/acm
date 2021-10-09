@@ -67,121 +67,121 @@ ld mat[MAXM][MAXN];
 ld vec[MAXN];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int cap[2][3], d[7];
-		for(int i=0; i<2; i++) {
-			for(int j=0; j<3; j++) {
-				cin >> cap[i][2-j];
-			}
-		}
-		for(int i=0; i<7; i++) {
-			cin >> d[i];
-		}
+  int T;
+  cin >> T;
+  while(T--) {
+    int cap[2][3], d[7];
+    for(int i=0; i<2; i++) {
+      for(int j=0; j<3; j++) {
+        cin >> cap[i][2-j];
+      }
+    }
+    for(int i=0; i<7; i++) {
+      cin >> d[i];
+    }
 
-		fill(&mat[0][0], &mat[0][0]+MAXM*MAXN, 0);
-		int row = 0;
-		for(int i=0; i<7; i++) {
-			mat[row][2*i] = 1;
-			mat[row][2*i+1] = 1;
-			mat[row][14] = d[i];
-			row++;
-			mat[row][2*i] = -1;
-			mat[row][2*i+1] = -1;
-			mat[row][14] = -d[i];
-			row++;
-		}
+    fill(&mat[0][0], &mat[0][0]+MAXM*MAXN, 0);
+    int row = 0;
+    for(int i=0; i<7; i++) {
+      mat[row][2*i] = 1;
+      mat[row][2*i+1] = 1;
+      mat[row][14] = d[i];
+      row++;
+      mat[row][2*i] = -1;
+      mat[row][2*i+1] = -1;
+      mat[row][14] = -d[i];
+      row++;
+    }
 
-		for(int i=0; i<2; i++) {
-			for(int j=0; j<3; j++) {
-				for(int bm=0; bm<7; bm++) {
-					if(!(bm & 1<<j)) {
-						mat[row][2*bm+i] = 1;
-					}
-				}
-				mat[row][14] = cap[i][j];
-				row++;
-			}
-		}
+    for(int i=0; i<2; i++) {
+      for(int j=0; j<3; j++) {
+        for(int bm=0; bm<7; bm++) {
+          if(!(bm & 1<<j)) {
+            mat[row][2*bm+i] = 1;
+          }
+        }
+        mat[row][14] = cap[i][j];
+        row++;
+      }
+    }
 
-		for(int i=0; i<14; i++) {
-			mat[row][i] = (i%2 == 0);
-		}
-		mat[row][14] = 0;
+    for(int i=0; i<14; i++) {
+      mat[row][i] = (i%2 == 0);
+    }
+    mat[row][14] = 0;
 
-		ld maxv = 0;
-		int ok = simplex(row, 14, mat, vec, maxv);
-		if(!ok) {
-			cout << -1 << nl;
-			continue;
-		}
+    ld maxv = 0;
+    int ok = simplex(row, 14, mat, vec, maxv);
+    if(!ok) {
+      cout << -1 << nl;
+      continue;
+    }
 
-		int out[14];
-		for(int i=0; i<7; i++) {
-			out[2*i] = floor(vec[2*i]);
-			out[2*i+1] = d[i] - out[2*i];
-			//cerr<<"got "<<vec[2*i]<<" -> "<<out[2*i]<<" and "<<out[2*i+1]<<nl;
-			assert(0 <= out[2*i] && out[2*i] <= d[i]);
-		}
+    int out[14];
+    for(int i=0; i<7; i++) {
+      out[2*i] = floor(vec[2*i]);
+      out[2*i+1] = d[i] - out[2*i];
+      //cerr<<"got "<<vec[2*i]<<" -> "<<out[2*i]<<" and "<<out[2*i+1]<<nl;
+      assert(0 <= out[2*i] && out[2*i] <= d[i]);
+    }
 
-		auto valid = [&]() {
-			//cerr<<"try "; for(int i=0; i<7; i++) //cerr<<out[2*i]<<" ";
-			//cerr<<nl;
-			for(int i=0; i<7; i++) {
-				if(out[2*i] < 0 || out[2*i] > d[i]) {
-					return false;
-				}
-			}
-			for(int i=0; i<2; i++) {
-				for(int j=0; j<3; j++) {
-					int sum = 0;
-					for(int bm=0; bm<7; bm++) {
-						if(!(bm & 1<<j)) {
-							sum += out[2*bm+i];
-						}
-					}
-					if(sum > cap[i][j]) {
-						//cerr<<"false @ "<<i<<" "<<j<<nl;
-						return false;
-					}
-				}
-			}
-			return true;
-		};
+    auto valid = [&]() {
+      //cerr<<"try "; for(int i=0; i<7; i++) //cerr<<out[2*i]<<" ";
+      //cerr<<nl;
+      for(int i=0; i<7; i++) {
+        if(out[2*i] < 0 || out[2*i] > d[i]) {
+          return false;
+        }
+      }
+      for(int i=0; i<2; i++) {
+        for(int j=0; j<3; j++) {
+          int sum = 0;
+          for(int bm=0; bm<7; bm++) {
+            if(!(bm & 1<<j)) {
+              sum += out[2*bm+i];
+            }
+          }
+          if(sum > cap[i][j]) {
+            //cerr<<"false @ "<<i<<" "<<j<<nl;
+            return false;
+          }
+        }
+      }
+      return true;
+    };
 
-		ok = false;
-		for(int bm=0; bm<1<<7; bm++) {
-			for(int i=0; i<7; i++) {
-				if(bm & 1<<i) {
-					out[2*i]++;
-					out[2*i+1]--;
-				}
-			}
-			if(valid()) {
-				ok = true;
-				break;
-			}
-			for(int i=0; i<7; i++) {
-				if(bm & 1<<i) {
-					out[2*i]--;
-					out[2*i+1]++;
-				}
-			}
-		}
+    ok = false;
+    for(int bm=0; bm<1<<7; bm++) {
+      for(int i=0; i<7; i++) {
+        if(bm & 1<<i) {
+          out[2*i]++;
+          out[2*i+1]--;
+        }
+      }
+      if(valid()) {
+        ok = true;
+        break;
+      }
+      for(int i=0; i<7; i++) {
+        if(bm & 1<<i) {
+          out[2*i]--;
+          out[2*i+1]++;
+        }
+      }
+    }
 
-		if(!ok) {
-			cout << -1 << nl;
-		} else {
-			for(int i=0; i<7; i++) {
-				cout << out[2*i] << " ";
-			}
-			cout << nl;
-		}
-	}
+    if(!ok) {
+      cout << -1 << nl;
+    } else {
+      for(int i=0; i<7; i++) {
+        cout << out[2*i] << " ";
+      }
+      cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

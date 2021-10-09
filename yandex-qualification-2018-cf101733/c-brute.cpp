@@ -61,65 +61,65 @@ struct Int {
 int a[10][10];
 
 bool valid(int n) {
-	//cerr << "VALID " << nl;
-	for (int i=0; i<n; i++) {
-		int row, col;
-		row = col = 0;
-		for (int j=0; j<n; j++) {
-			//cerr << a[i][j] << " ";
-			row += a[i][j];
-			col += a[j][i];
-		}
-		//cerr << nl;
-		if (row % n != 0 || col % n != 0) {
-			return false;
-		}
-	}
-	return true;
+  //cerr << "VALID " << nl;
+  for (int i=0; i<n; i++) {
+    int row, col;
+    row = col = 0;
+    for (int j=0; j<n; j++) {
+      //cerr << a[i][j] << " ";
+      row += a[i][j];
+      col += a[j][i];
+    }
+    //cerr << nl;
+    if (row % n != 0 || col % n != 0) {
+      return false;
+    }
+  }
+  return true;
 }
 
 bool line(int n, int i) {
-	//cerr << "LINE " << i << ": ";
-	int sum = 0;
-	for (int j=0; j<n; j++) {
-		sum += a[i][j];
-		//cerr << a[i][j] << " ";
-	}
-	//cerr << nl;
-	return sum % n == 0;
+  //cerr << "LINE " << i << ": ";
+  int sum = 0;
+  for (int j=0; j<n; j++) {
+    sum += a[i][j];
+    //cerr << a[i][j] << " ";
+  }
+  //cerr << nl;
+  return sum % n == 0;
 }
 
 Int solve(int n, int i, int j) {
-	if (j == n) {
-		if (!line(n,i)) return 0;
-		else { i++; j=0; }
-	}
-	if (i == n) {
-		return valid(n);
-	}
+  if (j == n) {
+    if (!line(n,i)) return 0;
+    else { i++; j=0; }
+  }
+  if (i == n) {
+    return valid(n);
+  }
 
-	Int res = 0;
-	for (int v=0; v<n; v++) {
-		a[i][j] = v;
-		res += solve(n, i, j+1);
-	}
-	return res;
+  Int res = 0;
+  for (int v=0; v<n; v++) {
+    a[i][j] = v;
+    res += solve(n, i, j+1);
+  }
+  return res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	cout << solve(n,0,0) << nl;
+  cout << solve(n,0,0) << nl;
 
-	return 0;
+  return 0;
 }

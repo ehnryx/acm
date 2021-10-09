@@ -30,95 +30,95 @@ ll pdist[500001][26];
 int ans[500001];
 
 void init() {
-	memset(ans, -1, sizeof(ans));
-	memset(pref, -1, sizeof(pref));
-	memset(done, 0, sizeof(done));
-	memset(pdist, -1, sizeof(pdist));
+  memset(ans, -1, sizeof(ans));
+  memset(pref, -1, sizeof(pref));
+  memset(done, 0, sizeof(done));
+  memset(pdist, -1, sizeof(pdist));
 }
 
 void build_jump(int cur, int par) {
-	int c = pref[cur][0] = par;
-	int i = 0;
-	while (c != -1) {
-		c = pref[cur][i+1] = pref[c][i];
-		i++;
-	}
-	if (i > 0) {
-		pdist[cur][0] = graph[cur][par];
-		for (int j = 1; j < i; j++) {
-			pdist[cur][j] = pdist[cur][j-1] + pdist[pref[cur][j-1]][j-1];
-		}	
-	}
-	for (const pii& e : graph[cur]) {
-		if (e.first != par)
-			build_jump(e.first, cur);
-	}
+  int c = pref[cur][0] = par;
+  int i = 0;
+  while (c != -1) {
+    c = pref[cur][i+1] = pref[c][i];
+    i++;
+  }
+  if (i > 0) {
+    pdist[cur][0] = graph[cur][par];
+    for (int j = 1; j < i; j++) {
+      pdist[cur][j] = pdist[cur][j-1] + pdist[pref[cur][j-1]][j-1];
+    }  
+  }
+  for (const pii& e : graph[cur]) {
+    if (e.first != par)
+      build_jump(e.first, cur);
+  }
 }
 
 void build_done(int cur, int par) {
-	for (int i = 0; i < n; i++) {
-		ll len = ww[i];
-		int c = i;
-		while (len > 0) {
-			int j;
-			for (j = 0; pdist[c][j] != -1 && len >= pdist[c][j]; j++);
-			if (j == 0) break;
-			if (pref[c][j-1] == -1) break;
-			len -= pdist[c][j-1];
-			c = pref[c][j-1];
-		}
-		done[c]++;
-	}
+  for (int i = 0; i < n; i++) {
+    ll len = ww[i];
+    int c = i;
+    while (len > 0) {
+      int j;
+      for (j = 0; pdist[c][j] != -1 && len >= pdist[c][j]; j++);
+      if (j == 0) break;
+      if (pref[c][j-1] == -1) break;
+      len -= pdist[c][j-1];
+      c = pref[c][j-1];
+    }
+    done[c]++;
+  }
 }
 
 int dfs(int cur, int par) {
-	int res = 0;
-	for (pii e : graph[cur]) {
-		if (e.first != par) {
-			res += dfs(e.first, cur);
-		}
-	}
-	ans[cur] = res;
+  int res = 0;
+  for (pii e : graph[cur]) {
+    if (e.first != par) {
+      res += dfs(e.first, cur);
+    }
+  }
+  ans[cur] = res;
 
-	res++;
-	res -= done[cur];
+  res++;
+  res -= done[cur];
 
-	return res;
+  return res;
 }
 
 int main() {
-	freopen("car.in", "r", stdin);
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  freopen("car.in", "r", stdin);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int T;
-	cin >> T;
-	while (T--) {
+  int T;
+  cin >> T;
+  while (T--) {
 
-		cin >> n;
-		for (int i = 0; i < n; i++) {
-			graph[i].clear();
-		}
-		for (int i = 0; i < n; i++) {
-			cin >> ww[i];
-		}
-		for (int i = 1; i < n; i++) {
-			cin >> a >> b >> c;
-			graph[a-1].insert(pii(b-1,c));
-			graph[b-1].insert(pii(a-1,c));
-		}
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+      graph[i].clear();
+    }
+    for (int i = 0; i < n; i++) {
+      cin >> ww[i];
+    }
+    for (int i = 1; i < n; i++) {
+      cin >> a >> b >> c;
+      graph[a-1].insert(pii(b-1,c));
+      graph[b-1].insert(pii(a-1,c));
+    }
 
-		init();
-		build_jump(0, -1);
-		build_done(0, -1);
+    init();
+    build_jump(0, -1);
+    build_done(0, -1);
 
-		dfs(0, -1);
+    dfs(0, -1);
 
-		for (int i = 0; i < n; i++) {
-			cout << ans[i] << " ";
-		}
-		cout << nl;
-	}
+    for (int i = 0; i < n; i++) {
+      cout << ans[i] << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

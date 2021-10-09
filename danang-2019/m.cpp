@@ -8,13 +8,13 @@ typedef long double ld;
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
+  ios::sync_with_stdio(0); cin.tie(0);
 
-	int a, b, c, n;
-	cin >> a >> b >> c >> n;
-	int z = min(a, min(b, c));
-	int sum = a+b+c;
-	cout << (n >= 3 && sum >= n && z >= 1 ? "YES" : "NO") << "\n";
+  int a, b, c, n;
+  cin >> a >> b >> c >> n;
+  int z = min(a, min(b, c));
+  int sum = a+b+c;
+  cout << (n >= 3 && sum >= n && z >= 1 ? "YES" : "NO") << "\n";
 
-	return 0;
+  return 0;
 }

@@ -12,15 +12,15 @@ const int INF = 0x3f3f3f3f;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	cout << "50\n";
-	mt19937 rng;
-	for (int i = 0; i < 50; i++) {
-		cout << rng()%10 << " ";
-	}
-	cout << nl;
+  cout << "50\n";
+  mt19937 rng;
+  for (int i = 0; i < 50; i++) {
+    cout << rng()%10 << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

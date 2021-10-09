@@ -19,40 +19,40 @@ const int N = 1e5+1;
 int a[N], b[N];
 
 bool cmp(int i, int j) {
-	return a[i]-b[i] > a[j]-b[j];
+  return a[i]-b[i] > a[j]-b[j];
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	vector<int> id;
-	ll sum = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> a[i] >> b[i];
-		sum += a[i];
-		id.push_back(i);
-	}
-	sort(id.begin(), id.end(), cmp);
+  vector<int> id;
+  ll sum = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> a[i] >> b[i];
+    sum += a[i];
+    id.push_back(i);
+  }
+  sort(id.begin(), id.end(), cmp);
 
-	int ans = 0;
-	for (int i : id) {
-		if (sum <= m) break;
-		sum += b[i]-a[i];
-		ans++;
-	}
+  int ans = 0;
+  for (int i : id) {
+    if (sum <= m) break;
+    sum += b[i]-a[i];
+    ans++;
+  }
 
-	if (sum <= m) cout << ans << nl;
-	else cout << -1 << nl;
+  if (sum <= m) cout << ans << nl;
+  else cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

@@ -26,54 +26,54 @@ const int N = 20;
 int a[N][N];
 
 bool solve(int n, int m, int x, int y) {
-	for (int i=0; i<n; i++) {
-		swap(a[i][x], a[i][y]);
-	}
-	for (int i=0; i<n; i++) {
-		int bad = 0;
-		for (int j=0; j<m; j++) {
-			bad += (a[i][j] != j+1);
-		}
-		if (bad > 2) {
-			goto undo;
-		}
-	}
-	return true;
-	undo:
-	for (int i=0; i<n; i++) {
-		swap(a[i][x], a[i][y]);
-	}
-	return false;
+  for (int i=0; i<n; i++) {
+    swap(a[i][x], a[i][y]);
+  }
+  for (int i=0; i<n; i++) {
+    int bad = 0;
+    for (int j=0; j<m; j++) {
+      bad += (a[i][j] != j+1);
+    }
+    if (bad > 2) {
+      goto undo;
+    }
+  }
+  return true;
+  undo:
+  for (int i=0; i<n; i++) {
+    swap(a[i][x], a[i][y]);
+  }
+  return false;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<m; j++) {
-			cin >> a[i][j];
-		}
-	}
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<m; j++) {
+      cin >> a[i][j];
+    }
+  }
 
-	for (int i=0; i<m; i++) {
-		for (int j=0; j<m; j++) {
-			if (solve(n,m,i,j)) {
-				cout << "YES" << nl;
-				return 0;
-			}
-		}
-	}
-	cout << "NO" << nl;
+  for (int i=0; i<m; i++) {
+    for (int j=0; j<m; j++) {
+      if (solve(n,m,i,j)) {
+        cout << "YES" << nl;
+        return 0;
+      }
+    }
+  }
+  cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

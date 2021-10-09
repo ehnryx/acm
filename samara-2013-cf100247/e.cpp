@@ -23,60 +23,60 @@ int bad[N];
 vector<int> ans;
 
 void down(int cur, int val = false) {
-	if (allowed[cur] == -1) {
-		allowed[cur] = val;
-	}
-	if (adj[cur].empty()) {
-		bad[cur] = !allowed[cur];
-	} else {
-		for (int x : adj[cur]) {
-			down(x, allowed[cur]);
-			bad[cur] += bad[x];
-		}
-	}
+  if (allowed[cur] == -1) {
+    allowed[cur] = val;
+  }
+  if (adj[cur].empty()) {
+    bad[cur] = !allowed[cur];
+  } else {
+    for (int x : adj[cur]) {
+      down(x, allowed[cur]);
+      bad[cur] += bad[x];
+    }
+  }
 }
 
 void up(int cur) {
-	if (bad[cur] == 0) {
-		ans.push_back(cur);
-	} else {
-		for (int x : adj[cur]) {
-			up(x);
-		}
-	}
+  if (bad[cur] == 0) {
+    ans.push_back(cur);
+  } else {
+    for (int x : adj[cur]) {
+      up(x);
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	char c;
-	for (int i=1; i<=n; i++) {
-		cin >> c;
-		if (c == '+') allowed[i] = true;
-		else if (c == '-') allowed[i] = false;
-		else allowed[i] = -1;
-	}
+  char c;
+  for (int i=1; i<=n; i++) {
+    cin >> c;
+    if (c == '+') allowed[i] = true;
+    else if (c == '-') allowed[i] = false;
+    else allowed[i] = -1;
+  }
 
-	int a, b;
-	for (int i=1; i<n; i++) {
-		cin >> a >> b;
-		adj[a].push_back(b);
-	}
+  int a, b;
+  for (int i=1; i<n; i++) {
+    cin >> a >> b;
+    adj[a].push_back(b);
+  }
 
-	down(1);
-	up(1);
+  down(1);
+  up(1);
 
-	sort(ans.begin(), ans.end());
-	cout << ans.size() << nl;
-	for (int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  sort(ans.begin(), ans.end());
+  cout << ans.size() << nl;
+  for (int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

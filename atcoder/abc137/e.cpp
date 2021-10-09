@@ -31,7 +31,7 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int a,b,c;
+  int a,b,c;
 };
 
 const int N = 2500+1;
@@ -39,39 +39,39 @@ const int M = 5e3+1;
 int dist[N], rev[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m,p;
-	cin>>n>>m>>p;
+  int n,m,p;
+  cin>>n>>m>>p;
 
-	vector<Edge> edges;
-	For(i,m) {
-		int a,b,c;
-		cin>>a>>b>>c;
-		edges.push_back({a,b,p-c});
-	}
+  vector<Edge> edges;
+  For(i,m) {
+    int a,b,c;
+    cin>>a>>b>>c;
+    edges.push_back({a,b,p-c});
+  }
 
-	memset(dist,INF,sizeof dist);
-	memset(rev,INF,sizeof rev);
-	dist[1] = 0;
-	rev[n] = 0;
-	For(i,n-1) {
-		for (const Edge& e : edges) {
-			dist[e.b] = min(dist[e.b], dist[e.a]+e.c);
-			rev[e.a] = min(rev[e.a], rev[e.b]);
-		}
-	}
-	for (const Edge& e : edges) {
-		if (dist[e.a]<INF/2 && rev[e.b]<INF/2) {
-			if (dist[e.a]+e.c < dist[e.b]) {
-				cout << -1 << nl;
-				return 0;
-			}
-		}
-	}
-	cout << max(0, -dist[n]) << nl;
+  memset(dist,INF,sizeof dist);
+  memset(rev,INF,sizeof rev);
+  dist[1] = 0;
+  rev[n] = 0;
+  For(i,n-1) {
+    for (const Edge& e : edges) {
+      dist[e.b] = min(dist[e.b], dist[e.a]+e.c);
+      rev[e.a] = min(rev[e.a], rev[e.b]);
+    }
+  }
+  for (const Edge& e : edges) {
+    if (dist[e.a]<INF/2 && rev[e.b]<INF/2) {
+      if (dist[e.a]+e.c < dist[e.b]) {
+        cout << -1 << nl;
+        return 0;
+      }
+    }
+  }
+  cout << max(0, -dist[n]) << nl;
 
-	return 0;
+  return 0;
 }

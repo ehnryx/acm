@@ -19,8 +19,8 @@ const ll INF = 0x3f3f3f3f;
 ////////////////////////////////////////////////////////////////////////////////
 //*!
 namespace FLOW {
-	const int N = 100100;
-	const int M = 500000;
+  const int N = 100100;
+  const int M = 500000;
 //*/
 // data structures and helper functions common to all flow routines
 int par[N], first[N], nxt[2*M], ep[2*M], m;
@@ -129,36 +129,36 @@ ll mcf_update(int s, int t, ll& price, int n) {
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	FLOW::init();
+  FLOW::init();
 
-	int s = 0, t = 100010;
-	int b, n, e, v;
-	int sb, sn, se;
-	cin >> b >> n >> e;
-	v = (b+n+e)/2;
-	int kayak[v+1];
+  int s = 0, t = 100010;
+  int b, n, e, v;
+  int sb, sn, se;
+  cin >> b >> n >> e;
+  v = (b+n+e)/2;
+  int kayak[v+1];
 
-	cin >> sb >> sn >> se;
-	FLOW::add_edge(s, 100000+1, b, 0);
-	FLOW::add_edge(s, 100000+2, n, 0);
-	FLOW::add_edge(s, 100000+3, e, 0);
-	for (int i = 1; i <= v; i++) {
-		cin >> kayak[i];
-		FLOW::add_edge(100000+1, i, 1, -kayak[i]*sb);
-		FLOW::add_edge(100000+2, i, 1, -kayak[i]*sn);
-		FLOW::add_edge(100000+3, i, 1, -kayak[i]*se);
-		FLOW::add_edge(i, t, 2, 0);
-	}
+  cin >> sb >> sn >> se;
+  FLOW::add_edge(s, 100000+1, b, 0);
+  FLOW::add_edge(s, 100000+2, n, 0);
+  FLOW::add_edge(s, 100000+3, e, 0);
+  for (int i = 1; i <= v; i++) {
+    cin >> kayak[i];
+    FLOW::add_edge(100000+1, i, 1, -kayak[i]*sb);
+    FLOW::add_edge(100000+2, i, 1, -kayak[i]*sn);
+    FLOW::add_edge(100000+3, i, 1, -kayak[i]*se);
+    FLOW::add_edge(i, t, 2, 0);
+  }
 
-	FLOW::mcf_pot_init(v+5);
-	ll ans = -INF, flow = 0;
-	while (ll df = FLOW::mcf_update(s, t, ans, v+5))
-		flow += df;
+  FLOW::mcf_pot_init(v+5);
+  ll ans = -INF, flow = 0;
+  while (ll df = FLOW::mcf_update(s, t, ans, v+5))
+    flow += df;
 
-	cout << -ans << nl;
+  cout << -ans << nl;
 
-	return 0;
+  return 0;
 }

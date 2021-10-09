@@ -22,39 +22,39 @@ const ld EPS = 1e-9;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 unsigned int inverse(unsigned int n) {
-	unsigned int r = 1;
-	for(ll e=(1LL<<31)-1; e>0; e/=2) {
-		if(e&1) r = r*n;
-		n = n*n;
-	}
-	return r;
+  unsigned int r = 1;
+  for(ll e=(1LL<<31)-1; e>0; e/=2) {
+    if(e&1) r = r*n;
+    n = n*n;
+  }
+  return r;
 }
 
 // TODO
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	unsigned int val = 2654435761;
-	unsigned int f = inverse(val);
-	assert(val * f == 1);
+  unsigned int val = 2654435761;
+  unsigned int f = inverse(val);
+  assert(val * f == 1);
 
-	int n, m;
-	cin >> n >> m;
-	vector<ll> res;
-	for(int i=0; i<n; i++) {
-		unsigned int v;
-		cin >> v;
-		res.push_back((ll)(v * f));
-	}
-	sort(res.begin(), res.end(), greater<ll>());
+  int n, m;
+  cin >> n >> m;
+  vector<ll> res;
+  for(int i=0; i<n; i++) {
+    unsigned int v;
+    cin >> v;
+    res.push_back((ll)(v * f));
+  }
+  sort(res.begin(), res.end(), greater<ll>());
 
-	ll ans = accumulate(res.begin(), res.begin()+m, (ll)0, [](ll c, ll v) {
-		return c + v;
-	});
-	cout << ans << nl;
+  ll ans = accumulate(res.begin(), res.begin()+m, (ll)0, [](ll c, ll v) {
+    return c + v;
+  });
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

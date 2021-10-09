@@ -25,49 +25,49 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	unordered_set<string> names;
-	for(string s; getline(cin,s) && !s.empty(); ) {
-		names.insert(s);
-	}
+  unordered_set<string> names;
+  for(string s; getline(cin,s) && !s.empty(); ) {
+    names.insert(s);
+  }
 
-	unordered_set<string> backup;
-	vector<string> orphans;
-	for(string s; getline(cin,s); ) {
-		int len = s.size()-1;
-		for(int cnt=0;cnt<2;len--) {
-			if(s[len]=='_') cnt++;
-		}
-		string t = s.substr(0, len+1);
-		if(!names.count(t)) {
-			orphans.push_back(s);
-		} else {
-			backup.insert(t);
-		}
-	}
-	sort(orphans.begin(),orphans.end());
+  unordered_set<string> backup;
+  vector<string> orphans;
+  for(string s; getline(cin,s); ) {
+    int len = s.size()-1;
+    for(int cnt=0;cnt<2;len--) {
+      if(s[len]=='_') cnt++;
+    }
+    string t = s.substr(0, len+1);
+    if(!names.count(t)) {
+      orphans.push_back(s);
+    } else {
+      backup.insert(t);
+    }
+  }
+  sort(orphans.begin(),orphans.end());
 
-	vector<string> need;
-	for(const string& s:names) {
-		if(!backup.count(s)) {
-			need.push_back(s);
-		}
-	}
-	sort(need.begin(),need.end());
+  vector<string> need;
+  for(const string& s:names) {
+    if(!backup.count(s)) {
+      need.push_back(s);
+    }
+  }
+  sort(need.begin(),need.end());
 
-	if(orphans.empty() && need.empty()) {
-		cout<<"No mismatches."<<nl;
-	} else {
-		for(const string& s:orphans) {
-			cout<<"F "<<s<<nl;
-		}
-		for(const string& s:need) {
-			cout<<"I "<<s<<nl;
-		}
-	}
+  if(orphans.empty() && need.empty()) {
+    cout<<"No mismatches."<<nl;
+  } else {
+    for(const string& s:orphans) {
+      cout<<"F "<<s<<nl;
+    }
+    for(const string& s:need) {
+      cout<<"I "<<s<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

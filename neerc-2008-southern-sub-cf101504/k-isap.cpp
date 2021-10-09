@@ -60,63 +60,63 @@ int adj[N][N];
 int vis[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	int a[m],b[m],c[m];
-	for(int i=0;i<m;i++) {
-		cin>>a[i]>>b[i]>>c[i];
-		--a[i]; --b[i];
-		adj[a[i]][b[i]] = adj[b[i]][a[i]] = i+1;
-	}
+  int n,m;
+  cin>>n>>m;
+  int a[m],b[m],c[m];
+  for(int i=0;i<m;i++) {
+    cin>>a[i]>>b[i]>>c[i];
+    --a[i]; --b[i];
+    adj[a[i]][b[i]] = adj[b[i]][a[i]] = i+1;
+  }
 
-	vector<int> ans;
-	int best = INF;
-	for(int i=0;i<n;i++) {
-		int s = !i;
-		for(int j=0;j<n;j++) {
-			if(j==i || j==s) continue;
-			Flow::init();
-			for(int e=0;e<m;e++) {
-				if(a[e]!=i && b[e]!=i) {
-					Flow::add_edge(a[e],b[e],c[e]);
-				}
-			}
-			Flow::preflow(j);
-			int cur = Flow::flow(s,j);
-			if(cur < best) {
-				best = cur;
-				memset(vis,0,sizeof vis);
-				ans.clear();
-				queue<int> bfs;
-				bfs.push(s); vis[s] = true;
-				while(!bfs.empty()) {
-					int u = bfs.front(); bfs.pop();
-					for(const Flow::Edge& e:Flow::adj[u]) {
-						if(e.f < e.c && !vis[e.v]) {
-							bfs.push(e.v); vis[e.v] = true;
-						}
-					}
-				}
-				for(int k=0;k<n;k++) {
-					for(const Flow::Edge& e:Flow::adj[k]) {
-						if(vis[k] && !vis[e.v]) {
-							ans.push_back(adj[e.v][k]);
-						}
-					}
-				}
-			}
-		}
-	}
+  vector<int> ans;
+  int best = INF;
+  for(int i=0;i<n;i++) {
+    int s = !i;
+    for(int j=0;j<n;j++) {
+      if(j==i || j==s) continue;
+      Flow::init();
+      for(int e=0;e<m;e++) {
+        if(a[e]!=i && b[e]!=i) {
+          Flow::add_edge(a[e],b[e],c[e]);
+        }
+      }
+      Flow::preflow(j);
+      int cur = Flow::flow(s,j);
+      if(cur < best) {
+        best = cur;
+        memset(vis,0,sizeof vis);
+        ans.clear();
+        queue<int> bfs;
+        bfs.push(s); vis[s] = true;
+        while(!bfs.empty()) {
+          int u = bfs.front(); bfs.pop();
+          for(const Flow::Edge& e:Flow::adj[u]) {
+            if(e.f < e.c && !vis[e.v]) {
+              bfs.push(e.v); vis[e.v] = true;
+            }
+          }
+        }
+        for(int k=0;k<n;k++) {
+          for(const Flow::Edge& e:Flow::adj[k]) {
+            if(vis[k] && !vis[e.v]) {
+              ans.push_back(adj[e.v][k]);
+            }
+          }
+        }
+      }
+    }
+  }
 
-	cout<<best<<nl;
-	cout<<ans.size()<<nl;
-	for(int it:ans) {
-		cout<<it<<" ";
-	}
-	cout<<nl;
+  cout<<best<<nl;
+  cout<<ans.size()<<nl;
+  for(int it:ans) {
+    cout<<it<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

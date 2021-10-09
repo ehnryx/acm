@@ -19,27 +19,27 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	while (cin >> n) {
-		ll sum = 1;
-		for (int i=2; i*i<=n; i++) {
-			if (n%i == 0) {
-				sum += i;
-				if (i != n/i) sum += n/i;
-			}
-		}
-		if (sum == n) cout << n << " perfect" << nl;
-		else if (abs(sum-n)<=2) cout << n << " almost perfect" << nl;
-		else cout << n << " not perfect" << nl;
-	}
+  int n;
+  while (cin >> n) {
+    ll sum = 1;
+    for (int i=2; i*i<=n; i++) {
+      if (n%i == 0) {
+        sum += i;
+        if (i != n/i) sum += n/i;
+      }
+    }
+    if (sum == n) cout << n << " perfect" << nl;
+    else if (abs(sum-n)<=2) cout << n << " almost perfect" << nl;
+    else cout << n << " not perfect" << nl;
+  }
 
-	return 0;
+  return 0;
 }

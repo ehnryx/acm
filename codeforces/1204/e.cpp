@@ -33,33 +33,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	int N=n+m+7;
-	ll dp[N][N], up[N][N];
-	memset(dp,0,sizeof dp);
-	memset(up,0,sizeof up);
-	dp[0][0] = 1;
-	up[0][0] = 1;
-	for(int i=1;i<=n+m;i++) {
-		dp[i][0] = dp[i-1][1];
-		for(int j=1;j<N-1;j++) {
-			up[i][j] = (up[i-1][j-1] + up[i-1][j+1]) % MOD;
-			dp[i][j] = (dp[i-1][j-1] + dp[i-1][j+1]) % MOD;
-		}
-	}
+  int n,m;
+  cin>>n>>m;
+  int N=n+m+7;
+  ll dp[N][N], up[N][N];
+  memset(dp,0,sizeof dp);
+  memset(up,0,sizeof up);
+  dp[0][0] = 1;
+  up[0][0] = 1;
+  for(int i=1;i<=n+m;i++) {
+    dp[i][0] = dp[i-1][1];
+    for(int j=1;j<N-1;j++) {
+      up[i][j] = (up[i-1][j-1] + up[i-1][j+1]) % MOD;
+      dp[i][j] = (dp[i-1][j-1] + dp[i-1][j+1]) % MOD;
+    }
+  }
 
-	ll ans = 0;
-	for(int i=0;i<=n+m;i++) {
-		for(int t=max(0,n-m);t<N&&t-(n-m)<N;t++) {
-			ans += dp[i][t] * up[n+m-i][t-(n-m)] % MOD * t % MOD;
-		}
-	}
-	cout<<ans%MOD<<nl;
+  ll ans = 0;
+  for(int i=0;i<=n+m;i++) {
+    for(int t=max(0,n-m);t<N&&t-(n-m)<N;t++) {
+      ans += dp[i][t] * up[n+m-i][t-(n-m)] % MOD * t % MOD;
+    }
+  }
+  cout<<ans%MOD<<nl;
 
-	return 0;
+  return 0;
 }

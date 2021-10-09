@@ -19,43 +19,43 @@ int sgn(int n) { return n<0 ? -1 : n>0 ? 1 : 0; }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int a, b;
-		cin >> a >> b;
-		vector<pii> ans;
-		bool s = false;
-		if (sgn(a)==sgn(b)) {
-			a = abs(a); b = abs(b);
-		} else {
-			a = abs(a); b = abs(b);
-			s = true;
-		}
-		for (int n=a,p=1; n>0; n/=10,p*=10) {
-			if (n%10==0) continue;
-			for (int m=b,q=1; m>0; m/=10,q*=10) {
-				if (m%10==0) continue;
-				ans.push_back(pii(n%10 * p, m%10 * q));
-			}
-		}
-		if (s) cout << "-";
-		cout << ans[0].first << " x " << ans[0].second;
-		for (int i=1; i<ans.size(); i++) {
-			if (s) cout << " - ";
-			else cout << " + ";
-			cout << ans[i].first << " x " << ans[i].second;
-		}
-		cout << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int a, b;
+    cin >> a >> b;
+    vector<pii> ans;
+    bool s = false;
+    if (sgn(a)==sgn(b)) {
+      a = abs(a); b = abs(b);
+    } else {
+      a = abs(a); b = abs(b);
+      s = true;
+    }
+    for (int n=a,p=1; n>0; n/=10,p*=10) {
+      if (n%10==0) continue;
+      for (int m=b,q=1; m>0; m/=10,q*=10) {
+        if (m%10==0) continue;
+        ans.push_back(pii(n%10 * p, m%10 * q));
+      }
+    }
+    if (s) cout << "-";
+    cout << ans[0].first << " x " << ans[0].second;
+    for (int i=1; i<ans.size(); i++) {
+      if (s) cout << " - ";
+      else cout << " + ";
+      cout << ans[i].first << " x " << ans[i].second;
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

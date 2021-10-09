@@ -85,21 +85,21 @@ int main() {
   cin.tie(0);
 
   for (int n, tt=1; cin >> n; tt++) {
-		cout << "Case " << tt << ": ";
-		vector<Point> p;
-		for (int i=0; i<n; i++) {
-			int x, y, z, vx, vy, vz;
-			cin >> x >> y >> z >> vx >> vy >> vz;
-			p.push_back({x,y,z,vx,vy,vz});
-		}
+    cout << "Case " << tt << ": ";
+    vector<Point> p;
+    for (int i=0; i<n; i++) {
+      int x, y, z, vx, vy, vz;
+      cin >> x >> y >> z >> vx >> vy >> vz;
+      p.push_back({x,y,z,vx,vy,vz});
+    }
 
-		ld left = 0;
-		ld right = INF;
-		vector<pii> lval = mst(left, p);
-		vector<pii> rval = mst(right, p);
-		if (lval == rval) cout << 1 << nl;
-		else cout << 1 + solve(left, right, lval, rval, p) << nl;
-	}
+    ld left = 0;
+    ld right = INF;
+    vector<pii> lval = mst(left, p);
+    vector<pii> rval = mst(right, p);
+    if (lval == rval) cout << 1 << nl;
+    else cout << 1 + solve(left, right, lval, rval, p) << nl;
+  }
 
   return 0;
 }

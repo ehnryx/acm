@@ -31,20 +31,20 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	const string one = "Tomaz";
-	const string two = "Danftito";
+  const string one = "Tomaz";
+  const string two = "Danftito";
 
-	ll m,a,b,c;
-	cin>>m>>a>>b>>c;
-	a=a%(m+1);
-	b=(b-1)%(m+1);
-	c=(c-1)%(m+1);
-	if(a^b^c) cout<<one<<nl;
-	else cout<<two<<nl;
+  ll m,a,b,c;
+  cin>>m>>a>>b>>c;
+  a=a%(m+1);
+  b=(b-1)%(m+1);
+  c=(c-1)%(m+1);
+  if(a^b^c) cout<<one<<nl;
+  else cout<<two<<nl;
 
-	return 0;
+  return 0;
 }

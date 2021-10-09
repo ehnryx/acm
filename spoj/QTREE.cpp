@@ -17,21 +17,21 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 // MAGIC IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 inline void read(int &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 void readchar(char& c) {
-	while (isspace(c = get()));
+  while (isspace(c = get()));
 }
 // END MAGIC IO
 
@@ -40,26 +40,26 @@ const int N = 1e4+1;
 vector<int> adj[N];
 
 struct SegTree {
-	int n;
-	int *segt;
-	SegTree(int len) {
-		n = 1 << (32-__builtin_clz(len));
-		segt = new int[2*n];
-		fill(segt, segt+2*n, -1);
-	}
-	void update(int x, int v) {
-		for (segt[x+=n]=v; x>1; x/=2) {
-			segt[x/2] = max(segt[x], segt[x^1]);
-		}
-	}
-	int query(int l, int r) {
-		int res = -1;
-		for (l+=n, r+=n+1; l<r; l/=2, r/=2) {
-			if (l&1) res = max(res, segt[(l++)]);
-			if (r&1) res = max(res, segt[(--r)]);
-		}
-		return res;
-	}
+  int n;
+  int *segt;
+  SegTree(int len) {
+    n = 1 << (32-__builtin_clz(len));
+    segt = new int[2*n];
+    fill(segt, segt+2*n, -1);
+  }
+  void update(int x, int v) {
+    for (segt[x+=n]=v; x>1; x/=2) {
+      segt[x/2] = max(segt[x], segt[x^1]);
+    }
+  }
+  int query(int l, int r) {
+    int res = -1;
+    for (l+=n, r+=n+1; l<r; l/=2, r/=2) {
+      if (l&1) res = max(res, segt[(l++)]);
+      if (r&1) res = max(res, segt[(--r)]);
+    }
+    return res;
+  }
 };
 
 namespace HLD {
@@ -86,77 +86,77 @@ namespace HLD {
     }
     return res;
   }
-	void insert_node(int x, int v) {
-		segt[ch[x]]->update(pos[x], v);
-	}
+  void insert_node(int x, int v) {
+    segt[ch[x]]->update(pos[x], v);
+  }
 }
 
 struct Edge {
-	int a, b, c;
+  int a, b, c;
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	read(T);
+  int T;
+  read(T);
 
-	while (T--) {
-		int n;
-		read(n);
-		for (int i=1; i<=n; i++) {
-			adj[i].clear();
-		}
+  while (T--) {
+    int n;
+    read(n);
+    for (int i=1; i<=n; i++) {
+      adj[i].clear();
+    }
 
-		vector<Edge> edges;
-		for (int i=1; i<n; i++) {
-			int a, b, c;
-			read(a); read(b); read(c); 
-			adj[a].push_back(b);
-			adj[b].push_back(a);
-			edges.push_back({a,b,c});
-		}
-		HLD::build(1);
+    vector<Edge> edges;
+    for (int i=1; i<n; i++) {
+      int a, b, c;
+      read(a); read(b); read(c); 
+      adj[a].push_back(b);
+      adj[b].push_back(a);
+      edges.push_back({a,b,c});
+    }
+    HLD::build(1);
 
-		for (Edge& e : edges) {
-			if (e.a == HLD::par[e.b]) swap(e.a, e.b);
-			HLD::insert_node(e.a, e.c);
-		}
+    for (Edge& e : edges) {
+      if (e.a == HLD::par[e.b]) swap(e.a, e.b);
+      HLD::insert_node(e.a, e.c);
+    }
 
-		for(;;) {
-			char s; readchar(s);
-			if (s == 'D') {
-				readchar(s);
-				readchar(s);
-				readchar(s);
-				break;
-			} else if (s == 'Q') {
-				readchar(s);
-				readchar(s);
-				readchar(s);
-				readchar(s);
-				int a, b;
-				read(a); read(b);
-				printf("%d\n", HLD::query_path(a,b));
-			} else {
-				readchar(s);
-				readchar(s);
-				readchar(s);
-				readchar(s);
-				readchar(s);
-				int a, b;
-				read(a); read(b);
-				HLD::insert_node(edges[a-1].a, b);
-			}
-		}
-	}
+    for(;;) {
+      char s; readchar(s);
+      if (s == 'D') {
+        readchar(s);
+        readchar(s);
+        readchar(s);
+        break;
+      } else if (s == 'Q') {
+        readchar(s);
+        readchar(s);
+        readchar(s);
+        readchar(s);
+        int a, b;
+        read(a); read(b);
+        printf("%d\n", HLD::query_path(a,b));
+      } else {
+        readchar(s);
+        readchar(s);
+        readchar(s);
+        readchar(s);
+        readchar(s);
+        int a, b;
+        read(a); read(b);
+        HLD::insert_node(edges[a-1].a, b);
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

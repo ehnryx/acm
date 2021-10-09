@@ -27,72 +27,72 @@ int x[N], y[N];
 int cnt[2][2];
 
 ll ncr(int n, int r) {
-	ll res = 1;
-	For(i,r) res *= n-i;
-	For(i,r) res /= i+1;
-	return res;
+  ll res = 1;
+  For(i,r) res *= n-i;
+  For(i,r) res /= i+1;
+  return res;
 }
 
 int solve() {
-	memset(cnt, 0, sizeof cnt);
+  memset(cnt, 0, sizeof cnt);
 
-	int n;
-	cin >> n;
-	For(i,n) {
-		cin >> x[i] >> y[i];
-		cnt[abs(x[i])%2][abs(y[i])%2]++;
-	}
+  int n;
+  cin >> n;
+  For(i,n) {
+    cin >> x[i] >> y[i];
+    cnt[abs(x[i])%2][abs(y[i])%2]++;
+  }
 
-	set<map<pii,int>> todo;
-	For(ax,2) {
-		For(ay,2) {
-			For(bx,2) {
-				For(by,2) {
-					For(cx,2) {
-						For(cy,2) {
-							if ((ax*by+bx*cy+cx*ay+ay*bx+by*cx+cy*ax)%2 == 0) {
-								map<pii,int> cur;
-								cur[pii(ax,ay)]++;
-								cur[pii(bx,by)]++;
-								cur[pii(cx,cy)]++;
-								todo.insert(cur);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  set<map<pii,int>> todo;
+  For(ax,2) {
+    For(ay,2) {
+      For(bx,2) {
+        For(by,2) {
+          For(cx,2) {
+            For(cy,2) {
+              if ((ax*by+bx*cy+cx*ay+ay*bx+by*cx+cy*ax)%2 == 0) {
+                map<pii,int> cur;
+                cur[pii(ax,ay)]++;
+                cur[pii(bx,by)]++;
+                cur[pii(cx,cy)]++;
+                todo.insert(cur);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-	ll ans = 0;
-	for (const auto& cur : todo) {
-		ll res = 1;
-		for (const auto& it : cur) {
-			res *= ncr(cnt[it.first.first][it.first.second], it.second);
-		}
-		ans += res;
-	}
+  ll ans = 0;
+  for (const auto& cur : todo) {
+    ll res = 1;
+    for (const auto& it : cur) {
+      res *= ncr(cnt[it.first.first][it.first.second], it.second);
+    }
+    ans += res;
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		assert(solve() == 0);
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    assert(solve() == 0);
+  }
 
-	return 0;
+  return 0;
 }

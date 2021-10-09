@@ -20,32 +20,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 void solve() {
-	int a,b;
-	scanf("%d:%d",&a,&b);
-	if (a+1 < b+6) cout << "NO" << nl;
-	else if (a+1 > b+6) cout << "YES" << nl;
-	else {
-		if (a+2 < 2*b+6) cout << "NO" << nl;
-		else if (a+2 > 2*b+6) cout << "YES" << nl;
-		else cout << "PENALTIES" << nl;
-	}
+  int a,b;
+  scanf("%d:%d",&a,&b);
+  if (a+1 < b+6) cout << "NO" << nl;
+  else if (a+1 > b+6) cout << "YES" << nl;
+  else {
+    if (a+2 < 2*b+6) cout << "NO" << nl;
+    else if (a+2 > 2*b+6) cout << "YES" << nl;
+    else cout << "PENALTIES" << nl;
+  }
 }
 
 int main() {
-	//ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  //ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
-	freopen(TESTFILE ".in", "r", stdin);
+  freopen(TESTFILE ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	for (int tt=1; tt<=T; tt++) {
-		cout << "Case " << tt << ": ";
-		solve();
-	}
+  for (int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

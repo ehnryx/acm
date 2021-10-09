@@ -19,34 +19,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, k;
-	cin >> n >> m >> k;
+  int n, m, k;
+  cin >> n >> m >> k;
 
-	int minv = INF, maxv = -INF;
-	int a = INF, b;
-	vector<int> diff;
-	for (int i=0; i<n; i++) {
-		cin >> b;
-		minv = min(minv, b);
-		maxv = max(maxv, b);
-		diff.push_back(b-a-1);
-		a = b;
-	}
-	sort(diff.begin(), diff.end(), greater<int>());
+  int minv = INF, maxv = -INF;
+  int a = INF, b;
+  vector<int> diff;
+  for (int i=0; i<n; i++) {
+    cin >> b;
+    minv = min(minv, b);
+    maxv = max(maxv, b);
+    diff.push_back(b-a-1);
+    a = b;
+  }
+  sort(diff.begin(), diff.end(), greater<int>());
 
-	int sum = 0;
-	for (int i=0; i<k-1; i++) {
-		sum += diff[i];
-	}
-	cout << maxv-minv+1 - sum << nl;
+  int sum = 0;
+  for (int i=0; i<k-1; i++) {
+    sum += diff[i];
+  }
+  cout << maxv-minv+1 - sum << nl;
 
-	return 0;
+  return 0;
 }

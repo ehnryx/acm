@@ -23,83 +23,83 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 string convert(const string& s) {
-	string res;
-	for(char c:s) {
-		if(isalpha(c)) {
-			res.push_back(tolower(c));
-		}
-	}
-	return res;
+  string res;
+  for(char c:s) {
+    if(isalpha(c)) {
+      res.push_back(tolower(c));
+    }
+  }
+  return res;
 }
 
 bool contains(const string& s, const string& t) {
-	int i = 0;
-	for(char c:t) {
-		if(i>s.size()) return false;
-		while(c!=s[i]) {
-			i++;
-			if(i>s.size()) return false;
-		}
-		i++;
-	}
-	return true;
+  int i = 0;
+  for(char c:t) {
+    if(i>s.size()) return false;
+    while(c!=s[i]) {
+      i++;
+      if(i>s.size()) return false;
+    }
+    i++;
+  }
+  return true;
 }
 
 bool similar(string s, const string& t) {
-	if(s.size() == t.size()) {
-		for(int i=0;i<s.size();i++) {
-			if(i>0) {
-				swap(s[i],s[i-1]);
-				if(s==t) return true;
-				swap(s[i],s[i-1]);
-			}
-			char orig = s[i];
-			for(int c=0;c<26;c++) {
-				s[i] = c+'a';
-				if(s==t) return true;
-			}
-			s[i] = orig;
-		}
-		return false;
-	} else if(s.size() == t.size()-1) {
-		return contains(t,s);
-	} else if(t.size() == s.size()-1) {
-		return contains(s,t);
-	}
-	return false;
+  if(s.size() == t.size()) {
+    for(int i=0;i<s.size();i++) {
+      if(i>0) {
+        swap(s[i],s[i-1]);
+        if(s==t) return true;
+        swap(s[i],s[i-1]);
+      }
+      char orig = s[i];
+      for(int c=0;c<26;c++) {
+        s[i] = c+'a';
+        if(s==t) return true;
+      }
+      s[i] = orig;
+    }
+    return false;
+  } else if(s.size() == t.size()-1) {
+    return contains(t,s);
+  } else if(t.size() == s.size()-1) {
+    return contains(s,t);
+  }
+  return false;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	set<string> w;
-	for(string s; cin>>s && s!="***"; ) {
-		string t = convert(s);
-		if(!t.empty()) w.insert(t);
-	}
+  set<string> w;
+  for(string s; cin>>s && s!="***"; ) {
+    string t = convert(s);
+    if(!t.empty()) w.insert(t);
+  }
 
-	bool out = false;
-	for(const string& s:w) {
-		vector<string> sim;
-		for(const string& t:w) {
-			if(s!=t && similar(s,t)) {
-				sim.push_back(t);
-			}
-		}
-		if(!sim.empty()) {
-			cout<<s<<": ";
-			for(const string& t:sim) {
-				cout<<t<<" ";
-			}
-			cout<<nl;
-			out = true;
-		}
-	}
-	if(!out) {
-		cout<<"***"<<nl;
-	}
+  bool out = false;
+  for(const string& s:w) {
+    vector<string> sim;
+    for(const string& t:w) {
+      if(s!=t && similar(s,t)) {
+        sim.push_back(t);
+      }
+    }
+    if(!sim.empty()) {
+      cout<<s<<": ";
+      for(const string& t:sim) {
+        cout<<t<<" ";
+      }
+      cout<<nl;
+      out = true;
+    }
+  }
+  if(!out) {
+    cout<<"***"<<nl;
+  }
 
-	return 0;
+  return 0;
 }

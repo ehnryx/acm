@@ -27,34 +27,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	multiset<pii> cur;
-	while(n--) {
-		string s;
-		cin>>s;
-		if(s=="add") {
-			int a,b;
-			cin>>a>>b;
-			cur.insert(pii(a,b));
-		} else {
-			int x;
-			cin>>x;
-			ll res = 0;
-			auto it = cur.upper_bound(pii(x,INF));
-			while(it!=cur.begin()) {
-				--it;
-				res += it->second;
-				x -= it->first;
-				cur.erase(it);
-				it = cur.upper_bound(pii(x,INF));
-			}
-			cout<<res<<nl;
-		}
-	}
+  int n;
+  cin>>n;
+  multiset<pii> cur;
+  while(n--) {
+    string s;
+    cin>>s;
+    if(s=="add") {
+      int a,b;
+      cin>>a>>b;
+      cur.insert(pii(a,b));
+    } else {
+      int x;
+      cin>>x;
+      ll res = 0;
+      auto it = cur.upper_bound(pii(x,INF));
+      while(it!=cur.begin()) {
+        --it;
+        res += it->second;
+        x -= it->first;
+        cur.erase(it);
+        it = cur.upper_bound(pii(x,INF));
+      }
+      cout<<res<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

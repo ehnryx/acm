@@ -13,14 +13,14 @@ const int O = 1e9;
 mt19937 rng;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int n = 1e5;
-	cout << n << nl;
-	for (int i=0; i<n; i++) {
-		cout << ((int)rng()%C - O) << " " << ((int)rng()%C - O) << nl;
-	}
+  int n = 1e5;
+  cout << n << nl;
+  for (int i=0; i<n; i++) {
+    cout << ((int)rng()%C - O) << " " << ((int)rng()%C - O) << nl;
+  }
 
-	return 0;
+  return 0;
 }

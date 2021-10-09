@@ -24,56 +24,56 @@ ll rmemo[1<<20];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	unordered_set<int> graph[m];
+  unordered_set<int> graph[m];
 
-	int sid = 0;
-	unordered_map<string,int> idx;
-	unordered_set<int> cur;
-	for (int i=0; i<n; i++) {
-		int t;
-		cin >> t;
-		if (t == 1) {
-			for (int a : cur) {
-				for (int b : cur) {
-					if (a==b) continue;
-					graph[a].insert(b);
-				}
-			}
-			cur.clear();
-		} else {
-			string s;
-			cin >> s;
-			if (!idx.count(s)) idx[s] = sid++;
-			cur.insert(idx[s]);
-		}
-	}
-	for (int a : cur) {
-		for (int b : cur) {
-			if (a==b) continue;
-			graph[a].insert(b);
-		}
-	}
+  int sid = 0;
+  unordered_map<string,int> idx;
+  unordered_set<int> cur;
+  for (int i=0; i<n; i++) {
+    int t;
+    cin >> t;
+    if (t == 1) {
+      for (int a : cur) {
+        for (int b : cur) {
+          if (a==b) continue;
+          graph[a].insert(b);
+        }
+      }
+      cur.clear();
+    } else {
+      string s;
+      cin >> s;
+      if (!idx.count(s)) idx[s] = sid++;
+      cur.insert(idx[s]);
+    }
+  }
+  for (int a : cur) {
+    for (int b : cur) {
+      if (a==b) continue;
+      graph[a].insert(b);
+    }
+  }
 
-	for (int i=0; i<m; i++) {
-		for (int j=0; j<m; j++) {
-			if (i==j || graph[i].count(j)) continue;
-			adj[i][j] = true;
-			nbr[i] |= 1LL<<j;
-		}
-	}
+  for (int i=0; i<m; i++) {
+    for (int j=0; j<m; j++) {
+      if (i==j || graph[i].count(j)) continue;
+      adj[i][j] = true;
+      nbr[i] |= 1LL<<j;
+    }
+  }
 
-	// TODO
+  // TODO
 
-	return 0;
+  return 0;
 }

@@ -23,48 +23,48 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int a;
+  int a;
 
-	vector<int> b;
-	while (cin >> a) {
-		b.pb(a);
-	}
-	int preans = -1;
-	int ans = 0;
-	set<vector<int>> s;
-	s.insert(b);
-	for (;;) {
-		int j = -1;
-		int m = -1;
-		int n = b.size();
-		for (int i = 0; i < b.size(); i++) {
-			if (b[i] > m) {
-				j = i;
-				m = b[i];
-			}
-		}
-		int id = j+1;
-		int cc = b[j];
-		for (int c = b[j]; c > 0; c--) {
-			b[id%n]++;
-			id++;
-		}
-		b[j] -= cc;
-		ans++;
-		if (s.count(b)) {
-			bool quit = false;
-			if (preans != -1) quit = true;
-			cout << ans - preans << endl;
-			preans = ans;
-			cout << preans << endl << endl;
-			s.clear();
-			if (quit) break;
-		}
-		s.insert(b);
-	}
+  vector<int> b;
+  while (cin >> a) {
+    b.pb(a);
+  }
+  int preans = -1;
+  int ans = 0;
+  set<vector<int>> s;
+  s.insert(b);
+  for (;;) {
+    int j = -1;
+    int m = -1;
+    int n = b.size();
+    for (int i = 0; i < b.size(); i++) {
+      if (b[i] > m) {
+        j = i;
+        m = b[i];
+      }
+    }
+    int id = j+1;
+    int cc = b[j];
+    for (int c = b[j]; c > 0; c--) {
+      b[id%n]++;
+      id++;
+    }
+    b[j] -= cc;
+    ans++;
+    if (s.count(b)) {
+      bool quit = false;
+      if (preans != -1) quit = true;
+      cout << ans - preans << endl;
+      preans = ans;
+      cout << preans << endl << endl;
+      s.clear();
+      if (quit) break;
+    }
+    s.insert(b);
+  }
 
-	return 0;
+  return 0;
 }

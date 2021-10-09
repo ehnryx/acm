@@ -47,60 +47,60 @@ struct suff_array {
 };
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	int m = s.size();
-	s.push_back(' ');
+  string s;
+  cin >> s;
+  int m = s.size();
+  s.push_back(' ');
 
-	int n;
-	cin >> n;
-	int start[n], len[n];
-	for(int i=0; i<n; i++) {
-		string t;
-		cin >> t;
-		start[i] = s.size();
-		len[i] = t.size();
-		s += t;
-	}
+  int n;
+  cin >> n;
+  int start[n], len[n];
+  for(int i=0; i<n; i++) {
+    string t;
+    cin >> t;
+    start[i] = s.size();
+    len[i] = t.size();
+    s += t;
+  }
 
-	int tot = s.size();
-	suff_array sa(s);
-	const auto& inv = sa.get_sarray();
-	vector<int> idx(tot);
-	for(int i=0; i<tot; i++) {
-		idx[inv[i]] = i;
-	}
+  int tot = s.size();
+  suff_array sa(s);
+  const auto& inv = sa.get_sarray();
+  vector<int> idx(tot);
+  for(int i=0; i<tot; i++) {
+    idx[inv[i]] = i;
+  }
 
-	set<int> vals;
-	for(int i=0; i<m; i++) {
-		vals.insert(inv[i]);
-	}
+  set<int> vals;
+  for(int i=0; i<m; i++) {
+    vals.insert(inv[i]);
+  }
 
-	for(int i=0; i<n; i++) {
-		int cnt = 0;
-		for(int j=0; j<len[i]; ) {
-			int clen = 0;
-			int v = start[i]+j;
-			auto it = vals.lower_bound(inv[v]);
-			if(it!=vals.end()) {
-				clen = max(clen, sa.lcp(v, idx[*it]));
-			}
-			if(it!=vals.begin()) {
-				clen = max(clen, sa.lcp(v, idx[*prev(it)]));
-			}
-			if(clen == 0) {
-				cnt = -1;
-				break;
-			} else {
-				j += clen;
-				cnt++;
-			}
-		}
-		cout << cnt << nl;
-	}
+  for(int i=0; i<n; i++) {
+    int cnt = 0;
+    for(int j=0; j<len[i]; ) {
+      int clen = 0;
+      int v = start[i]+j;
+      auto it = vals.lower_bound(inv[v]);
+      if(it!=vals.end()) {
+        clen = max(clen, sa.lcp(v, idx[*it]));
+      }
+      if(it!=vals.begin()) {
+        clen = max(clen, sa.lcp(v, idx[*prev(it)]));
+      }
+      if(clen == 0) {
+        cnt = -1;
+        break;
+      } else {
+        j += clen;
+        cnt++;
+      }
+    }
+    cout << cnt << nl;
+  }
 
-	return 0;
+  return 0;
 }

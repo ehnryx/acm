@@ -47,106 +47,106 @@ int idx[N], ans[N], cnt[N];
 //  3. auto matches = trie.match(string) to find words in string
 //*!
 struct AhoCorasick {
-	struct Node {
-		Node *end, *p;
-		unordered_map<char,Node*> ch;
-		int id, d;
-		Node(int d=0): id(-1), d(d) {}
-	};
+  struct Node {
+    Node *end, *p;
+    unordered_map<char,Node*> ch;
+    int id, d;
+    Node(int d=0): id(-1), d(d) {}
+  };
 
-	Node* root;
-	int wcnt;
-	AhoCorasick(): root(new Node), wcnt(0) {}
+  Node* root;
+  int wcnt;
+  AhoCorasick(): root(new Node), wcnt(0) {}
 
-	void insert(const string& s) {
-		Node* u = root;
-		for (char c : s) {
-			if (!u->ch.count(c)) u->ch[c] = new Node(u->d+1);
-			u = u->ch[c];
-		}
-		assert(u->id == -1); u->id = wcnt++;
-	}
+  void insert(const string& s) {
+    Node* u = root;
+    for (char c : s) {
+      if (!u->ch.count(c)) u->ch[c] = new Node(u->d+1);
+      u = u->ch[c];
+    }
+    assert(u->id == -1); u->id = wcnt++;
+  }
 
-	void build() {
-		root->end = root; root->p = 0;
-		queue<Node*> bfs; bfs.push(root);
-		while (!bfs.empty()) {
-			Node* u = bfs.front(); bfs.pop();
-			for (const auto& it : u->ch) {
-				char c; Node* v; tie(c,v) = it;
-				Node* j = u->p;
-				while (j && !j->ch.count(c)) j = j->p;
-				v->p = (j ? j->ch[c] : root);
-				v->end = (v->id == -1 ? v->p->end : v);
-				bfs.push(v);
-			}
-		}
-	}
+  void build() {
+    root->end = root; root->p = 0;
+    queue<Node*> bfs; bfs.push(root);
+    while (!bfs.empty()) {
+      Node* u = bfs.front(); bfs.pop();
+      for (const auto& it : u->ch) {
+        char c; Node* v; tie(c,v) = it;
+        Node* j = u->p;
+        while (j && !j->ch.count(c)) j = j->p;
+        v->p = (j ? j->ch[c] : root);
+        v->end = (v->id == -1 ? v->p->end : v);
+        bfs.push(v);
+      }
+    }
+  }
 
-	void match(int s, Node* u) {
-		while (u!=root && !u->ch.count(pc[s])) u = u->p;
-		if (u->ch.count(pc[s])) u = u->ch[pc[s]];
-		for (Node* v=u; v->end!=root; v=v->p) {
-			v = v->end;
-			cnt[v->id]++;
-		}
-		for(pii it:ev[s]) {
-			ans[it.second] = cnt[it.first];
-		}
-		for(int t : adj[s]) {
-			match(t, u);
-		}
-		for (Node* v=u; v->end!=root; v=v->p) {
-			v = v->end;
-			cnt[v->id]--;
-		}
-	}
+  void match(int s, Node* u) {
+    while (u!=root && !u->ch.count(pc[s])) u = u->p;
+    if (u->ch.count(pc[s])) u = u->ch[pc[s]];
+    for (Node* v=u; v->end!=root; v=v->p) {
+      v = v->end;
+      cnt[v->id]++;
+    }
+    for(pii it:ev[s]) {
+      ans[it.second] = cnt[it.first];
+    }
+    for(int t : adj[s]) {
+      match(t, u);
+    }
+    for (Node* v=u; v->end!=root; v=v->p) {
+      v = v->end;
+      cnt[v->id]--;
+    }
+  }
 };
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=1;i<=n;i++) {
-		int t;
-		cin>>t;
-		if(t==1) {
-			cin>>pc[i];
-			adj[0].push_back(i);
-		} else {
-			int j;
-			cin>>j>>pc[i];
-			adj[j].push_back(i);
-		}
-	}
+  int n;
+  cin>>n;
+  for(int i=1;i<=n;i++) {
+    int t;
+    cin>>t;
+    if(t==1) {
+      cin>>pc[i];
+      adj[0].push_back(i);
+    } else {
+      int j;
+      cin>>j>>pc[i];
+      adj[j].push_back(i);
+    }
+  }
 
-	int m;
-	cin>>m;
-	unordered_map<string,vector<int>> todo;
-	for(int i=0;i<m;i++) {
-		string s;
-		cin>>idx[i]>>s;
-		todo[s].push_back(i);
-	}
+  int m;
+  cin>>m;
+  unordered_map<string,vector<int>> todo;
+  for(int i=0;i<m;i++) {
+    string s;
+    cin>>idx[i]>>s;
+    todo[s].push_back(i);
+  }
 
-	AhoCorasick ac;
-	int id = 0;
-	for(const auto& it:todo) {
-		ac.insert(it.first);
-		for(int j:it.second) {
-			ev[idx[j]].push_back(pii(id,j));
-		}
-		id++;
-	}
-	ac.build();
-	ac.match(0, ac.root);
-	for(int i=0;i<m;i++) {
-		cout<<ans[i]<<nl;
-	}
+  AhoCorasick ac;
+  int id = 0;
+  for(const auto& it:todo) {
+    ac.insert(it.first);
+    for(int j:it.second) {
+      ev[idx[j]].push_back(pii(id,j));
+    }
+    id++;
+  }
+  ac.build();
+  ac.match(0, ac.root);
+  for(int i=0;i<m;i++) {
+    cout<<ans[i]<<nl;
+  }
 
-	return 0;
+  return 0;
 }

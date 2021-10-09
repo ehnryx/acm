@@ -65,36 +65,36 @@ struct Int {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	string s;
-	cin >> s;
-	int n = s.size();
-	const Int P(151);
+  string s;
+  cin >> s;
+  int n = s.size();
+  const Int P(151);
 
-	Int mult = 1;
-	Int pref[n+1], inv[n+1];
-	pref[0] = 0;
-	inv[0] = 1;
-	for (int i=0; i<n; i++) {
-		pref[i+1] = pref[i] + mult*Int(s[i]);
-		mult *= P;
-		inv[i+1] = mult.inv();
-	}
+  Int mult = 1;
+  Int pref[n+1], inv[n+1];
+  pref[0] = 0;
+  inv[0] = 1;
+  for (int i=0; i<n; i++) {
+    pref[i+1] = pref[i] + mult*Int(s[i]);
+    mult *= P;
+    inv[i+1] = mult.inv();
+  }
 
-	int q;
-	cin >> q;
-	while (q--) {
-		int a, b;
-		cin >> a >> b;
-		cout << (long long)((pref[b]-pref[a])*inv[a]) << nl;
-	}
+  int q;
+  cin >> q;
+  while (q--) {
+    int a, b;
+    cin >> a >> b;
+    cout << (long long)((pref[b]-pref[a])*inv[a]) << nl;
+  }
 
-	return 0;
+  return 0;
 }

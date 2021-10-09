@@ -17,7 +17,7 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int target, jump;
+  int target, jump;
 };
 
 vector<vector<Edge>> adj = {
@@ -43,71 +43,71 @@ const lll MASK = (1<<7)-1;
 map<lll,int> memo;
 
 int value(lll bm, int i) {
-	return bm>>(7*i) & MASK;
+  return bm>>(7*i) & MASK;
 }
 
 void print(lll cur) {
-	int v = 0;
-	for (int i=0; i<5; i++) {
-		for (int j=0; j<=i; j++) {
-			cout << value(cur, v++) << " ";
-		}
-		cout << nl;
-	}
+  int v = 0;
+  for (int i=0; i<5; i++) {
+    for (int j=0; j<=i; j++) {
+      cout << value(cur, v++) << " ";
+    }
+    cout << nl;
+  }
 }
 
 int solve(lll cur) {
-	if (memo.count(cur)) { return memo[cur]; }
-	//cerr << "@: " << nl; print(cur);
-	int res = -INF;
-	for (int i=0; i<15; i++) {
-		int v = value(cur, i);
-		if (v) {
-			for (const Edge& e : adj[i]) {
-				int u = value(cur, e.jump);
-				if (u && !value(cur, e.target)) {
-					//cerr << "MOVE " << v << " over " << u << " using " << e.target << " " << e.jump << nl;
-					lll nxt = cur;
-					nxt &= ~(MASK<<(7*i));
-					nxt &= ~(MASK<<(7*e.jump));
-					nxt |= ((lll)v)<<(7*e.target);
-					res = max(res, u*v - solve(nxt));
-				}
-			}
-		}
-	}
-	if (res == -INF) res = 0;
-	//cerr << "VALUE: " << res << nl; print(cur);
-	return memo[cur] = res;
+  if (memo.count(cur)) { return memo[cur]; }
+  //cerr << "@: " << nl; print(cur);
+  int res = -INF;
+  for (int i=0; i<15; i++) {
+    int v = value(cur, i);
+    if (v) {
+      for (const Edge& e : adj[i]) {
+        int u = value(cur, e.jump);
+        if (u && !value(cur, e.target)) {
+          //cerr << "MOVE " << v << " over " << u << " using " << e.target << " " << e.jump << nl;
+          lll nxt = cur;
+          nxt &= ~(MASK<<(7*i));
+          nxt &= ~(MASK<<(7*e.jump));
+          nxt |= ((lll)v)<<(7*e.target);
+          res = max(res, u*v - solve(nxt));
+        }
+      }
+    }
+  }
+  if (res == -INF) res = 0;
+  //cerr << "VALUE: " << res << nl; print(cur);
+  return memo[cur] = res;
 }
 
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	vector<vector<int>> grid(5);
-	int a;
-	vector<int> v;
-	for (int i=0; i<5; i++) {
-		for (int j=0; j<=i; j++) {
-			cin >> a;
-			v.push_back(a);
-		}
-	}
+  vector<vector<int>> grid(5);
+  int a;
+  vector<int> v;
+  for (int i=0; i<5; i++) {
+    for (int j=0; j<=i; j++) {
+      cin >> a;
+      v.push_back(a);
+    }
+  }
 
-	reverse(v.begin(), v.end());
-	lll ha = 0;
-	for (int it : v) {
-		ha = (ha<<7) | it;
-	}
-	cout << solve(ha) << nl;
+  reverse(v.begin(), v.end());
+  lll ha = 0;
+  for (int it : v) {
+    ha = (ha<<7) | it;
+  }
+  cout << solve(ha) << nl;
 
-	return 0;
+  return 0;
 }

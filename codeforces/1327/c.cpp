@@ -24,29 +24,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, k;
-	cin >> n >> m >> k;
-	ostringstream out;
-	for(int i=0; i<n; i++) {
-		if(i>0) out << 'U';
-		for(int j=1; j<m; j++) {
-			if(i%2) out << 'R';
-			else out << 'L';
-		}
-	}
-	for(int i=n-1; i>=0; i--) {
-		for(int j=1; j<m; j++) {
-			if(i%2) out << 'L';
-			else out << 'R';
-		}
-		if(i>0) out << 'D';
-	}
-	string s = out.str();
-	cout << s.size() << nl;
-	cout << s << nl;
+  int n, m, k;
+  cin >> n >> m >> k;
+  ostringstream out;
+  for(int i=0; i<n; i++) {
+    if(i>0) out << 'U';
+    for(int j=1; j<m; j++) {
+      if(i%2) out << 'R';
+      else out << 'L';
+    }
+  }
+  for(int i=n-1; i>=0; i--) {
+    for(int j=1; j<m; j++) {
+      if(i%2) out << 'L';
+      else out << 'R';
+    }
+    if(i>0) out << 'D';
+  }
+  string s = out.str();
+  cout << s.size() << nl;
+  cout << s << nl;
 
-	return 0;
+  return 0;
 }

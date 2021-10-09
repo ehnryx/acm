@@ -136,46 +136,46 @@ unordered_map<string,int> id;
 
 unordered_set<string> leftn;
 void build_graph(string curr) {
-	for (string child : tree[curr]) {
-		if (!leftn.count(curr)) {
-			FLOW::add_edge(0, id[child], 1, 0);
-			if (curr != "CEO") {
-				FLOW::add_edge(id[child], id[curr], 1, 20000-1000*min(speed[curr], speed[child]));
-			}
-			leftn.insert(child);
-		} else {
-			FLOW::add_edge(id[child], 1002, 1, 0);
-			FLOW::add_edge(id[curr], id[child], 1, 20000-1000*min(speed[curr], speed[child]));
-		}
-		build_graph(child);
-	}
+  for (string child : tree[curr]) {
+    if (!leftn.count(curr)) {
+      FLOW::add_edge(0, id[child], 1, 0);
+      if (curr != "CEO") {
+        FLOW::add_edge(id[child], id[curr], 1, 20000-1000*min(speed[curr], speed[child]));
+      }
+      leftn.insert(child);
+    } else {
+      FLOW::add_edge(id[child], 1002, 1, 0);
+      FLOW::add_edge(id[curr], id[child], 1, 20000-1000*min(speed[curr], speed[child]));
+    }
+    build_graph(child);
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	FLOW::init();
+  FLOW::init();
 
-	string name, sup;
-	double spd;
-	int n;
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> name >> spd >> sup;
-		tree[sup].push_back(name);
-		speed[name] = spd;
-		id[name] = i+1;
-	}
-	build_graph("CEO");
+  string name, sup;
+  double spd;
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; i++) {
+    cin >> name >> spd >> sup;
+    tree[sup].push_back(name);
+    speed[name] = spd;
+    id[name] = i+1;
+  }
+  build_graph("CEO");
 
-	ll numV = 1003;
-	int s = 0, t = 1002;
-	FLOW::mcf_pot_init(numV);
-	ll price=0,flow=0; 
-	while (ll df = FLOW::mcf_update(s, t, price, numV)) 
-		flow += df;
-	cout << flow << " " << setprecision(10) << 20 - (price/1000.0)/flow << endl;
+  ll numV = 1003;
+  int s = 0, t = 1002;
+  FLOW::mcf_pot_init(numV);
+  ll price=0,flow=0; 
+  while (ll df = FLOW::mcf_update(s, t, price, numV)) 
+    flow += df;
+  cout << flow << " " << setprecision(10) << 20 - (price/1000.0)/flow << endl;
 
-	return 0;
+  return 0;
 }

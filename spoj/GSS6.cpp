@@ -101,7 +101,7 @@ void append(node* ref, node* other) { splay(ref); splay(other);
 
 int main() {
     int id = 0;
-		node* root = null;
+    node* root = null;
     int n; scanf("%d", &n);
     for (int i = 0; i < n; i++) {
         int a; scanf("%d", &a);

@@ -28,35 +28,35 @@ int dp[N][N];
 
 int n;
 int solve(int l, int r) {
-	if(l>=r) return 0;
-	if(dp[l][r]!=-1) return dp[l][r];
+  if(l>=r) return 0;
+  if(dp[l][r]!=-1) return dp[l][r];
 
-	int res = max(solve(l+1,r), solve(l,r-1));
-	for(int i=l;i<=r;i++) {
-		if(i>l && adj[l][i]) {
-			res = max(res, 1+solve(l+1,i-1)+solve(i+1,r));
-		}
-		if(i<r && adj[r][i]) {
-			res = max(res, 1+solve(l,i-1)+solve(i+1,r-1));
-		}
-	}
-	return dp[l][r] = res;
+  int res = max(solve(l+1,r), solve(l,r-1));
+  for(int i=l;i<=r;i++) {
+    if(i>l && adj[l][i]) {
+      res = max(res, 1+solve(l+1,i-1)+solve(i+1,r));
+    }
+    if(i<r && adj[r][i]) {
+      res = max(res, 1+solve(l,i-1)+solve(i+1,r-1));
+    }
+  }
+  return dp[l][r] = res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<n;j++) {
-			cin>>adj[i][j];
-		}
-	}
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<n;j++) {
+      cin>>adj[i][j];
+    }
+  }
 
-	memset(dp,-1,sizeof dp);
-	cout<<solve(0,n-1)<<nl;
+  memset(dp,-1,sizeof dp);
+  cout<<solve(0,n-1)<<nl;
 
-	return 0;
+  return 0;
 }

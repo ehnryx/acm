@@ -33,56 +33,56 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n][2];
-	vector<pii> v;
-	unordered_map<int,int> cnt[2];
-	map<pii,int> vals;
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<2;j++) {
-			cin>>a[i][j];
-			cnt[j][a[i][j]]++;
-		}
-		vals[pii(a[i][0],a[i][1])]++;
-		v.push_back(pii(a[i][0],a[i][1]));
-	}
+  int n;
+  cin>>n;
+  int a[n][2];
+  vector<pii> v;
+  unordered_map<int,int> cnt[2];
+  map<pii,int> vals;
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<2;j++) {
+      cin>>a[i][j];
+      cnt[j][a[i][j]]++;
+    }
+    vals[pii(a[i][0],a[i][1])]++;
+    v.push_back(pii(a[i][0],a[i][1]));
+  }
 
-	auto sorted = [&]() {
-		sort(v.begin(),v.end());
-		for(int i=1;i<n;i++) {
-			if(v[i].first>=v[i-1].first&&v[i].second>=v[i-1].second) continue;
-			return false;
-		}
-		return true;
-	};
+  auto sorted = [&]() {
+    sort(v.begin(),v.end());
+    for(int i=1;i<n;i++) {
+      if(v[i].first>=v[i-1].first&&v[i].second>=v[i-1].second) continue;
+      return false;
+    }
+    return true;
+  };
 
-	ll fact[n+1];
-	fact[0] = 1;
-	for(int i=1;i<=n;i++) {
-		fact[i] = i*fact[i-1]%MOD;
-	}
+  ll fact[n+1];
+  fact[0] = 1;
+  for(int i=1;i<=n;i++) {
+    fact[i] = i*fact[i-1]%MOD;
+  }
 
-	ll ans = fact[n];
-	for(int j=0;j<2;j++) {
-		ll cur = 1;
-		for(pii it:cnt[j]) {
-			cur = cur*fact[it.second]%MOD;
-		}
-		ans += MOD-cur;
-	}
-	if(sorted()) {
-		ll cur = 1;
-		for(auto it:vals) {
-			cur = cur*fact[it.second]%MOD;
-		}
-		ans += cur;
-	}
-	cout<<ans%MOD<<nl;
+  ll ans = fact[n];
+  for(int j=0;j<2;j++) {
+    ll cur = 1;
+    for(pii it:cnt[j]) {
+      cur = cur*fact[it.second]%MOD;
+    }
+    ans += MOD-cur;
+  }
+  if(sorted()) {
+    ll cur = 1;
+    for(auto it:vals) {
+      cur = cur*fact[it.second]%MOD;
+    }
+    ans += cur;
+  }
+  cout<<ans%MOD<<nl;
 
-	return 0;
+  return 0;
 }

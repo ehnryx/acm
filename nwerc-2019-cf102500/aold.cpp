@@ -13,19 +13,19 @@ int rank[M]; // score -> rank
 map<int,ll> slope[M], prefix[M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
+  ios::sync_with_stdio(0); cin.tie(0);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	for(int i=1; i<=m; i++) {
-		int k;
-		cin >> k;
-		vector<int> p(k);
-		for(int j=0; j<k; j++) {
-			cin >> p[j];
-		}
-	}
+  for(int i=1; i<=m; i++) {
+    int k;
+    cin >> k;
+    vector<int> p(k);
+    for(int j=0; j<k; j++) {
+      cin >> p[j];
+    }
+  }
 
-	return 0;
+  return 0;
 }

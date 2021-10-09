@@ -29,50 +29,50 @@ ll fact[N];
 
 ll dp[N];
 ll solve(int u, int p) {
-	if (dp[u] != -1) return dp[u];
+  if (dp[u] != -1) return dp[u];
 
-	sz[u] = 1;
-	ch[u] = 0;
-	ll cur = 1;
-	for (int v : adj[u]) {
-		if (v!=p) {
-			cur = cur * solve(v,u) % MOD * (ch[v]+1) % MOD;
-			sz[u] += sz[v];
-			ch[u]++;
-		}
-	}
-	//cerr << u << " -> " << ch[u] << nl;
+  sz[u] = 1;
+  ch[u] = 0;
+  ll cur = 1;
+  for (int v : adj[u]) {
+    if (v!=p) {
+      cur = cur * solve(v,u) % MOD * (ch[v]+1) % MOD;
+      sz[u] += sz[v];
+      ch[u]++;
+    }
+  }
+  //cerr << u << " -> " << ch[u] << nl;
 
-	return dp[u] = cur * fact[ch[u]] % MOD;
+  return dp[u] = cur * fact[ch[u]] % MOD;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	For(i,n-1) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
+  For(i,n-1) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
 
-	fact[0] = 1;
-	FOR(i,1,n) {
-		fact[i] = fact[i-1] * i % MOD;
-	}
+  fact[0] = 1;
+  FOR(i,1,n) {
+    fact[i] = fact[i-1] * i % MOD;
+  }
 
-	memset(dp, -1, sizeof dp);
-	cout << solve(1,0) * n % MOD << nl;
+  memset(dp, -1, sizeof dp);
+  cout << solve(1,0) * n % MOD << nl;
 
-	return 0;
+  return 0;
 }

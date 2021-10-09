@@ -19,48 +19,48 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a[n];
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-	}
-	sort(a, a+n, greater<int>());
+  int a[n];
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  sort(a, a+n, greater<int>());
 
-	auto valid = [&] (int k) {
-		ll sum = 0;
-		for (int i=0; i<n; i++) {
-			sum += max(0, a[i] - (i/k));
-		}
-		return sum >= m;
-	};
+  auto valid = [&] (int k) {
+    ll sum = 0;
+    for (int i=0; i<n; i++) {
+      sum += max(0, a[i] - (i/k));
+    }
+    return sum >= m;
+  };
 
-	int left = 1;
-	int right = n;
-	while (left < right) {
-		int mid = (left+right)/2;
-		if (valid(mid)) {
-			right = mid;
-		} else {
-			left = mid+1;
-		}
-	}
-	assert(left == right);
+  int left = 1;
+  int right = n;
+  while (left < right) {
+    int mid = (left+right)/2;
+    if (valid(mid)) {
+      right = mid;
+    } else {
+      left = mid+1;
+    }
+  }
+  assert(left == right);
 
-	if (valid(left)) {
-		cout << left << nl;
-	} else {
-		cout << -1 << nl;
-	}
+  if (valid(left)) {
+    cout << left << nl;
+  } else {
+    cout << -1 << nl;
+  }
 
-	return 0;
+  return 0;
 }

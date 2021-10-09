@@ -33,33 +33,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(17);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(17);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ld p[n+1];
-	FOR(i,1,n) {
-		cin >> p[i];
-	}
+  ld p[n+1];
+  FOR(i,1,n) {
+    cin >> p[i];
+  }
 
-	ld dp[n+1][n/2+1];
-	fill(dp[0], dp[0]+n/2+1, 0);
-	dp[0][0] = 1;
-	FOR(i,1,n) {
-		For(j,n/2+1) {
-			dp[i][j] = dp[i-1][j] * p[i];
-			if (j>0) dp[i][j] += dp[i-1][j-1] * (1-p[i]);
-		}
-	}
+  ld dp[n+1][n/2+1];
+  fill(dp[0], dp[0]+n/2+1, 0);
+  dp[0][0] = 1;
+  FOR(i,1,n) {
+    For(j,n/2+1) {
+      dp[i][j] = dp[i-1][j] * p[i];
+      if (j>0) dp[i][j] += dp[i-1][j-1] * (1-p[i]);
+    }
+  }
 
-	ld ans = 0;
-	For(j,n/2+1) {
-		ans += dp[n][j];
-	}
-	cout << ans << nl;
+  ld ans = 0;
+  For(j,n/2+1) {
+    ans += dp[n][j];
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

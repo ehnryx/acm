@@ -16,28 +16,28 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll solve(ll n) {
-	if (n==0) return 1;
-	int z = 63-__builtin_clzll(n);
-	return 2*solve(n - (1LL<<z));
+  if (n==0) return 1;
+  int z = 63-__builtin_clzll(n);
+  return 2*solve(n - (1LL<<z));
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		ll n;
-		cin >> n;
-		cout << n+1 - solve(n) << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    ll n;
+    cin >> n;
+    cout << n+1 - solve(n) << nl;
+  }
 
-	return 0;
+  return 0;
 }

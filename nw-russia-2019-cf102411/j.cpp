@@ -30,36 +30,36 @@ int g[N][N];
 int adj[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<n;j++) {
-			cin>>grid[i][j];
-			g[i][j] = grid[i][j] - '0';
-		}
-	}
+  int n;
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<n;j++) {
+      cin>>grid[i][j];
+      g[i][j] = grid[i][j] - '0';
+    }
+  }
 
-	for(int i=0;i<n;i++) {
-		for(int j=i+1;j<n;j++) {
-			int sum = 0;
-			for(int k=i+1;k<j;k++) {
-				sum += adj[i][k] * g[k][j] % 10;
-			}
-			if(sum%10 != g[i][j]) {
-				adj[i][j] = 1;
-			}
-		}
-	}
+  for(int i=0;i<n;i++) {
+    for(int j=i+1;j<n;j++) {
+      int sum = 0;
+      for(int k=i+1;k<j;k++) {
+        sum += adj[i][k] * g[k][j] % 10;
+      }
+      if(sum%10 != g[i][j]) {
+        adj[i][j] = 1;
+      }
+    }
+  }
 
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<n;j++) {
-			cout<<adj[i][j];
-		}
-		cout<<nl;
-	}
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<n;j++) {
+      cout<<adj[i][j];
+    }
+    cout<<nl;
+  }
 
-	return 0;
+  return 0;
 }

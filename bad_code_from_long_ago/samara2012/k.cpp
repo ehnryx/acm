@@ -15,32 +15,32 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	string s;
-	int need = 0;
+  string s;
+  int need = 0;
 
-	cin >> s;
-	for (int i = 0; i < s.size(); i++) {
-		if (s[i] == '(') {
-			need++;
-		}
-		else {
-			if (need == 0) {
-				cout << "IMPOSSIBLE" << nl;
-				return 0;
-			}
-			else {
-				need--;
-			}
-		}
-	}
-	cout << s;
-	for (int i = 0; i < need; i++) {
-		cout << ")";
-	} cout << nl;
+  cin >> s;
+  for (int i = 0; i < s.size(); i++) {
+    if (s[i] == '(') {
+      need++;
+    }
+    else {
+      if (need == 0) {
+        cout << "IMPOSSIBLE" << nl;
+        return 0;
+      }
+      else {
+        need--;
+      }
+    }
+  }
+  cout << s;
+  for (int i = 0; i < need; i++) {
+    cout << ")";
+  } cout << nl;
 
-	return 0;
+  return 0;
 
 }

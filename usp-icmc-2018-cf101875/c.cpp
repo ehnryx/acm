@@ -33,61 +33,61 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 vector<int> p;
 unordered_map<ll,int> cnt;
 void get_factors(ll v) {
-	for (int it : p) {
-		while (v%it == 0) {
-			cnt[it]++;
-			v /= it;
-		}
-	}
-	if (v>1) {
-		cnt[v]++;
-	}
+  for (int it : p) {
+    while (v%it == 0) {
+      cnt[it]++;
+      v /= it;
+    }
+  }
+  if (v>1) {
+    cnt[v]++;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	const int N = 1e6+1;
-	const int S = 1e3+1;
-	bitset<N> np;
-	for (int i=2; i<S; i++) {
-		if (!np[i]) {
-			for (int j=i*i; j<N; j+=i) {
-				np[j] = true;
-			}
-		}
-	}
-	for (int i=2; i<N; i++) {
-		if (!np[i]) {
-			p.push_back(i);
-		}
-	}
+  const int N = 1e6+1;
+  const int S = 1e3+1;
+  bitset<N> np;
+  for (int i=2; i<S; i++) {
+    if (!np[i]) {
+      for (int j=i*i; j<N; j+=i) {
+        np[j] = true;
+      }
+    }
+  }
+  for (int i=2; i<N; i++) {
+    if (!np[i]) {
+      p.push_back(i);
+    }
+  }
 
-	int b, n;
-	cin >> b >> n;
+  int b, n;
+  cin >> b >> n;
 
-	for (int i=0; i<n; i++) {
-		ll v;
-		cin >> v;
-		get_factors(v);
-	}
+  for (int i=0; i<n; i++) {
+    ll v;
+    cin >> v;
+    get_factors(v);
+  }
 
-	ll dp[cnt.size()+1][b+1];
-	memset(dp, 0, sizeof dp);
-	dp[0][1] = 1;
-	int id = 0;
-	for (const auto& it : cnt) {
-		id++;
-		for (int i=1; i<=b; i++) {
-			for (int j=0; j<=it.second && i*(j+1)<=b; j++) {
-				dp[id][i*(j+1)] = (dp[id][i*(j+1)] + dp[id-1][i]) % MOD;
-			}
-		}
-	}
-	cerr << "primes: " << id << nl;
-	cout << dp[id][b] << nl;
+  ll dp[cnt.size()+1][b+1];
+  memset(dp, 0, sizeof dp);
+  dp[0][1] = 1;
+  int id = 0;
+  for (const auto& it : cnt) {
+    id++;
+    for (int i=1; i<=b; i++) {
+      for (int j=0; j<=it.second && i*(j+1)<=b; j++) {
+        dp[id][i*(j+1)] = (dp[id][i*(j+1)] + dp[id-1][i]) % MOD;
+      }
+    }
+  }
+  cerr << "primes: " << id << nl;
+  cout << dp[id][b] << nl;
 
-	return 0;
+  return 0;
 }

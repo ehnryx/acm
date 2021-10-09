@@ -23,21 +23,21 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 void solve() {
-	int n, s, t;
-	cin >> n >> s >> t;
-	cout << max(n-s,n-t)+1 << nl;
+  int n, s, t;
+  cin >> n >> s >> t;
+  cout << max(n-s,n-t)+1 << nl;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		solve();
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

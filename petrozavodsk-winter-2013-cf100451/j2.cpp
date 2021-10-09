@@ -30,79 +30,79 @@ int cutoff;
 int n, t;
 
 int count(int x, int cut) {
-	sum = 0;
-	int cnt = 0;
-	int top = 0;
-	for (int i=1; i<=x+1; i++) {
-		int r = (cut+i-1)/i;
-		top += ((cut+i-1)%i == 0);
-		cnt += r;
-		sum += r * ((ll)r*i - (i-2)) / 2;
-	}
-	sum -= (ll)min(top,cnt-n)*cut;
-	return cnt;
+  sum = 0;
+  int cnt = 0;
+  int top = 0;
+  for (int i=1; i<=x+1; i++) {
+    int r = (cut+i-1)/i;
+    top += ((cut+i-1)%i == 0);
+    cnt += r;
+    sum += r * ((ll)r*i - (i-2)) / 2;
+  }
+  sum -= (ll)min(top,cnt-n)*cut;
+  return cnt;
 }
 
 ll solve(int x) {
-	int left = min(n,max(1,t-DOWN));
-	int right = min(n,t+UP);
-	//int left = 1;
-	//int right = 1e6;
-	for (int r=0; left < right && r < 20; r++) {
-		int mid = (left+right)/2;
-		if (count(x, mid) < n) {
-			left = mid+1;
-		} else {
-			right = mid;
-		}
-	}
-	count(x, cutoff = left);
-	return sum + (ll)x*t;
+  int left = min(n,max(1,t-DOWN));
+  int right = min(n,t+UP);
+  //int left = 1;
+  //int right = 1e6;
+  for (int r=0; left < right && r < 20; r++) {
+    int mid = (left+right)/2;
+    if (count(x, mid) < n) {
+      left = mid+1;
+    } else {
+      right = mid;
+    }
+  }
+  count(x, cutoff = left);
+  return sum + (ll)x*t;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	cin >> n >> t;
-	
-	//int right = max(0, (int)round(t/sqrt(n))-2);
-	//int left = min(999, (int)round(t/sqrt(n))+3);
-	//left = max(0, (int)round(n*approx[left]/1e6)-IDOWN);
-	//right = min(n-1, (int)round(n*approx[right]/1e6)+IUP);
-	int left = 0;
-	int right = n-1;
-	cerr << left << " " << right << nl;
-	for (int r=0; left < right && r < 20; r++) {
-		int mid = (left+right)/2;
-		if (solve(mid) > solve(mid+1)) {
-			left = mid+1;
-		} else {
-			right = mid;
-		}
-	}
+  cin >> n >> t;
+  
+  //int right = max(0, (int)round(t/sqrt(n))-2);
+  //int left = min(999, (int)round(t/sqrt(n))+3);
+  //left = max(0, (int)round(n*approx[left]/1e6)-IDOWN);
+  //right = min(n-1, (int)round(n*approx[right]/1e6)+IUP);
+  int left = 0;
+  int right = n-1;
+  cerr << left << " " << right << nl;
+  for (int r=0; left < right && r < 20; r++) {
+    int mid = (left+right)/2;
+    if (solve(mid) > solve(mid+1)) {
+      left = mid+1;
+    } else {
+      right = mid;
+    }
+  }
 
-	cout << solve(left) << nl;
-	cout << left << nl;
-	cerr << left << nl;
-	int cnt = count(left, cutoff);
-	int id = 0;
-	for (int i=1; i<=left; i++) {
-		int r = (cutoff+i-1)/i;
-		if (cnt > n) {
-			id += r-1;
-			cnt--;
-		} else {
-			id += r;
-		}
-		cout << id << ' ';
-	}
-	cout << nl;
+  cout << solve(left) << nl;
+  cout << left << nl;
+  cerr << left << nl;
+  int cnt = count(left, cutoff);
+  int id = 0;
+  for (int i=1; i<=left; i++) {
+    int r = (cutoff+i-1)/i;
+    if (cnt > n) {
+      id += r-1;
+      cnt--;
+    } else {
+      id += r;
+    }
+    cout << id << ' ';
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

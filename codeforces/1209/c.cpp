@@ -34,67 +34,67 @@ const int N = 2e5+1;
 int val[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n;
-		cin>>n;
-		string s;
-		cin>>s;
-		bool done = false;
-		for(int v=0;v<=9;v++) {
-			fill(val,val+n,0);
-			bool ok = true;
-			int last = -1;
-			int pre = 0;
-			for(int i=0;i<n;i++) {
-				if(s[i]-'0'<v) {
-					val[i] = 1;
-					last = i;
-					ok &= (s[i] >= pre);
-					pre = s[i];
-				}
-			}
-			for(int i=last+1;i<n;i++) {
-				if(s[i]-'0'==v) {
-					val[i] = 1;
-				}
-			}
-			last = n;
-			pre = '9'+1;
-			for(int i=n-1;i>=0;i--) {
-				if(s[i]-'0'>v) {
-					val[i] = 2;
-					last = i;
-					ok &= (s[i] <= pre);
-					pre = s[i];
-				}
-			}
-			for(int i=last-1;i>=0;i--) {
-				if(s[i]-'0'==v) {
-					val[i] = 2;
-				}
-			}
-			for(int i=0;i<n;i++) {
-				ok &= (val[i] != 0);
-			}
-			if(ok) {
-				for(int i=0;i<n;i++) {
-					cout<<val[i];
-				}
-				cout<<nl;
-				done = true;
-				break;
-			}
-		}
-		if(!done) {
-			cout<<'-'<<nl;
-		}
-	}
+  int T;
+  cin>>T;
+  while(T--) {
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    bool done = false;
+    for(int v=0;v<=9;v++) {
+      fill(val,val+n,0);
+      bool ok = true;
+      int last = -1;
+      int pre = 0;
+      for(int i=0;i<n;i++) {
+        if(s[i]-'0'<v) {
+          val[i] = 1;
+          last = i;
+          ok &= (s[i] >= pre);
+          pre = s[i];
+        }
+      }
+      for(int i=last+1;i<n;i++) {
+        if(s[i]-'0'==v) {
+          val[i] = 1;
+        }
+      }
+      last = n;
+      pre = '9'+1;
+      for(int i=n-1;i>=0;i--) {
+        if(s[i]-'0'>v) {
+          val[i] = 2;
+          last = i;
+          ok &= (s[i] <= pre);
+          pre = s[i];
+        }
+      }
+      for(int i=last-1;i>=0;i--) {
+        if(s[i]-'0'==v) {
+          val[i] = 2;
+        }
+      }
+      for(int i=0;i<n;i++) {
+        ok &= (val[i] != 0);
+      }
+      if(ok) {
+        for(int i=0;i<n;i++) {
+          cout<<val[i];
+        }
+        cout<<nl;
+        done = true;
+        break;
+      }
+    }
+    if(!done) {
+      cout<<'-'<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

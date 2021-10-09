@@ -19,35 +19,35 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	unordered_set<int> vals;
-	for (int i = 1; i <= m; i++) {
-		vals.insert(i);
-	}
+  unordered_set<int> vals;
+  for (int i = 1; i <= m; i++) {
+    vals.insert(i);
+  }
 
-	int a, b;
-	for (int i = 0; i < n; i++) {
-		cin >> a >> b;
-		for (int j = a; j <= b; j++) {
-			vals.erase(j);
-		}
-	}
+  int a, b;
+  for (int i = 0; i < n; i++) {
+    cin >> a >> b;
+    for (int j = a; j <= b; j++) {
+      vals.erase(j);
+    }
+  }
 
-	cout << vals.size() << nl;
-	for (int it : vals) {
-		cout << it << " ";
-	}
-	cout << nl;
+  cout << vals.size() << nl;
+  for (int it : vals) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

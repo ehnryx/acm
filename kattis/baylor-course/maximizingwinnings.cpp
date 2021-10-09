@@ -22,46 +22,46 @@ int dp1[M][N], dp2[M][N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int n;;) {
-		cin >> n;
-		if (!n) break;
+  for (int n;;) {
+    cin >> n;
+    if (!n) break;
 
-		for (int i=0; i<n; i++) {
-			for (int j=0; j<n; j++) {
-				cin >> adj[i][j];
-			}
-		}
+    for (int i=0; i<n; i++) {
+      for (int j=0; j<n; j++) {
+        cin >> adj[i][j];
+      }
+    }
 
-		int m;
-		cin >> m;
-		fill(&dp1[0][0], &dp1[0][0]+M*N, -INF);
-		fill(&dp2[0][0], &dp2[0][0]+M*N, INF);
-		dp1[0][0] = dp2[0][0] = 0;
-		for (int i=1; i<=m; i++) {
-			for (int j=0; j<n; j++) {
-				for (int k=0; k<n; k++) {
-					dp1[i][j] = max(dp1[i][j], dp1[i-1][k] + adj[k][j]);
-					dp2[i][j] = min(dp2[i][j], dp2[i-1][k] + adj[k][j]);
-				}
-			}
-		}
+    int m;
+    cin >> m;
+    fill(&dp1[0][0], &dp1[0][0]+M*N, -INF);
+    fill(&dp2[0][0], &dp2[0][0]+M*N, INF);
+    dp1[0][0] = dp2[0][0] = 0;
+    for (int i=1; i<=m; i++) {
+      for (int j=0; j<n; j++) {
+        for (int k=0; k<n; k++) {
+          dp1[i][j] = max(dp1[i][j], dp1[i-1][k] + adj[k][j]);
+          dp2[i][j] = min(dp2[i][j], dp2[i-1][k] + adj[k][j]);
+        }
+      }
+    }
 
-		int maxv = 0;
-		int minv = INF;
-		for (int j=0; j<n; j++) {
-			maxv = max(maxv, dp1[m][j]);
-			minv = min(minv, dp2[m][j]);
-		}
-		cout << maxv << " " << minv << nl;
-	}
+    int maxv = 0;
+    int minv = INF;
+    for (int j=0; j<n; j++) {
+      maxv = max(maxv, dp1[m][j]);
+      minv = min(minv, dp2[m][j]);
+    }
+    cout << maxv << " " << minv << nl;
+  }
 
-	return 0;
+  return 0;
 }

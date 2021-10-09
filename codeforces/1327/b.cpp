@@ -24,47 +24,47 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		vector<bool> taken(n);
-		int rem = 0;
-		for(int i=0; i<n; i++) {
-			int m;
-			cin >> m;
-			bool ok = false;
-			for(int j=0; j<m; j++) {
-				int v;
-				cin >> v;
-				--v;
-				if(!ok && !taken[v]) {
-					taken[v] = true;
-					ok = true;
-				}
-			}
-			if(!ok) {
-				rem = i+1;
-			}
-		}
-		if(rem == 0) {
-			cout << "OPTIMAL" << nl;
-		} else {
-			int ans = 0;
-			for(int i=0; i<n; i++) {
-				if(!taken[i]) {
-					ans = i+1;
-				}
-			}
-			assert(ans);
-			cout << "IMPROVE" << nl;
-			cout << rem << " " << ans << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<bool> taken(n);
+    int rem = 0;
+    for(int i=0; i<n; i++) {
+      int m;
+      cin >> m;
+      bool ok = false;
+      for(int j=0; j<m; j++) {
+        int v;
+        cin >> v;
+        --v;
+        if(!ok && !taken[v]) {
+          taken[v] = true;
+          ok = true;
+        }
+      }
+      if(!ok) {
+        rem = i+1;
+      }
+    }
+    if(rem == 0) {
+      cout << "OPTIMAL" << nl;
+    } else {
+      int ans = 0;
+      for(int i=0; i<n; i++) {
+        if(!taken[i]) {
+          ans = i+1;
+        }
+      }
+      assert(ans);
+      cout << "IMPROVE" << nl;
+      cout << rem << " " << ans << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

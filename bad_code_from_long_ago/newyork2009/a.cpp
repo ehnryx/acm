@@ -11,7 +11,7 @@ using namespace std;
 
 Get first line;
 for (int i = 0; i < line; i++) {
-	Input Line;
-	cout << i+1 << " " << sorted[7] << nl;
+  Input Line;
+  cout << i+1 << " " << sorted[7] << nl;
 }
 The End

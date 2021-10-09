@@ -35,11 +35,11 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // Warning: possibly SLOW! because Node is copied when querying
 //
 // USAGE:
-// 	SegmentTree<Node,T> magic(length);
-// 	magic.set(i,v); sets ith value to v, DOES NOT PULL
-// 	magic.build(); pulls leaves up
-// 	magic.query(l,r); range [l,r], combines segments using pull
-// 	magic.update(l,r,v); range [l,r], updates with v
+//   SegmentTree<Node,T> magic(length);
+//   magic.set(i,v); sets ith value to v, DOES NOT PULL
+//   magic.build(); pulls leaves up
+//   magic.query(l,r); range [l,r], combines segments using pull
+//   magic.update(l,r,v); range [l,r], updates with v
 // 
 // The Node class requires the following: (SEE EXAMPLE BELOW)
 // Node();
@@ -107,27 +107,27 @@ struct SegmentTree {
 //*/
 
 struct Node {
-	ll v, z;
-	Node(ll x=-INFLL): v(x), z(0) {}
-	bool get() { return true; }
-	bool put(const ll& x) { return true; }
-	void update(ll x, int len) {
-		v += x;
-		z += x;
-	}
-	void push(Node& left, Node& right, int len) {
-		if (z) {
-			left.v += z;
-			left.z += z;
-			right.v += z;
-			right.z += z;
-			z = 0;
-		}
-	}
-	const Node& pull(const Node& left, const Node& right) {
-		v = max(left.v, right.v);
-		return *this;
-	}
+  ll v, z;
+  Node(ll x=-INFLL): v(x), z(0) {}
+  bool get() { return true; }
+  bool put(const ll& x) { return true; }
+  void update(ll x, int len) {
+    v += x;
+    z += x;
+  }
+  void push(Node& left, Node& right, int len) {
+    if (z) {
+      left.v += z;
+      left.z += z;
+      right.v += z;
+      right.z += z;
+      z = 0;
+    }
+  }
+  const Node& pull(const Node& left, const Node& right) {
+    v = max(left.v, right.v);
+    return *this;
+  }
 };
 
 SegmentTree<Node,ll> segt[10];
@@ -137,30 +137,30 @@ int a[N];
 ll p[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m; ll k;
-	cin >> n >> m >> k;
+  int n, m; ll k;
+  cin >> n >> m >> k;
 
-	FOR(i,1,n) {
-		cin >> a[i];
-		p[i] = p[i-1] + a[i];
-		segt[i%m].set(i, p[i] - k*((i+m-1)/m));
-	}
-	For(i,m) {
-		segt[i].build();
-	}
+  FOR(i,1,n) {
+    cin >> a[i];
+    p[i] = p[i-1] + a[i];
+    segt[i%m].set(i, p[i] - k*((i+m-1)/m));
+  }
+  For(i,m) {
+    segt[i].build();
+  }
 
-	ll ans = 0;
-	FOR(i,1,n) {
-		For(j,m) {
-			ans = max(ans, segt[j].query(i,n).v - p[i-1]);
-		}
-		segt[i%m].update(i, n, k);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  FOR(i,1,n) {
+    For(j,m) {
+      ans = max(ans, segt[j].query(i,n).v - p[i-1]);
+    }
+    segt[i%m].update(i, n, k);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

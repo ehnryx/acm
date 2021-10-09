@@ -29,28 +29,28 @@ bool canon_egcd(ll a, ll b, ll c, ll& x, ll& y) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int a, b;
-	cin >> a >> b;
+  int a, b;
+  cin >> a >> b;
 
-	if (__gcd(a,b) == 1) {
-		ll t, x, y;
-		canon_egcd(a,-b,1,x,y);
-		t = a*x;
-		canon_egcd(b,-a,1,x,y);
-		t = max(t, b*x);
-		cout << t << nl;
-	}
-	else {
-		cout << (ll)a*b/__gcd(a,b) << nl;
-	}
+  if (__gcd(a,b) == 1) {
+    ll t, x, y;
+    canon_egcd(a,-b,1,x,y);
+    t = a*x;
+    canon_egcd(b,-a,1,x,y);
+    t = max(t, b*x);
+    cout << t << nl;
+  }
+  else {
+    cout << (ll)a*b/__gcd(a,b) << nl;
+  }
 
-	return 0;
+  return 0;
 }

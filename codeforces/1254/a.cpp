@@ -27,70 +27,70 @@ string g[N];
 char ans[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	vector<char> c;
-	for(int i=0;i<26;i++) {
-		c.push_back(i+'a');
-		c.push_back(i+'A');
-	}
-	for(int i=0;i<10;i++) {
-		c.push_back(i+'0');
-	}
+  vector<char> c;
+  for(int i=0;i<26;i++) {
+    c.push_back(i+'a');
+    c.push_back(i+'A');
+  }
+  for(int i=0;i<10;i++) {
+    c.push_back(i+'0');
+  }
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n,m,k;
-		cin>>n>>m>>k;
+  int T;
+  cin>>T;
+  while(T--) {
+    int n,m,k;
+    cin>>n>>m>>k;
 
-		int rice = 0;
-		for(int i=0;i<n;i++) {
-			cin>>g[i];
-			for(int j=0;j<m;j++) {
-				rice += (g[i][j] == 'R');
-			}
-		}
+    int rice = 0;
+    for(int i=0;i<n;i++) {
+      cin>>g[i];
+      for(int j=0;j<m;j++) {
+        rice += (g[i][j] == 'R');
+      }
+    }
 
-		int lb = rice / k;
-		int ubcnt = rice - lb*k;
-		//cerr<<"lb: "<<lb<<nl;
-		//cerr<<"ubcnt "<<ubcnt<<nl;
-		int cur = 0;
-		int id = 0;
-		for(int i=0;i<n;i++) {
-			if(i%2) {
-				for(int j=0;j<m;j++) {
-					cur += (g[i][j] == 'R');
-					if((id < ubcnt && cur > lb+1) || (id >= ubcnt && cur > lb)) {
-						id++;
-						cur = 1;
-					}
-					ans[i][j] = c[id];
-				}
-			} else {
-				for(int j=m-1;j>=0;j--) {
-					cur += (g[i][j] == 'R');
-					if((id < ubcnt && cur > lb+1) || (id >= ubcnt && cur > lb)) {
-						id++;
-						cur = 1;
-					}
-					ans[i][j] = c[id];
-				}
-			}
-		}
-		//cerr<<"id: "<<id<<nl;
-		assert(id == k-1);
+    int lb = rice / k;
+    int ubcnt = rice - lb*k;
+    //cerr<<"lb: "<<lb<<nl;
+    //cerr<<"ubcnt "<<ubcnt<<nl;
+    int cur = 0;
+    int id = 0;
+    for(int i=0;i<n;i++) {
+      if(i%2) {
+        for(int j=0;j<m;j++) {
+          cur += (g[i][j] == 'R');
+          if((id < ubcnt && cur > lb+1) || (id >= ubcnt && cur > lb)) {
+            id++;
+            cur = 1;
+          }
+          ans[i][j] = c[id];
+        }
+      } else {
+        for(int j=m-1;j>=0;j--) {
+          cur += (g[i][j] == 'R');
+          if((id < ubcnt && cur > lb+1) || (id >= ubcnt && cur > lb)) {
+            id++;
+            cur = 1;
+          }
+          ans[i][j] = c[id];
+        }
+      }
+    }
+    //cerr<<"id: "<<id<<nl;
+    assert(id == k-1);
 
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<m;j++) {
-				cout<<ans[i][j];
-			}
-			cout<<nl;
-		}
-		//cerr<<nl;
-	}
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<m;j++) {
+        cout<<ans[i][j];
+      }
+      cout<<nl;
+    }
+    //cerr<<nl;
+  }
 
-	return 0;
+  return 0;
 }

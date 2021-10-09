@@ -34,29 +34,29 @@ const int N = 2e5+1;
 ll dp[N][2];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	for(cin>>T;T--;) {
-		int n, a, b;
-		cin>>n>>a>>b;
-		string s;
-		cin>>s;
-		s += '0';
-		memset(dp,INF,sizeof dp);
-		dp[0][0] = b;
-		for(int i=1;i<=n;i++) {
-			dp[i][1] = min(dp[i][1], dp[i-1][1]+2*b+a);
-			dp[i][1] = min(dp[i][1], dp[i-1][0]+2*b+2*a);
-			if(s[i-1]=='0'&&s[i]=='0') {
-				dp[i][0] = min(dp[i][0], dp[i-1][0]+b+a);
-				dp[i][0] = min(dp[i][0], dp[i-1][1]+b+2*a);
-			}
-		}
-		cout<<dp[n][0]<<nl;
-	}
+  int T;
+  for(cin>>T;T--;) {
+    int n, a, b;
+    cin>>n>>a>>b;
+    string s;
+    cin>>s;
+    s += '0';
+    memset(dp,INF,sizeof dp);
+    dp[0][0] = b;
+    for(int i=1;i<=n;i++) {
+      dp[i][1] = min(dp[i][1], dp[i-1][1]+2*b+a);
+      dp[i][1] = min(dp[i][1], dp[i-1][0]+2*b+2*a);
+      if(s[i-1]=='0'&&s[i]=='0') {
+        dp[i][0] = min(dp[i][0], dp[i-1][0]+b+a);
+        dp[i][0] = min(dp[i][0], dp[i-1][1]+b+2*a);
+      }
+    }
+    cout<<dp[n][0]<<nl;
+  }
 
-	return 0;
+  return 0;
 }

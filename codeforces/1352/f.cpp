@@ -27,39 +27,39 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int a, b, c;
-		cin >> a >> c >> b;
-		if(b == 0 && c == 0) {
-			for(int i=0; i<=a; i++) {
-				cout << '0';
-			}
-			cout << nl;
-		} else if(a == 0 && c == 0) {
-			for(int i=0; i<=b; i++) {
-				cout << '1';
-			}
-			cout << nl;
-		} else {
-			assert(c > 0);
-			for(int i=0; i<=a; i++) {
-				cout << '0';
-			}
-			for(int i=0; i<=b; i++) {
-				cout << '1';
-			}
-			c--;
-			for(int i=0; i<c; i++) {
-				cout << (i%2 ? '1' : '0');
-			}
-			cout << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int a, b, c;
+    cin >> a >> c >> b;
+    if(b == 0 && c == 0) {
+      for(int i=0; i<=a; i++) {
+        cout << '0';
+      }
+      cout << nl;
+    } else if(a == 0 && c == 0) {
+      for(int i=0; i<=b; i++) {
+        cout << '1';
+      }
+      cout << nl;
+    } else {
+      assert(c > 0);
+      for(int i=0; i<=a; i++) {
+        cout << '0';
+      }
+      for(int i=0; i<=b; i++) {
+        cout << '1';
+      }
+      c--;
+      for(int i=0; i<c; i++) {
+        cout << (i%2 ? '1' : '0');
+      }
+      cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

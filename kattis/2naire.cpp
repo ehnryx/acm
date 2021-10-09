@@ -25,27 +25,27 @@ const int N = 30 + 2;
 ld xp[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(3);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(3);
 
-	int n; ld t;
-	while(cin >> n >> t && n) {
-		xp[n+1] = 1;
-		for(int i=n; i>0; i--) {
-			xp[i] = 0;
-			ld c = 1 / (2*xp[i+1]);
-			ld got = 1;
-			if(c > t) {
-				xp[i] += (c-t) / (1-t);
-				got = (1-c) / (1-t);
-			}
-			c = max(c, t);
-			ld p = (1./2 - c*c/2) / (1-c);
-			assert(0 <= p && p <= 1);
-			xp[i] += got * p * 2*xp[i+1];
-		}
-		cout << xp[1] << nl;
-	}
+  int n; ld t;
+  while(cin >> n >> t && n) {
+    xp[n+1] = 1;
+    for(int i=n; i>0; i--) {
+      xp[i] = 0;
+      ld c = 1 / (2*xp[i+1]);
+      ld got = 1;
+      if(c > t) {
+        xp[i] += (c-t) / (1-t);
+        got = (1-c) / (1-t);
+      }
+      c = max(c, t);
+      ld p = (1./2 - c*c/2) / (1-c);
+      assert(0 <= p && p <= 1);
+      xp[i] += got * p * 2*xp[i+1];
+    }
+    cout << xp[1] << nl;
+  }
 
-	return 0;
+  return 0;
 }

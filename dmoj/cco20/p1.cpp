@@ -27,44 +27,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	ll l, r, y;
-	cin >> l >> r >> y;
+  int n;
+  cin >> n;
+  ll l, r, y;
+  cin >> l >> r >> y;
 
-	vector<pair<ll,int>> p;
-	for(int i=0; i<n; i++) {
-		int x, v, h;
-		cin >> x >> v >> h;
-		ll dx = (h*y + v-1) / v - 1;
-		p.emplace_back(x - dx, 1);
-		p.emplace_back(x + dx + 1, -1);
-	}
-	p.emplace_back(r + 7, 0);
-	sort(p.begin(), p.end());
+  vector<pair<ll,int>> p;
+  for(int i=0; i<n; i++) {
+    int x, v, h;
+    cin >> x >> v >> h;
+    ll dx = (h*y + v-1) / v - 1;
+    p.emplace_back(x - dx, 1);
+    p.emplace_back(x + dx + 1, -1);
+  }
+  p.emplace_back(r + 7, 0);
+  sort(p.begin(), p.end());
 
-	vector<int> ans(n+1);
-	ll px = -INFLL;
-	int cur = 0;
-	for(auto [x, t] : p) {
-		ll left = max(px, l);
-		ll right = min(x, r+1);
-		//cerr<<"@ "<<x<<" "<<t<<" -> "<<left<<" "<<right<<" w/ "<<cur<<nl;
-		if(left < right) {
-			ans[cur] += right - left;
-			//cerr<<"add "<<right-left<<" to "<<cur<<nl;
-		}
-		cur += t;
-		px = x;
-	}
+  vector<int> ans(n+1);
+  ll px = -INFLL;
+  int cur = 0;
+  for(auto [x, t] : p) {
+    ll left = max(px, l);
+    ll right = min(x, r+1);
+    //cerr<<"@ "<<x<<" "<<t<<" -> "<<left<<" "<<right<<" w/ "<<cur<<nl;
+    if(left < right) {
+      ans[cur] += right - left;
+      //cerr<<"add "<<right-left<<" to "<<cur<<nl;
+    }
+    cur += t;
+    px = x;
+  }
 
-	partial_sum(ans.begin(), ans.end(), ans.begin());
-	for(int i=0; i<=n; i++) {
-		cout << ans[i] << nl;
-	}
+  partial_sum(ans.begin(), ans.end(), ans.begin());
+  for(int i=0; i<=n; i++) {
+    cout << ans[i] << nl;
+  }
 
-	return 0;
+  return 0;
 }

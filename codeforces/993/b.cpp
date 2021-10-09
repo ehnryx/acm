@@ -19,57 +19,57 @@ const int N = 12+1;
 unordered_set<int> dega[N], degb[N];
 
 int overlap(const pii& a, const pii& b) {
-	if (a.first == b.first || a.first == b.second) return a.first;
-	if (a.second == b.first || a.second == b.second) return a.second;
-	return 0;
+  if (a.first == b.first || a.first == b.second) return a.first;
+  if (a.second == b.first || a.second == b.second) return a.second;
+  return 0;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	vector<pii> a, b;
-	int x, y;
+  vector<pii> a, b;
+  int x, y;
 
-	for (int i=0; i<n; i++) {
-		cin >> x >> y;
-		a.push_back(pii(min(x,y),max(x,y)));
-	}
-	for (int i=0; i<m; i++) {
-		cin >> x >> y;
-		b.push_back(pii(min(x,y),max(x,y)));
-	}
+  for (int i=0; i<n; i++) {
+    cin >> x >> y;
+    a.push_back(pii(min(x,y),max(x,y)));
+  }
+  for (int i=0; i<m; i++) {
+    cin >> x >> y;
+    b.push_back(pii(min(x,y),max(x,y)));
+  }
 
-	unordered_set<int> read_the_problem;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<m; j++) {
-			if (a[i] != b[j] && overlap(a[i], b[j])) {
-				dega[i].insert(overlap(a[i], b[j]));
-				degb[j].insert(overlap(a[i], b[j]));
-				read_the_problem.insert(overlap(a[i], b[j]));
-			}
-		}
-	}
+  unordered_set<int> read_the_problem;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<m; j++) {
+      if (a[i] != b[j] && overlap(a[i], b[j])) {
+        dega[i].insert(overlap(a[i], b[j]));
+        degb[j].insert(overlap(a[i], b[j]));
+        read_the_problem.insert(overlap(a[i], b[j]));
+      }
+    }
+  }
 
-	if (read_the_problem.size() == 1) {
-		cout << *read_the_problem.begin() << nl;
-		return 0;
-	}
+  if (read_the_problem.size() == 1) {
+    cout << *read_the_problem.begin() << nl;
+    return 0;
+  }
 
-	bool good = true;
-	for (int i=0; i<n; i++) {
-		if (dega[i].size() > 1) good = false;
-	}
-	for (int j=0; j<m; j++) {
-		if (degb[j].size() > 1) good = false;
-	}
+  bool good = true;
+  for (int i=0; i<n; i++) {
+    if (dega[i].size() > 1) good = false;
+  }
+  for (int j=0; j<m; j++) {
+    if (degb[j].size() > 1) good = false;
+  }
 
-	if (good) cout << 0 << nl;
-	else cout << -1 << nl;
+  if (good) cout << 0 << nl;
+  else cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

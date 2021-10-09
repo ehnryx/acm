@@ -25,7 +25,7 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Pair {
-	int i, j;
+  int i, j;
 };
 
 const int N = 1e5;
@@ -34,105 +34,105 @@ unordered_map<int,int> vis[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, a, b;
-	cin >> n >> a >> b;
-	if (a > b) swap(a,b);
+  int n, a, b;
+  cin >> n >> a >> b;
+  if (a > b) swap(a,b);
 
-	For(i,n) {
-		cin >> l[i] >> r[i] >> p[i];
-	}
+  For(i,n) {
+    cin >> l[i] >> r[i] >> p[i];
+  }
 
-	if (p[a]^p[b]) {
-		cout << 0 << nl;
-		return 0;
-	}
+  if (p[a]^p[b]) {
+    cout << 0 << nl;
+    return 0;
+  }
 
-	int ans = -1;
-	const int CAP = 17;
-	queue<Pair> bfs;
-	bfs.push({a,b});
-	vis[a][b] = 1;
-	cnt[a]++; cnt[b]++;
-	int tot = 1;
-	while (!bfs.empty()) {
-		Pair c = bfs.front();
-		bfs.pop();
-		{ // left
-			int ni = min(l[c.i], l[c.j]);
-			int nj = max(l[c.i], l[c.j]);
-			if (ni != nj && !vis[ni].count(nj) && cnt[ni]<CAP && cnt[nj]<CAP) {
-				if (p[ni]^p[nj]) {
-					ans = vis[c.i][c.j];
-					break;
-				}
-				vis[ni][nj] = vis[c.i][c.j]+1;
-				bfs.push({ni,nj});
-				cnt[ni]++; cnt[nj]++;
-				tot++;
-			}
-		}
-		{ // right
-			int ni = min(r[c.i], r[c.j]);
-			int nj = max(r[c.i], r[c.j]);
-			if (ni != nj && !vis[ni].count(nj) && cnt[ni]<CAP && cnt[nj]<CAP) {
-				if (p[ni]^p[nj]) {
-					ans = vis[c.i][c.j];
-					break;
-				}
-				vis[ni][nj] = vis[c.i][c.j]+1;
-				bfs.push({ni,nj});
-				cnt[ni]++; cnt[nj]++;
-				tot++;
-			}
-		}
-	}
+  int ans = -1;
+  const int CAP = 17;
+  queue<Pair> bfs;
+  bfs.push({a,b});
+  vis[a][b] = 1;
+  cnt[a]++; cnt[b]++;
+  int tot = 1;
+  while (!bfs.empty()) {
+    Pair c = bfs.front();
+    bfs.pop();
+    { // left
+      int ni = min(l[c.i], l[c.j]);
+      int nj = max(l[c.i], l[c.j]);
+      if (ni != nj && !vis[ni].count(nj) && cnt[ni]<CAP && cnt[nj]<CAP) {
+        if (p[ni]^p[nj]) {
+          ans = vis[c.i][c.j];
+          break;
+        }
+        vis[ni][nj] = vis[c.i][c.j]+1;
+        bfs.push({ni,nj});
+        cnt[ni]++; cnt[nj]++;
+        tot++;
+      }
+    }
+    { // right
+      int ni = min(r[c.i], r[c.j]);
+      int nj = max(r[c.i], r[c.j]);
+      if (ni != nj && !vis[ni].count(nj) && cnt[ni]<CAP && cnt[nj]<CAP) {
+        if (p[ni]^p[nj]) {
+          ans = vis[c.i][c.j];
+          break;
+        }
+        vis[ni][nj] = vis[c.i][c.j]+1;
+        bfs.push({ni,nj});
+        cnt[ni]++; cnt[nj]++;
+        tot++;
+      }
+    }
+  }
 
-	while (!bfs.empty()) bfs.pop();
-	For(i,n) vis[i].clear();
-	bfs.push({a,b});
-	vis[a][b] = 1;
-	tot = 1;
-	while (!bfs.empty() && tot<3e6) {
-		Pair c = bfs.front();
-		bfs.pop();
-		{ // left
-			int ni = min(l[c.i], l[c.j]);
-			int nj = max(l[c.i], l[c.j]);
-			if (ni != nj && !vis[ni].count(nj)) {
-				if (p[ni]^p[nj]) {
-					cout << vis[c.i][c.j] << nl;
-					return 0;
-				}
-				vis[ni][nj] = vis[c.i][c.j]+1;
-				bfs.push({ni,nj});
-				tot++;
-			}
-		}
-		{ // right
-			int ni = min(r[c.i], r[c.j]);
-			int nj = max(r[c.i], r[c.j]);
-			if (ni != nj && !vis[ni].count(nj)) {
-				if (p[ni]^p[nj]) {
-					cout << vis[c.i][c.j] << nl;
-					return 0;
-				}
-				vis[ni][nj] = vis[c.i][c.j]+1;
-				bfs.push({ni,nj});
-				tot++;
-			}
-		}
-	}
+  while (!bfs.empty()) bfs.pop();
+  For(i,n) vis[i].clear();
+  bfs.push({a,b});
+  vis[a][b] = 1;
+  tot = 1;
+  while (!bfs.empty() && tot<3e6) {
+    Pair c = bfs.front();
+    bfs.pop();
+    { // left
+      int ni = min(l[c.i], l[c.j]);
+      int nj = max(l[c.i], l[c.j]);
+      if (ni != nj && !vis[ni].count(nj)) {
+        if (p[ni]^p[nj]) {
+          cout << vis[c.i][c.j] << nl;
+          return 0;
+        }
+        vis[ni][nj] = vis[c.i][c.j]+1;
+        bfs.push({ni,nj});
+        tot++;
+      }
+    }
+    { // right
+      int ni = min(r[c.i], r[c.j]);
+      int nj = max(r[c.i], r[c.j]);
+      if (ni != nj && !vis[ni].count(nj)) {
+        if (p[ni]^p[nj]) {
+          cout << vis[c.i][c.j] << nl;
+          return 0;
+        }
+        vis[ni][nj] = vis[c.i][c.j]+1;
+        bfs.push({ni,nj});
+        tot++;
+      }
+    }
+  }
 
-	if (ans != -1) cout << ans << nl;
-	else cout << "indistinguishable" << nl;
+  if (ans != -1) cout << ans << nl;
+  else cout << "indistinguishable" << nl;
 
-	return 0;
+  return 0;
 }

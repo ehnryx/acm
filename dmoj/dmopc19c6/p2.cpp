@@ -24,33 +24,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int a, b;
-	cin >> a >> b;
+  int a, b;
+  cin >> a >> b;
 
-	vector<pair<int,int>> pc;
-	for(int i=2; i<=a; i++) {
-		if(a%i == 0) {
-			int cnt = 0;
-			while(a%i == 0) {
-				a /= i;
-				cnt++;
-			}
-			pc.push_back(make_pair(i, cnt));
-		}
-	}
+  vector<pair<int,int>> pc;
+  for(int i=2; i<=a; i++) {
+    if(a%i == 0) {
+      int cnt = 0;
+      while(a%i == 0) {
+        a /= i;
+        cnt++;
+      }
+      pc.push_back(make_pair(i, cnt));
+    }
+  }
 
-	int ans = INF;
-	for(auto [p, cnt] : pc) {
-		int have = 0;
-		for(int i=p; i<=b; i*=p) {
-			have += b/i;
-		}
-		ans = min(ans, have/cnt);
-	}
-	cout << ans << nl;
+  int ans = INF;
+  for(auto [p, cnt] : pc) {
+    int have = 0;
+    for(int i=p; i<=b; i*=p) {
+      have += b/i;
+    }
+    ans = min(ans, have/cnt);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

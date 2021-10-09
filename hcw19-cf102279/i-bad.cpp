@@ -33,40 +33,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n];
-	int sum = 0;
-	int minv = INF;
-	int minc = 0;
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		sum ^= a[i]&1;
-		if(a[i]<minv) {
-			minv = a[i];
-			minc = 0;
-		}
-		minc += (a[i]==minv);
-	}
+  int n;
+  cin>>n;
+  int a[n];
+  int sum = 0;
+  int minv = INF;
+  int minc = 0;
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    sum ^= a[i]&1;
+    if(a[i]<minv) {
+      minv = a[i];
+      minc = 0;
+    }
+    minc += (a[i]==minv);
+  }
 
-	if(n%2==1) {
-		if(sum) cout<<"lowie"<<nl;
-		else cout<<"imitater"<<nl;
-	}
-	else {
-		if(sum) {
-			if(minv%2==0) cout<<"lowie"<<nl;
-			else if(minc==1) cout<<"lowie"<<nl;
-			else cout<<"imitater"<<nl;
-		} else {
-			if(minv%2==1) cout<<"lowie"<<nl;
-			else cout<<"imitater"<<nl;
-		}
-	}
+  if(n%2==1) {
+    if(sum) cout<<"lowie"<<nl;
+    else cout<<"imitater"<<nl;
+  }
+  else {
+    if(sum) {
+      if(minv%2==0) cout<<"lowie"<<nl;
+      else if(minc==1) cout<<"lowie"<<nl;
+      else cout<<"imitater"<<nl;
+    } else {
+      if(minv%2==1) cout<<"lowie"<<nl;
+      else cout<<"imitater"<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

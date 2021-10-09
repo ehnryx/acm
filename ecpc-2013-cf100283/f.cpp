@@ -22,53 +22,53 @@ const ll UB = 2.1e12;
 ll sqr(ll x) { return x*x; }
 
 ll sum(ll n) {
-	//cerr << "SUM " << n << nl;
-	ll r = floor(sqrt(n));
-	//cerr << "  r " << r << nl;
-	ll res = r*(r+1)*(2*r+1)/6;
-	//cerr << "  base: " << res << nl;
-	ll left = min(n-sqr(r),r);
-	ll right = sqr(r+1)-n;
-	//cerr << "  left: " << left << "  right: " << right << nl;
-	res += left*(left+1)/2;
-	if (n-sqr(r) > r) res += (r+1)*(r+2)/2 - right*(right+1)/2;
-	//cerr << "  res: " << res << nl;
-	//cerr << nl;
-	return res;
+  //cerr << "SUM " << n << nl;
+  ll r = floor(sqrt(n));
+  //cerr << "  r " << r << nl;
+  ll res = r*(r+1)*(2*r+1)/6;
+  //cerr << "  base: " << res << nl;
+  ll left = min(n-sqr(r),r);
+  ll right = sqr(r+1)-n;
+  //cerr << "  left: " << left << "  right: " << right << nl;
+  res += left*(left+1)/2;
+  if (n-sqr(r) > r) res += (r+1)*(r+2)/2 - right*(right+1)/2;
+  //cerr << "  res: " << res << nl;
+  //cerr << nl;
+  return res;
 }
 
 void solve() {
-	ll n;
-	cin >> n;
+  ll n;
+  cin >> n;
 
-	ll left = 1;
-	ll right = UB;
-	while (left<right) {
-		ll mid = (left+right)/2;
-		if (sum(mid) >= n) {
-			right = mid;
-		} else {
-			left = mid+1;
-		}
-	}
-	cout << left << nl;
+  ll left = 1;
+  ll right = UB;
+  while (left<right) {
+    ll mid = (left+right)/2;
+    if (sum(mid) >= n) {
+      right = mid;
+    } else {
+      left = mid+1;
+    }
+  }
+  cout << left << nl;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
-	freopen(TESTFILE ".in", "r", stdin);
+  freopen(TESTFILE ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	for (int tt=1; tt<=T; tt++) {
-		cout << "Case " << tt << ": ";
-		solve();
-	}
+  for (int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

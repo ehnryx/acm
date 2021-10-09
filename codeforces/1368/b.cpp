@@ -27,26 +27,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll k;
-	cin >> k;
+  ll k;
+  cin >> k;
 
-	string s = "codeforces";
-	int n = s.size();
-	vector<int> cnt(n, 1);
-	ll cur = 1;
-	for(int i=0; cur < k; i=(i+1)%n) {
-		cur /= cnt[i];
-		cur *= ++cnt[i];
-	}
-	for(int i=0; i<n; i++) {
-		while(cnt[i]--) {
-			cout << s[i];
-		}
-	}
-	cout << nl;
+  string s = "codeforces";
+  int n = s.size();
+  vector<int> cnt(n, 1);
+  ll cur = 1;
+  for(int i=0; cur < k; i=(i+1)%n) {
+    cur /= cnt[i];
+    cur *= ++cnt[i];
+  }
+  for(int i=0; i<n; i++) {
+    while(cnt[i]--) {
+      cout << s[i];
+    }
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

@@ -13,26 +13,26 @@ inline void srand() { srand(clock() + time(nullptr)); }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	os << "(" << v.first << "," << v.second << ")"; return os;
+  os << "(" << v.first << "," << v.second << ")"; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ ";
-	for (const T& it : v) os << it << " ";
-	os << "}"; return os;
+  os << "{ ";
+  for (const T& it : v) os << it << " ";
+  os << "}"; return os;
 }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ ";
-	for (const pair<T,U>& it : v) os << "{" << it.first << "," << it.second << "} "; 
-	os << "}"; return os;
+  os << "{ ";
+  for (const pair<T,U>& it : v) os << "{" << it.first << "," << it.second << "} "; 
+  os << "}"; return os;
 }
 
 template <class T>
@@ -47,37 +47,37 @@ const ll MOD = 1e9+7;
 const ld EPS = 1e-9;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m;
-		cin >> n >> m;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
 
-		int a, b, temp;
-		a = b = 0;
-		for (int i = 0; i < n-1; i++) {
-			cin >> temp;
-			a += temp;
-		}
-		for (int i = 0; i < m; i++) {
-			cin >> temp;
-			b += temp;
-		}
+    int a, b, temp;
+    a = b = 0;
+    for (int i = 0; i < n-1; i++) {
+      cin >> temp;
+      a += temp;
+    }
+    for (int i = 0; i < m; i++) {
+      cin >> temp;
+      b += temp;
+    }
 
-		int first, last;
-		first = last = -1;
-		for (int i = 0; i <= 100; i++) {
-			if ((a+i)*(n-1) < a*n && b*(m+1) < (b+i)*m) {
-				if (first == -1)
-					first = i;
-				last = i;
-			}
-		}
-		cout << first << " " << last << nl;
-	}
+    int first, last;
+    first = last = -1;
+    for (int i = 0; i <= 100; i++) {
+      if ((a+i)*(n-1) < a*n && b*(m+1) < (b+i)*m) {
+        if (first == -1)
+          first = i;
+        last = i;
+      }
+    }
+    cout << first << " " << last << nl;
+  }
 
-	return 0;
+  return 0;
 }

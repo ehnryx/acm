@@ -28,69 +28,69 @@ int dp[N][N], pre[N][N];
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, k;
-		cin >> n >> k;
-		vector<tuple<int,int,int>> ev;
-		for(int i=1; i<=n; i++) {
-			int a, b;
-			cin >> a >> b;
-			ev.emplace_back(b, a, i);
-		}
-		sort(ev.begin(), ev.end());
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+    vector<tuple<int,int,int>> ev;
+    for(int i=1; i<=n; i++) {
+      int a, b;
+      cin >> a >> b;
+      ev.emplace_back(b, a, i);
+    }
+    sort(ev.begin(), ev.end());
 
-		memset(dp, -1, sizeof dp);
-		dp[0][0] = 0;
-		for(int i=1; i<=n; i++) {
-			auto [b, a, _] = ev[i-1];
-			for(int j=0; j<=k; j++) {
-				// skip
-				if(dp[i-1][j] != -1) {
-					dp[i][j] = dp[i-1][j] + (k-1)*b;
-					pre[i][j] = j;
-				}
-				// take
-				if(j > 0 && dp[i-1][j-1] != -1) {
-					int val = dp[i-1][j-1] + a + (j-1)*b;
-					if(val > dp[i][j]) {
-						dp[i][j] = val;
-						pre[i][j] = j-1;
-					}
-				}
-			}
-		}
-		assert(dp[n][k] != -1);
+    memset(dp, -1, sizeof dp);
+    dp[0][0] = 0;
+    for(int i=1; i<=n; i++) {
+      auto [b, a, _] = ev[i-1];
+      for(int j=0; j<=k; j++) {
+        // skip
+        if(dp[i-1][j] != -1) {
+          dp[i][j] = dp[i-1][j] + (k-1)*b;
+          pre[i][j] = j;
+        }
+        // take
+        if(j > 0 && dp[i-1][j-1] != -1) {
+          int val = dp[i-1][j-1] + a + (j-1)*b;
+          if(val > dp[i][j]) {
+            dp[i][j] = val;
+            pre[i][j] = j-1;
+          }
+        }
+      }
+    }
+    assert(dp[n][k] != -1);
 
-		vector<int> ans;
-		for(int i=n, j=k; i>0; i--) {
-			if(pre[i][j] == j-1) {
-				ans.push_back(get<2>(ev[i-1]));
-			}
-			j = pre[i][j];
-		}
-		reverse(ans.begin(), ans.end());
-		int last = ans.back();
-		ans.pop_back();
-		for(int i=n, j=k; i>0; i--) {
-			if(pre[i][j] == j) {
-				ans.push_back(get<2>(ev[i-1]));
-				ans.push_back(-get<2>(ev[i-1]));
-			}
-			j = pre[i][j];
-		}
-		ans.push_back(last);
+    vector<int> ans;
+    for(int i=n, j=k; i>0; i--) {
+      if(pre[i][j] == j-1) {
+        ans.push_back(get<2>(ev[i-1]));
+      }
+      j = pre[i][j];
+    }
+    reverse(ans.begin(), ans.end());
+    int last = ans.back();
+    ans.pop_back();
+    for(int i=n, j=k; i>0; i--) {
+      if(pre[i][j] == j) {
+        ans.push_back(get<2>(ev[i-1]));
+        ans.push_back(-get<2>(ev[i-1]));
+      }
+      j = pre[i][j];
+    }
+    ans.push_back(last);
 
-		cout << ans.size() << nl;
-		for(int it : ans) {
-			cout << it << " ";
-		}
-		cout << nl;
-	}
+    cout << ans.size() << nl;
+    for(int it : ans) {
+      cout << it << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

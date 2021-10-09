@@ -15,46 +15,46 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	string n, m;
-	cin >> n >> m;
-	int trail = 0;
-	for (int i = n.size()-1; i >= 0; i--) {
-		if (n[i] == '0') trail++;
-		else break;
-	}
-	int length = m.size()-1;
-	int nonzero = n.size()-trail;
+  string n, m;
+  cin >> n >> m;
+  int trail = 0;
+  for (int i = n.size()-1; i >= 0; i--) {
+    if (n[i] == '0') trail++;
+    else break;
+  }
+  int length = m.size()-1;
+  int nonzero = n.size()-trail;
 
-	int overlap = min(length, trail);
-	length -= overlap;
-	trail -= overlap;
+  int overlap = min(length, trail);
+  length -= overlap;
+  trail -= overlap;
 
-	if (length == 0) {
-		for (int i = 0; i < trail + nonzero; i++)
-			cout << n[i];
-		cout << nl;
-	} else {
-		if (length >= nonzero) {
-			//cerr << "length: " << length << nl;
-			//cerr << "nonzero: " << nonzero << nl;
-			cout << "0.";
-			for (int i = 0; i < length-nonzero; i++)
-				cout << "0";
-			for (int i = 0; i < nonzero; i++)
-				cout << n[i];
-			cout << nl;
-		} else {
-			for (int i = 0; i < nonzero-length; i++)
-				cout << n[i];
-			cout << ".";
-			for (int i = nonzero-length; i < nonzero; i++)
-				cout << n[i];
-			cout << nl;
-		}
-	}
+  if (length == 0) {
+    for (int i = 0; i < trail + nonzero; i++)
+      cout << n[i];
+    cout << nl;
+  } else {
+    if (length >= nonzero) {
+      //cerr << "length: " << length << nl;
+      //cerr << "nonzero: " << nonzero << nl;
+      cout << "0.";
+      for (int i = 0; i < length-nonzero; i++)
+        cout << "0";
+      for (int i = 0; i < nonzero; i++)
+        cout << n[i];
+      cout << nl;
+    } else {
+      for (int i = 0; i < nonzero-length; i++)
+        cout << n[i];
+      cout << ".";
+      for (int i = nonzero-length; i < nonzero; i++)
+        cout << n[i];
+      cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

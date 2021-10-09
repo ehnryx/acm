@@ -22,7 +22,7 @@ typedef vector<pt> pol;
 ld cp(const pt &a, const pt &b) {return imag(conj(a)*b);}
 ld dp(const pt &a, const pt &b) {return real(conj(a)*b);}
 bool cmp_lex(const pt &a, const pt &b) {
-	return a.real()<b.real()-EPS||(a.real()<b.real()+EPS&&a.imag()<b.imag()-EPS);}
+  return a.real()<b.real()-EPS||(a.real()<b.real()+EPS&&a.imag()<b.imag()-EPS);}
 pt base; bool cmp_base(const pt& a, const pt& b){
   ld dist = cp(a-base, b-base)/max(abs(a-base), abs(b-base));
   if (abs(dist)>EPS) return dist>0; return abs(a-base) < abs(b-base); }
@@ -37,45 +37,45 @@ pol graham(pol p) { pol hull; prep_graham(p);
   } return hull; } // pts returned in ccw order.
 
 inline void perturb(const pt &a, pol &pts) {
-	pts.push_back(a);
-//	pts.push_back(a+pt(1e-10, 1e-10));
-//	pts.push_back(a+pt(1e-10, -1e-10));
-//	pts.push_back(a-pt(1e-10, 1e-10));
-//	pts.push_back(a-pt(1e-10, -1e-10));
+  pts.push_back(a);
+//  pts.push_back(a+pt(1e-10, 1e-10));
+//  pts.push_back(a+pt(1e-10, -1e-10));
+//  pts.push_back(a-pt(1e-10, 1e-10));
+//  pts.push_back(a-pt(1e-10, -1e-10));
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int circ = 5000;
+  int circ = 5000;
 
-	int n; cin >> n;
-	string s; cin >> s;
-	pol pts;
-	for (int i = 0; i < s.size(); i++) {
-		switch (s[i]) {
-			case 'T': perturb(pt(i, 0), pts);
-					  perturb(pt(i+1, 0), pts);
-					  perturb(pt((2*i+1)/2.0, sqrt(3) / 2), pts);
-					  break;
-			case 'S': perturb(pt(i, 0), pts);
-					  perturb(pt(i+1, 0), pts);
-					  perturb(pt(i+1, 1), pts);
-					  perturb(pt(i, 1), pts);
-					  break;
-			case 'C': for (int j = 0; j < circ; j++) {
-						pts.push_back(pt((2*i+1)/2.0, 0.5) + 0.5*exp(pt(0, 2 * PI * j / circ)));
-					  }
-					  break;
-		}
-	}
-	pol chull = graham(pts);
-	ld ans = 0;
-	for (int i = 0; i < chull.size()-1; i++)
-		ans += abs(chull[i] - chull[i+1]);
-	ans += abs(chull.back() - chull[0]);
-	cout << fixed << setprecision(10) << ans << endl;
+  int n; cin >> n;
+  string s; cin >> s;
+  pol pts;
+  for (int i = 0; i < s.size(); i++) {
+    switch (s[i]) {
+      case 'T': perturb(pt(i, 0), pts);
+            perturb(pt(i+1, 0), pts);
+            perturb(pt((2*i+1)/2.0, sqrt(3) / 2), pts);
+            break;
+      case 'S': perturb(pt(i, 0), pts);
+            perturb(pt(i+1, 0), pts);
+            perturb(pt(i+1, 1), pts);
+            perturb(pt(i, 1), pts);
+            break;
+      case 'C': for (int j = 0; j < circ; j++) {
+            pts.push_back(pt((2*i+1)/2.0, 0.5) + 0.5*exp(pt(0, 2 * PI * j / circ)));
+            }
+            break;
+    }
+  }
+  pol chull = graham(pts);
+  ld ans = 0;
+  for (int i = 0; i < chull.size()-1; i++)
+    ans += abs(chull[i] - chull[i+1]);
+  ans += abs(chull.back() - chull[0]);
+  cout << fixed << setprecision(10) << ans << endl;
 
-	return 0;
+  return 0;
 }

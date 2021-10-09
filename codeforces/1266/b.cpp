@@ -23,24 +23,24 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 bool solve(ll n) {
-	for(int i=1; i<=6; i++) {
-		if(n-i > 0 && (n-i)%14 == 0) return true;
-	}
-	return false;
+  for(int i=1; i<=6; i++) {
+    if(n-i > 0 && (n-i)%14 == 0) return true;
+  }
+  return false;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		ll n;
-		cin >> n;
-		if(solve(n)) cout << "YES" << nl;
-		else cout << "NO" << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    ll n;
+    cin >> n;
+    if(solve(n)) cout << "YES" << nl;
+    else cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

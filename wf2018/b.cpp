@@ -20,89 +20,89 @@ unordered_set<int> adj[N], rev[N];
 bool vis[2][N];
 
 void init() {
-	memset(vis, 0, sizeof vis);
+  memset(vis, 0, sizeof vis);
 }
 
 void reverse(int);
 void forward(int it) {
-	vis[0][it] = true;
-	for (int x : adj[it]) {
-		if (!vis[1][x]) {
-			reverse(x);
-		}
-	}
+  vis[0][it] = true;
+  for (int x : adj[it]) {
+    if (!vis[1][x]) {
+      reverse(x);
+    }
+  }
 }
 void reverse(int it) {
-	vis[1][it] = true;
-	for (int x : rev[it]) {
-		if (!vis[0][x]) {
-			forward(x);
-		}
-	}
+  vis[1][it] = true;
+  for (int x : rev[it]) {
+    if (!vis[0][x]) {
+      forward(x);
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	string s;
-	getline(cin, s);
+  string s;
+  getline(cin, s);
 
-	map<string,int> index;
-	vector<string> line;
-	unordered_set<int> edges;
-	int id = 1;
-	int pre = -1;
+  map<string,int> index;
+  vector<string> line;
+  unordered_set<int> edges;
+  int id = 1;
+  int pre = -1;
 
-	istringstream ss(s);
-	while (ss >> s) {
-		char tail = 0;
-		if (s.back() == '.') {
-			line.push_back(s);
-			tail = '.';
-			s.pop_back();
-		}
-		else if (s.back() == ',') {
-			tail = ',';
-			s.pop_back();
-			line.push_back(s);
-		} else {
-			line.push_back(s);
-		}
+  istringstream ss(s);
+  while (ss >> s) {
+    char tail = 0;
+    if (s.back() == '.') {
+      line.push_back(s);
+      tail = '.';
+      s.pop_back();
+    }
+    else if (s.back() == ',') {
+      tail = ',';
+      s.pop_back();
+      line.push_back(s);
+    } else {
+      line.push_back(s);
+    }
 
-		if (!index.count(s)) {
-			index[s] = id++;
-		}
+    if (!index.count(s)) {
+      index[s] = id++;
+    }
 
-		int cur = index[s];
-		if (pre != -1) {
-			adj[pre].insert(cur);
-			rev[cur].insert(pre);
-		}
+    int cur = index[s];
+    if (pre != -1) {
+      adj[pre].insert(cur);
+      rev[cur].insert(pre);
+    }
 
-		if (tail == '.') {
-			pre = -1;
-		} else {
-			pre = cur;
-			if (tail == ',') {
-				edges.insert(pre);
-			}
-		}
-	}
+    if (tail == '.') {
+      pre = -1;
+    } else {
+      pre = cur;
+      if (tail == ',') {
+        edges.insert(pre);
+      }
+    }
+  }
 
-	for (int it : edges) {
-		if (!vis[0][it]) {
-			forward(it);
-		}
-	}
+  for (int it : edges) {
+    if (!vis[0][it]) {
+      forward(it);
+    }
+  }
 
-	for (const string& it : line) {
-		cout << it;
-		if (vis[0][index[it]]) cout << ',';
-		cout << ' ';
-	}
+  for (const string& it : line) {
+    cout << it;
+    if (vis[0][index[it]]) cout << ',';
+    cout << ' ';
+  }
 
-	return 0;
+  return 0;
 }

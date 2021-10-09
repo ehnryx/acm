@@ -36,34 +36,34 @@ int cnt[N][26];
 int r[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	For(i,n) {
-		cin >> grid[i];
-	}
-	For(i,m) {
-		cin >> r[i];
-	}
+  int n, m;
+  cin >> n >> m;
+  For(i,n) {
+    cin >> grid[i];
+  }
+  For(i,m) {
+    cin >> r[i];
+  }
 
-	For(i,n) {
-		For(j,m) {
-			cnt[j][grid[i][j]-'A'] += r[j];
-		}
-	}
+  For(i,n) {
+    For(j,m) {
+      cnt[j][grid[i][j]-'A'] += r[j];
+    }
+  }
 
-	int ans = 0;
-	For(j,m) {
-		int res = 0;
-		For(i,26) {
-			res = max(res, cnt[j][i]);
-		}
-		ans += res;
-	}
-	cout << ans << nl;
+  int ans = 0;
+  For(j,m) {
+    int res = 0;
+    For(i,26) {
+      res = max(res, cnt[j][i]);
+    }
+    ans += res;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

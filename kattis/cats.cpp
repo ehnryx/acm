@@ -24,43 +24,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int m, n;
-		cin >> m >> n;
-		vector<tuple<int,int,int>> edges;
-		for(int i=0; i<n*(n-1)/2; i++) {
-			int a, b, c;
-			cin >> a >> b >> c;
-			edges.push_back(make_tuple(c, a, b));
-		}
-		sort(edges.begin(), edges.end());
-		vector<int> dsu(n, -1);
-		function<int(int)> find = [&](int i) {
-			if(dsu[i] == -1) return i;
-			return dsu[i] = find(dsu[i]);
-		};
-		function<bool(int,int)> link = [&](int i, int j) {
-			i = find(i); j = find(j);
-			if(i == j) return false;
-			dsu[i] = j;
-			return true;
-		};
-		for(auto [c, a, b] : edges) {
-			if(link(a, b)) {
-				m -= c;
-			}
-		}
-		if(m >= n) {
-			cout << "yes" << nl;
-		} else {
-			cout << "no" << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int m, n;
+    cin >> m >> n;
+    vector<tuple<int,int,int>> edges;
+    for(int i=0; i<n*(n-1)/2; i++) {
+      int a, b, c;
+      cin >> a >> b >> c;
+      edges.push_back(make_tuple(c, a, b));
+    }
+    sort(edges.begin(), edges.end());
+    vector<int> dsu(n, -1);
+    function<int(int)> find = [&](int i) {
+      if(dsu[i] == -1) return i;
+      return dsu[i] = find(dsu[i]);
+    };
+    function<bool(int,int)> link = [&](int i, int j) {
+      i = find(i); j = find(j);
+      if(i == j) return false;
+      dsu[i] = j;
+      return true;
+    };
+    for(auto [c, a, b] : edges) {
+      if(link(a, b)) {
+        m -= c;
+      }
+    }
+    if(m >= n) {
+      cout << "yes" << nl;
+    } else {
+      cout << "no" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

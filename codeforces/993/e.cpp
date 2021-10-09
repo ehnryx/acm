@@ -46,52 +46,52 @@ vector<Complex> FFT(const vector<Complex>& v, int dir=1) {
 const int N = 1<<18;
 
 ll nc2(int n) {
-	return (ll)n*(n-1)/2;
+  return (ll)n*(n-1)/2;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, x;
-	cin >> n >> x;
+  int n, x;
+  cin >> n >> x;
 
-	vector<int> diff;
-	int in;
-	int last = -1;
-	for (int i=0; i<n; i++) {
-		cin >> in;
-		if (in < x) {
-			diff.push_back(i-last);
-			last = i;
-		}
-	}
-	diff.push_back(n-last);
+  vector<int> diff;
+  int in;
+  int last = -1;
+  for (int i=0; i<n; i++) {
+    cin >> in;
+    if (in < x) {
+      diff.push_back(i-last);
+      last = i;
+    }
+  }
+  diff.push_back(n-last);
 
-	vector<ll> ans(n+1,0);
-	vector<Complex> a(2*N,0), b(2*N,0);
-	int k = diff.size()-1;
-	for (int i=0; i<=k; i++) {
-		a[i] = b[k-i] = Complex(diff[i],0);
-		ans[0] += nc2(diff[i]);
-	}
+  vector<ll> ans(n+1,0);
+  vector<Complex> a(2*N,0), b(2*N,0);
+  int k = diff.size()-1;
+  for (int i=0; i<=k; i++) {
+    a[i] = b[k-i] = Complex(diff[i],0);
+    ans[0] += nc2(diff[i]);
+  }
 
-	a = FFT(a);
-	b = FFT(b);
-	for (int i=0; i<2*N; i++) {
-		a[i] *= b[i];
-	}
-	a = FFT(a,-1);
+  a = FFT(a);
+  b = FFT(b);
+  for (int i=0; i<2*N; i++) {
+    a[i] *= b[i];
+  }
+  a = FFT(a,-1);
 
-	for (int i=1; i<=k; i++) {
-		ans[i] = llround(a[k-i].real());
-	}
+  for (int i=1; i<=k; i++) {
+    ans[i] = llround(a[k-i].real());
+  }
 
-	for (int i=0; i<=n; i++) {
-		cout << ans[i] << " ";
-	}
-	cout << nl;
+  for (int i=0; i<=n; i++) {
+    cout << ans[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

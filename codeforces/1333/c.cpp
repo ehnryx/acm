@@ -25,28 +25,28 @@ const int N = 2e5 + 1;
 ll a[N], pref[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<=n; i++) {
-		cin >> a[i];
-		pref[i] = pref[i-1] + a[i];
-	}
+  int n;
+  cin >> n;
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+    pref[i] = pref[i-1] + a[i];
+  }
 
-	map<ll,int> last;
-	last[0] = 0;
-	int lb = 0;
-	ll ans = 0;
-	for(int i=1; i<=n; i++) {
-		if(last.count(pref[i])) {
-			lb = max(lb, last[pref[i]] + 1);
-		}
-		ans += i - lb;
-		last[pref[i]] = i;
-	}
-	cout << ans << nl;
+  map<ll,int> last;
+  last[0] = 0;
+  int lb = 0;
+  ll ans = 0;
+  for(int i=1; i<=n; i++) {
+    if(last.count(pref[i])) {
+      lb = max(lb, last[pref[i]] + 1);
+    }
+    ans += i - lb;
+    last[pref[i]] = i;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

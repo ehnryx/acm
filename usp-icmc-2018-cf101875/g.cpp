@@ -31,70 +31,70 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Car {
-	ld s;
-	int v;
-	bool operator < (const Car& o) const {
-		return s < o.s;
-	}
+  ld s;
+  int v;
+  bool operator < (const Car& o) const {
+    return s < o.s;
+  }
 };
 
 struct Node {
-	int i, j;
-	ld t;
-	bool operator < (const Node& o) const {
-		return t > o.t;
-	}
+  int i, j;
+  ld t;
+  bool operator < (const Node& o) const {
+    return t > o.t;
+  }
 };
 
 ld collide(const Car& a, const Car& b) {
-	ld d = b.s - a.s;
-	return d / (a.v - b.v);
+  ld d = b.s - a.s;
+  return d / (a.v - b.v);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	map<int,Car> car;
-	for (int i=0; i<n; i++) {
-		int s, v;
-		cin >> s >> v;
-		car[s] = { (ld)s, v };
-	}
+  map<int,Car> car;
+  for (int i=0; i<n; i++) {
+    int s, v;
+    cin >> s >> v;
+    car[s] = { (ld)s, v };
+  }
 
-	priority_queue<Node> dijk;
-	for (auto it=car.begin(); next(it)!=car.end(); it++) {
-		auto jt = next(it);
-		if (it->second.v > jt->second.v) {
-			dijk.push({ it->first, jt->first, collide(it->second, jt->second) });
-			//cerr << "init " << it->first << " " << jt->first << " at " << collide(it->second, jt->second) << nl;
-		}
-	}
+  priority_queue<Node> dijk;
+  for (auto it=car.begin(); next(it)!=car.end(); it++) {
+    auto jt = next(it);
+    if (it->second.v > jt->second.v) {
+      dijk.push({ it->first, jt->first, collide(it->second, jt->second) });
+      //cerr << "init " << it->first << " " << jt->first << " at " << collide(it->second, jt->second) << nl;
+    }
+  }
 
-	ld ans = 0;
-	while (!dijk.empty()) {
-		Node cur = dijk.top();
-		dijk.pop();
-		//cerr << "try colliding " << cur.i << " " << cur.j << nl;
-		if (car.count(cur.i) && car.count(cur.j)) {
-			ans = cur.t;
-			//cerr << "collided at " << cur.t << nl;
-			car.erase(cur.i);
-			auto jt = car.find(cur.j);
-			if (jt != car.begin()) {
-				auto it = prev(jt);
-				if (it->second.v > jt->second.v) {
-					dijk.push({ it->first, jt->first, collide(it->second, jt->second) });
-					//cerr << "push " << it->first << " " << jt->first << " at " << collide(it->second, jt->second) << nl;
-				}
-			}
-		}
-	}
-	cout << ans << nl;
+  ld ans = 0;
+  while (!dijk.empty()) {
+    Node cur = dijk.top();
+    dijk.pop();
+    //cerr << "try colliding " << cur.i << " " << cur.j << nl;
+    if (car.count(cur.i) && car.count(cur.j)) {
+      ans = cur.t;
+      //cerr << "collided at " << cur.t << nl;
+      car.erase(cur.i);
+      auto jt = car.find(cur.j);
+      if (jt != car.begin()) {
+        auto it = prev(jt);
+        if (it->second.v > jt->second.v) {
+          dijk.push({ it->first, jt->first, collide(it->second, jt->second) });
+          //cerr << "push " << it->first << " " << jt->first << " at " << collide(it->second, jt->second) << nl;
+        }
+      }
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

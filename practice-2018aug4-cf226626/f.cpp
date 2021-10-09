@@ -21,55 +21,55 @@ unordered_map<string,ll> dp[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	for (int i = 1; i <= n; i++) {
-		cin >> cost[i];
-	}
+  for (int i = 1; i <= n; i++) {
+    cin >> cost[i];
+  }
 
-	dp[0]["!"] = 0;
-	for (int i = 1; i <= n; i++) {
-		string s, t;
-		cin >> s;
-		t = s;
+  dp[0]["!"] = 0;
+  for (int i = 1; i <= n; i++) {
+    string s, t;
+    cin >> s;
+    t = s;
 
-		dp[i][s] = INFLL;
-		for (const pair<string,ll>& it : dp[i-1]) {
-			if (it.first <= s) {
-				dp[i][s] = min(dp[i][s], it.second);
-			}
-		}
+    dp[i][s] = INFLL;
+    for (const pair<string,ll>& it : dp[i-1]) {
+      if (it.first <= s) {
+        dp[i][s] = min(dp[i][s], it.second);
+      }
+    }
 
-		reverse(s.begin(), s.end());
-		if (s != t) {
-			dp[i][s] = INFLL;
-			for (const pair<string,ll>& it : dp[i-1]) {
-				if (it.first <= s) {
-					dp[i][s] = min(dp[i][s], it.second + cost[i]);
-				}
-			}
-		}
-	}
+    reverse(s.begin(), s.end());
+    if (s != t) {
+      dp[i][s] = INFLL;
+      for (const pair<string,ll>& it : dp[i-1]) {
+        if (it.first <= s) {
+          dp[i][s] = min(dp[i][s], it.second + cost[i]);
+        }
+      }
+    }
+  }
 
-	ll ans = INFLL;
-	for (const pair<string,ll>& it : dp[n]) {
-		ans = min(ans, it.second);
-	}
+  ll ans = INFLL;
+  for (const pair<string,ll>& it : dp[n]) {
+    ans = min(ans, it.second);
+  }
 
-	if (ans == INFLL) {
-		cout << -1 << nl;
-	} else {
-		cout << ans << nl;
-	}
+  if (ans == INFLL) {
+    cout << -1 << nl;
+  } else {
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

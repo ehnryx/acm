@@ -47,9 +47,9 @@ struct SegmentTree {
     }
     void set(int i, const T& v) {
         segt[n+i] = Node(v);
-		for (int x=n+i; x>1; x>>=1) {
-			segt[x>>1].pull(segt[x], segt[x^1]);
-		}
+    for (int x=n+i; x>1; x>>=1) {
+      segt[x>>1].pull(segt[x], segt[x^1]);
+    }
     }
     void update(int l, int r, const T& v) {
         update(l, r, v, 1, 0, n-1);
@@ -82,94 +82,94 @@ struct SegmentTree {
 //*/
 
 struct Node {
-	ll sum, maxv, maxv2, maxcnt;
-	bool lazy;
-	Node(): sum(0), lazy(0), maxv(-INFLL), maxv2(-INFLL) {}
-	Node(const ll& v): sum(v), maxv(v), maxv2(-INFLL), maxcnt(1), lazy(0) {}
-	bool put(const ll& v) { return v > maxv2; }
-	bool get() { return true; }
-	// min update
-	void update(const ll& v, int len) {
-		if (v < maxv) {
-			sum += maxcnt*(v-maxv);
-			maxv = v;
-			lazy = true;
-		}
-	}
-	void push(Node& left, Node& right, int len) {
-		if (lazy) {
-			if (left.maxv > maxv) {
-				left.sum += left.maxcnt*(maxv-left.maxv);
-				left.maxv = maxv;
-				left.lazy = true;
-			}
-			if (right.maxv > maxv) {
-				right.sum += right.maxcnt*(maxv-right.maxv);
-				right.maxv = maxv;
-				right.lazy = true;
-			}
-			lazy = false;
-		}
-	}
-	// sum query
-	const Node& pull(const Node& left, const Node& right) {
-		sum = left.sum + right.sum;
-		if (left.maxv == right.maxv) {
-			maxv = left.maxv;
-			maxv2 = max(left.maxv2, right.maxv2);
-			maxcnt = left.maxcnt + right.maxcnt;
-		} else if (left.maxv > right.maxv) {
-			maxv = left.maxv;
-			maxv2 = max(left.maxv2, right.maxv);
-			maxcnt = left.maxcnt;
-		} else if (right.maxv > left.maxv) {
-			maxv = right.maxv;
-			maxv2 = max(right.maxv2, left.maxv);
-			maxcnt = right.maxcnt;
-		}
-		return *this;
-	}
+  ll sum, maxv, maxv2, maxcnt;
+  bool lazy;
+  Node(): sum(0), lazy(0), maxv(-INFLL), maxv2(-INFLL) {}
+  Node(const ll& v): sum(v), maxv(v), maxv2(-INFLL), maxcnt(1), lazy(0) {}
+  bool put(const ll& v) { return v > maxv2; }
+  bool get() { return true; }
+  // min update
+  void update(const ll& v, int len) {
+    if (v < maxv) {
+      sum += maxcnt*(v-maxv);
+      maxv = v;
+      lazy = true;
+    }
+  }
+  void push(Node& left, Node& right, int len) {
+    if (lazy) {
+      if (left.maxv > maxv) {
+        left.sum += left.maxcnt*(maxv-left.maxv);
+        left.maxv = maxv;
+        left.lazy = true;
+      }
+      if (right.maxv > maxv) {
+        right.sum += right.maxcnt*(maxv-right.maxv);
+        right.maxv = maxv;
+        right.lazy = true;
+      }
+      lazy = false;
+    }
+  }
+  // sum query
+  const Node& pull(const Node& left, const Node& right) {
+    sum = left.sum + right.sum;
+    if (left.maxv == right.maxv) {
+      maxv = left.maxv;
+      maxv2 = max(left.maxv2, right.maxv2);
+      maxcnt = left.maxcnt + right.maxcnt;
+    } else if (left.maxv > right.maxv) {
+      maxv = left.maxv;
+      maxv2 = max(left.maxv2, right.maxv);
+      maxcnt = left.maxcnt;
+    } else if (right.maxv > left.maxv) {
+      maxv = right.maxv;
+      maxv2 = max(right.maxv2, left.maxv);
+      maxcnt = right.maxcnt;
+    }
+    return *this;
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, q, a, b;
-	cin >> n >> q;
+  int n, q, a, b;
+  cin >> n >> q;
 
-	SegmentTree<Node,ll> segtree(n+1);
+  SegmentTree<Node,ll> segtree(n+1);
 
-	ll offset = 0;
-	for (int i=1; i<=n; i++) {
-		cin >> a;
-		segtree.set(i, a);
-	}
+  ll offset = 0;
+  for (int i=1; i<=n; i++) {
+    cin >> a;
+    segtree.set(i, a);
+  }
 
-	while (q--) {
-		string s;
-		cin >> s;
-		if (s == "GROW") {
-			cin >> a >> b;
-			ll height = segtree.query(a,a).sum;
-			segtree.set(a, height+b);
-		} else if (s == "CUT") {
-			cin >> a;
-			ll before = segtree.query(1,n).sum - n*offset;
-			segtree.update(1,n,a+offset);
-			ll after = segtree.query(1,n).sum - n*offset;
-			cout << before-after << nl;
-		} else {
-			cin >> a;
-			offset -= a;
-		}
-	}
+  while (q--) {
+    string s;
+    cin >> s;
+    if (s == "GROW") {
+      cin >> a >> b;
+      ll height = segtree.query(a,a).sum;
+      segtree.set(a, height+b);
+    } else if (s == "CUT") {
+      cin >> a;
+      ll before = segtree.query(1,n).sum - n*offset;
+      segtree.update(1,n,a+offset);
+      ll after = segtree.query(1,n).sum - n*offset;
+      cout << before-after << nl;
+    } else {
+      cin >> a;
+      offset -= a;
+    }
+  }
 
-	return 0;
+  return 0;
 }

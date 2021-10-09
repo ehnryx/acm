@@ -42,43 +42,43 @@ ld lp_dist(const pt &a, const pt &b, const pt &p) {
 }
 
 pt circumcenter(const pt& a, const pt& b, const pt& c) {
-	ld A = abs(b-c);
-	ld B = abs(c-a);
-	ld C = abs(a-b);
-	ld fa = A*A * (B*B + C*C - A*A);
-	ld fb = B*B * (C*C + A*A - B*B);
-	ld fc = C*C * (A*A + B*B - C*C);
-	return (fa*a + fb*b + fc*c) / (fa+fb+fc);
+  ld A = abs(b-c);
+  ld B = abs(c-a);
+  ld C = abs(a-b);
+  ld fa = A*A * (B*B + C*C - A*A);
+  ld fb = B*B * (C*C + A*A - B*B);
+  ld fc = C*C * (A*A + B*B - C*C);
+  return (fa*a + fb*b + fc*c) / (fa+fb+fc);
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(0);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(0);
 
-	int n;
-	cin >> n;
-	vector<pt> p;
-	for(int i=0; i<n; i++) {
-		int x, y;
-		cin >> x >> y;
-		p.push_back(pt(x, y));
-	}
-	vector<pt> h = chull(p);
-	pt a = h[0], b = h[1];
+  int n;
+  cin >> n;
+  vector<pt> p;
+  for(int i=0; i<n; i++) {
+    int x, y;
+    cin >> x >> y;
+    p.push_back(pt(x, y));
+  }
+  vector<pt> h = chull(p);
+  pt a = h[0], b = h[1];
 
-	vector<pair<ld,int>> order;
-	for(int i=0; i<n; i++) {
-		if(abs(p[i]-a) < EPS || abs(p[i]-b) < EPS) continue;
-		pt c = circumcenter(a, b, p[i]);
-		ld d = lp_dist(a, b, c);
-		order.push_back(make_pair(d, i));
-	}
-	sort(order.begin(), order.end());
+  vector<pair<ld,int>> order;
+  for(int i=0; i<n; i++) {
+    if(abs(p[i]-a) < EPS || abs(p[i]-b) < EPS) continue;
+    pt c = circumcenter(a, b, p[i]);
+    ld d = lp_dist(a, b, c);
+    order.push_back(make_pair(d, i));
+  }
+  sort(order.begin(), order.end());
 
-	pt s = p[order[order.size()/2].second];
-	cout << a.real() << " " << a.imag() << nl;
-	cout << b.real() << " " << b.imag() << nl;
-	cout << s.real() << " " << s.imag() << nl;
+  pt s = p[order[order.size()/2].second];
+  cout << a.real() << " " << a.imag() << nl;
+  cout << b.real() << " " << b.imag() << nl;
+  cout << s.real() << " " << s.imag() << nl;
 
-	return 0;
+  return 0;
 }

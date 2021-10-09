@@ -33,50 +33,50 @@ inline pt line_inter(const pt &a, const pt &b, const pt &c, const pt &d) {
 }
 
 string solve(char a, char b, char c, char d, ld x, ld ang, ld len) {
-	//cerr<<"solving "<<a<<','<<b<<','<<c<<','<<d<<": "<<x<<" "<<ang<<" "<<len<<nl;
-	pt S(x,0), A(0,0), B(1,0), C(half,sqrt3);
-	pt D = S + exp(pt(0,ang));
-	if(ang < arg(C-S)) {
-		pt T = line_inter(B,C,S,D);
-		ld dist = abs(T-S);
-		if(len < dist) {
-			string s = {a,b,c};
-			sort(s.begin(),s.end());
-			return s;
-		} else {
-			return solve(c, b, d, a, abs(C-T), ang+d60, len-dist);
-		}
-	} else {
-		pt T = line_inter(A,C,S,D);
-		ld dist = abs(T-S);
-		if(len < dist) {
-			string s = {a,b,c};
-			sort(s.begin(),s.end());
-			return s;
-		} else {
-			return solve(a, c, d, b, abs(A-T), ang-d60, len-dist);
-		}
-	}
+  //cerr<<"solving "<<a<<','<<b<<','<<c<<','<<d<<": "<<x<<" "<<ang<<" "<<len<<nl;
+  pt S(x,0), A(0,0), B(1,0), C(half,sqrt3);
+  pt D = S + exp(pt(0,ang));
+  if(ang < arg(C-S)) {
+    pt T = line_inter(B,C,S,D);
+    ld dist = abs(T-S);
+    if(len < dist) {
+      string s = {a,b,c};
+      sort(s.begin(),s.end());
+      return s;
+    } else {
+      return solve(c, b, d, a, abs(C-T), ang+d60, len-dist);
+    }
+  } else {
+    pt T = line_inter(A,C,S,D);
+    ld dist = abs(T-S);
+    if(len < dist) {
+      string s = {a,b,c};
+      sort(s.begin(),s.end());
+      return s;
+    } else {
+      return solve(a, c, d, b, abs(A-T), ang-d60, len-dist);
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	char x[2],y[2];
-	int d[2],l[2];
-	string res[2];
-	for(int i=0;i<2;i++) {
-		//cerr<<"SOLVE "<<i<<nl;
-		cin>>x[i]>>y[i]>>d[i]>>l[i];
-		char c = y[i]+1;
-		if(c>'D') c = 'B';
-		res[i] = solve('A',x[i],y[i],c,0,d[i]*PI/180,l[i]);
-		//cerr<<res[i]<<nl;
-		//cerr<<nl;
-	}
-	cout<<(res[0]==res[1] ? "YES" : "NO")<<nl;
+  char x[2],y[2];
+  int d[2],l[2];
+  string res[2];
+  for(int i=0;i<2;i++) {
+    //cerr<<"SOLVE "<<i<<nl;
+    cin>>x[i]>>y[i]>>d[i]>>l[i];
+    char c = y[i]+1;
+    if(c>'D') c = 'B';
+    res[i] = solve('A',x[i],y[i],c,0,d[i]*PI/180,l[i]);
+    //cerr<<res[i]<<nl;
+    //cerr<<nl;
+  }
+  cout<<(res[0]==res[1] ? "YES" : "NO")<<nl;
 
-	return 0;
+  return 0;
 }

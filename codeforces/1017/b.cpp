@@ -19,43 +19,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string s, t;
-	cin >> s >> t;
+  string s, t;
+  cin >> s >> t;
 
-	ll oo, oi, io, ii;
-	oo = oi = io = ii = 0;
+  ll oo, oi, io, ii;
+  oo = oi = io = ii = 0;
 
-	for (int i = 0; i < n; i++) {
-		if (s[i] == '0') {
-			if (t[i] == '0') {
-				oo++;
-			}
-			else {
-				oi++;
-			}
-		}
-		else {
-			if (t[i] == '0') {
-				io++;
-			}
-			else {
-				ii++;
-			}
-		}
-	}
+  for (int i = 0; i < n; i++) {
+    if (s[i] == '0') {
+      if (t[i] == '0') {
+        oo++;
+      }
+      else {
+        oi++;
+      }
+    }
+    else {
+      if (t[i] == '0') {
+        io++;
+      }
+      else {
+        ii++;
+      }
+    }
+  }
 
-	cout << ii*oo + oo*io + oi*io << nl;
+  cout << ii*oo + oo*io + oi*io << nl;
 
-	return 0;
+  return 0;
 }

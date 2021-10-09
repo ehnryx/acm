@@ -17,16 +17,16 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const ldouble EPS = 1e-9;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int n;
-	cin >> n;
-	vector<string> grid(n);
-	for (int i = 0; i < n; i++) {
-		cin >> grid[i];
-	}
+  int n;
+  cin >> n;
+  vector<string> grid(n);
+  for (int i = 0; i < n; i++) {
+    cin >> grid[i];
+  }
 
 
-	return 0;
+  return 0;
 }

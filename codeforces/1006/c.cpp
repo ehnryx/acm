@@ -20,31 +20,31 @@ int a[N];
 unordered_map<ll,int> pref;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ll sum = 0;
-	pref[sum] = 0;
-	for (int i=1; i<=n; i++) {
-		cin >> a[i];
-		sum += a[i];
-		pref[sum] = i;
-	}
+  ll sum = 0;
+  pref[sum] = 0;
+  for (int i=1; i<=n; i++) {
+    cin >> a[i];
+    sum += a[i];
+    pref[sum] = i;
+  }
 
-	ll suf = 0;
-	ll ans = 0;
-	for (int i=n; i>0; i--) {
-		suf += a[i];
-		if (pref.count(suf) && pref[suf] < i) {
-			ans = suf;
-		}
-	}
+  ll suf = 0;
+  ll ans = 0;
+  for (int i=n; i>0; i--) {
+    suf += a[i];
+    if (pref.count(suf) && pref[suf] < i) {
+      ans = suf;
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

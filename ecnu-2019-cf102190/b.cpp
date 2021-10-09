@@ -26,44 +26,44 @@ const int N = 1e6+1;
 ld dp[N][2];
 
 ld solve(int n, bool has) {
-	if (dp[n][has] > -1) return dp[n][has];
-	if (n == 0) return dp[n][has] = 1-has;
-	if (has) return dp[n][has] = 1-solve(n-1, false);
-	else return dp[n][has] = (n+1 - n*solve(n-1, true)) / (n+2);
+  if (dp[n][has] > -1) return dp[n][has];
+  if (n == 0) return dp[n][has] = 1-has;
+  if (has) return dp[n][has] = 1-solve(n-1, false);
+  else return dp[n][has] = (n+1 - n*solve(n-1, true)) / (n+2);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(13);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(13);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	fill(&dp[0][0], &dp[0][0]+N*2, -2);
+  fill(&dp[0][0], &dp[0][0]+N*2, -2);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		string s, t;
-		cin >> s;
-		cin >> t;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    string s, t;
+    cin >> s;
+    cin >> t;
 
-		int cnt = 0;
-		int old = -1;
-		For(i,n) {
-			if (s[i]+t[i]-2*'0' == 1) {
-				old = (s[i]=='1');
-			} else if (s[i]=='1' && t[i]=='1') {
-				cnt++;
-			}
-		}
-		cout << solve(cnt, old) << nl;
-	}
+    int cnt = 0;
+    int old = -1;
+    For(i,n) {
+      if (s[i]+t[i]-2*'0' == 1) {
+        old = (s[i]=='1');
+      } else if (s[i]=='1' && t[i]=='1') {
+        cnt++;
+      }
+    }
+    cout << solve(cnt, old) << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -31,22 +31,22 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Point {
-	int a, b;
-	bool operator < (const Point& o) const {
-		return (a!=o.a ? (a<o.a) : (b<o.b));
-	}
-	Point operator - (const Point& o) const {
-		return { a-o.a, b-o.b };
-	}
+  int a, b;
+  bool operator < (const Point& o) const {
+    return (a!=o.a ? (a<o.a) : (b<o.b));
+  }
+  Point operator - (const Point& o) const {
+    return { a-o.a, b-o.b };
+  }
 };
 
 ll power(ll b, ll e) {
-	ll r = 1;
-	for(;e;e/=2) {
-		if(e&1) r = r*b % MOD;
-		b = b*b % MOD;
-	}
-	return r;
+  ll r = 1;
+  for(;e;e/=2) {
+    if(e&1) r = r*b % MOD;
+    b = b*b % MOD;
+  }
+  return r;
 }
 
 const int N = 2e5+1;
@@ -55,50 +55,50 @@ ll fact[N], invf[N];
 ll dp[K];
 
 ll ncr(int n, int r) {
-	if(r<0||r>n) return 0;
-	return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
+  if(r<0||r>n) return 0;
+  return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
 }
 
 ll paths(const Point& p) {
-	assert(p.a>=0 && p.b>=0);
-	return ncr(p.a+p.b, p.a);
+  assert(p.a>=0 && p.b>=0);
+  return ncr(p.a+p.b, p.a);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	fact[0] = invf[0] = 1;
-	for(int i=1;i<N;i++) {
-		fact[i] = fact[i-1] * i % MOD;
-		invf[i] = power(fact[i], MOD-2);
-	}
+  fact[0] = invf[0] = 1;
+  for(int i=1;i<N;i++) {
+    fact[i] = fact[i-1] * i % MOD;
+    invf[i] = power(fact[i], MOD-2);
+  }
 
-	int n, m, k;
-	cin >> n >> m >> k;
-	vector<Point> p;
-	for(int i=0;i<k;i++) {
-		int a, b;
-		cin >> a >> b;
-		p.push_back({a,b});
-	}
-	p.push_back({1,1});
-	p.push_back({n,m});
-	sort(p.begin(),p.end());
+  int n, m, k;
+  cin >> n >> m >> k;
+  vector<Point> p;
+  for(int i=0;i<k;i++) {
+    int a, b;
+    cin >> a >> b;
+    p.push_back({a,b});
+  }
+  p.push_back({1,1});
+  p.push_back({n,m});
+  sort(p.begin(),p.end());
 
-	dp[0] = 1;
-	for(int i=1;i<=k+1;i++) {
-		ll bad = 0;
-		for(int j=1;j<i;j++) {
-			Point d = p[i]-p[j];
-			if (d.a>=0 && d.b>=0) {
-				bad += dp[j] * paths(d) % MOD;
-			}
-		}
-		dp[i] = (paths(p[i]-p[0]) - bad%MOD + MOD) % MOD;
-	}
-	cout << dp[k+1] << nl;
+  dp[0] = 1;
+  for(int i=1;i<=k+1;i++) {
+    ll bad = 0;
+    for(int j=1;j<i;j++) {
+      Point d = p[i]-p[j];
+      if (d.a>=0 && d.b>=0) {
+        bad += dp[j] * paths(d) % MOD;
+      }
+    }
+    dp[i] = (paths(p[i]-p[0]) - bad%MOD + MOD) % MOD;
+  }
+  cout << dp[k+1] << nl;
 
-	return 0;
+  return 0;
 }

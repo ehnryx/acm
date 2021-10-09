@@ -28,66 +28,66 @@ ll ans[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	memset(ans, -1, sizeof ans);
+  memset(ans, -1, sizeof ans);
 
-	int n, m, k;
-	cin >> n >> m >> k;
+  int n, m, k;
+  cin >> n >> m >> k;
 
-	unordered_map<int,set<int>> plus, minus;
-	For(i,k) {
-		cin >> x[i] >> y[i];
-		plus[x[i]+y[i]].insert(i);
-		minus[x[i]-y[i]].insert(i);
-	}
+  unordered_map<int,set<int>> plus, minus;
+  For(i,k) {
+    cin >> x[i] >> y[i];
+    plus[x[i]+y[i]].insert(i);
+    minus[x[i]-y[i]].insert(i);
+  }
 
-	int cx = 0;
-	int cy = 0;
-	int dx = 1;
-	int dy = 1;
-	ll cur = 0;
-	for(;;) {
-		int tx = (dx==1 ? n-cx : cx);
-		int ty = (dy==1 ? m-cy : cy);
-		if (dx == dy) {
-			for (int i : minus[cx-cy]) {
-				ans[i] = cur + abs(x[i]-cx);
-				plus[x[i]+y[i]].erase(i);
-			}
-			minus[cx-cy].clear();
-		} else {
-			for (int i : plus[cx+cy]) {
-				ans[i] = cur + abs(x[i]-cx);
-				minus[x[i]-y[i]].erase(i);
-			}
-			plus[cx+cy].clear();
-		}
-		if (tx < ty) {
-			cur += tx;
-			cx += dx*tx;
-			cy += dy*tx;
-			dx = -dx;
-		} else {
-			cur += ty;
-			cx += dx*ty;
-			cy += dy*ty;
-			dy = -dy;
-		}
-		if (tx == ty) {
-			break;
-		}
-	}
+  int cx = 0;
+  int cy = 0;
+  int dx = 1;
+  int dy = 1;
+  ll cur = 0;
+  for(;;) {
+    int tx = (dx==1 ? n-cx : cx);
+    int ty = (dy==1 ? m-cy : cy);
+    if (dx == dy) {
+      for (int i : minus[cx-cy]) {
+        ans[i] = cur + abs(x[i]-cx);
+        plus[x[i]+y[i]].erase(i);
+      }
+      minus[cx-cy].clear();
+    } else {
+      for (int i : plus[cx+cy]) {
+        ans[i] = cur + abs(x[i]-cx);
+        minus[x[i]-y[i]].erase(i);
+      }
+      plus[cx+cy].clear();
+    }
+    if (tx < ty) {
+      cur += tx;
+      cx += dx*tx;
+      cy += dy*tx;
+      dx = -dx;
+    } else {
+      cur += ty;
+      cx += dx*ty;
+      cy += dy*ty;
+      dy = -dy;
+    }
+    if (tx == ty) {
+      break;
+    }
+  }
 
-	For(i,k) {
-		cout << ans[i] << nl;
-	}
+  For(i,k) {
+    cout << ans[i] << nl;
+  }
 
-	return 0;
+  return 0;
 }

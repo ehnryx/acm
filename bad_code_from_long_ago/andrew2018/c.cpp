@@ -13,26 +13,26 @@ inline void srand() { srand(clock() + time(nullptr)); }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	os << "(" << v.first << "," << v.second << ")"; return os;
+  os << "(" << v.first << "," << v.second << ")"; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ ";
-	for (const T& it : v) os << it << " ";
-	os << "}"; return os;
+  os << "{ ";
+  for (const T& it : v) os << it << " ";
+  os << "}"; return os;
 }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ ";
-	for (const pair<T,U>& it : v) os << "{" << it.first << "," << it.second << "} "; 
-	os << "}"; return os;
+  os << "{ ";
+  for (const pair<T,U>& it : v) os << "{" << it.first << "," << it.second << "} "; 
+  os << "}"; return os;
 }
 
 template <class T>
@@ -56,34 +56,34 @@ const int N = 2e6+1;
 ll fact[N], inv[N];
 
 void init() {
-	fact[0] = inv[0] = 1;
-	ll x, y;
-	for (int i = 1; i <= 2e6; i++) {
-		fact[i] = i * fact[i-1] % MOD;
-		egcd(fact[i], MOD, x, y);
-		inv[i] = (x+MOD) % MOD;
-	}
+  fact[0] = inv[0] = 1;
+  ll x, y;
+  for (int i = 1; i <= 2e6; i++) {
+    fact[i] = i * fact[i-1] % MOD;
+    egcd(fact[i], MOD, x, y);
+    inv[i] = (x+MOD) % MOD;
+  }
 }
 
 inline ll choose(ll n, ll r) {
-	return inv[r] * inv[n-r] % MOD * fact[n] % MOD;
+  return inv[r] * inv[n-r] % MOD * fact[n] % MOD;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	init();
+  init();
 
-	int T;
-	cin >> T;
-	while (T--) {
-		ll n, m, x, y;
-		cin >> n >> m;
-		cin >> x >> y;
-		ll ans = choose(n+m, n) - choose(n-x + m-y, n-x) * choose(x+y, x) % MOD;
-		cout << (ans % MOD + MOD) % MOD << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    ll n, m, x, y;
+    cin >> n >> m;
+    cin >> x >> y;
+    ll ans = choose(n+m, n) - choose(n-x + m-y, n-x) * choose(x+y, x) % MOD;
+    cout << (ans % MOD + MOD) % MOD << nl;
+  }
 
-	return 0;
+  return 0;
 }

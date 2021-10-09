@@ -33,36 +33,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n+1];
-	ll p[n+1];
-	p[0] = 0;
-	For(i,n) {
-		cin >> a[i];
-		p[i+1] = p[i] + a[i];
-	}
+  int a[n+1];
+  ll p[n+1];
+  p[0] = 0;
+  For(i,n) {
+    cin >> a[i];
+    p[i+1] = p[i] + a[i];
+  }
 
-	ll dp[n+1][n+1];
-	for (int d=0; d<n; d++) {
-		for (int i=1; i+d<=n; i++) {
-			if (d == 0) {
-				dp[i][i] = 0;
-			} else {
-				dp[i][i+d] = INFLL;
-				for (int j=0; j<d; j++) {
-					dp[i][i+d] = min(dp[i][i+d], dp[i][i+j] + dp[i+j+1][i+d] + p[i+d]-p[i-1]);
-				}
-			}
-		}
-	}
-	cout << dp[1][n] << nl;
+  ll dp[n+1][n+1];
+  for (int d=0; d<n; d++) {
+    for (int i=1; i+d<=n; i++) {
+      if (d == 0) {
+        dp[i][i] = 0;
+      } else {
+        dp[i][i+d] = INFLL;
+        for (int j=0; j<d; j++) {
+          dp[i][i+d] = min(dp[i][i+d], dp[i][i+j] + dp[i+j+1][i+d] + p[i+d]-p[i-1]);
+        }
+      }
+    }
+  }
+  cout << dp[1][n] << nl;
 
-	return 0;
+  return 0;
 }
 

@@ -22,32 +22,32 @@ constexpr ld EPS = 1e-9L;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Line {
-	mutable ld m, b, p;
-	bool operator<(const Line& o) const { return m < o.m; }
-	bool operator<(ld x) const { return p < x; }
+  mutable ld m, b, p;
+  bool operator<(const Line& o) const { return m < o.m; }
+  bool operator<(ld x) const { return p < x; }
 };
 
 struct LineContainer : multiset<Line, less<>> {
-	const ld inf = 1/(ld)0;
-	ld div(ld a, ld b) { return a/b; }
-	bool isect(iterator x, iterator y) {
-		if (y == end()) { x->p = inf; return false; }
-		if (x->m == y->m) x->p = x->b > y->b ? inf : -inf;
-		else x->p = div(y->b - x->b, x->m - y->m);
-		return x->p >= y->p;
-	}
-	void add(ld m, ld b) { m = -m; b = -b;
-		auto z = insert({m, b, 0}), y = z++, x = y;
-		while (isect(y, z)) z = erase(z);
-		if (x != begin() && isect(--x, y)) isect(x, y = erase(y));
-		while ((y = x) != begin() && (--x)->p >= y->p)
-			isect(x, erase(y));
-	}
-	pair<ld,int> query(ld x) {
-		assert(!empty());
-		auto l = *lower_bound(x);
-		return pair(-l.m * x + -l.b, (int)round(-l.m));
-	}
+  const ld inf = 1/(ld)0;
+  ld div(ld a, ld b) { return a/b; }
+  bool isect(iterator x, iterator y) {
+    if (y == end()) { x->p = inf; return false; }
+    if (x->m == y->m) x->p = x->b > y->b ? inf : -inf;
+    else x->p = div(y->b - x->b, x->m - y->m);
+    return x->p >= y->p;
+  }
+  void add(ld m, ld b) { m = -m; b = -b;
+    auto z = insert({m, b, 0}), y = z++, x = y;
+    while (isect(y, z)) z = erase(z);
+    if (x != begin() && isect(--x, y)) isect(x, y = erase(y));
+    while ((y = x) != begin() && (--x)->p >= y->p)
+      isect(x, erase(y));
+  }
+  pair<ld,int> query(ld x) {
+    assert(!empty());
+    auto l = *lower_bound(x);
+    return pair(-l.m * x + -l.b, (int)round(-l.m));
+  }
 };
 
 // double-check correctness

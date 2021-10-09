@@ -50,7 +50,7 @@ struct Int {
 };
 
 bool iszero(const Int& x) {
-	return x.x == 0;
+  return x.x == 0;
 }
 
 
@@ -183,52 +183,52 @@ template <class T> struct Matrix {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	const int k = 11;
+  const int k = 11;
 
-	Matrix<Int> mat(k,k);
-	vector<Int> vals;
+  Matrix<Int> mat(k,k);
+  vector<Int> vals;
 
-	Int cur(1);
-	For(i,k) {
-		cout << "? " << i << endl;
-		Int a(1);
-		For(j,k) {
-			mat[i][j] = a;
-			a *= Int(i);
-		}
-		int v;
-		cin >> v;
-		assert(v != -1);
-		vals.push_back(Int(v));
-	}
+  Int cur(1);
+  For(i,k) {
+    cout << "? " << i << endl;
+    Int a(1);
+    For(j,k) {
+      mat[i][j] = a;
+      a *= Int(i);
+    }
+    int v;
+    cin >> v;
+    assert(v != -1);
+    vals.push_back(Int(v));
+  }
 
-	vector<Int> ans = mat.solve(vals);
-	vector<Int> check = mat * ans;
+  vector<Int> ans = mat.solve(vals);
+  vector<Int> check = mat * ans;
 
-	For(i,MOD) {
-		Int res(0);
-		for (int j=0; j<k; j++) {
-			Int cur = Int(1);
-			for (int t=0; t<j; t++) {
-				cur *= Int(i);
-			}
-			res += ans[j]*cur;
-		}
-		if (res.x == 0) {
-			cout << "! " << i << endl;
-			return 0;
-		}
-	}
+  For(i,MOD) {
+    Int res(0);
+    for (int j=0; j<k; j++) {
+      Int cur = Int(1);
+      for (int t=0; t<j; t++) {
+        cur *= Int(i);
+      }
+      res += ans[j]*cur;
+    }
+    if (res.x == 0) {
+      cout << "! " << i << endl;
+      return 0;
+    }
+  }
 
-	cout << "! -1" << endl;
+  cout << "! -1" << endl;
 
-	return 0;
+  return 0;
 }

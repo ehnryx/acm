@@ -26,64 +26,64 @@ int v[7];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	while (T--) {
-		FOR(i,1,6) {
-			cin >> v[i];
-		}
+  while (T--) {
+    FOR(i,1,6) {
+      cin >> v[i];
+    }
 
-		// 6 and 5
-		int ans = v[6] + v[5];
-		v[1] -= min(v[1], v[5]);
+    // 6 and 5
+    int ans = v[6] + v[5];
+    v[1] -= min(v[1], v[5]);
 
-		// 4
-		ans += v[4];
-		int m42 = min(v[4], v[2]);
-		v[2] -= m42; v[4] -= m42;
-		int m41 = min(v[4], (v[1]+1)/2);
-		v[1] -= min(v[1], 2*m41);
+    // 4
+    ans += v[4];
+    int m42 = min(v[4], v[2]);
+    v[2] -= m42; v[4] -= m42;
+    int m41 = min(v[4], (v[1]+1)/2);
+    v[1] -= min(v[1], 2*m41);
 
-		// 3
-		ans += v[3]/2;
-		v[3] %= 2;
-		ans += v[3];
-		if (v[3] > 0) {
-			if (v[2] > 0) {
-				v[2]--;
-				v[1] -= min(v[1], 1);
-			} else {
-				v[1] -= min(v[1], 3);
-			}
-		}
+    // 3
+    ans += v[3]/2;
+    v[3] %= 2;
+    ans += v[3];
+    if (v[3] > 0) {
+      if (v[2] > 0) {
+        v[2]--;
+        v[1] -= min(v[1], 1);
+      } else {
+        v[1] -= min(v[1], 3);
+      }
+    }
 
-		// 2
-		ans += v[2]/3;
-		v[2] %= 3;
-		ans += (v[2]>0);
-		if (v[2] == 1) {
-			v[1] -= min(v[1], 4);
-		} else if (v[2] == 2) {
-			v[1] -= min(v[1], 2);
-		}
+    // 2
+    ans += v[2]/3;
+    v[2] %= 3;
+    ans += (v[2]>0);
+    if (v[2] == 1) {
+      v[1] -= min(v[1], 4);
+    } else if (v[2] == 2) {
+      v[1] -= min(v[1], 2);
+    }
 
-		// 1
-		ans += v[1]/6;
-		v[1] %= 6;
-		ans += (v[1]>0);
+    // 1
+    ans += v[1]/6;
+    v[1] %= 6;
+    ans += (v[1]>0);
 
-		// 0
-		cout << ans << nl;
-	}
+    // 0
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

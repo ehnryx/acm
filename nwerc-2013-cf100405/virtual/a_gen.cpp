@@ -18,43 +18,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int adj[n][n];
-	memset(adj, INF, sizeof adj);
-	for (int i = 0; i < n; i++) {
-		adj[i][i] = 0;
-	}
+  int adj[n][n];
+  memset(adj, INF, sizeof adj);
+  for (int i = 0; i < n; i++) {
+    adj[i][i] = 0;
+  }
 
-	for (int i = 1; i < n; i++) {
-		int j = rng()%i;
-		adj[j][i] = adj[i][j] = 1+rng()%5;
-	}
+  for (int i = 1; i < n; i++) {
+    int j = rng()%i;
+    adj[j][i] = adj[i][j] = 1+rng()%5;
+  }
 
-	int a, b;
-	do {
-		a = rng()%n;
-		b = rng()%n;
-	} while (adj[a][b] != INF);
-	adj[b][a] = adj[a][b] = rng()%10;
+  int a, b;
+  do {
+    a = rng()%n;
+    b = rng()%n;
+  } while (adj[a][b] != INF);
+  adj[b][a] = adj[a][b] = rng()%10;
 
-	for (int k = 0; k < n; k++)
-		for (int i = 0; i < n; i++)
-			for (int j = 0; j < n; j++)
-				adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
+  for (int k = 0; k < n; k++)
+    for (int i = 0; i < n; i++)
+      for (int j = 0; j < n; j++)
+        adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
 
-	cout << n << nl;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << adj[i][j] << " ";
-		}
-		cout << nl;
-	}
+  cout << n << nl;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      cout << adj[i][j] << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

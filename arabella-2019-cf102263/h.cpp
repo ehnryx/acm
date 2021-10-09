@@ -31,14 +31,14 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n, k;
-	cin >> n >> k;
-	ll ans = (2*n + 2*k-1)/(2*k);
-	cout << 5 * max(ans,(ll)2) << nl;
+  ll n, k;
+  cin >> n >> k;
+  ll ans = (2*n + 2*k-1)/(2*k);
+  cout << 5 * max(ans,(ll)2) << nl;
 
-	return 0;
+  return 0;
 }

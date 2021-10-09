@@ -26,23 +26,23 @@ const int M = 26;
 ll cnt[M], dp[M][M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	ll ans = 0;
-	for(char c : s) {
-		int i = c-'a';
-		for(int j=0; j<M; j++) {
-			dp[i][j] += cnt[j];
-			ans = max(ans, dp[i][j]);
-		}
-		cnt[i]++;
-		ans = max(ans, cnt[i]);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for(char c : s) {
+    int i = c-'a';
+    for(int j=0; j<M; j++) {
+      dp[i][j] += cnt[j];
+      ans = max(ans, dp[i][j]);
+    }
+    cnt[i]++;
+    ans = max(ans, cnt[i]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

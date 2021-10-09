@@ -21,60 +21,60 @@ int deg[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a, b;
-	for (int i=0; i<m; i++) {
-		cin >> a >> b;
-		adj[a].push_back(b);
-		deg[b]++;
-	}
+  int a, b;
+  for (int i=0; i<m; i++) {
+    cin >> a >> b;
+    adj[a].push_back(b);
+    deg[b]++;
+  }
 
-	queue<int> topo;
-	auto push = [&] (int i) {
-		if (!topo.empty()) return false;
-		topo.push(i);
-		return true;
-	};
+  queue<int> topo;
+  auto push = [&] (int i) {
+    if (!topo.empty()) return false;
+    topo.push(i);
+    return true;
+  };
 
-	for (int i=0; i<n; i++) {
-		if (deg[i]==0) {
-			if (!push(i)) {
-				cout << "back to the lab" << nl;
-				return 0;
-			}
-		}
-	}
+  for (int i=0; i<n; i++) {
+    if (deg[i]==0) {
+      if (!push(i)) {
+        cout << "back to the lab" << nl;
+        return 0;
+      }
+    }
+  }
 
-	vector<int> ans;
-	while (!topo.empty()) {
-		int cur = topo.front();
-		topo.pop();
-		ans.push_back(cur);
-		for (int x : adj[cur]) {
-			deg[x]--;
-			if (deg[x] == 0) {
-				if (!push(x)) {
-					cout << "back to the lab" << nl;
-					return 0;
-				}
-			}
-		}
-	}
+  vector<int> ans;
+  while (!topo.empty()) {
+    int cur = topo.front();
+    topo.pop();
+    ans.push_back(cur);
+    for (int x : adj[cur]) {
+      deg[x]--;
+      if (deg[x] == 0) {
+        if (!push(x)) {
+          cout << "back to the lab" << nl;
+          return 0;
+        }
+      }
+    }
+  }
 
-	for (int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  for (int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

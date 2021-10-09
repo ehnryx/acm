@@ -31,52 +31,52 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Answer {
-	string a,b,c;
+  string a,b,c;
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	string s[n];
-	int h[n],a[n],d[n];
-	for(int i=0;i<n;i++) {
-		cin>>s[i]>>h[i]>>a[i]>>d[i];
-	}
+  int n;
+  cin>>n;
+  string s[n];
+  int h[n],a[n],d[n];
+  for(int i=0;i<n;i++) {
+    cin>>s[i]>>h[i]>>a[i]>>d[i];
+  }
 
-	auto win = [&](int i, int j) {
-		int di = max(0,a[j]-d[i]);
-		int dj = max(0,a[i]-d[j]);
-		if(dj==0) return false;
-		if(di==0) return true;
-		int ti = (h[i]+di-1)/di;
-		int tj = (h[j]+dj-1)/dj;
-		return ti>tj;
-	};
+  auto win = [&](int i, int j) {
+    int di = max(0,a[j]-d[i]);
+    int dj = max(0,a[i]-d[j]);
+    if(dj==0) return false;
+    if(di==0) return true;
+    int ti = (h[i]+di-1)/di;
+    int tj = (h[j]+dj-1)/dj;
+    return ti>tj;
+  };
 
-	auto check = [&](int i, int j, int k) {
-		if(win(i,j) && win(j,k) && win(k,i)) return true;
-		if(win(j,i) && win(k,j) && win(i,k)) return true;
-		return false;
-	};
+  auto check = [&](int i, int j, int k) {
+    if(win(i,j) && win(j,k) && win(k,i)) return true;
+    if(win(j,i) && win(k,j) && win(i,k)) return true;
+    return false;
+  };
 
-	vector<Answer> ans;
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<i;j++) {
-			for(int k=0;k<j;k++) {
-				if(check(i,j,k)) {
-					ans.push_back({s[i],s[j],s[k]});
-				}
-			}
-		}
-	}
-	cout<<ans.size()<<nl;
-	for(const auto& it:ans) {
-		cout<<it.a<<" "<<it.b<<" "<<it.c<<nl;
-	}
+  vector<Answer> ans;
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<i;j++) {
+      for(int k=0;k<j;k++) {
+        if(check(i,j,k)) {
+          ans.push_back({s[i],s[j],s[k]});
+        }
+      }
+    }
+  }
+  cout<<ans.size()<<nl;
+  for(const auto& it:ans) {
+    cout<<it.a<<" "<<it.b<<" "<<it.c<<nl;
+  }
 
-	return 0;
+  return 0;
 }

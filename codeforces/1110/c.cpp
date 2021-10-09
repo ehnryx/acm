@@ -44,28 +44,28 @@ vector<int> pre = {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int q;
-	cin >> q;
+  int q;
+  cin >> q;
 
-	while (q--) {
-		int a;
-		cin >> a;
-		int clz = 32 - __builtin_clz(a);
-		if (__builtin_popcount(a+1) == 1) {
-			cout << pre[30-__builtin_clz(a)] << nl;
-		} else {
-			int ans = (1<<clz)-1;
-			cout << ans << nl;
-		}
-	}
+  while (q--) {
+    int a;
+    cin >> a;
+    int clz = 32 - __builtin_clz(a);
+    if (__builtin_popcount(a+1) == 1) {
+      cout << pre[30-__builtin_clz(a)] << nl;
+    } else {
+      int ans = (1<<clz)-1;
+      cout << ans << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

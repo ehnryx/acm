@@ -26,37 +26,37 @@ const int L = 25;
 int a[N], b[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=0; i<n; i++) {
-		cin >> a[i];
-	}
+  int n;
+  cin >> n;
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
 
-	int ans = 0;
-	for(int j=0; j<L; j++) {
-		transform(a, a+n, b, [=] (int x) {
-			return x % (1<<(j+1));
-		});
-		sort(b, b+n);
-		int cnt = 0;
-		for(int i=0; i<n; i++) {
-			{
-				auto lb = lower_bound(b+i+1, b+n, (1<<j) - b[i]);
-				auto rb = lower_bound(b+i+1, b+n, (1<<(j+1)) - b[i]);
-				cnt ^= (rb - lb) % 2;
-			}
-			{
-				auto lb = lower_bound(b+i+1, b+n, (1<<(j+1)) + (1<<j) - b[i]);
-				auto rb = lower_bound(b+i+1, b+n, (1<<(j+2)) - b[i]);
-				cnt ^= (rb - lb) % 2;
-			}
-		}
-		ans |= cnt << j;
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for(int j=0; j<L; j++) {
+    transform(a, a+n, b, [=] (int x) {
+      return x % (1<<(j+1));
+    });
+    sort(b, b+n);
+    int cnt = 0;
+    for(int i=0; i<n; i++) {
+      {
+        auto lb = lower_bound(b+i+1, b+n, (1<<j) - b[i]);
+        auto rb = lower_bound(b+i+1, b+n, (1<<(j+1)) - b[i]);
+        cnt ^= (rb - lb) % 2;
+      }
+      {
+        auto lb = lower_bound(b+i+1, b+n, (1<<(j+1)) + (1<<j) - b[i]);
+        auto rb = lower_bound(b+i+1, b+n, (1<<(j+2)) - b[i]);
+        cnt ^= (rb - lb) % 2;
+      }
+    }
+    ans |= cnt << j;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

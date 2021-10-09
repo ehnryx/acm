@@ -24,28 +24,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	const int n = 3;
-	vector<pt> p;
-	for(int i=0; i<n; i++) {
-		ld x, y;
-		cin >> x >> y;
-		p.push_back(pt(x, y));
-	}
+  const int n = 3;
+  vector<pt> p;
+  for(int i=0; i<n; i++) {
+    ld x, y;
+    cin >> x >> y;
+    p.push_back(pt(x, y));
+  }
 
-	pt g = accumulate(p.begin(), p.end(), pt(0,0)) / (ld)3;
-	cout << g.real() << " " << g.imag() << nl;
-	for(int i=1; i<n; i++) {
-		pt o = (p[i] - p[0]) / (ld)9 + g;
-		cout << o.real() << " " << o.imag() << nl;
-		assert(abs(o-g) > 1+EPS);
-	}
-	for(int i=0; i<n; i++) {
-		pt o = (ld)2*g - p[i];
-		cout << o.real() << " " << o.imag() << nl;
-	}
+  pt g = accumulate(p.begin(), p.end(), pt(0,0)) / (ld)3;
+  cout << g.real() << " " << g.imag() << nl;
+  for(int i=1; i<n; i++) {
+    pt o = (p[i] - p[0]) / (ld)9 + g;
+    cout << o.real() << " " << o.imag() << nl;
+    assert(abs(o-g) > 1+EPS);
+  }
+  for(int i=0; i<n; i++) {
+    pt o = (ld)2*g - p[i];
+    cout << o.real() << " " << o.imag() << nl;
+  }
 
-	return 0;
+  return 0;
 }

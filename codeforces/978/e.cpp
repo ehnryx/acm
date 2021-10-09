@@ -18,23 +18,23 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, w;
-	cin >> n >> w;
+  int n, w;
+  cin >> n >> w;
 
-	int a, maxv, minv, cur;
-	cur = maxv = minv = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> a;
-		cur += a;
-		maxv = max(maxv, cur);
-		minv = min(minv, cur);
-	}
+  int a, maxv, minv, cur;
+  cur = maxv = minv = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> a;
+    cur += a;
+    maxv = max(maxv, cur);
+    minv = min(minv, cur);
+  }
 
-	cout << max(0, w+1 - (maxv-minv)) << nl;
+  cout << max(0, w+1 - (maxv-minv)) << nl;
 
-	return 0;
+  return 0;
 }

@@ -26,31 +26,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s, t;
-	cin >> s >> t;
-	int a = s.size();
-	int b = t.size();
-	int ok = 0;
-	for(int i=0; i<min(a,b); i++) {
-		if(s[i] == t[i]) {
-			ok++;
-		} else {
-			break;
-		}
-	}
-	reverse(s.begin(), s.end());
-	reverse(t.begin(), t.end());
-	for(int i=0; i<min(a,b); i++) {
-		if(s[i] == t[i]) {
-			ok++;
-		} else {
-			break;
-		}
-	}
-	cout << max(0, b-min(a,ok)) << nl;
+  string s, t;
+  cin >> s >> t;
+  int a = s.size();
+  int b = t.size();
+  int ok = 0;
+  for(int i=0; i<min(a,b); i++) {
+    if(s[i] == t[i]) {
+      ok++;
+    } else {
+      break;
+    }
+  }
+  reverse(s.begin(), s.end());
+  reverse(t.begin(), t.end());
+  for(int i=0; i<min(a,b); i++) {
+    if(s[i] == t[i]) {
+      ok++;
+    } else {
+      break;
+    }
+  }
+  cout << max(0, b-min(a,ok)) << nl;
 
-	return 0;
+  return 0;
 }

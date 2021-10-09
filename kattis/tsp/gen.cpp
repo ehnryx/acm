@@ -27,21 +27,21 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(4);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(4);
 
-	int n;
-	cin >> n;
-	vector<int> x = {7, 7, 999993, 999993};
-	vector<int> y = {7, 999993, 7, 999993};
-	cout << n << nl;
-	for(int i=0; i<4; i++) {
-		for(int j=0; j<n/4; j++) {
-			ld a = x[i] + ((int)(rng()%200001) - 100000) / (ld)30000;
-			ld b = y[i] + ((int)(rng()%200001) - 100000) / (ld)30000;
-			cout << a << " " << b << nl;
-		}
-	}
+  int n;
+  cin >> n;
+  vector<int> x = {7, 7, 999993, 999993};
+  vector<int> y = {7, 999993, 7, 999993};
+  cout << n << nl;
+  for(int i=0; i<4; i++) {
+    for(int j=0; j<n/4; j++) {
+      ld a = x[i] + ((int)(rng()%200001) - 100000) / (ld)30000;
+      ld b = y[i] + ((int)(rng()%200001) - 100000) / (ld)30000;
+      cout << a << " " << b << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

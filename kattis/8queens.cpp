@@ -19,33 +19,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n=8;
-	string a[n];
-	for(int i=0;i<n;i++)cin>>a[i];
-	int cnt=0;
-	for(int i=0;i<n;i++)for(int j=0;j<n;j++)if(a[i][j]=='*'){
-		cnt++;
-		for(int k=0;k<n;k++){
-			if(k!=j&&a[i][k]=='*')goto bad;
-			if(k!=i&&a[k][j]=='*')goto bad;
-			if(k!=i&&j+k-i>=0&&j+k-i<8&&a[k][j+k-i]=='*')goto bad;
-			if(k!=i&&j-k+i>=0&&j-k+i<8&&a[k][j-k+i]=='*')goto bad;
-		}
-	}
-	if (cnt==8) {
-		cout << "valid" << nl;
-	} else {
+  int n=8;
+  string a[n];
+  for(int i=0;i<n;i++)cin>>a[i];
+  int cnt=0;
+  for(int i=0;i<n;i++)for(int j=0;j<n;j++)if(a[i][j]=='*'){
+    cnt++;
+    for(int k=0;k<n;k++){
+      if(k!=j&&a[i][k]=='*')goto bad;
+      if(k!=i&&a[k][j]=='*')goto bad;
+      if(k!=i&&j+k-i>=0&&j+k-i<8&&a[k][j+k-i]=='*')goto bad;
+      if(k!=i&&j-k+i>=0&&j-k+i<8&&a[k][j-k+i]=='*')goto bad;
+    }
+  }
+  if (cnt==8) {
+    cout << "valid" << nl;
+  } else {
 bad:
-		cout << "invalid" << nl;
-	}
+    cout << "invalid" << nl;
+  }
 
-	return 0;
+  return 0;
 }

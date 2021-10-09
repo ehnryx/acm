@@ -29,52 +29,52 @@ pol chull(pol p) {
 } // pts returned in ccw order.
 
 ld value(const ld& t, const pt& a, const pt& b) {
-	pt c = t*a + (1-t)*b;
-	return c.real()*c.imag();
+  pt c = t*a + (1-t)*b;
+  return c.real()*c.imag();
 }
 
 ld solve(const pt& a, const pt& b) {
-	ld left = 0;
-	ld right = 1;
-	for (int i=0; i<200; i++) {
-		ld first = (2*left+right)/3;
-		ld second = (left+2*right)/3;
-		if (value(first,a,b) > value(second,a,b)) {
-			right = second;
-		} else {
-			left = first;
-		}
-	}
-	return value((left+right)/2, a, b);
+  ld left = 0;
+  ld right = 1;
+  for (int i=0; i<200; i++) {
+    ld first = (2*left+right)/3;
+    ld second = (left+2*right)/3;
+    if (value(first,a,b) > value(second,a,b)) {
+      right = second;
+    } else {
+      left = first;
+    }
+  }
+  return value((left+right)/2, a, b);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(2);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(2);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int c; ld a, b;
-	vector<pt> p;
-	for (int i=0; i<n; i++) {
-		cin >> c >> a >> b;
-		p.push_back(pt(m*a/c,m*b/c));
-	}
-	p = chull(p);
+  int c; ld a, b;
+  vector<pt> p;
+  for (int i=0; i<n; i++) {
+    cin >> c >> a >> b;
+    p.push_back(pt(m*a/c,m*b/c));
+  }
+  p = chull(p);
 
-	n = p.size();
-	ld ans = 0;
-	for (int i=n-1,j=0; j<n; i=j++) {
-		ans = max(ans, solve(p[i],p[j]));
-	}
-	cout << ans << nl;
+  n = p.size();
+  ld ans = 0;
+  for (int i=n-1,j=0; j<n; i=j++) {
+    ans = max(ans, solve(p[i],p[j]));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

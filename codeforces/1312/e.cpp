@@ -27,40 +27,40 @@ int dp[N][N];
 int stk[N];
 
 int calc(int l, int r) {
-	int id = 0;
-	for(int i=l; i<=r; i++) {
-		int cur = a[i];
-		while(cur == stk[id]) {
-			cur++;
-			id--;
-		}
-		stk[++id] = cur;
-	}
-	assert(id > 0);
-	return id;
+  int id = 0;
+  for(int i=l; i<=r; i++) {
+    int cur = a[i];
+    while(cur == stk[id]) {
+      cur++;
+      id--;
+    }
+    stk[++id] = cur;
+  }
+  assert(id > 0);
+  return id;
 }
 
 int solve(int l, int r) {
-	if(l == r) return 1;
-	if(dp[l][r] != -1) return dp[l][r];
-	int res = calc(l, r);
-	for(int i=l; i<r; i++) {
-		res = min(res, solve(l, i) + solve(i+1, r));
-	}
-	return dp[l][r] = res;
+  if(l == r) return 1;
+  if(dp[l][r] != -1) return dp[l][r];
+  int res = calc(l, r);
+  for(int i=l; i<r; i++) {
+    res = min(res, solve(l, i) + solve(i+1, r));
+  }
+  return dp[l][r] = res;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<=n; i++) {
-		cin >> a[i];
-	}
-	memset(dp, -1, sizeof dp);
-	cout << solve(1, n) << nl;
+  int n;
+  cin >> n;
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+  }
+  memset(dp, -1, sizeof dp);
+  cout << solve(1, n) << nl;
 
-	return 0;
+  return 0;
 }

@@ -33,32 +33,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int x[n], y[n];
-	for (int i=0; i<n; i++) {
-		cin >> x[i] >> y[i];
-	}
+  int n;
+  cin >> n;
+  int x[n], y[n];
+  for (int i=0; i<n; i++) {
+    cin >> x[i] >> y[i];
+  }
 
-	int ans = 0;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<i; j++) {
-			int cur = 0;
-			int a = x[i]-x[j];
-			int b = y[i]-y[j];
-			for (int ii=0; ii<n; ii++) {
-				for (int jj=0; jj<n; jj++) {
-					cur += (x[ii]-x[jj]==a && y[ii]-y[jj]==b);
-				}
-			}
-			ans = max(ans, cur);
-		}
-	}
-	cout << n-ans << nl;
+  int ans = 0;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<i; j++) {
+      int cur = 0;
+      int a = x[i]-x[j];
+      int b = y[i]-y[j];
+      for (int ii=0; ii<n; ii++) {
+        for (int jj=0; jj<n; jj++) {
+          cur += (x[ii]-x[jj]==a && y[ii]-y[jj]==b);
+        }
+      }
+      ans = max(ans, cur);
+    }
+  }
+  cout << n-ans << nl;
 
-	return 0;
+  return 0;
 }

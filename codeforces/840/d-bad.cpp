@@ -37,109 +37,109 @@ int ans[N];
 vector<pii> best[N];
 
 void solve(int left, int right, const vector<int>& q) {
-	if(left==right) {
-		for(int i:q) {
-			ans[i]=a[left];
-		}
-		return ;
-	}
-	int mid = (left+right)/2;
+  if(left==right) {
+    for(int i:q) {
+      ans[i]=a[left];
+    }
+    return ;
+  }
+  int mid = (left+right)/2;
 
-	unordered_map<int,int> f;
-	for(int i=mid;i>=left;i--) {
-		int cnt = ++f[a[i]];
-		if(i==mid) {
-			best[i] = { pii(a[i],1) };
-		} else {
-			best[i] = best[i+1];
-			bool found = false;
-			for(pii& j:best[i]) {
-				if(j.first == a[i]) {
-					found = true;
-					j.second = cnt;
-				}
-			}
-			if(!found) {
-				if(best[i].size()<K) {
-					best[i].push_back(pii(a[i],cnt));
-				} else if(best[i][K-1].second<cnt) {
-					best[i][K-1]=pii(a[i],cnt);
-				}
-			}
-		}
-	}
+  unordered_map<int,int> f;
+  for(int i=mid;i>=left;i--) {
+    int cnt = ++f[a[i]];
+    if(i==mid) {
+      best[i] = { pii(a[i],1) };
+    } else {
+      best[i] = best[i+1];
+      bool found = false;
+      for(pii& j:best[i]) {
+        if(j.first == a[i]) {
+          found = true;
+          j.second = cnt;
+        }
+      }
+      if(!found) {
+        if(best[i].size()<K) {
+          best[i].push_back(pii(a[i],cnt));
+        } else if(best[i][K-1].second<cnt) {
+          best[i][K-1]=pii(a[i],cnt);
+        }
+      }
+    }
+  }
 
-	f.clear();
-	for(int i=mid+1;i<=right;i++) {
-		int cnt = ++f[a[i]];
-		if(i==mid+1) {
-			best[i] = { pii(a[i],1) };
-		} else {
-			best[i] = best[i-1];
-			bool found = false;
-			for(pii& j:best[i]) {
-				if(j.first == a[i]) {
-					found = true;
-					j.second = cnt;
-				}
-			}
-			if(!found) {
-				if(best[i].size()<K) {
-					best[i].push_back(pii(a[i],cnt));
-				} else if(best[i][K-1].second<cnt) {
-					best[i][K-1]=pii(a[i],cnt);
-				}
-			}
-		}
-	}
+  f.clear();
+  for(int i=mid+1;i<=right;i++) {
+    int cnt = ++f[a[i]];
+    if(i==mid+1) {
+      best[i] = { pii(a[i],1) };
+    } else {
+      best[i] = best[i-1];
+      bool found = false;
+      for(pii& j:best[i]) {
+        if(j.first == a[i]) {
+          found = true;
+          j.second = cnt;
+        }
+      }
+      if(!found) {
+        if(best[i].size()<K) {
+          best[i].push_back(pii(a[i],cnt));
+        } else if(best[i][K-1].second<cnt) {
+          best[i][K-1]=pii(a[i],cnt);
+        }
+      }
+    }
+  }
 
-	vector<int> lq,rq;
-	for(int i:q) {
-		if(r[i]<=mid) {
-			lq.push_back(i);
-		} else if(l[i]>mid) {
-			rq.push_back(i);
-		} else {
-			ans[i]=INF;
-			int lb = (r[i]-l[i]+1)/k[i];
-			for(pii it:best[l[i]]) {
-				for(pii jt:best[r[i]]) {
-					if(it.first==jt.first) {
-						if(it.second+jt.second>lb) ans[i] = min(ans[i],it.first);
-					} else {
-						if(it.second>lb) ans[i] = min(ans[i],it.first);
-						if(jt.second>lb) ans[i] = min(ans[i],jt.first);
-					}
-				}
-			}
-			if(ans[i]==INF) ans[i]=-1;
-		}
-	}
+  vector<int> lq,rq;
+  for(int i:q) {
+    if(r[i]<=mid) {
+      lq.push_back(i);
+    } else if(l[i]>mid) {
+      rq.push_back(i);
+    } else {
+      ans[i]=INF;
+      int lb = (r[i]-l[i]+1)/k[i];
+      for(pii it:best[l[i]]) {
+        for(pii jt:best[r[i]]) {
+          if(it.first==jt.first) {
+            if(it.second+jt.second>lb) ans[i] = min(ans[i],it.first);
+          } else {
+            if(it.second>lb) ans[i] = min(ans[i],it.first);
+            if(jt.second>lb) ans[i] = min(ans[i],jt.first);
+          }
+        }
+      }
+      if(ans[i]==INF) ans[i]=-1;
+    }
+  }
 
-	solve(left,mid,lq);
-	solve(mid+1,right,rq);
+  solve(left,mid,lq);
+  solve(mid+1,right,rq);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-	}
-	vector<int> q;
-	for(int i=0;i<m;i++) {
-		cin>>l[i]>>r[i]>>k[i];
-		q.push_back(i);
-	}
-	solve(1,n,q);
+  int n,m;
+  cin>>n>>m;
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+  }
+  vector<int> q;
+  for(int i=0;i<m;i++) {
+    cin>>l[i]>>r[i]>>k[i];
+    q.push_back(i);
+  }
+  solve(1,n,q);
 
-	for(int i=0;i<m;i++) {
-		cout<<ans[i]<<nl;
-	}
+  for(int i=0;i<m;i++) {
+    cout<<ans[i]<<nl;
+  }
 
-	return 0;
+  return 0;
 }

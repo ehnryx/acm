@@ -26,49 +26,49 @@ const string First = "tokitsukaze";
 const string Second = "quailty";
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	set<int> idx[2]; 
+  set<int> idx[2]; 
 
-	function<bool(void)> check_win = [&] () {
-		return idx[0].empty() || idx[1].empty();
-	};
-	function<bool(int)> check_lose = [&] (int i) {
-		if (idx[0].empty() || idx[1].empty()) return false;
-		if (!((max(*idx[0].rbegin(),i)-*idx[0].begin() < k && *idx[0].rbegin()-min(i-k+1,*idx[0].begin()) < k) || *idx[1].rbegin()-*idx[1].begin() < k)) return false;
-		if (!((max(*idx[1].rbegin(),i)-*idx[1].begin() < k && *idx[1].rbegin()-min(i-k+1,*idx[1].begin()) < k) || *idx[0].rbegin()-*idx[0].begin() < k)) return false;
-		return true;
-	};
+  function<bool(void)> check_win = [&] () {
+    return idx[0].empty() || idx[1].empty();
+  };
+  function<bool(int)> check_lose = [&] (int i) {
+    if (idx[0].empty() || idx[1].empty()) return false;
+    if (!((max(*idx[0].rbegin(),i)-*idx[0].begin() < k && *idx[0].rbegin()-min(i-k+1,*idx[0].begin()) < k) || *idx[1].rbegin()-*idx[1].begin() < k)) return false;
+    if (!((max(*idx[1].rbegin(),i)-*idx[1].begin() < k && *idx[1].rbegin()-min(i-k+1,*idx[1].begin()) < k) || *idx[0].rbegin()-*idx[0].begin() < k)) return false;
+    return true;
+  };
 
-	FOR(i,k,n-1) {
-		idx[s[i]-'0'].insert(i);
-	}
+  FOR(i,k,n-1) {
+    idx[s[i]-'0'].insert(i);
+  }
 
-	bool win = false;
-	bool lose = true;
-	win |= check_win();
-	lose &= check_lose(k-1);
+  bool win = false;
+  bool lose = true;
+  win |= check_win();
+  lose &= check_lose(k-1);
 
-	FOR(i,k,n-1) {
-		idx[s[i]-'0'].erase(i);
-		idx[s[i-k]-'0'].insert(i-k);
-		win |= check_win();
-		lose &= check_lose(i);
-	}
+  FOR(i,k,n-1) {
+    idx[s[i]-'0'].erase(i);
+    idx[s[i-k]-'0'].insert(i-k);
+    win |= check_win();
+    lose &= check_lose(i);
+  }
 
-	assert(!(win && lose));
+  assert(!(win && lose));
 
-	if (win) cout << First << nl;
-	else if (lose) cout << Second << nl;
-	else cout << "once again" << nl;
+  if (win) cout << First << nl;
+  else if (lose) cout << Second << nl;
+  else cout << "once again" << nl;
 
-	return 0;
+  return 0;
 }

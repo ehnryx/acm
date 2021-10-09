@@ -33,28 +33,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, w;
-	cin >> n >> w;
+  int n, w;
+  cin >> n >> w;
 
-	ll dp[w+1];
-	memset(dp, 0, sizeof dp);
-	For(i,n) {
-		int we, v;
-		cin >> we >> v;
-		for (int j=w; j-we>=0; j--) {
-			dp[j] = max(dp[j], dp[j-we] + v);
-		}
-	}
+  ll dp[w+1];
+  memset(dp, 0, sizeof dp);
+  For(i,n) {
+    int we, v;
+    cin >> we >> v;
+    for (int j=w; j-we>=0; j--) {
+      dp[j] = max(dp[j], dp[j-we] + v);
+    }
+  }
 
-	ll ans = 0;
-	For(i,w+1) {
-		ans = max(ans, dp[i]);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  For(i,w+1) {
+    ans = max(ans, dp[i]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

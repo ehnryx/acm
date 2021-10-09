@@ -76,35 +76,35 @@ namespace MinArb {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=1;i<=n;i++) {
-		int a,c;
-		cin>>a>>c;
-		MinArb::add_edge(a,i,c);
-		for (int j=0;j<=n;j++) {
-			cin>>c;
-			MinArb::add_edge(j,i,c);
-		}
-	}
-	MinArb::add_edge(1,0);
-	//cerr<<nl<<nl;
+  int n;
+  cin>>n;
+  for(int i=1;i<=n;i++) {
+    int a,c;
+    cin>>a>>c;
+    MinArb::add_edge(a,i,c);
+    for (int j=0;j<=n;j++) {
+      cin>>c;
+      MinArb::add_edge(j,i,c);
+    }
+  }
+  MinArb::add_edge(1,0);
+  //cerr<<nl<<nl;
 
-	MinArb::contract(n);
-	MinArb::expand(0);
+  MinArb::contract(n);
+  MinArb::expand(0);
 
-	ll ans = 0;
-	//cerr<<"MinArb:"<<nl;
-	for(int i=1;i<=n;i++) {
-		ans += MinArb::cost[MinArb::in[i]];
-		//cerr<<i<<": "; int e = MinArb::in[i];
-		//cerr<<e<<" ("<<MinArb::from[e]<<" "<<MinArb::to[e]<<" "<<MinArb::cost[e]<<")"<<nl;
-	}
-	cout<<-ans<<nl;
+  ll ans = 0;
+  //cerr<<"MinArb:"<<nl;
+  for(int i=1;i<=n;i++) {
+    ans += MinArb::cost[MinArb::in[i]];
+    //cerr<<i<<": "; int e = MinArb::in[i];
+    //cerr<<e<<" ("<<MinArb::from[e]<<" "<<MinArb::to[e]<<" "<<MinArb::cost[e]<<")"<<nl;
+  }
+  cout<<-ans<<nl;
 
-	return 0;
+  return 0;
 }

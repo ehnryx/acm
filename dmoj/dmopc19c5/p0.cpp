@@ -24,17 +24,17 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, t;
-	cin >> n >> t;
-	for(int i=0; i<n; i++) {
-		string s; int v;
-		cin >> s >> v;
-		if(v > t) cout << s << " will advance" << nl;
-		else cout << s << " will not advance" << nl;
-	}
+  int n, t;
+  cin >> n >> t;
+  for(int i=0; i<n; i++) {
+    string s; int v;
+    cin >> s >> v;
+    if(v > t) cout << s << " will advance" << nl;
+    else cout << s << " will not advance" << nl;
+  }
 
-	return 0;
+  return 0;
 }

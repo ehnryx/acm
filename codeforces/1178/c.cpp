@@ -29,22 +29,22 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll power(ll b, ll e) {
-	ll res = 1;
-	for ( ; e>0; e/=2) {
-		if (e&1) res = res*b % MOD;
-		b = b*b % MOD;
-	}
-	return res;
+  ll res = 1;
+  for ( ; e>0; e/=2) {
+    if (e&1) res = res*b % MOD;
+    b = b*b % MOD;
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int w, h;
-	cin >> w >> h;
-	cout << power(2,w+h) << nl;
+  int w, h;
+  cin >> w >> h;
+  cout << power(2,w+h) << nl;
 
-	return 0;
+  return 0;
 }

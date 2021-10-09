@@ -33,55 +33,55 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int adj[n][n];
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<n;j++) {
-			char c;
-			cin>>c;
-			if(c=='0') adj[i][j]=INF;
-			else adj[i][j]=1;
-		}
-	}
-	for(int i=0;i<n;i++) {
-		adj[i][i]=0;
-	}
+  int n;
+  cin>>n;
+  int adj[n][n];
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<n;j++) {
+      char c;
+      cin>>c;
+      if(c=='0') adj[i][j]=INF;
+      else adj[i][j]=1;
+    }
+  }
+  for(int i=0;i<n;i++) {
+    adj[i][i]=0;
+  }
 
-	for(int k=0;k<n;k++) {
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				adj[i][j]=min(adj[i][j],adj[i][k]+adj[k][j]);
-			}
-		}
-	}
+  for(int k=0;k<n;k++) {
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<n;j++) {
+        adj[i][j]=min(adj[i][j],adj[i][k]+adj[k][j]);
+      }
+    }
+  }
 
-	int m;
-	cin>>m;
-	int a[m];
-	for(int i=0;i<m;i++) {
-		cin>>a[i];
-		--a[i];
-	}
+  int m;
+  cin>>m;
+  int a[m];
+  for(int i=0;i<m;i++) {
+    cin>>a[i];
+    --a[i];
+  }
 
-	vector<int> ans;
-	ans.push_back(a[0]);
-	for(int i=0;i<m-1;) {
-		int j=i+1;
-		while(j<m && adj[a[i]][a[j]]==j-i) j++;
-		ans.push_back(a[--j]);
-		i = j;
-	}
+  vector<int> ans;
+  ans.push_back(a[0]);
+  for(int i=0;i<m-1;) {
+    int j=i+1;
+    while(j<m && adj[a[i]][a[j]]==j-i) j++;
+    ans.push_back(a[--j]);
+    i = j;
+  }
 
-	cout<<ans.size()<<nl;
-	for(int it:ans) {
-		cout<<it+1<<" ";
-	}
-	cout<<nl;
+  cout<<ans.size()<<nl;
+  for(int it:ans) {
+    cout<<it+1<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

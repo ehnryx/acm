@@ -35,37 +35,37 @@ vector<int> adj[N];
 ll dp[N][2];
 
 ll solve(int u, int c, int p) {
-	if (dp[u][c] != -1) return dp[u][c];
-	ll res = 1;
-	for (int v : adj[u]) {
-		if (v != p) {
-			if (c) {
-				res = res * solve(v, c^1, u) % MOD;
+  if (dp[u][c] != -1) return dp[u][c];
+  ll res = 1;
+  for (int v : adj[u]) {
+    if (v != p) {
+      if (c) {
+        res = res * solve(v, c^1, u) % MOD;
             } else {
-				res = res * (solve(v, c^1, u) + solve(v, c, u)) % MOD;
+        res = res * (solve(v, c^1, u) + solve(v, c, u)) % MOD;
             }
-		}
-	}
-	return dp[u][c] = res % MOD;
+    }
+  }
+  return dp[u][c] = res % MOD;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(dp, -1, sizeof dp);
+  memset(dp, -1, sizeof dp);
 
-	int n;
-	cin >> n;
-	For(i,n-1) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	cout << (solve(1, 0, 0) + solve(1, 1, 0)) % MOD << nl;
+  int n;
+  cin >> n;
+  For(i,n-1) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  cout << (solve(1, 0, 0) + solve(1, 1, 0)) % MOD << nl;
 
-	return 0;
+  return 0;
 }
 

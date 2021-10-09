@@ -26,50 +26,50 @@ vector<int> adj[N];
 int dist[N], par[N];
 
 int solve(int s) {
-	memset(par, -1, sizeof par);
-	memset(dist, -1, sizeof dist);
-	queue<int> bfs;
-	bfs.push(s);
-	dist[s] = 0;
-	int cyc = INF;
-	while(!bfs.empty()) {
-		int u = bfs.front();
-		bfs.pop();
-		for(int v : adj[u]) {
-			if(dist[v] == -1) {
-				dist[v] = dist[u] + 1;
-				par[v] = u;
-				bfs.push(v);
-			} else if(par[u] != v) {
-				cyc = min(cyc, dist[v] + dist[u] + 1);
-			}
-		}
-	}
-	return cyc;
+  memset(par, -1, sizeof par);
+  memset(dist, -1, sizeof dist);
+  queue<int> bfs;
+  bfs.push(s);
+  dist[s] = 0;
+  int cyc = INF;
+  while(!bfs.empty()) {
+    int u = bfs.front();
+    bfs.pop();
+    for(int v : adj[u]) {
+      if(dist[v] == -1) {
+        dist[v] = dist[u] + 1;
+        par[v] = u;
+        bfs.push(v);
+      } else if(par[u] != v) {
+        cyc = min(cyc, dist[v] + dist[u] + 1);
+      }
+    }
+  }
+  return cyc;
 }
 
 // TODO
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	for(int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
+  int n, m;
+  cin >> n >> m;
+  for(int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
 
-	int ans = INF;
-	for(int i=0; i<n; i++) {
-		ans = min(ans, solve(i));
-	}
-	if(ans < INF) cout << ans << nl;
-	else cout << "impossible" << nl;
+  int ans = INF;
+  for(int i=0; i<n; i++) {
+    ans = min(ans, solve(i));
+  }
+  if(ans < INF) cout << ans << nl;
+  else cout << "impossible" << nl;
 
-	return 0;
+  return 0;
 }

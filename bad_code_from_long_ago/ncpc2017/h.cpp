@@ -60,160 +60,160 @@ ll dfs(int u, int t, ll f) {
 // MAGIC IO
 #ifdef USE_MAGIC_IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 inline void read(int &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 #else
 #define get() getchar()
 #define read(x) scanf("%d",&x)
 #endif
 void readchar(char& c) {
-	while (isspace(c = get()));
+  while (isspace(c = get()));
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	FLOW::init();
+  FLOW::init();
 
-	int S = 400000;
-	int T = 400001;
+  int S = 400000;
+  int T = 400001;
 
-	int n, m; read(n); read(m);
-	vector<pair<double, int>> people(n);
-	for (int i = 0; i < n; i++) {
-		int x, y; read(x); read(y);
-		people[i] = {arg(pt(x, y)), i};
-		FLOW::add_edge(S, i);
-	}
+  int n, m; read(n); read(m);
+  vector<pair<double, int>> people(n);
+  for (int i = 0; i < n; i++) {
+    int x, y; read(x); read(y);
+    people[i] = {arg(pt(x, y)), i};
+    FLOW::add_edge(S, i);
+  }
 
-	set<ldouble> lines;
-	unordered_map<ldouble, int> dumb;
-	int cap[m];
-	for (int i = 0; i < m; i++) {
-		int x, y; read(x); read(y); read(cap[i]);
-		lines.insert(arg(pt(x, y)));
-		dumb[arg(pt(x,y))] = i;
-	}
+  set<ldouble> lines;
+  unordered_map<ldouble, int> dumb;
+  int cap[m];
+  for (int i = 0; i < m; i++) {
+    int x, y; read(x); read(y); read(cap[i]);
+    lines.insert(arg(pt(x, y)));
+    dumb[arg(pt(x,y))] = i;
+  }
 
-	int nans = 0;
-	vector<int> ans(n, -1);
-	vector<vector<int>> id(n);
-	int cid = 0;
+  int nans = 0;
+  vector<int> ans(n, -1);
+  vector<vector<int>> id(n);
+  int cid = 0;
 
-	sort(people.begin(), people.end());
+  sort(people.begin(), people.end());
 
-	vector<pair<double, int>> todo;
-	double prev = 500;
+  vector<pair<double, int>> todo;
+  double prev = 500;
 
-	for (int i = 0; i < n; i++) {
-		ldouble a = people[i].first;
-		auto it = lines.lower_bound(a);
-		auto it2 = it;
-		if (it == lines.begin()) {
-			it2 = --lines.end();
-			if (abs((*it - a) - (a - (*it2 - 2*M_PI))) < EPS) {
-				if (abs(prev - a) < EPS)
-					id[cid].push_back(people[i].second);
-				else {
-					prev = a;
-					cid++;
-				}
-			}
-			else if ((*it - a) < (a - (*it2 - 2*M_PI)))
-				if (cap[dumb[*it]]) {
-					cap[dumb[*it]]--;
-					nans++;
-					ans[people[i].second] = dumb[*it];
-				}
-			else
-				if (cap[dumb[*it2]]) {
-					cap[dumb[*it2]]--;
-					nans++;
-					ans[people[i].second] = dumb[*it2];
-				}
-		} else if (it == lines.end()) {
-			it = lines.begin(), --it2;
-			if (abs((*it - a + 2*M_PI) - (a - (*it2))) < EPS) {
-				if (abs(prev - a) < EPS)
-					id[cid].push_back(people[i].second);
-				else {
-					prev = a;
-					cid++;
-				}
-			}
-			else if ((*it - a + 2*M_PI) < (a - (*it2)))
-				if (cap[dumb[*it]]) {
-					cap[dumb[*it]]--;
-					nans++;
-					ans[people[i].second] = dumb[*it];
-				}
-			else 
-				if (cap[dumb[*it2]]) {
-					cap[dumb[*it2]]--;
-					nans++;
-					ans[people[i].second] = dumb[*it2];
-				}
-		}
-		else {
-			--it2;
-			if (abs((*it - a) - (a - (*it2))) < EPS) {
-				if (abs(prev - a) < EPS)
-					id[cid].push_back(people[i].second);
-				else {
-					prev = a;
-					cid++;
-				}
-			}
-			else if ((*it - a) < (a - (*it2)))
-				if (cap[dumb[*it]]) {
-					cap[dumb[*it]]--;
-					nans++;
-					ans[people[i].second] = dumb[*it];
-				}
-			else
-				if (cap[dumb[*it2]]) {
-					cap[dumb[*it2]]--;
-					nans++;
-					ans[people[i].second] = dumb[*it2];
-				}
-		}
-	}
-	for (int i = 0; i < n && !id[i].empty(); i++) {
-		FLOW::add_edge(S, i, id[i].size());
-		ldouble a = people[id[i][0]].first;
-		auto it = lines.lower_bound(a);
-		auto it2 = it;
-		if (it == lines.begin()) {
-			it2 = --lines.end();
-		} else if (it == lines.end()) {
-			it = lines.begin();
-			--it2;
-		} else  {
-			--it2;
-		}
-		FLOW::add_edge(i, dumb[*it], id[i].size());
-		FLOW::add_edge(i, dumb[*it2], id[i].size());
-	}
-	for (const auto& p : dumb) {
-		FLOW::add_edge(200000+p.second, T, cap[p.second]);
-	}
+  for (int i = 0; i < n; i++) {
+    ldouble a = people[i].first;
+    auto it = lines.lower_bound(a);
+    auto it2 = it;
+    if (it == lines.begin()) {
+      it2 = --lines.end();
+      if (abs((*it - a) - (a - (*it2 - 2*M_PI))) < EPS) {
+        if (abs(prev - a) < EPS)
+          id[cid].push_back(people[i].second);
+        else {
+          prev = a;
+          cid++;
+        }
+      }
+      else if ((*it - a) < (a - (*it2 - 2*M_PI)))
+        if (cap[dumb[*it]]) {
+          cap[dumb[*it]]--;
+          nans++;
+          ans[people[i].second] = dumb[*it];
+        }
+      else
+        if (cap[dumb[*it2]]) {
+          cap[dumb[*it2]]--;
+          nans++;
+          ans[people[i].second] = dumb[*it2];
+        }
+    } else if (it == lines.end()) {
+      it = lines.begin(), --it2;
+      if (abs((*it - a + 2*M_PI) - (a - (*it2))) < EPS) {
+        if (abs(prev - a) < EPS)
+          id[cid].push_back(people[i].second);
+        else {
+          prev = a;
+          cid++;
+        }
+      }
+      else if ((*it - a + 2*M_PI) < (a - (*it2)))
+        if (cap[dumb[*it]]) {
+          cap[dumb[*it]]--;
+          nans++;
+          ans[people[i].second] = dumb[*it];
+        }
+      else 
+        if (cap[dumb[*it2]]) {
+          cap[dumb[*it2]]--;
+          nans++;
+          ans[people[i].second] = dumb[*it2];
+        }
+    }
+    else {
+      --it2;
+      if (abs((*it - a) - (a - (*it2))) < EPS) {
+        if (abs(prev - a) < EPS)
+          id[cid].push_back(people[i].second);
+        else {
+          prev = a;
+          cid++;
+        }
+      }
+      else if ((*it - a) < (a - (*it2)))
+        if (cap[dumb[*it]]) {
+          cap[dumb[*it]]--;
+          nans++;
+          ans[people[i].second] = dumb[*it];
+        }
+      else
+        if (cap[dumb[*it2]]) {
+          cap[dumb[*it2]]--;
+          nans++;
+          ans[people[i].second] = dumb[*it2];
+        }
+    }
+  }
+  for (int i = 0; i < n && !id[i].empty(); i++) {
+    FLOW::add_edge(S, i, id[i].size());
+    ldouble a = people[id[i][0]].first;
+    auto it = lines.lower_bound(a);
+    auto it2 = it;
+    if (it == lines.begin()) {
+      it2 = --lines.end();
+    } else if (it == lines.end()) {
+      it = lines.begin();
+      --it2;
+    } else  {
+      --it2;
+    }
+    FLOW::add_edge(i, dumb[*it], id[i].size());
+    FLOW::add_edge(i, dumb[*it2], id[i].size());
+  }
+  for (const auto& p : dumb) {
+    FLOW::add_edge(200000+p.second, T, cap[p.second]);
+  }
 
-	while (FLOW::bfs(S, T))
-		nans += FLOW::dfs(S, T, INF);
+  while (FLOW::bfs(S, T))
+    nans += FLOW::dfs(S, T, INF);
 
-	cout << nans << nl;
+  cout << nans << nl;
 
-	return 0;
+  return 0;
 }

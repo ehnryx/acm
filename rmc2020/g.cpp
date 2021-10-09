@@ -25,21 +25,21 @@ random_device _rd; mt19937 rng(_rd());
 
 // MAGIC IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 template <typename T> inline void read(T &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 void readchar(char& c) {
-	while (isspace(c = get()));
+  while (isspace(c = get()));
 }
 // END MAGIC IO
 

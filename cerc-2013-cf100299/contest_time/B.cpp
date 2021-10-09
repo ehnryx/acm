@@ -18,39 +18,39 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T; cin >> T;
-	string s; getline(cin, s);
-	while (T--) {
-		getline(cin, s);
-		istringstream in(s);
-		vector<string> v;
-		while (in >> s) v.push_back(s);
-		vector<bool> use(v.size(), 1);
-		while (getline(cin, s)) {
-			istringstream in(s);
-			in >> s >> s;
-			if (s[0] == 'd') {
-				for (int i = 0; i < v.size(); i++) {
-					if (use[i]) {
-						cout << v[i] << " ";
-					}
-				}
-				cout << nl;
-				break;
-			} else {
-				in >> s;
-				for (int i = 0; i < v.size(); i++) {
-					if (v[i] == s) {
-						use[i] = 0;
-					}
-				}
-			}
-		}
-	}
+  int T; cin >> T;
+  string s; getline(cin, s);
+  while (T--) {
+    getline(cin, s);
+    istringstream in(s);
+    vector<string> v;
+    while (in >> s) v.push_back(s);
+    vector<bool> use(v.size(), 1);
+    while (getline(cin, s)) {
+      istringstream in(s);
+      in >> s >> s;
+      if (s[0] == 'd') {
+        for (int i = 0; i < v.size(); i++) {
+          if (use[i]) {
+            cout << v[i] << " ";
+          }
+        }
+        cout << nl;
+        break;
+      } else {
+        in >> s;
+        for (int i = 0; i < v.size(); i++) {
+          if (v[i] == s) {
+            use[i] = 0;
+          }
+        }
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

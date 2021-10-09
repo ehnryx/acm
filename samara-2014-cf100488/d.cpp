@@ -17,43 +17,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n+1];
-	unordered_map<int,int> cnt;
-	for (int i = 1; i <= n; i++) {
-		cin >> a[i];
-		cnt[a[i]]++;
-	}
-	if (cnt.size() == 1) {
-		cout << 0 << nl;
-		return 0;
-	}
+  int a[n+1];
+  unordered_map<int,int> cnt;
+  for (int i = 1; i <= n; i++) {
+    cin >> a[i];
+    cnt[a[i]]++;
+  }
+  if (cnt.size() == 1) {
+    cout << 0 << nl;
+    return 0;
+  }
 
-	int m, j, v;
-	cin >> m;
+  int m, j, v;
+  cin >> m;
 
-	for (int i = 1; i <= m; i++) {
-		cin >> j >> v;
-		cnt[a[j]]--;
-		a[j] = v;
-		cnt[a[j]]++;
-		if (cnt[a[j]] == n) {
-			cout << i << nl;
-			return 0;
-		}
-	}
+  for (int i = 1; i <= m; i++) {
+    cin >> j >> v;
+    cnt[a[j]]--;
+    a[j] = v;
+    cnt[a[j]]++;
+    if (cnt[a[j]] == n) {
+      cout << i << nl;
+      return 0;
+    }
+  }
 
-	cout << -1 << nl;
+  cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

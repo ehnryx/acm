@@ -24,21 +24,21 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, l, d, g;
-		cin >> n >> l >> d >> g;
-		ld ang = 2*M_PIl / n;
-		ld h = (ld)l/2 / tan(ang/2);
-		ld area = h * l/2 * n;
-		area += (ld)n * g * l * d;
-		area += M_PIl * (g*d)*(g*d);
-		cout << area << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, l, d, g;
+    cin >> n >> l >> d >> g;
+    ld ang = 2*M_PIl / n;
+    ld h = (ld)l/2 / tan(ang/2);
+    ld area = h * l/2 * n;
+    area += (ld)n * g * l * d;
+    area += M_PIl * (g*d)*(g*d);
+    cout << area << nl;
+  }
 
-	return 0;
+  return 0;
 }

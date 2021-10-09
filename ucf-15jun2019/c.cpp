@@ -27,59 +27,59 @@ int a[N], b[N];
 int val[N][N];
 
 int solve() {
-	int n, m;
-	cin >> n >> m;
-	For(i,n) {
-		cin >> a[i] >> b[i];
-	}
+  int n, m;
+  cin >> n >> m;
+  For(i,n) {
+    cin >> a[i] >> b[i];
+  }
 
-	function<bool(int)> valid = [&] (int t) {
-		memset(val, -1, sizeof val);
-		val[0][0] = 0;
-		For(i,n) {
-			for (int v = 0; v <= t/a[i]; v++) {
-				int u = (t-v*a[i])/b[i];
-				FOR(j,0,m) {
-					if (val[i][j] >= 0) {
-						int jj = min(m, j+v);
-						val[i+1][jj] = max(val[i+1][jj], min(m, val[i][j]+u));
-					}
-				}
-			}
-		}
-		return val[n][m] == m;
-	};
+  function<bool(int)> valid = [&] (int t) {
+    memset(val, -1, sizeof val);
+    val[0][0] = 0;
+    For(i,n) {
+      for (int v = 0; v <= t/a[i]; v++) {
+        int u = (t-v*a[i])/b[i];
+        FOR(j,0,m) {
+          if (val[i][j] >= 0) {
+            int jj = min(m, j+v);
+            val[i+1][jj] = max(val[i+1][jj], min(m, val[i][j]+u));
+          }
+        }
+      }
+    }
+    return val[n][m] == m;
+  };
 
-	int left = 0;
-	int right = m * (a[0]+b[0]);
-	while (left < right) {
-		int mid = (left+right)/2;
-		if (valid(mid)) {
-			right = mid;
-		} else {
-			left = mid+1;
-		}
-	}
-	cout << left << nl;
+  int left = 0;
+  int right = m * (a[0]+b[0]);
+  while (left < right) {
+    int mid = (left+right)/2;
+    if (valid(mid)) {
+      right = mid;
+    } else {
+      left = mid+1;
+    }
+  }
+  cout << left << nl;
 
-	return 0;
+  return 0;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		assert(solve() == 0);
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    assert(solve() == 0);
+  }
 
-	return 0;
+  return 0;
 }

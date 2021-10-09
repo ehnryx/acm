@@ -44,52 +44,52 @@ const int N = 3000+1;
 int g[N][N], h[N][N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, a, b;
-	cin >> n >> m >> a >> b;
+  int n, m, a, b;
+  cin >> n >> m >> a >> b;
 
-	int x, y, z;
-	cin >> g[0][0] >> x >> y >> z;
-	For(i,n) {
-		For(j,m) {
-			if (j>0) {
-				g[i][j] = ((ll)g[i][j-1]*x + y) % z;
-			} else if (i>0) {
-				g[i][j] = ((ll)g[i-1][m-1]*x + y) % z;
-			}
-		}
-	}
+  int x, y, z;
+  cin >> g[0][0] >> x >> y >> z;
+  For(i,n) {
+    For(j,m) {
+      if (j>0) {
+        g[i][j] = ((ll)g[i][j-1]*x + y) % z;
+      } else if (i>0) {
+        g[i][j] = ((ll)g[i-1][m-1]*x + y) % z;
+      }
+    }
+  }
 
-	For(i,n) {
-		min_queue<int> cur;
-		For(j,b) {
-			cur.push(g[i][j]);
-		}
-		h[i][0] = cur.minimum();
-		For(j,m-b) {
-			cur.pop();
-			cur.push(g[i][j+b]);
-			h[i][j+1] = cur.minimum();
-		}
-	}
+  For(i,n) {
+    min_queue<int> cur;
+    For(j,b) {
+      cur.push(g[i][j]);
+    }
+    h[i][0] = cur.minimum();
+    For(j,m-b) {
+      cur.pop();
+      cur.push(g[i][j+b]);
+      h[i][j+1] = cur.minimum();
+    }
+  }
 
-	ll ans = 0;
-	For(j,m-b+1) {
-		min_queue<int> cur;
-		For(i,a) {
-			cur.push(h[i][j]);
-		}
-		ans += cur.minimum();
-		For(i,n-a) {
-			cur.pop();
-			cur.push(h[i+a][j]);
-			ans += cur.minimum();
-		}
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  For(j,m-b+1) {
+    min_queue<int> cur;
+    For(i,a) {
+      cur.push(h[i][j]);
+    }
+    ans += cur.minimum();
+    For(i,n-a) {
+      cur.pop();
+      cur.push(h[i+a][j]);
+      ans += cur.minimum();
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

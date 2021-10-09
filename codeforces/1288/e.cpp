@@ -26,37 +26,37 @@ const int N = 3e5+1;
 int lb[N], ub[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int idx[n+1];
-	ordered_set<int> ord;
-	for(int i=1; i<=n; i++) {
-		lb[i] = i;
-		idx[i] = i;
-		ord.insert(i);
-	}
+  int idx[n+1];
+  ordered_set<int> ord;
+  for(int i=1; i<=n; i++) {
+    lb[i] = i;
+    idx[i] = i;
+    ord.insert(i);
+  }
 
-	int cid = 0;
-	for(int i=0; i<m; i++) {
-		int v;
-		cin >> v;
-		int j = idx[v];
-		int k = ord.order_of_key(j);
-		ub[v] = max(ub[v], k+1);
-		ord.erase(j);
-		idx[v] = cid--;
-		ord.insert(idx[v]);
-		lb[v] = 1;
-	}
+  int cid = 0;
+  for(int i=0; i<m; i++) {
+    int v;
+    cin >> v;
+    int j = idx[v];
+    int k = ord.order_of_key(j);
+    ub[v] = max(ub[v], k+1);
+    ord.erase(j);
+    idx[v] = cid--;
+    ord.insert(idx[v]);
+    lb[v] = 1;
+  }
 
-	for(int i=1; i<=n; i++) {
-		ub[i] = max(ub[i], (int)ord.order_of_key(idx[i]) + 1);
-		cout << lb[i] << " " << ub[i] << nl;
-	}
+  for(int i=1; i<=n; i++) {
+    ub[i] = max(ub[i], (int)ord.order_of_key(idx[i]) + 1);
+    cout << lb[i] << " " << ub[i] << nl;
+  }
 
-	return 0;
+  return 0;
 }

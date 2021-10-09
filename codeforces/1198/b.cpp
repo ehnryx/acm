@@ -37,75 +37,75 @@ void build() {
 }
 
 void push(int i) {
-	if (maxv[i]) {
-		maxv[2*i] = max(maxv[2*i], maxv[i]);
-		segt[2*i] = max(segt[2*i], maxv[i]);
-		maxv[2*i+1] = max(maxv[2*i+1], maxv[i]);
-		segt[2*i+1] = max(segt[2*i+1], maxv[i]);
-		maxv[i] = 0;
-	}
+  if (maxv[i]) {
+    maxv[2*i] = max(maxv[2*i], maxv[i]);
+    segt[2*i] = max(segt[2*i], maxv[i]);
+    maxv[2*i+1] = max(maxv[2*i+1], maxv[i]);
+    segt[2*i+1] = max(segt[2*i+1], maxv[i]);
+    maxv[i] = 0;
+  }
 }
 
 void setv(int x, int v, int i=1, int s=0, int e=N-1) {
-	if (s==e) {
-		segt[i] = v;
-		maxv[i] = 0;
-		return;
-	}
-	push(i);
-	int m = (s+e)/2;
-	if (x<=m) setv(x, v, 2*i, s, m);
-	else setv(x, v, 2*i+1, m+1, e);
+  if (s==e) {
+    segt[i] = v;
+    maxv[i] = 0;
+    return;
+  }
+  push(i);
+  int m = (s+e)/2;
+  if (x<=m) setv(x, v, 2*i, s, m);
+  else setv(x, v, 2*i+1, m+1, e);
 }
 
 void update(int x) {
-	maxv[1] = max(maxv[1], x);
+  maxv[1] = max(maxv[1], x);
 }
 
 int query(int x, int i=1, int s=0, int e=N-1) {
-	if (s==e) {
-		return segt[i];
-	}
-	push(i);
-	int m = (s+e)/2;
-	if (x<=m) return query(x, 2*i, s, m);
-	else return query(x, 2*i+1, m+1, e);
+  if (s==e) {
+    return segt[i];
+  }
+  push(i);
+  int m = (s+e)/2;
+  if (x<=m) return query(x, 2*i, s, m);
+  else return query(x, 2*i+1, m+1, e);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	FOR(i,1,n) {
-		cin >> segt[N+i];
-	}
-	build();
+  FOR(i,1,n) {
+    cin >> segt[N+i];
+  }
+  build();
 
-	int q;
-	cin >> q;
-	while (q--) {
-		int t;
-		cin >> t;
-		if (t == 1) {
-			int p, x;
-			cin >> p >> x;
-			setv(p,x);
-		}
-		else {
-			int x;
-			cin >> x;
-			update(x);
-		}
-	}
+  int q;
+  cin >> q;
+  while (q--) {
+    int t;
+    cin >> t;
+    if (t == 1) {
+      int p, x;
+      cin >> p >> x;
+      setv(p,x);
+    }
+    else {
+      int x;
+      cin >> x;
+      update(x);
+    }
+  }
 
-	FOR(i,1,n) {
-		cout << query(i) << " ";
-	}
-	cout << nl;
+  FOR(i,1,n) {
+    cout << query(i) << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

@@ -26,40 +26,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int an, bn, pn;
-	cin >> an >> bn >> pn;
+  int an, bn, pn;
+  cin >> an >> bn >> pn;
 
-	string a, b, p;
-	cin >> a >> b >> p;
-	int am = 0;
-	for (char c : a) {
-		am += c-'0';
-	}
-	am %= 9;
-	int bm = 0;
-	for (char c : b) {
-		bm += c-'0';
-	}
-	bm %= 9;
-	int pm = 0;
-	for (char c : p) {
-		if (c != '*') {
-			pm += c-'0';
-		}
-	}
-	pm %= 9;
+  string a, b, p;
+  cin >> a >> b >> p;
+  int am = 0;
+  for (char c : a) {
+    am += c-'0';
+  }
+  am %= 9;
+  int bm = 0;
+  for (char c : b) {
+    bm += c-'0';
+  }
+  bm %= 9;
+  int pm = 0;
+  for (char c : p) {
+    if (c != '*') {
+      pm += c-'0';
+    }
+  }
+  pm %= 9;
 
-	int ans = ((am*bm - pm) % 9 + 9) % 9;
-	if (ans == 0) ans = 9;
-	cout << ans << nl;
+  int ans = ((am*bm - pm) % 9 + 9) % 9;
+  if (ans == 0) ans = 9;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

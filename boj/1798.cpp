@@ -24,16 +24,16 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(2);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(2);
 
-	ld r, h, d1, a1, d2, a2;
-	while(cin >> r >> h >> d1 >> a1 >> d2 >> a2) {
-		ld dif = min(abs(a1-a2), 360 - abs(a1-a2));
-		ld R = sqrt(r*r + h*h);
-		ld A = dif * r/R;
-		cout << sqrt(d1*d1 + d2*d2 - 2*d1*d2*cos(A*M_PIl/180)) << nl;
-	}
+  ld r, h, d1, a1, d2, a2;
+  while(cin >> r >> h >> d1 >> a1 >> d2 >> a2) {
+    ld dif = min(abs(a1-a2), 360 - abs(a1-a2));
+    ld R = sqrt(r*r + h*h);
+    ld A = dif * r/R;
+    cout << sqrt(d1*d1 + d2*d2 - 2*d1*d2*cos(A*M_PIl/180)) << nl;
+  }
 
-	return 0;
+  return 0;
 }

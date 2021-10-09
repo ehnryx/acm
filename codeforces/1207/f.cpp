@@ -36,31 +36,31 @@ ll sum[S][S];
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int q;
-	for(cin>>q;q--;) {
-		int t,x,y;
-		cin>>t>>x>>y;
-		if(t==1) {
-			a[x]+=y;
-			for(int i=1;i<S;i++) {
-				sum[i][x%i]+=y;
-			}
-		} else {
-			if(x<S) {
-				cout<<sum[x][y]<<nl;
-			} else {
-				ll res = 0;
-				for(;y<N;y+=x) {
-					res += a[y];
-				}
-				cout<<res<<nl;
-			}
-		}
-	}
+  int q;
+  for(cin>>q;q--;) {
+    int t,x,y;
+    cin>>t>>x>>y;
+    if(t==1) {
+      a[x]+=y;
+      for(int i=1;i<S;i++) {
+        sum[i][x%i]+=y;
+      }
+    } else {
+      if(x<S) {
+        cout<<sum[x][y]<<nl;
+      } else {
+        ll res = 0;
+        for(;y<N;y+=x) {
+          res += a[y];
+        }
+        cout<<res<<nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

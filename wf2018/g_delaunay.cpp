@@ -19,15 +19,15 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 template<class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	os << "[ ";
-	for (const T& it : v) os << it << ' ';
-	return os << ']';
+  os << "[ ";
+  for (const T& it : v) os << it << ' ';
+  return os << ']';
 }
 template<class T>
 ostream& operator << (ostream& os, const unordered_set<T>& v) {
-	os << "{ ";
-	for (const T& it : v) os << it << ' ';
-	return os << '}';
+  os << "{ ";
+  for (const T& it : v) os << it << ' ';
+  return os << '}';
 }
 
 template<class T> struct cplx {
@@ -113,9 +113,9 @@ int inc(int i, int m) { return i+1==m?0:i+1; }
 // Circumcenter of triangle defined by three points
 // !!! used once on WF2018G
 pt circumcenter(const pt& A, const pt& B, const pt& C) {
-	ld a = norm(B-C), b = norm(C-A), c = norm(A-B);
-	ld fa = a*(b+c-a), fb = b*(c+a-b), fc = c*(a+b-c);
-	return (fa*A + fb*B + fc*C) / (fa+fb+fc);
+  ld a = norm(B-C), b = norm(C-A), c = norm(A-B);
+  ld fa = a*(b+c-a), fb = b*(c+a-b), fc = c*(a+b-c);
+  return (fa*A + fb*B + fc*C) / (fa+fb+fc);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -123,127 +123,127 @@ pt circumcenter(const pt& A, const pt& B, const pt& C) {
 // returns the delaunay triangulation as triples of indices
 
 struct Tuple { vi v;
-	Tuple() {}
-	Tuple(int a, int b) { v={a,b}; sort(v.begin(), v.end()); }
-	Tuple(int a, int b, int c) { v={a,b,c}; sort(v.begin(),v.end()); }
-	bool operator == (const Tuple& t) const { return v == t.v; }
-	int operator [] (int i) const { return v[i]; }
+  Tuple() {}
+  Tuple(int a, int b) { v={a,b}; sort(v.begin(), v.end()); }
+  Tuple(int a, int b, int c) { v={a,b,c}; sort(v.begin(),v.end()); }
+  bool operator == (const Tuple& t) const { return v == t.v; }
+  int operator [] (int i) const { return v[i]; }
 };
 namespace std {
-	template<> struct hash<Tuple> {
-		size_t operator () (const Tuple& t) const {
-			size_t h = 0;
-			for (int i = 0; i < t.v.size(); i++)
-				h ^= hash<int>()(t[i]<<(10*i));
-			return h;
-		}
-	};
-	bool operator == (const pt& a, const pt& b) { return eq(a,b); }
-	template<> struct hash<pt> {
-		size_t operator () (const pt& t) const {
-			return hash<ld>()(1e5*t.x) ^ hash<ld>()(t.y);
-		}
-	};
+  template<> struct hash<Tuple> {
+    size_t operator () (const Tuple& t) const {
+      size_t h = 0;
+      for (int i = 0; i < t.v.size(); i++)
+        h ^= hash<int>()(t[i]<<(10*i));
+      return h;
+    }
+  };
+  bool operator == (const pt& a, const pt& b) { return eq(a,b); }
+  template<> struct hash<pt> {
+    size_t operator () (const pt& t) const {
+      return hash<ld>()(1e5*t.x) ^ hash<ld>()(t.y);
+    }
+  };
 }
 
 vector<Tuple> delaunay(vector<pt> p) {
-	int n = p.size();
+  int n = p.size();
 
-	p.push_back(pt(INF,INF));
-	p.push_back(pt(INF,-INF));
-	p.push_back(pt(-INF,0));
+  p.push_back(pt(INF,INF));
+  p.push_back(pt(INF,-INF));
+  p.push_back(pt(-INF,0));
 
-	unordered_set<Tuple> cur;
-	cur.insert(Tuple(n, n+1, n+2));
+  unordered_set<Tuple> cur;
+  cur.insert(Tuple(n, n+1, n+2));
 
-	unordered_map<Tuple,int> cnt;
-	for (int i = 0; i < n; i++) {
-		vector<Tuple> add; // edge
-		vector<Tuple> bad; // triangle
+  unordered_map<Tuple,int> cnt;
+  for (int i = 0; i < n; i++) {
+    vector<Tuple> add; // edge
+    vector<Tuple> bad; // triangle
 
-		cnt.clear();
-		for (const Tuple& tri : cur) {
-			pt cc = circumcenter(p[tri[0]], p[tri[1]], p[tri[2]]);
-			if (abs(p[i]-cc) < abs(p[tri[0]]-cc)) {
-				bad.push_back(tri);
-				for (int j = 0; j < 3; j++) {
-					cnt[Tuple(tri[j], tri[inc(j,3)])]++;
-				}
-			}
-		}
+    cnt.clear();
+    for (const Tuple& tri : cur) {
+      pt cc = circumcenter(p[tri[0]], p[tri[1]], p[tri[2]]);
+      if (abs(p[i]-cc) < abs(p[tri[0]]-cc)) {
+        bad.push_back(tri);
+        for (int j = 0; j < 3; j++) {
+          cnt[Tuple(tri[j], tri[inc(j,3)])]++;
+        }
+      }
+    }
 
-		for (const Tuple& tri : bad) {
-			for (int j = 0; j < 3; j++) {
-				cur.erase(tri);
-				if (cnt[Tuple(tri[j], tri[inc(j,3)])] == 1) {
-					add.push_back(Tuple(tri[j], tri[inc(j,3)]));
-				}
-			}
-		}
+    for (const Tuple& tri : bad) {
+      for (int j = 0; j < 3; j++) {
+        cur.erase(tri);
+        if (cnt[Tuple(tri[j], tri[inc(j,3)])] == 1) {
+          add.push_back(Tuple(tri[j], tri[inc(j,3)]));
+        }
+      }
+    }
 
-		for (const Tuple& e : add) {
-			cur.insert(Tuple(i, e[0], e[1]));
-		}
-	}
+    for (const Tuple& e : add) {
+      cur.insert(Tuple(i, e[0], e[1]));
+    }
+  }
 
-	vector<Tuple> res;
-	for (const Tuple& tri : cur) {
-		if (tri[0] < n && tri[1] < n && tri[2] < n) res.push_back(tri);
-	}
+  vector<Tuple> res;
+  for (const Tuple& tri : cur) {
+    if (tri[0] < n && tri[1] < n && tri[2] < n) res.push_back(tri);
+  }
 
-	return res;
+  return res;
 }
 
 unordered_set<pt> voronoi(const vector<pt>& p) {
-	int n = p.size();
-	vector<Tuple> triangles = delaunay(p);
-	cerr << triangles.size() << " triangles" << endl;
+  int n = p.size();
+  vector<Tuple> triangles = delaunay(p);
+  cerr << triangles.size() << " triangles" << endl;
 
-	unordered_set<pt> circ;
-	for (const Tuple& tri : triangles) {
-		pt cc = circumcenter(p[tri[0]], p[tri[1]], p[tri[2]]);
-		if (pt_in_polygon(cc, p)) {
-			circ.insert(cc);
-		}
-		for (int i = 0; i < 3; i++) {
-			pt end = (ld)0.5*(p[tri[i]]+p[tri[i+1==3?0:i+1]]);
-			for (int j = 0; j < n; j++) {
-				if (seg_x_seg(end, cc, p[j], p[j+1==n?0:j+1])) {
-					circ.insert(line_inter(end, cc, p[j], p[j+1==n?0:j+1]));
-				}
-			}
-		}
-	}
+  unordered_set<pt> circ;
+  for (const Tuple& tri : triangles) {
+    pt cc = circumcenter(p[tri[0]], p[tri[1]], p[tri[2]]);
+    if (pt_in_polygon(cc, p)) {
+      circ.insert(cc);
+    }
+    for (int i = 0; i < 3; i++) {
+      pt end = (ld)0.5*(p[tri[i]]+p[tri[i+1==3?0:i+1]]);
+      for (int j = 0; j < n; j++) {
+        if (seg_x_seg(end, cc, p[j], p[j+1==n?0:j+1])) {
+          circ.insert(line_inter(end, cc, p[j], p[j+1==n?0:j+1]));
+        }
+      }
+    }
+  }
 
-	return circ;
+  return circ;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a, b;
-	vector<pt> p;
-	for (int i = 0; i < n; i++) {
-		cin >> a >> b;
-		p.push_back(pt(a,b));
-	}
-	unordered_set<pt> vx = voronoi(p);
-	cerr << vx.size() << " points" << endl;
+  int a, b;
+  vector<pt> p;
+  for (int i = 0; i < n; i++) {
+    cin >> a >> b;
+    p.push_back(pt(a,b));
+  }
+  unordered_set<pt> vx = voronoi(p);
+  cerr << vx.size() << " points" << endl;
 
-	ld ans = 0;
-	for (const pt& it : vx) {
-		ld cur = INF;
-		for (const pt& v : p) {
-			cur = min(cur, abs(v-it));
-		}
-		ans = max(cur, ans);
-	}
-	cout << ans << nl;
+  ld ans = 0;
+  for (const pt& it : vx) {
+    ld cur = INF;
+    for (const pt& v : p) {
+      cur = min(cur, abs(v-it));
+    }
+    ans = max(cur, ans);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

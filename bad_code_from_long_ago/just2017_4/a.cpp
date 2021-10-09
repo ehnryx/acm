@@ -16,33 +16,33 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int n, last;
-	int arr[100001];
-	ll ans;
+  int n, last;
+  int arr[100001];
+  ll ans;
 
-	int T; 
-	cin >> T;
-	while (T--) {
-		cin >> n;
-		for (int i = 0; i < n; i++) 
-			cin >> arr[i];
-		arr[n] = 0;
+  int T; 
+  cin >> T;
+  while (T--) {
+    cin >> n;
+    for (int i = 0; i < n; i++) 
+      cin >> arr[i];
+    arr[n] = 0;
 
-		ans = 0;
-		for (int bit = 1; bit < 1e6; bit = bit<<1) {
-			last = -1;
-			for (int i = 0; i <= n; i++) {
-				if ((bit & arr[i]) == 0) {
-					ans += 1LL * (i-last)*(i-last-1)/2 * bit;
-					last = i;
-				}
-			}
-		}
-		cout << ans << nl;
-	}
+    ans = 0;
+    for (int bit = 1; bit < 1e6; bit = bit<<1) {
+      last = -1;
+      for (int i = 0; i <= n; i++) {
+        if ((bit & arr[i]) == 0) {
+          ans += 1LL * (i-last)*(i-last-1)/2 * bit;
+          last = i;
+        }
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

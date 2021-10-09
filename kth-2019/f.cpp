@@ -26,31 +26,31 @@ const int N = 1e5+1;
 int one[N], two[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		int x,y,t;
-		cin>>x>>y>>t;
-		if(t==1) one[y]++;
-		else two[y]++;
-	}
+  int n;
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    int x,y,t;
+    cin>>x>>y>>t;
+    if(t==1) one[y]++;
+    else two[y]++;
+  }
 
-	int ans = 0;
-	int cnt = 0;
-	for(int i=0;i<N;i++) {
-		int a = min(cnt,two[i]);
-		cnt -= a;
-		int b = min(cnt,one[i]);
-		cnt -= b;
-		one[i] -= b;
-		ans += a+b;
-		cnt = one[i]+two[i];
-	}
-	cout<<ans<<nl;
+  int ans = 0;
+  int cnt = 0;
+  for(int i=0;i<N;i++) {
+    int a = min(cnt,two[i]);
+    cnt -= a;
+    int b = min(cnt,one[i]);
+    cnt -= b;
+    one[i] -= b;
+    ans += a+b;
+    cnt = one[i]+two[i];
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

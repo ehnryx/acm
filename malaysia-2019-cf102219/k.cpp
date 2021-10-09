@@ -34,30 +34,30 @@ const int N = 1e5+1;
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	for (int ii=1; T--; ii++) {
-		int n;
-		cin >> n;
-		for (int i=0; i<n; i++) {
-			cin >> a[i];
-		}
-		sort(a,a+n);
-		ll cur = 0;
-		int ans = 0;
-		for (int i=0; i<n; i++) {
-			if (cur + a[i] <= 2*a[i]) {
-				cur += a[i];
-				ans++;
-			}
-		}
-		cout << "Case #" << ii << ": ";
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  for (int ii=1; T--; ii++) {
+    int n;
+    cin >> n;
+    for (int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+    sort(a,a+n);
+    ll cur = 0;
+    int ans = 0;
+    for (int i=0; i<n; i++) {
+      if (cur + a[i] <= 2*a[i]) {
+        cur += a[i];
+        ans++;
+      }
+    }
+    cout << "Case #" << ii << ": ";
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

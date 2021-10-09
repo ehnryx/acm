@@ -34,29 +34,29 @@ const int N = 1e5+1;
 vector<int> adj[N];
 
 int solve(int u, int p) {
-	int res = 1;
-	for (int v : adj[u]) {
-		if (v!=p) {
-			res = max(res, 1+solve(v,u));
-		}
-	}
-	return res;
+  int res = 1;
+  for (int v : adj[u]) {
+    if (v!=p) {
+      res = max(res, 1+solve(v,u));
+    }
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, r;
-	cin >> n >> r;
-	for (int i=0; i<n-1; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	cout << solve(r, 0) << nl;
+  int n, r;
+  cin >> n >> r;
+  for (int i=0; i<n-1; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  cout << solve(r, 0) << nl;
 
-	return 0;
+  return 0;
 }

@@ -13,18 +13,18 @@ const ll INFLL = 0x7f7f7f7f7f7f7f7f;
 
 The story of lame:
 
-	ll i, n, ans;
-	int T;
-	cin >> T;
-	while (T--) {
-		cin >> i >> n;
-		ans = n;
-		while (n != 1) {
-			if (n%2 == 0) n/=2;
-			else n = 3*n+1;
-			ans = max(ans, n);
-		}
-		cout << i << " " << ans << endl;
-	}
+  ll i, n, ans;
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> i >> n;
+    ans = n;
+    while (n != 1) {
+      if (n%2 == 0) n/=2;
+      else n = 3*n+1;
+      ans = max(ans, n);
+    }
+    cout << i << " " << ans << endl;
+  }
 
 The End

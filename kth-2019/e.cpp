@@ -25,37 +25,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string line;
+  string line;
 
-	getline(cin,line);
-	int n = stoi(line);
-	for(int i=0;i<n;i++) {
-		getline(cin,line);
-		int k = stoi(line);
-		string name;
-		getline(cin,name);
-		bool pea = false;
-		bool pan = false;
-		for(int j=0;j<k;j++) {
-			getline(cin,line);
-			if(line == "pea soup") {
-				pea = true;
-			}
-			if(line == "pancakes") {
-				pan = true;
-			}
-		}
-		if(pea && pan) {
-			cout<<name<<nl;
-			return 0;
-		}
-	}
+  getline(cin,line);
+  int n = stoi(line);
+  for(int i=0;i<n;i++) {
+    getline(cin,line);
+    int k = stoi(line);
+    string name;
+    getline(cin,name);
+    bool pea = false;
+    bool pan = false;
+    for(int j=0;j<k;j++) {
+      getline(cin,line);
+      if(line == "pea soup") {
+        pea = true;
+      }
+      if(line == "pancakes") {
+        pan = true;
+      }
+    }
+    if(pea && pan) {
+      cout<<name<<nl;
+      return 0;
+    }
+  }
 
-	cout<<"Anywhere is fine I guess"<<nl;
+  cout<<"Anywhere is fine I guess"<<nl;
 
-	return 0;
+  return 0;
 }

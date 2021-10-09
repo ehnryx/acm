@@ -20,47 +20,47 @@ vector<int> adj[N];
 int par[N];
 
 int dfs(int cur, int rem) {
-	if (rem == 0) return 0;
-	int vis = 1;
-	if (cur) cout << '(';
-	for (int x : adj[cur]) {
-		vis += dfs(x, rem-vis);
-	}
-	if (cur) cout << ')';
-	return vis;
+  if (rem == 0) return 0;
+  int vis = 1;
+  if (cur) cout << '(';
+  for (int x : adj[cur]) {
+    vis += dfs(x, rem-vis);
+  }
+  if (cur) cout << ')';
+  return vis;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	int id, cur;
-	id = 1;
-	cur = 0;
-	for (char c : s) {
-		if (c == '(') {
-			par[id] = cur;
-			adj[cur].push_back(id);
-			cur = id++;
-		} else {
-			cur = par[cur];
-		}
-	}
+  int id, cur;
+  id = 1;
+  cur = 0;
+  for (char c : s) {
+    if (c == '(') {
+      par[id] = cur;
+      adj[cur].push_back(id);
+      cur = id++;
+    } else {
+      cur = par[cur];
+    }
+  }
 
-	dfs(0, k/2+1);
-	cout << nl;
+  dfs(0, k/2+1);
+  cout << nl;
 
-	return 0;
+  return 0;
 }

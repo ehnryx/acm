@@ -24,24 +24,24 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ld temp;
-	ld ans = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> temp;
-		if (temp == 0) {
-			ans += 2;
-		} else {
-			ans += 1/temp;
-		}
-	}
-	cout << ans << nl;
+  ld temp;
+  ld ans = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> temp;
+    if (temp == 0) {
+      ans += 2;
+    } else {
+      ans += 1/temp;
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

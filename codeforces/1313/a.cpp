@@ -25,33 +25,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		int ans = 0;
-		for(int bm=0; bm<1<<8; bm++) {
-			if(bm & 1) continue;
-			int A = 0;
-			int B = 0;
-			int C = 0;
-			for(int j=1; j<8; j++) {
-				if(bm & 1<<j) {
-					if(j & 1<<0) A++;
-					if(j & 1<<1) B++;
-					if(j & 1<<2) C++;
-				}
-			}
-			if(A<=a && B<=b && C<=c) {
-				ans = max(ans, __builtin_popcount(bm));
-			}
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    int ans = 0;
+    for(int bm=0; bm<1<<8; bm++) {
+      if(bm & 1) continue;
+      int A = 0;
+      int B = 0;
+      int C = 0;
+      for(int j=1; j<8; j++) {
+        if(bm & 1<<j) {
+          if(j & 1<<0) A++;
+          if(j & 1<<1) B++;
+          if(j & 1<<2) C++;
+        }
+      }
+      if(A<=a && B<=b && C<=c) {
+        ans = max(ans, __builtin_popcount(bm));
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

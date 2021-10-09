@@ -31,33 +31,33 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int nc2(int n) {
-	return n*(n-1)/2;
+  return n*(n-1)/2;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		string ans;
-		ans.push_back('1');
-		for (int t=3e4; t>1; t--) {
-			while (n>=nc2(t)) {
-				n -= nc2(t);
-				ans.push_back('7');
-			}
-			ans.push_back('3');
-		}
-		ans.push_back('3');
-		reverse(ans.begin()+1, ans.end());
-		cout << ans << nl;
-	}
+    string ans;
+    ans.push_back('1');
+    for (int t=3e4; t>1; t--) {
+      while (n>=nc2(t)) {
+        n -= nc2(t);
+        ans.push_back('7');
+      }
+      ans.push_back('3');
+    }
+    ans.push_back('3');
+    reverse(ans.begin()+1, ans.end());
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

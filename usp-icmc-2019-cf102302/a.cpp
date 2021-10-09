@@ -33,32 +33,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n];
-	vector<pii> p;
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		p.push_back(pii(-a[i],i));
-	}
-	sort(p.begin(),p.end());
+  int n;
+  cin>>n;
+  int a[n];
+  vector<pii> p;
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    p.push_back(pii(-a[i],i));
+  }
+  sort(p.begin(),p.end());
 
-	int ans[n];
-	set<int> cur;
-	cur.insert(n);
-	for(pii it:p) {
-		ans[it.second] = min(-it.first+it.second, *cur.upper_bound(it.second)-1);
-		cur.insert(it.second);
-	}
+  int ans[n];
+  set<int> cur;
+  cur.insert(n);
+  for(pii it:p) {
+    ans[it.second] = min(-it.first+it.second, *cur.upper_bound(it.second)-1);
+    cur.insert(it.second);
+  }
 
-	for(int i=0;i<n;i++) {
-		cout<<ans[i]-i<<" ";
-	}
-	cout<<nl;
+  for(int i=0;i<n;i++) {
+    cout<<ans[i]-i<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

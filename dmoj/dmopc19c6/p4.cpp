@@ -26,54 +26,54 @@ int val[N];
 
 unordered_map<int,int> st[2*N];
 int get(int x, int v) {
-	auto it = st[x].find(v);
-	if(it == st[x].end()) return 0;
-	else return it->second;
+  auto it = st[x].find(v);
+  if(it == st[x].end()) return 0;
+  else return it->second;
 }
 void insert(int x, int v, int c) {
-	for(x+=N; x>0; x/=2) {
-		if((st[x][v] += c) == 0) {
-			st[x].erase(v);
-		}
-	}
+  for(x+=N; x>0; x/=2) {
+    if((st[x][v] += c) == 0) {
+      st[x].erase(v);
+    }
+  }
 }
 int query(int l, int r, int v) {
-	int res = 0;
-	for(l+=N, r+=N+1; l<r; l/=2, r/=2) {
-		if(l&1) res += get(l++, v);
-		if(r&1) res += get(--r, v);
-	}
-	return res;
+  int res = 0;
+  for(l+=N, r+=N+1; l<r; l/=2, r/=2) {
+    if(l&1) res += get(l++, v);
+    if(r&1) res += get(--r, v);
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	for(int i=1; i<=n; i++) {
-		insert(i, 0, 1);
-	}
-	for(int i=0; i<m; i++) {
-		int t;
-		cin >> t;
-		if(t == 1) {
-			int x;
-			cin >> x;
-			insert(x, val[x], -1);
-			insert(x, ++val[x], 1);
-		} else if(t == 2) {
-			int x;
-			cin >> x;
-			insert(x, val[x], -1);
-			insert(x, --val[x], 1);
-		} else {
-			int l, r, c;
-			cin >> l >> r >> c;
-			cout << query(l, r, c) << nl;
-		}
-	}
+  int n, m;
+  cin >> n >> m;
+  for(int i=1; i<=n; i++) {
+    insert(i, 0, 1);
+  }
+  for(int i=0; i<m; i++) {
+    int t;
+    cin >> t;
+    if(t == 1) {
+      int x;
+      cin >> x;
+      insert(x, val[x], -1);
+      insert(x, ++val[x], 1);
+    } else if(t == 2) {
+      int x;
+      cin >> x;
+      insert(x, val[x], -1);
+      insert(x, --val[x], 1);
+    } else {
+      int l, r, c;
+      cin >> l >> r >> c;
+      cout << query(l, r, c) << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

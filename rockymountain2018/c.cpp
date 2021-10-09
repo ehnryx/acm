@@ -26,52 +26,52 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	ll x, y;
-	cin >> x >> y;
+  ll x, y;
+  cin >> x >> y;
 
-	ll a, b, c, d;
-	cin >> a >> b >> c >> d;
+  ll a, b, c, d;
+  cin >> a >> b >> c >> d;
 
-	function<bool(ll,ll)> inrect = [=] (ll xx, ll yy) {
-		return a<=xx && xx<=c && b<=yy && yy<=d;
-	};
+  function<bool(ll,ll)> inrect = [=] (ll xx, ll yy) {
+    return a<=xx && xx<=c && b<=yy && yy<=d;
+  };
 
-	ll g = __gcd(x,y);
-	if (g == 1) {
-		cout << "Yes" << nl;
-	} else {
-		ll x0 = x/g;
-		ll y0 = y/g;
-		if (!inrect(x0,y0)) {
-			cout << "No" << nl;
-			cout << x0 << " " << y0 << nl;
-		}
-		else if (!inrect(x-x0,y-y0)) {
-			// binary search
-			ll left = 1;
-			ll right = g-1;
-			while (left < right) {
-				ll mid = (left+right)/2;
-				if (inrect(mid*x0, mid*y0)) {
-					left = mid+1;
-				} else {
-					right = mid;
-				}
-			}
-			cout << "No" << nl;
-			cout << left*x0 << " " << right*y0 << nl;
-		} else {
-			cout << "Yes" << nl;
-		}
-	}
+  ll g = __gcd(x,y);
+  if (g == 1) {
+    cout << "Yes" << nl;
+  } else {
+    ll x0 = x/g;
+    ll y0 = y/g;
+    if (!inrect(x0,y0)) {
+      cout << "No" << nl;
+      cout << x0 << " " << y0 << nl;
+    }
+    else if (!inrect(x-x0,y-y0)) {
+      // binary search
+      ll left = 1;
+      ll right = g-1;
+      while (left < right) {
+        ll mid = (left+right)/2;
+        if (inrect(mid*x0, mid*y0)) {
+          left = mid+1;
+        } else {
+          right = mid;
+        }
+      }
+      cout << "No" << nl;
+      cout << left*x0 << " " << right*y0 << nl;
+    } else {
+      cout << "Yes" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

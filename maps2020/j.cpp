@@ -24,32 +24,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int s[n];
-	for(int i=0; i<n; i++) {
-		cin >> s[i];
-	}
-	sort(s, s+n, greater<int>());
+  int n;
+  cin >> n;
+  int s[n];
+  for(int i=0; i<n; i++) {
+    cin >> s[i];
+  }
+  sort(s, s+n, greater<int>());
 
-	ld ans = 0;
-	vector<ld> g(n, 0);
-	for(int i=0; i<n; i++) {
-		ans += (ld)s[i] * pow((ld)4/5, i);
-		for(int j=0; j<n; j++) {
-			if(i == j) continue;
-			g[j] += (ld)s[i] * pow((ld)4/5, i - (i>j));
-		}
-	}
-	ld sum = 0;
-	for(int i=0; i<n; i++) {
-		sum += g[i] / 5;
-	}
-	cout << ans / 5 << nl;
-	cout << sum / n << nl;
+  ld ans = 0;
+  vector<ld> g(n, 0);
+  for(int i=0; i<n; i++) {
+    ans += (ld)s[i] * pow((ld)4/5, i);
+    for(int j=0; j<n; j++) {
+      if(i == j) continue;
+      g[j] += (ld)s[i] * pow((ld)4/5, i - (i>j));
+    }
+  }
+  ld sum = 0;
+  for(int i=0; i<n; i++) {
+    sum += g[i] / 5;
+  }
+  cout << ans / 5 << nl;
+  cout << sum / n << nl;
 
-	return 0;
+  return 0;
 }

@@ -26,36 +26,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
-	vector<int> val;
-	map<int,int> cnt;
-	for (int i=0; i<n; i++) {
-		int a;
-		cin >> a;
-		val.push_back(abs(a));
-		cnt[abs(a)]++;
-	}
-	sort(val.begin(), val.end());
+  int n;
+  cin >> n;
+  vector<int> val;
+  map<int,int> cnt;
+  for (int i=0; i<n; i++) {
+    int a;
+    cin >> a;
+    val.push_back(abs(a));
+    cnt[abs(a)]++;
+  }
+  sort(val.begin(), val.end());
 
-	ll ans = 0;
-	for (int it : val) {
-		auto lb = upper_bound(val.begin(), val.end(), it);
-		auto ub = upper_bound(val.begin(), val.end(), 2*it);
-		ans += ub-lb;
-	}
-	for (pii it : cnt) {
-		ans += (it.second == 2);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for (int it : val) {
+    auto lb = upper_bound(val.begin(), val.end(), it);
+    auto ub = upper_bound(val.begin(), val.end(), 2*it);
+    ans += ub-lb;
+  }
+  for (pii it : cnt) {
+    ans += (it.second == 2);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -19,34 +19,34 @@ const int N = 2001;
 ll arr[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		for (int i=0; i<n; i++) {
-			cin >> arr[i];
-		}
+    for (int i=0; i<n; i++) {
+      cin >> arr[i];
+    }
 
-		int ans = 0;
-		for (int i = 0; i < n; i++) {
-			ll sum = 0;
-			ll lcm = 1;
-			for (int j = i; j < n; j++) {
-				if (lcm > 2e12) break;
-				//lcm = llround((ld)lcm*arr[j] / __gcd(lcm, arr[j]));
-				lcm = lcm*arr[j]/__gcd(lcm,arr[j]);
-				sum += arr[j];
-				if (sum % lcm == 0) ans++;
-			}
-		}
-		cout << ans << nl;
-	}
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+      ll sum = 0;
+      ll lcm = 1;
+      for (int j = i; j < n; j++) {
+        if (lcm > 2e12) break;
+        //lcm = llround((ld)lcm*arr[j] / __gcd(lcm, arr[j]));
+        lcm = lcm*arr[j]/__gcd(lcm,arr[j]);
+        sum += arr[j];
+        if (sum % lcm == 0) ans++;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

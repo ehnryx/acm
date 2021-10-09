@@ -27,57 +27,57 @@ int a[N], v[N], u[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, x;
-	cin >> n >> x;
+  int n, x;
+  cin >> n >> x;
 
-	set<int> seen;
-	memset(u, INF, sizeof u);
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-		auto it = seen.upper_bound(a[i]);
-		if (it != seen.end()) {
-			u[a[i]] = min(u[a[i]], *it);
-			v[a[i]] = max(v[a[i]], *seen.rbegin());
-		}
-		seen.insert(a[i]);
-	}
+  set<int> seen;
+  memset(u, INF, sizeof u);
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+    auto it = seen.upper_bound(a[i]);
+    if (it != seen.end()) {
+      u[a[i]] = min(u[a[i]], *it);
+      v[a[i]] = max(v[a[i]], *seen.rbegin());
+    }
+    seen.insert(a[i]);
+  }
 
-	set<int> left, right;
-	for (int i=1; i<=x; i++) {
-		//cerr << i << ": " << v[i] << " " << u[i] << nl;
-		if (v[i]) {
-			right.insert(i);
-		}
-	}
+  set<int> left, right;
+  for (int i=1; i<=x; i++) {
+    //cerr << i << ": " << v[i] << " " << u[i] << nl;
+    if (v[i]) {
+      right.insert(i);
+    }
+  }
 
-	ll ans = 0;
-	for (int lb=1; lb<=x; lb++) {
-		right.erase(lb);
-		int ub = lb;
-		if (!right.empty()) {
-			ub = max(ub, *right.rbegin());
-		}
-		if (!left.empty()) {
-			if (*left.begin() < lb) break;
-			else ub = max(ub, *left.rbegin());
-		}
-		ans += max(0,x-ub+1);
-		//cerr << lb << ": add " << x-ub+1 << " (up to " << ub << ")" << nl;
-		if (v[lb]) {
-			left.insert(u[lb]);
-			left.insert(v[lb]);
-		}
-	}
+  ll ans = 0;
+  for (int lb=1; lb<=x; lb++) {
+    right.erase(lb);
+    int ub = lb;
+    if (!right.empty()) {
+      ub = max(ub, *right.rbegin());
+    }
+    if (!left.empty()) {
+      if (*left.begin() < lb) break;
+      else ub = max(ub, *left.rbegin());
+    }
+    ans += max(0,x-ub+1);
+    //cerr << lb << ": add " << x-ub+1 << " (up to " << ub << ")" << nl;
+    if (v[lb]) {
+      left.insert(u[lb]);
+      left.insert(v[lb]);
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

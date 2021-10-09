@@ -24,24 +24,24 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	ll n;
-	int T;
-	cin >> T;
-	while (T--) {
-		cin >> n;
-		if (n % 3 == 0) {
-			cout << n/3 << " " << n/3 << " " << n/3 << nl;
-		} else if (n % 4 == 0) {
-			cout << n/4 << " " << n/4 << " " << n/2 << nl;
-		} else if (n % 6 == 0) {
-			cout << n/6 << " " << n/3 << " " << n/2 << nl;
-		} else {
-			cout << "IMPOSSIBLE" << nl;
-		}
-	}
+  ll n;
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> n;
+    if (n % 3 == 0) {
+      cout << n/3 << " " << n/3 << " " << n/3 << nl;
+    } else if (n % 4 == 0) {
+      cout << n/4 << " " << n/4 << " " << n/2 << nl;
+    } else if (n % 6 == 0) {
+      cout << n/6 << " " << n/3 << " " << n/2 << nl;
+    } else {
+      cout << "IMPOSSIBLE" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

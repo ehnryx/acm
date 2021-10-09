@@ -48,29 +48,29 @@ const int N = 1e5 + 1;
 int rev[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		string s;
-		cin >> s;
-		int n = s.size();
-		SuffixArray::build(s);
-		int* idx = SuffixArray::idx();
-		for(int i=0; i<n; i++) {
-			rev[idx[i]] = i;
-		}
-		ll ans = 0;
-		int cur = 0;
-		for(int i=1; i<n; i++) {
-			int nxt = SuffixArray::lcp(rev[i], rev[i-1]);
-			if(nxt > cur) ans += nxt - cur;
-			cur = nxt;
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    string s;
+    cin >> s;
+    int n = s.size();
+    SuffixArray::build(s);
+    int* idx = SuffixArray::idx();
+    for(int i=0; i<n; i++) {
+      rev[idx[i]] = i;
+    }
+    ll ans = 0;
+    int cur = 0;
+    for(int i=1; i<n; i++) {
+      int nxt = SuffixArray::lcp(rev[i], rev[i-1]);
+      if(nxt > cur) ans += nxt - cur;
+      cur = nxt;
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

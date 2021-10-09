@@ -12,17 +12,17 @@ const int INF = 0x7f7f7f7f;
 const ll INFLL = 0x7f7f7f7f7f7f7f7f;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int a, b;
-	int T;
-	cin >> T;
-	while (T--) {
-		cin >> a >> b;
-		if (a >= b) cout << "FunkyMonkeys" << endl;
-		else cout << "WeWillEatYou" << endl;
-	}
+  int a, b;
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> a >> b;
+    if (a >= b) cout << "FunkyMonkeys" << endl;
+    else cout << "WeWillEatYou" << endl;
+  }
 
-	return 0;
+  return 0;
 }

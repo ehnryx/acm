@@ -29,8 +29,8 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 /*
 #ifdef ONLINE_JUDGE
   freopen(FILENAME ".in", "r", stdin);
@@ -53,5 +53,5 @@ int main() {
     cout << dp[n].first << nl;
   }
 
-	return 0;
+  return 0;
 }

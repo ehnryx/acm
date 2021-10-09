@@ -15,25 +15,25 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int N; cin >> N;
-	vector<string> v(N);
-	for (int i = 0; i < N; i++)
-		cin >> v[i];
-	vector<string> v2(v);
-	sort(v2.begin(), v2.end());
-	if (v2 == v) {
-		cout << "INCREASING" << endl;
-		return 0;
-	}
-	sort(v2.rbegin(), v2.rend());
-	if (v2 == v) {
-		cout << "DECREASING" << endl;
-		return 0;
-	}
-	cout << "NEITHER" << endl;
+  int N; cin >> N;
+  vector<string> v(N);
+  for (int i = 0; i < N; i++)
+    cin >> v[i];
+  vector<string> v2(v);
+  sort(v2.begin(), v2.end());
+  if (v2 == v) {
+    cout << "INCREASING" << endl;
+    return 0;
+  }
+  sort(v2.rbegin(), v2.rend());
+  if (v2 == v) {
+    cout << "DECREASING" << endl;
+    return 0;
+  }
+  cout << "NEITHER" << endl;
 
-	return 0;
+  return 0;
 }

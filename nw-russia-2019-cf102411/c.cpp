@@ -30,62 +30,62 @@ int x[N*N], y[N*N];
 
 list<int> ans;
 void euler(int u, list<int>::iterator it) {
-	for(auto jt=adj[u].begin(); jt!=adj[u].end(); ) {
-		int v = *jt; adj[u].erase(jt);
-		euler(v, ans.insert(it, v));
-		jt = adj[u].begin();
-	}
+  for(auto jt=adj[u].begin(); jt!=adj[u].end(); ) {
+    int v = *jt; adj[u].erase(jt);
+    euler(v, ans.insert(it, v));
+    jt = adj[u].begin();
+  }
 }
 
 int add_edges(int i, int j) {
-	int a = i*N + j;
-	int b = (i+1)*N + j;
-	x[a] = i; y[a] = j;
-	x[b] = i+1; y[b] = j;
-	x[a+1] = i; y[a+1] = j+1;
-	x[b+1] = i+1; y[b+1] = j+1;
-	if(i%2 == 0) {
-		adj[a].insert(b+1);
-		adj[a+1].insert(b);
-		adj[b].insert(a);
-		adj[b+1].insert(a+1);
-		return b;
-	} else {
-		adj[a].insert(b);
-		adj[a+1].insert(b+1);
-		adj[b].insert(a+1);
-		adj[b+1].insert(a);
-		return a;
-	}
+  int a = i*N + j;
+  int b = (i+1)*N + j;
+  x[a] = i; y[a] = j;
+  x[b] = i+1; y[b] = j;
+  x[a+1] = i; y[a+1] = j+1;
+  x[b+1] = i+1; y[b+1] = j+1;
+  if(i%2 == 0) {
+    adj[a].insert(b+1);
+    adj[a+1].insert(b);
+    adj[b].insert(a);
+    adj[b+1].insert(a+1);
+    return b;
+  } else {
+    adj[a].insert(b);
+    adj[a+1].insert(b+1);
+    adj[b].insert(a+1);
+    adj[b+1].insert(a);
+    return a;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>m>>n;
+  int n,m;
+  cin>>m>>n;
 
-	string g[n];
-	int s = -1;
-	for(int i=0;i<n;i++) {
-		cin>>g[i];
-		for(int j=0;j<m;j++) {
-			if(g[i][j] == 'X') {
-				s = add_edges(i,j);
-			}
-		}
-	}
+  string g[n];
+  int s = -1;
+  for(int i=0;i<n;i++) {
+    cin>>g[i];
+    for(int j=0;j<m;j++) {
+      if(g[i][j] == 'X') {
+        s = add_edges(i,j);
+      }
+    }
+  }
 
-	if(s == -1) {
-		cout<<0<<nl;
-	} else {
-		euler(s, ans.begin());
-		cout<<ans.size()-1<<nl;
-		for(int it:ans) {
-			cout<<y[it]<<" "<<x[it]<<nl;
-		}
-	}
+  if(s == -1) {
+    cout<<0<<nl;
+  } else {
+    euler(s, ans.begin());
+    cout<<ans.size()-1<<nl;
+    for(int it:ans) {
+      cout<<y[it]<<" "<<x[it]<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

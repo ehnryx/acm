@@ -32,12 +32,12 @@ vector<int> manacher(const string& s) {
     len[i+d] = r-d; } return len; }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(string s;cin>>s;) {
-		set<string> ans;
-		int n = s.size();
+  for(string s;cin>>s;) {
+    set<string> ans;
+    int n = s.size();
     vector<int> pals = manacher(s);
     for(int i=0; i<2*n-1; i++) {
       if(i%2) {
@@ -50,11 +50,11 @@ int main() {
         }
       }
     }
-		for(const string& it:ans) {
-			cout<<it<<nl;
-		}
-		cout<<nl;
-	}
+    for(const string& it:ans) {
+      cout<<it<<nl;
+    }
+    cout<<nl;
+  }
 
-	return 0;
+  return 0;
 }

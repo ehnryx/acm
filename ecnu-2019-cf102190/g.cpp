@@ -26,46 +26,46 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, p, a, u, l, liu;
-		cin >> n;
-		cout << 1 << " " << 2 << " " << 2 << " " << 3 << endl;
-		cin >> p;
-		cout << 3 << " " << 4 << " " << 4 << " " << 5 << endl;
-		cin >> a;
-		if (a == p) {
-			cout << 1 << " " << 3 << " " << 1 << " " << 4 << endl;
-			cin >> u;
-			cout << 5 << " " << 2 << " " << 5 << " " << 3 << endl;
-			cin >> l;
-		} else {
-			cout << 3 << " " << 1 << " " << 3 << " " << 5 << endl;
-			cin >> u;
-			if (u == p) {
-				cout << 1 << " " << 4 << " " << 1 << " " << 5 << endl;
-				cin >> l;
-			} else {
-				cout << 5 << " " << 2 << " " << 5 << " " << 1 << endl;
-				cin >> l;
-			}
-		}
-		FOR(i,6,n) {
-			cout << i << " " << i-1 << " " << i << " " << i-2 << endl;
-			cin >> liu;
-		}
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, p, a, u, l, liu;
+    cin >> n;
+    cout << 1 << " " << 2 << " " << 2 << " " << 3 << endl;
+    cin >> p;
+    cout << 3 << " " << 4 << " " << 4 << " " << 5 << endl;
+    cin >> a;
+    if (a == p) {
+      cout << 1 << " " << 3 << " " << 1 << " " << 4 << endl;
+      cin >> u;
+      cout << 5 << " " << 2 << " " << 5 << " " << 3 << endl;
+      cin >> l;
+    } else {
+      cout << 3 << " " << 1 << " " << 3 << " " << 5 << endl;
+      cin >> u;
+      if (u == p) {
+        cout << 1 << " " << 4 << " " << 1 << " " << 5 << endl;
+        cin >> l;
+      } else {
+        cout << 5 << " " << 2 << " " << 5 << " " << 1 << endl;
+        cin >> l;
+      }
+    }
+    FOR(i,6,n) {
+      cout << i << " " << i-1 << " " << i << " " << i-2 << endl;
+      cin >> liu;
+    }
+  }
 
-	return 0;
+  return 0;
 }
 
 // try harder?

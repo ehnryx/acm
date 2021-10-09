@@ -19,58 +19,58 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	vector<bool> up(n);
-	vector<bool> down(n);
-	down[0] = true;
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-		if (i && a[i]>=a[i-1]) up[i] = true;
-		if (i && a[i]<=a[i-1]) down[i] = true;
-	}
+  int a[n];
+  vector<bool> up(n);
+  vector<bool> down(n);
+  down[0] = true;
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+    if (i && a[i]>=a[i-1]) up[i] = true;
+    if (i && a[i]<=a[i-1]) down[i] = true;
+  }
 
-	vector<int> s;
-	for (int i=1; i<n; i++) {
-		if (up[i] == up[i-1] || down[i] == down[i-1]) {
-			s.push_back(i);
-		}
-	}
+  vector<int> s;
+  for (int i=1; i<n; i++) {
+    if (up[i] == up[i-1] || down[i] == down[i-1]) {
+      s.push_back(i);
+    }
+  }
 
-	auto valid = [&] () {
-		int p = INF;
-		for (int i=0; i<n; i++) {
-			if (i%2 == 0 && a[i] >= p) return false;
-			if (i%2 == 1 && a[i] <= p) return false;
-			p = a[i];
-		}
-		return true;
-	};
+  auto valid = [&] () {
+    int p = INF;
+    for (int i=0; i<n; i++) {
+      if (i%2 == 0 && a[i] >= p) return false;
+      if (i%2 == 1 && a[i] <= p) return false;
+      p = a[i];
+    }
+    return true;
+  };
 
-	cerr << s.size() << nl;
-	if (s.size() > 17) {
-		cout << 0 << nl;
-	} else {
-		int ans = 0;
-		for (int i : s) {
-			for (int j : s) {
-				swap(a[i], a[j]);
-				ans += valid();
-				swap(a[i], a[j]);
-			}
-		}
-		cout << ans << nl;
-	}
+  cerr << s.size() << nl;
+  if (s.size() > 17) {
+    cout << 0 << nl;
+  } else {
+    int ans = 0;
+    for (int i : s) {
+      for (int j : s) {
+        swap(a[i], a[j]);
+        ans += valid();
+        swap(a[i], a[j]);
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

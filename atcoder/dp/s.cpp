@@ -33,35 +33,35 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	int n = s.size();
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	int k;
-	cin >> k;
+  int k;
+  cin >> k;
 
-	ll dp[n+1][k][2];
-	memset(dp, 0, sizeof dp);
-	dp[0][0][1] = 1;
-	for (int i=0; i<n; i++) {
-		int d = s[i]-'0';
-		for (int j=0; j<k; j++) {
-			dp[i+1][j][1] = dp[i][(j+d)%k][1];
-			for (int c=0; c<10; c++) {
-				if (c<d) dp[i+1][j][0] += dp[i][(j+c)%k][1];
-				dp[i+1][j][0] += dp[i][(j+c)%k][0];
-			}
-			dp[i+1][j][0] %= MOD;
-		}
-	}
+  ll dp[n+1][k][2];
+  memset(dp, 0, sizeof dp);
+  dp[0][0][1] = 1;
+  for (int i=0; i<n; i++) {
+    int d = s[i]-'0';
+    for (int j=0; j<k; j++) {
+      dp[i+1][j][1] = dp[i][(j+d)%k][1];
+      for (int c=0; c<10; c++) {
+        if (c<d) dp[i+1][j][0] += dp[i][(j+c)%k][1];
+        dp[i+1][j][0] += dp[i][(j+c)%k][0];
+      }
+      dp[i+1][j][0] %= MOD;
+    }
+  }
 
-	ll ans = dp[n][0][0] + dp[n][0][1] - 1;
-	cout << (ans + MOD) % MOD << nl;
+  ll ans = dp[n][0][0] + dp[n][0][1] - 1;
+  cout << (ans + MOD) % MOD << nl;
 
-	return 0;
+  return 0;
 }
 

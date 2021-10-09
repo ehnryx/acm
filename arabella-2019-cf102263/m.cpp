@@ -31,37 +31,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	map<char,int> v;
-	for (char c : s) {
-		v[c]++;
-	}
+  map<char,int> v;
+  for (char c : s) {
+    v[c]++;
+  }
 
-	map<char,int> ans;
-	while (!v.empty()) {
-		auto it = v.begin();
-		char c = it->first;
-		if (c == 'z') {
-			ans[c] = it->second;
-		} else {
-			v[c+1] += it->second/2;
-			if (it->second%2) {
-				ans[c] = 1;
-			}
-		}
-		v.erase(it);
-	}
+  map<char,int> ans;
+  while (!v.empty()) {
+    auto it = v.begin();
+    char c = it->first;
+    if (c == 'z') {
+      ans[c] = it->second;
+    } else {
+      v[c+1] += it->second/2;
+      if (it->second%2) {
+        ans[c] = 1;
+      }
+    }
+    v.erase(it);
+  }
 
-	for (auto it = ans.rbegin(); it!=ans.rend(); it++) {
-		For(i,it->second) cout << it->first;
-	}
-	cout << nl;
+  for (auto it = ans.rbegin(); it!=ans.rend(); it++) {
+    For(i,it->second) cout << it->first;
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

@@ -52,38 +52,38 @@ bool pt_in_polygon(const pt &p, const pol &v){ if(on_boundary(v,p)) return true;
   return abs(res) > 1; } // will be either 2*PI or 0
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	vector<pt> a, b;
-	int x, y;
-	for (int i=0; i<4; i++) {
-		cin >> x >> y;
-		a.push_back(pt(x,y));
-	}
-	for (int i=0; i<4; i++) {
-		cin >> x >> y;
-		b.push_back(pt(x,y));
-	}
+  vector<pt> a, b;
+  int x, y;
+  for (int i=0; i<4; i++) {
+    cin >> x >> y;
+    a.push_back(pt(x,y));
+  }
+  for (int i=0; i<4; i++) {
+    cin >> x >> y;
+    b.push_back(pt(x,y));
+  }
 
-	for (int i=0; i<4; i++) {
-		for (int j=0; j<4; j++) {
-			if (seg_x_seg(a[i], a[(i+1)%4], b[j], b[(j+1)%4])) {
-				cout << "YES" << nl;
-				return 0;
-			}
-		}
-	}
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<4; j++) {
+      if (seg_x_seg(a[i], a[(i+1)%4], b[j], b[(j+1)%4])) {
+        cout << "YES" << nl;
+        return 0;
+      }
+    }
+  }
 
-	for (int i=0; i<4; i++) {
-		if (pt_in_polygon(a[i], b) || pt_in_polygon(b[i], a)) {
-			cout << "YES" << nl;
-			return 0;
-		}
-	}
+  for (int i=0; i<4; i++) {
+    if (pt_in_polygon(a[i], b) || pt_in_polygon(b[i], a)) {
+      cout << "YES" << nl;
+      return 0;
+    }
+  }
 
-	cout << "NO" << nl;
+  cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

@@ -19,47 +19,47 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, v;
-	cin >> n;
+  int n, v;
+  cin >> n;
 
-	priority_queue<int> a, b;
-	a.push(0);
-	for (int i=0; i<n; i++) {
-		cin >> v;
-		a.push(v);
-	}
-	b.push(0);
-	for (int i=0; i<n; i++) {
-		cin >> v;
-		b.push(v);
-	}
+  priority_queue<int> a, b;
+  a.push(0);
+  for (int i=0; i<n; i++) {
+    cin >> v;
+    a.push(v);
+  }
+  b.push(0);
+  for (int i=0; i<n; i++) {
+    cin >> v;
+    b.push(v);
+  }
 
-	ll ans = 0;
-	while (n--) {
-		if (a.top() < b.top()) {
-			b.pop();
-		} else {
-			ans += a.top();
-			a.pop();
-		}
+  ll ans = 0;
+  while (n--) {
+    if (a.top() < b.top()) {
+      b.pop();
+    } else {
+      ans += a.top();
+      a.pop();
+    }
 
-		if (b.top() < a.top()) {
-			a.pop();
-		} else {
-			ans -= b.top();
-			b.pop();
-		}
-	}
+    if (b.top() < a.top()) {
+      a.pop();
+    } else {
+      ans -= b.top();
+      b.pop();
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

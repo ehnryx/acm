@@ -20,34 +20,34 @@ string grid[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int maxh = -INF;
-	int minh = INF;
-	int maxv = -INF;
-	int minv = INF;
-	for (int i = 1; i <= n; i++) {
-		cin >> grid[i];
-		for (int j = 0; j < m; j++) {
-			if (grid[i][j] == 'B') {
-				maxv = max(maxv, i);
-				minv = min(minv, i);
-				maxh = max(maxh, j+1);
-				minh = min(minh, j+1);
-			}
-		}
-	}
+  int maxh = -INF;
+  int minh = INF;
+  int maxv = -INF;
+  int minv = INF;
+  for (int i = 1; i <= n; i++) {
+    cin >> grid[i];
+    for (int j = 0; j < m; j++) {
+      if (grid[i][j] == 'B') {
+        maxv = max(maxv, i);
+        minv = min(minv, i);
+        maxh = max(maxh, j+1);
+        minh = min(minh, j+1);
+      }
+    }
+  }
 
-	cout << (maxv+minv)/2 << " " << (maxh+minh)/2 << nl;
+  cout << (maxv+minv)/2 << " " << (maxh+minh)/2 << nl;
 
-	return 0;
+  return 0;
 }

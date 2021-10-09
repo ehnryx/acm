@@ -17,21 +17,21 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ld sqr(ld x) { return x*x; }
@@ -42,19 +42,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -87,40 +87,40 @@ const int N = 100 + 1;
 int width[N], height[N];
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	int n, perim;
-	cin >> n >> perim;
+  int n, perim;
+  cin >> n >> perim;
 
-	interval_set iset;
-	iset.insert(0, 100*EPS);
+  interval_set iset;
+  iset.insert(0, 100*EPS);
 
-	ld sum = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> width[i] >> height[i];
-		sum += 2 * (width[i] + height[i]);
+  ld sum = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> width[i] >> height[i];
+    sum += 2 * (width[i] + height[i]);
 
-		vector<pair<ld,ld>> segs;
-		for (const pair<ld,ld>& seg : iset.s) {
-			segs.push_back(seg);
-		}
-		for (const pair<ld,ld>& seg : segs) {
-			iset.insert(
-					seg.first + 2 * min(width[i], height[i]), 
-					seg.second + 2 * sqrt(sqr(width[i]) + sqr(height[i]))
-			);
-		}
-		//cerr << i << ": " << iset.s << endl;
-	}
+    vector<pair<ld,ld>> segs;
+    for (const pair<ld,ld>& seg : iset.s) {
+      segs.push_back(seg);
+    }
+    for (const pair<ld,ld>& seg : segs) {
+      iset.insert(
+          seg.first + 2 * min(width[i], height[i]), 
+          seg.second + 2 * sqrt(sqr(width[i]) + sqr(height[i]))
+      );
+    }
+    //cerr << i << ": " << iset.s << endl;
+  }
 
-	perim -= sum;
-	auto it = iset.s.upper_bound({perim + EPS, (ld)INF});
-	if (it != iset.s.begin() && (*prev(it)).second > perim - EPS) {
-		cout << sum + perim << nl;
-	} else {
-		cout << sum + (*prev(it)).second << nl;
-	}
+  perim -= sum;
+  auto it = iset.s.upper_bound({perim + EPS, (ld)INF});
+  if (it != iset.s.begin() && (*prev(it)).second > perim - EPS) {
+    cout << sum + perim << nl;
+  } else {
+    cout << sum + (*prev(it)).second << nl;
+  }
 
-	return;
+  return;
 }
 

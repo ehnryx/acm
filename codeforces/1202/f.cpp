@@ -31,37 +31,37 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int solve(int a, int b, int k) {
-	//cerr << "solving " << k << " full repeats" << nl;
-	int n = a+b;
-	int lb = (n+k+1)/(k+1);
-	int ub = n/k;
-	int alb = (a+k)/(k+1);
-	int aub = a/k;
-	int blb = (b+k)/(k+1);
-	int bub = b/k;
-	if (lb>ub || alb>aub || blb>bub) return 0;
-	lb = max(lb, alb+blb);
-	ub = min(ub, aub+bub);
-	lb = max(lb, 1);
-	ub = min(ub, n);
-	return max(0, ub-lb+1);
+  //cerr << "solving " << k << " full repeats" << nl;
+  int n = a+b;
+  int lb = (n+k+1)/(k+1);
+  int ub = n/k;
+  int alb = (a+k)/(k+1);
+  int aub = a/k;
+  int blb = (b+k)/(k+1);
+  int bub = b/k;
+  if (lb>ub || alb>aub || blb>bub) return 0;
+  lb = max(lb, alb+blb);
+  ub = min(ub, aub+bub);
+  lb = max(lb, 1);
+  ub = min(ub, n);
+  return max(0, ub-lb+1);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int a, b;
-	cin >> a >> b;
-	int n = a+b;
+  int a, b;
+  cin >> a >> b;
+  int n = a+b;
 
-	int ans = 0;
-	for (int i=1; i*i<=n; i++) {
-		ans += solve(a, b, i);
-		if (i!=n/i) ans += solve(a, b, n/i);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=1; i*i<=n; i++) {
+    ans += solve(a, b, i);
+    if (i!=n/i) ans += solve(a, b, n/i);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -15,17 +15,17 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int a, b, c;
-	int n, m, w;
-	cin >> n >> m >> w;
-	vector<bool> leaf(n);
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b >> d;
-		;
-	}
+  int a, b, c;
+  int n, m, w;
+  cin >> n >> m >> w;
+  vector<bool> leaf(n);
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b >> d;
+    ;
+  }
 
-	return 0;
+  return 0;
 }

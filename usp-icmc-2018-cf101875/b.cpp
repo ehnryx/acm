@@ -54,23 +54,23 @@ struct suff_array {
 }; //! code adapted from the Stanford Team Notebook
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string s;
-	cin >> s;
-	s = s + s;
-	s.push_back('9'+1);
-	suff_array sa(s);
-	if (sa.get_sarray()[0] == 0) {
-		cout << "Yes" << nl;
-	} else {
-		cout << "No" << nl;
-	}
+  string s;
+  cin >> s;
+  s = s + s;
+  s.push_back('9'+1);
+  suff_array sa(s);
+  if (sa.get_sarray()[0] == 0) {
+    cout << "Yes" << nl;
+  } else {
+    cout << "No" << nl;
+  }
 
-	return 0;
+  return 0;
 }

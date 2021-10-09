@@ -27,46 +27,46 @@ int par[N], val[N], cur[N], depth[N];
 int ans[N], cnt[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<=n; i++) {
-		cin >> par[i] >> val[i];
-		cur[i] = val[i];
-	}
+  int n;
+  cin >> n;
+  for(int i=1; i<=n; i++) {
+    cin >> par[i] >> val[i];
+    cur[i] = val[i];
+  }
 
-	depth[0] = 0;
-	for(int i=1; i<=n; i++) {
-		for(int j=1; j<=n; j++) {
-			depth[j] = depth[par[j]] + 1;
-		}
-	}
+  depth[0] = 0;
+  for(int i=1; i<=n; i++) {
+    for(int j=1; j<=n; j++) {
+      depth[j] = depth[par[j]] + 1;
+    }
+  }
 
-	for(int i=1; i<=n; i++) {
-		tuple<int,int,int> best = make_tuple(n+7, 0, 0);
-		for(int j=1; j<=n; j++) {
-			if(ans[j] == 0) {
-				best = min(best, make_tuple(cur[j], depth[j], j));
-			}
-		}
-		auto [c, d, u] = best;
-		if(c > 0) {
-			cout << "NO" << nl;
-			return 0;
-		}
-		ans[u] = i;
-		for(int j=par[u]; j!=0; j=par[j]) {
-			cur[j]--;
-		}
-	}
+  for(int i=1; i<=n; i++) {
+    tuple<int,int,int> best = make_tuple(n+7, 0, 0);
+    for(int j=1; j<=n; j++) {
+      if(ans[j] == 0) {
+        best = min(best, make_tuple(cur[j], depth[j], j));
+      }
+    }
+    auto [c, d, u] = best;
+    if(c > 0) {
+      cout << "NO" << nl;
+      return 0;
+    }
+    ans[u] = i;
+    for(int j=par[u]; j!=0; j=par[j]) {
+      cur[j]--;
+    }
+  }
 
-	cout << "YES" << nl;
-	for(int i=1; i<=n; i++) {
-		cout << ans[i] << " ";
-	}
-	cout << nl;
+  cout << "YES" << nl;
+  for(int i=1; i<=n; i++) {
+    cout << ans[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

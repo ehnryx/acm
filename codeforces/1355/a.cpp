@@ -27,26 +27,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		ll a, k;
-		cin >> a >> k;
-		for(int i=1; i<k; i++) {
-			int minv = 10;
-			int maxv = -1;
-			for(ll b=a, j=0; b>0 && j<2; b/=10) {
-				minv = min((ll)minv, b % 10);
-				maxv = max((ll)maxv, b % 10);
-			}
-			if(minv == 0) break;
-			a += minv * maxv;
-		}
-		cout << a << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    ll a, k;
+    cin >> a >> k;
+    for(int i=1; i<k; i++) {
+      int minv = 10;
+      int maxv = -1;
+      for(ll b=a, j=0; b>0 && j<2; b/=10) {
+        minv = min((ll)minv, b % 10);
+        maxv = max((ll)maxv, b % 10);
+      }
+      if(minv == 0) break;
+      a += minv * maxv;
+    }
+    cout << a << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -33,50 +33,50 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n;
-	cin >> n;
-	ll ga, sa, ba;
-	cin >> ga >> sa >> ba;
-	ll gb, sb, bb;
-	cin >> gb >> sb >> bb;
+  ll n;
+  cin >> n;
+  ll ga, sa, ba;
+  cin >> ga >> sa >> ba;
+  ll gb, sb, bb;
+  cin >> gb >> sb >> bb;
 
-	if (ga>gb && sa>sb && ba>bb) {
-		swap(ga,gb);
-		swap(sa,sb);
-		swap(ba,bb);
-	}
+  if (ga>gb && sa>sb && ba>bb) {
+    swap(ga,gb);
+    swap(sa,sb);
+    swap(ba,bb);
+  }
 
-	ll res = 0;
-	for (ll i=0; i<=n; i+=ga) {
-		for (ll j=0; i+j<=n; j+=sa) {
-			ll k = ((n-i-j)/ba) * ba;
-			if (ba>bb) k = 0;
-			res = max(res, i/ga*gb + j/sa*sb + k/ba*bb + n-i-j-k);
-		}
-	}
-	n = res;
+  ll res = 0;
+  for (ll i=0; i<=n; i+=ga) {
+    for (ll j=0; i+j<=n; j+=sa) {
+      ll k = ((n-i-j)/ba) * ba;
+      if (ba>bb) k = 0;
+      res = max(res, i/ga*gb + j/sa*sb + k/ba*bb + n-i-j-k);
+    }
+  }
+  n = res;
 
-	swap(ga,gb);
-	swap(sa,sb);
-	swap(ba,bb);
-	while (ga<gb) {
-		swap(ga,sa);
-		swap(gb,sb);
-		swap(sa,ba);
-		swap(sb,bb);
-	}
+  swap(ga,gb);
+  swap(sa,sb);
+  swap(ba,bb);
+  while (ga<gb) {
+    swap(ga,sa);
+    swap(gb,sb);
+    swap(sa,ba);
+    swap(sb,bb);
+  }
 
-	res = 0;
-	for (ll i=0; i<=n; i+=sa) {
-		ll j = ((n-i)/ba) * ba;
-		if (ba>bb) j = 0;
-		res = max(res, i/sa*sb + j/ba*bb + n-i-j);
-	}
-	cout << res << nl;
+  res = 0;
+  for (ll i=0; i<=n; i+=sa) {
+    ll j = ((n-i)/ba) * ba;
+    if (ba>bb) j = 0;
+    res = max(res, i/sa*sb + j/ba*bb + n-i-j);
+  }
+  cout << res << nl;
 
-	return 0;
+  return 0;
 }

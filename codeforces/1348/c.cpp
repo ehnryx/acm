@@ -27,34 +27,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, k;
-		cin >> n >> k;
-		string s;
-		cin >> s;
-		sort(s.begin(), s.end());
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+    string s;
+    cin >> s;
+    sort(s.begin(), s.end());
 
-		map<char,int> cnt;
-		for(char c : s) {
-			cnt[c]++;
-		}
-		if(cnt.size() == 1) {
-			cout << s.substr(0, (n+k-1)/k) << nl;
-		} else if(cnt[s[0]] < k) {
-			cout << s[k-1] << nl;
-		} else if(cnt[s[0]] > k) {
-			cout << s.substr(k-1) << nl;
-		} else if(cnt.size() == 2) {
-			cout << s[0] << s.substr(k, (n-k+k-1)/k) << nl;
-		} else {
-			cout << s[0] << s.substr(k) << nl;
-		}
-	}
+    map<char,int> cnt;
+    for(char c : s) {
+      cnt[c]++;
+    }
+    if(cnt.size() == 1) {
+      cout << s.substr(0, (n+k-1)/k) << nl;
+    } else if(cnt[s[0]] < k) {
+      cout << s[k-1] << nl;
+    } else if(cnt[s[0]] > k) {
+      cout << s.substr(k-1) << nl;
+    } else if(cnt.size() == 2) {
+      cout << s[0] << s.substr(k, (n-k+k-1)/k) << nl;
+    } else {
+      cout << s[0] << s.substr(k) << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

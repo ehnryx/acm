@@ -25,30 +25,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n],b[n],id[n+1];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
-	for(int i=0;i<n;i++) {
-		cin>>b[i];
-		id[b[i]] = i;
-	}
+  int n;
+  cin>>n;
+  int a[n],b[n],id[n+1];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
+  for(int i=0;i<n;i++) {
+    cin>>b[i];
+    id[b[i]] = i;
+  }
 
-	int cur = 0;
-	int ans = 0;
-	for(int i=0;i<n;i++) {
-		if(id[a[i]]>cur) {
-			ans += id[a[i]]-cur;
-		}
-		cur = max(cur, id[a[i]]+1);
-	}
-	cout<<ans<<nl;
+  int cur = 0;
+  int ans = 0;
+  for(int i=0;i<n;i++) {
+    if(id[a[i]]>cur) {
+      ans += id[a[i]]-cur;
+    }
+    cur = max(cur, id[a[i]]+1);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

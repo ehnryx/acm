@@ -33,28 +33,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, p, q, r;
-	cin >> n >> p >> q >> r;
-	int a[n];
-	multiset<int> left, right;
-	For(i,n) {
-		cin >> a[i];
-		right.insert(a[i]);
-	}
+  int n, p, q, r;
+  cin >> n >> p >> q >> r;
+  int a[n];
+  multiset<int> left, right;
+  For(i,n) {
+    cin >> a[i];
+    right.insert(a[i]);
+  }
 
-	ll ans = -INFLL;
-	For(i,n) {
-		left.insert(a[i]);
-		ll L = max((ll)p*(*left.begin()), (ll)p*(*left.rbegin()));
-		ll R = max((ll)r*(*right.begin()), (ll)r*(*right.rbegin()));
-		ans = max(ans, L + R + (ll)q*a[i]);
-		right.erase(right.find(a[i]));
-	}
-	cout << ans << nl;
+  ll ans = -INFLL;
+  For(i,n) {
+    left.insert(a[i]);
+    ll L = max((ll)p*(*left.begin()), (ll)p*(*left.rbegin()));
+    ll R = max((ll)r*(*right.begin()), (ll)r*(*right.rbegin()));
+    ans = max(ans, L + R + (ll)q*a[i]);
+    right.erase(right.find(a[i]));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

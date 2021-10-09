@@ -25,17 +25,17 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 ld sqr(ld x) { return x*x; }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	for(cin>>n;n--;) {
-		int w,g,h,r;
-		cin>>w>>g>>h>>r;
-		g-=r; h-=r;
-		cout<<sqrt(sqr(g-h)+sqr(w))<<" "<<sqrt(sqr(g+h)+sqr(w))<<nl;
-	}
+  int n;
+  for(cin>>n;n--;) {
+    int w,g,h,r;
+    cin>>w>>g>>h>>r;
+    g-=r; h-=r;
+    cout<<sqrt(sqr(g-h)+sqr(w))<<" "<<sqrt(sqr(g+h)+sqr(w))<<nl;
+  }
 
-	return 0;
+  return 0;
 }

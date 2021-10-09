@@ -22,30 +22,30 @@ const ld EPS = 1e-11;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll power(ll n, int e) {
-	ll r = 1;
-	for( ; e>0; e/=2) {
-		if(e&1) r = r*n % MOD;
-		n = n*n % MOD;
-	}
-	return r;
+  ll r = 1;
+  for( ; e>0; e/=2) {
+    if(e&1) r = r*n % MOD;
+    n = n*n % MOD;
+  }
+  return r;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<=n; i++) {
-		if(i == n) {
-			cout << 10 << " ";
-		} else {
-			ll res = 10 * 9 * 2 * power(10, n-i-1) % MOD; // ends
-			res += (ll)(n-i-1) * 10 * 9 * 9 * power(10, n-i-2) % MOD;
-			cout << res % MOD << " ";
-		}
-	}
-	cout << nl;
+  int n;
+  cin >> n;
+  for(int i=1; i<=n; i++) {
+    if(i == n) {
+      cout << 10 << " ";
+    } else {
+      ll res = 10 * 9 * 2 * power(10, n-i-1) % MOD; // ends
+      res += (ll)(n-i-1) * 10 * 9 * 9 * power(10, n-i-2) % MOD;
+      cout << res % MOD << " ";
+    }
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

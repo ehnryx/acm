@@ -16,41 +16,41 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 bool isvowel(char c) {
-	return c=='a'||c=='e'||c=='i'||c=='o'||c=='u';
+  return c=='a'||c=='e'||c=='i'||c=='o'||c=='u';
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	vector<int> cnt;
-	cnt.push_back(0);
-	for (char c : s) {
-		if (isvowel(c)) {
-			cnt.push_back(0);
-		} else {
-			cnt.back()++;
-		}
-	}
+  vector<int> cnt;
+  cnt.push_back(0);
+  for (char c : s) {
+    if (isvowel(c)) {
+      cnt.push_back(0);
+    } else {
+      cnt.back()++;
+    }
+  }
 
-	if (cnt.size() == 1) {
-		cout << 1 << nl;
-	}
-	else if (cnt[0] > 0) {
-		cout << 0 << nl;
-	}
-	else {
-		cout << 1+cnt[cnt.size()/2] << nl;
-	}
+  if (cnt.size() == 1) {
+    cout << 1 << nl;
+  }
+  else if (cnt[0] > 0) {
+    cout << 0 << nl;
+  }
+  else {
+    cout << 1+cnt[cnt.size()/2] << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -33,48 +33,48 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	vector<int> adj[n+1];
-	int indeg[n+1];
-	memset(indeg, 0, sizeof indeg);
-	For(i,m) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		indeg[b]++;
-	}
+  vector<int> adj[n+1];
+  int indeg[n+1];
+  memset(indeg, 0, sizeof indeg);
+  For(i,m) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    indeg[b]++;
+  }
 
-	queue<int> bfs;
-	FOR(i,1,n) {
-		if (indeg[i] == 0) {
-			bfs.push(i);
-		}
-	}
+  queue<int> bfs;
+  FOR(i,1,n) {
+    if (indeg[i] == 0) {
+      bfs.push(i);
+    }
+  }
 
-	int len[n+1];
-	memset(len, 0, sizeof len);
-	while (!bfs.empty()) {
-		int u = bfs.front();
-		bfs.pop();
-		for (int v : adj[u]) {
-			len[v] = max(len[v], len[u] + 1);
-			if (--indeg[v] == 0) {
-				bfs.push(v);
-			}
-		}
-	}
+  int len[n+1];
+  memset(len, 0, sizeof len);
+  while (!bfs.empty()) {
+    int u = bfs.front();
+    bfs.pop();
+    for (int v : adj[u]) {
+      len[v] = max(len[v], len[u] + 1);
+      if (--indeg[v] == 0) {
+        bfs.push(v);
+      }
+    }
+  }
 
-	int ans = 0;
-	FOR(i,1,n) {
-		ans = max(ans, len[i]);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  FOR(i,1,n) {
+    ans = max(ans, len[i]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

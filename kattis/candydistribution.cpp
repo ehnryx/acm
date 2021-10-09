@@ -31,26 +31,26 @@ ll egcd(ll a, ll b, ll& x, ll &y) {
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		ll k,c,x,y;
-		cin>>k>>c;
-		if(c==1) {
-			cout<<k+1<<nl;
-		} else if(k==1) {
-			cout<<7<<nl;
-		} else {
-			if(egcd(c,k,x,y)==1) {
-				cout<<(x+k)%k<<nl;
-			} else {
-				cout<<"IMPOSSIBLE"<<nl;
-			}
-		}
-	}
+  int T;
+  cin>>T;
+  while(T--) {
+    ll k,c,x,y;
+    cin>>k>>c;
+    if(c==1) {
+      cout<<k+1<<nl;
+    } else if(k==1) {
+      cout<<7<<nl;
+    } else {
+      if(egcd(c,k,x,y)==1) {
+        cout<<(x+k)%k<<nl;
+      } else {
+        cout<<"IMPOSSIBLE"<<nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"sort"
+  "bufio"
+  "fmt"
+  "os"
+  "sort"
 )
 
 var reader = bufio.NewReader(os.Stdin)
@@ -16,10 +16,10 @@ func scan(a ...interface{})  { fmt.Fscan(reader, a...) }
 
 
 func main() {
-	// code GOes here
+  // code GOes here
 
-	
+  
 
-	writer.Flush()
-	return
+  writer.Flush()
+  return
 }

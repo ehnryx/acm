@@ -33,21 +33,21 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n, m; int q;
-	cin >> n >> m >> q;
-	ll g = __gcd(n,m);
-	vector<ll> d = { 0, n/g, m/g };
-	while (q--) {
-		int a, x; ll b, y;
-		cin >> a >> b >> x >> y;
-		--b; --y;
-		if (b/d[a] == y/d[x]) cout << "YES" << nl;
-		else cout << "NO" << nl;
-	}
+  ll n, m; int q;
+  cin >> n >> m >> q;
+  ll g = __gcd(n,m);
+  vector<ll> d = { 0, n/g, m/g };
+  while (q--) {
+    int a, x; ll b, y;
+    cin >> a >> b >> x >> y;
+    --b; --y;
+    if (b/d[a] == y/d[x]) cout << "YES" << nl;
+    else cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

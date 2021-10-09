@@ -31,28 +31,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int a[n];
-	For(i,n) {
-		cin >> a[i];
-	}
-	sort(a,a+n);
+  int n;
+  cin >> n;
+  int a[n];
+  For(i,n) {
+    cin >> a[i];
+  }
+  sort(a,a+n);
 
-	ll cur = 0;
-	ll range = 0;
-	FOR(i,2,n) {
-		if (i%2 == 0) {
-			range += a[n-i/2] - a[(i-2)/2];
-		}
-		cur += range;
-		cout << cur << " ";
-	}
-	cout << nl;
+  ll cur = 0;
+  ll range = 0;
+  FOR(i,2,n) {
+    if (i%2 == 0) {
+      range += a[n-i/2] - a[(i-2)/2];
+    }
+    cur += range;
+    cout << cur << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

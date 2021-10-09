@@ -23,27 +23,27 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int ask(int n, int s) {
-	cout << "? ";
-	for(int i=1; i<=n; i++) {
-		if(i!=s) cout << i << " ";
-	}
-	cout << endl;
-	int p, v;
-	cin >> p >> v;
-	return v;
+  cout << "? ";
+  for(int i=1; i<=n; i++) {
+    if(i!=s) cout << i << " ";
+  }
+  cout << endl;
+  int p, v;
+  cin >> p >> v;
+  return v;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	map<int,int> cnt;
-	for(int i=1; i<=k+1; i++) {
-		cnt[ask(k+1, i)]++;
-	}
-	cout << "! " << cnt.rbegin()->second << nl;
+  int n, k;
+  cin >> n >> k;
+  map<int,int> cnt;
+  for(int i=1; i<=k+1; i++) {
+    cnt[ask(k+1, i)]++;
+  }
+  cout << "! " << cnt.rbegin()->second << nl;
 
-	return 0;
+  return 0;
 }

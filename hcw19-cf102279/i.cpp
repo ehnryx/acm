@@ -33,40 +33,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n];
-	int sum = 0;
-	int minv = INF;
-	int minc = 0;
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		sum ^= a[i]&1;
-		if(a[i]<minv) {
-			minv = a[i];
-			minc = 0;
-		}
-		minc += (a[i]==minv);
-	}
+  int n;
+  cin>>n;
+  int a[n];
+  int sum = 0;
+  int minv = INF;
+  int minc = 0;
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    sum ^= a[i]&1;
+    if(a[i]<minv) {
+      minv = a[i];
+      minc = 0;
+    }
+    minc += (a[i]==minv);
+  }
 
-	int lose[minv+1][2];
-	for(int i=0;i<=minv;i++) {
-		lose[i][0] = lose[i][1] = 1;
-		if(i>0) {
-			lose[i][0] &= !lose[i-1][0];
-			lose[i][1] &= !lose[i-1][1];
-			lose[i][0] &= !lose[i-1][1^(n&1)];
-			lose[i][1] &= !lose[i-1][0^(n&1)];
-		}
-		lose[i][1] &= !lose[i][0];
-	}
+  int lose[minv+1][2];
+  for(int i=0;i<=minv;i++) {
+    lose[i][0] = lose[i][1] = 1;
+    if(i>0) {
+      lose[i][0] &= !lose[i-1][0];
+      lose[i][1] &= !lose[i-1][1];
+      lose[i][0] &= !lose[i-1][1^(n&1)];
+      lose[i][1] &= !lose[i-1][0^(n&1)];
+    }
+    lose[i][1] &= !lose[i][0];
+  }
 
-	if(lose[minv][sum^((minv*n)&1)]) cout<<"imitater"<<nl;
-	else cout<<"lowie"<<nl;
+  if(lose[minv][sum^((minv*n)&1)]) cout<<"imitater"<<nl;
+  else cout<<"lowie"<<nl;
 
-	return 0;
+  return 0;
 }

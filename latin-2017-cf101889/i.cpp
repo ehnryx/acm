@@ -16,11 +16,11 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int a, b, c;
-	Edge(int a, int b, int c): a(a), b(b), c(c) {}
-	bool operator < (const Edge& e) const {
-		return c < e.c;
-	}
+  int a, b, c;
+  Edge(int a, int b, int c): a(a), b(b), c(c) {}
+  bool operator < (const Edge& e) const {
+    return c < e.c;
+  }
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -31,29 +31,29 @@ struct Edge {
 // 3. dsu.find(i) to find the root of the set containing i
 //*!
 struct DSU {
-	vector<int> root;
-	vector<int> sz;
+  vector<int> root;
+  vector<int> sz;
 
-	DSU(int n) {
-		root.resize(n, -1);
-		sz.resize(n, 1);
-	}
+  DSU(int n) {
+    root.resize(n, -1);
+    sz.resize(n, 1);
+  }
 
-	int find(int i) {
-		if (root[i] == -1) return i;
-		return root[i] = find(root[i]);
-	}
+  int find(int i) {
+    if (root[i] == -1) return i;
+    return root[i] = find(root[i]);
+  }
 
-	// returns true if we combine two sets
-	bool link(int i, int j) {
-		i = find(i);
-		j = find(j);
-		if (i == j) return false;
-		if (sz[i] < sz[j]) swap(i,j);
-		root[j] = i;
-		sz[i] += sz[j];
-		return true;
-	}
+  // returns true if we combine two sets
+  bool link(int i, int j) {
+    i = find(i);
+    j = find(j);
+    if (i == j) return false;
+    if (sz[i] < sz[j]) swap(i,j);
+    root[j] = i;
+    sz[i] += sz[j];
+    return true;
+  }
 };
 //*/
 
@@ -209,76 +209,76 @@ struct HLD : LCA {
 //*/
 
 struct Int {
-	int x;
-	Int(int x=0): x(x) {}
-	bool operator < (const Int& v) const {
-		return x > v.x;
-	}
+  int x;
+  Int(int x=0): x(x) {}
+  bool operator < (const Int& v) const {
+    return x > v.x;
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, r, a, b, c;
-	cin >> n >> r;
+  int n, r, a, b, c;
+  cin >> n >> r;
 
-	vector<Edge> edges;
-	for (int i=0; i<r; i++) {
-		cin >> a >> b >> c;
-		edges.push_back(Edge(a,b,c));
-	}
-	sort(edges.begin(), edges.end());
+  vector<Edge> edges;
+  for (int i=0; i<r; i++) {
+    cin >> a >> b >> c;
+    edges.push_back(Edge(a,b,c));
+  }
+  sort(edges.begin(), edges.end());
 
-	int sum = 0;
-	DSU dsu(n+1);
-	for (const Edge& e : edges) {
-		if (dsu.link(e.a, e.b)) {
-			adj[e.a].push_back(e.b);
-			adj[e.b].push_back(e.a);
-			sum += e.c;
-		}
-		cost[e.a][e.b] = e.c;
-		cost[e.b][e.a] = e.c;
-	}
+  int sum = 0;
+  DSU dsu(n+1);
+  for (const Edge& e : edges) {
+    if (dsu.link(e.a, e.b)) {
+      adj[e.a].push_back(e.b);
+      adj[e.b].push_back(e.a);
+      sum += e.c;
+    }
+    cost[e.a][e.b] = e.c;
+    cost[e.b][e.a] = e.c;
+  }
 
-	HLD hld(n+1);
-	hld.build(1);
+  HLD hld(n+1);
+  hld.build(1);
 
-	RMQ<Int> rmq(n+1);
-	for (int i=2; i<=n; i++) {
-		rmq.set(hld.get(i), Int(cost[i][hld.parent[i]]));
-	}
-	rmq.build();
+  RMQ<Int> rmq(n+1);
+  for (int i=2; i<=n; i++) {
+    rmq.set(hld.get(i), Int(cost[i][hld.parent[i]]));
+  }
+  rmq.build();
 
-	auto query_path = [&] (int a, int b) {
-		int res = 0;
-		while (hld.chain[a] != hld.chain[b]) {
-			int s = hld.start[hld.chain[a]];
-			res = max(res, rmq.query(s, s + hld.pos[a]).x);
-			a = hld.parent[hld.root[hld.chain[a]]];
-		}
-		if (hld.pos[a] != hld.pos[b]) {
-			int s = hld.start[hld.chain[a]];
-			res = max(res, rmq.query(s + hld.pos[b] + 1, s + hld.pos[a]).x);
-		}
-		return res;
-	};
+  auto query_path = [&] (int a, int b) {
+    int res = 0;
+    while (hld.chain[a] != hld.chain[b]) {
+      int s = hld.start[hld.chain[a]];
+      res = max(res, rmq.query(s, s + hld.pos[a]).x);
+      a = hld.parent[hld.root[hld.chain[a]]];
+    }
+    if (hld.pos[a] != hld.pos[b]) {
+      int s = hld.start[hld.chain[a]];
+      res = max(res, rmq.query(s + hld.pos[b] + 1, s + hld.pos[a]).x);
+    }
+    return res;
+  };
 
-	int q;
-	cin >> q;
-	for (int i=0; i<q; i++) {
-		cin >> a >> b;
-		int lca = hld.query(a,b);
-		int maxv = max(query_path(a, lca), query_path(b, lca));
-		cout << sum + cost[a][b] - maxv << nl;
-	}
+  int q;
+  cin >> q;
+  for (int i=0; i<q; i++) {
+    cin >> a >> b;
+    int lca = hld.query(a,b);
+    int maxv = max(query_path(a, lca), query_path(b, lca));
+    cout << sum + cost[a][b] - maxv << nl;
+  }
 
-	return 0;
+  return 0;
 }

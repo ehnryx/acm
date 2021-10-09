@@ -33,24 +33,24 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		string a, b;
-		cin >> a >> b;
-		reverse(a.begin(), a.end());
-		reverse(b.begin(), b.end());
-		int fa = a.find('1');
-		int fb = b.find('1');
-		while (fa < fb) {
-			fa = a.find('1', fa+1);
-		}
-		cout << fa-fb << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    string a, b;
+    cin >> a >> b;
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+    int fa = a.find('1');
+    int fb = b.find('1');
+    while (fa < fb) {
+      fa = a.find('1', fa+1);
+    }
+    cout << fa-fb << nl;
+  }
 
-	return 0;
+  return 0;
 }

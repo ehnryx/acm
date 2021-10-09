@@ -27,81 +27,81 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	sort(s.begin(), s.end());
+  string s;
+  cin >> s;
+  sort(s.begin(), s.end());
 
-	int n = s.size();
-	int h = n/2;
-	if(n <= 8) {
-		do {
-			unordered_set<string> seen;
-			string cur = s + s;
-			bool ok = true;
-			for(int i=0; i<n; i++) {
-				ok &= seen.insert(cur.substr(i, h)).second;
-			}
-			if(ok) {
-				cout << "YES" << nl;
-				cout << s << nl;
-				return 0;
-			}
-		} while(next_permutation(s.begin(), s.end()));
-		cout << "NO" << nl;
-		return 0;
-	}
+  int n = s.size();
+  int h = n/2;
+  if(n <= 8) {
+    do {
+      unordered_set<string> seen;
+      string cur = s + s;
+      bool ok = true;
+      for(int i=0; i<n; i++) {
+        ok &= seen.insert(cur.substr(i, h)).second;
+      }
+      if(ok) {
+        cout << "YES" << nl;
+        cout << s << nl;
+        return 0;
+      }
+    } while(next_permutation(s.begin(), s.end()));
+    cout << "NO" << nl;
+    return 0;
+  }
 
-	map<char,int> cnt;
-	char sad = 0;
-	for(char c : s) {
-		cnt[c]++;
-		if(cnt[c] > h) {
-			sad = c;
-		}
-	}
+  map<char,int> cnt;
+  char sad = 0;
+  for(char c : s) {
+    cnt[c]++;
+    if(cnt[c] > h) {
+      sad = c;
+    }
+  }
 
-	if(sad) {
-		rotate(s.begin(), lower_bound(s.begin(), s.end(), sad), s.end());
-	}
+  if(sad) {
+    rotate(s.begin(), lower_bound(s.begin(), s.end(), sad), s.end());
+  }
 
-	if(s[n-2] == s[0]) {
-		cout << "NO" << nl;
-		return 0;
-	}
+  if(s[n-2] == s[0]) {
+    cout << "NO" << nl;
+    return 0;
+  }
 
-	if(s[n-3] == s[0]) {
-		if(s[n-2] == s[n-1]) {
-			cout << "NO" << nl;
-			return 0;
-		}
+  if(s[n-3] == s[0]) {
+    if(s[n-2] == s[n-1]) {
+      cout << "NO" << nl;
+      return 0;
+    }
 
-		cout << "YES" << nl;
-		for(int i=0; i<h-1; i++) {
-			cout << s[i];
-		}
-		cout << s[n-2];
-		for(int i=h-1; i<n-2; i++) {
-			cout << s[i];
-		}
-		cout << s[n-1];
-		cout << nl;
-		return 0;
-	}
+    cout << "YES" << nl;
+    for(int i=0; i<h-1; i++) {
+      cout << s[i];
+    }
+    cout << s[n-2];
+    for(int i=h-1; i<n-2; i++) {
+      cout << s[i];
+    }
+    cout << s[n-1];
+    cout << nl;
+    return 0;
+  }
 
-	cout << "YES" << nl;
-	for(int i=0; i<h-1; i++) {
-		cout << s[i];
-	}
-	cout << s[n-3];
-	for(int i=h-1; i<n-3; i++) {
-		cout << s[i];
-	}
-	cout << s[n-2];
-	cout << s[n-1];
-	cout << nl;
+  cout << "YES" << nl;
+  for(int i=0; i<h-1; i++) {
+    cout << s[i];
+  }
+  cout << s[n-3];
+  for(int i=h-1; i<n-3; i++) {
+    cout << s[i];
+  }
+  cout << s[n-2];
+  cout << s[n-1];
+  cout << nl;
 
-	return 0;
+  return 0;
 }

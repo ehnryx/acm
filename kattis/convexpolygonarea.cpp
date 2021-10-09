@@ -101,27 +101,27 @@ bool pt_in_polygon(const pt &p, const pol &v){ if(on_boundary(v,p)) return true;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
-	while (n--) {
-		int m;
-		cin >> m;
-		pol p;
-		while (m--) {
-			int x,y;
-			cin >> x >> y;
-			p.emplace_back(x,y);
-		}
-		cout << abs(area(p)) << nl;
-	}
+  int n;
+  cin >> n;
+  while (n--) {
+    int m;
+    cin >> m;
+    pol p;
+    while (m--) {
+      int x,y;
+      cin >> x >> y;
+      p.emplace_back(x,y);
+    }
+    cout << abs(area(p)) << nl;
+  }
 
-	return 0;
+  return 0;
 }

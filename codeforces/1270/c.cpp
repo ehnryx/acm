@@ -25,37 +25,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		ll sum = 0;
-		ll other = 0;
-		for(int i=0; i<n; i++) {
-			int a;
-			cin >> a;
-			sum += a;
-			other ^= 2*a;
-		}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    ll sum = 0;
+    ll other = 0;
+    for(int i=0; i<n; i++) {
+      int a;
+      cin >> a;
+      sum += a;
+      other ^= 2*a;
+    }
 
-		ll add = 0;
-		for(int i=0; i<60; i++) {
-			if((sum & 1LL<<i) != (other & 1LL<<i)) {
-				add |= 1LL<<i;
-				sum += 1LL<<i;
-				other ^= 2LL<<i;
-				assert((sum & 1LL<<i) == (other & 1LL<<i));
-			}
-		}
-		assert((sum & 1LL<<60) == 0 && (other & 1LL<<60) == 0);
+    ll add = 0;
+    for(int i=0; i<60; i++) {
+      if((sum & 1LL<<i) != (other & 1LL<<i)) {
+        add |= 1LL<<i;
+        sum += 1LL<<i;
+        other ^= 2LL<<i;
+        assert((sum & 1LL<<i) == (other & 1LL<<i));
+      }
+    }
+    assert((sum & 1LL<<60) == 0 && (other & 1LL<<60) == 0);
 
-		cout << 1 << nl;
-		cout << add << nl;
-	}
+    cout << 1 << nl;
+    cout << add << nl;
+  }
 
-	return 0;
+  return 0;
 }

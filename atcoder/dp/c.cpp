@@ -33,30 +33,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int v[n+1][3];
-	FOR(i,1,n) {
-		For(j,3) {
-			cin >> v[i][j];
-		}
-	}
+  int n;
+  cin >> n;
+  int v[n+1][3];
+  FOR(i,1,n) {
+    For(j,3) {
+      cin >> v[i][j];
+    }
+  }
 
-	int dp[n+1][3];
-	memset(dp, 0, sizeof dp);
-	FOR(i,1,n) {
-		For(j,3) {
-			For(k,3) {
-				if (j==k) continue;
-				dp[i][j] = max(dp[i][j], dp[i-1][k] + v[i][j]);
-			}
-		}
-	}
-	cout << max(dp[n][0], max(dp[n][1], dp[n][2])) << nl;
+  int dp[n+1][3];
+  memset(dp, 0, sizeof dp);
+  FOR(i,1,n) {
+    For(j,3) {
+      For(k,3) {
+        if (j==k) continue;
+        dp[i][j] = max(dp[i][j], dp[i-1][k] + v[i][j]);
+      }
+    }
+  }
+  cout << max(dp[n][0], max(dp[n][1], dp[n][2])) << nl;
 
-	return 0;
+  return 0;
 }

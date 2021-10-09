@@ -25,19 +25,19 @@ int n;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	cin >> n;
+  cin >> n;
 
-	for (int i=1; i<n; i++) {
-		cin >> a >> b;
-	}
+  for (int i=1; i<n; i++) {
+    cin >> a >> b;
+  }
 
-	return 0;
+  return 0;
 }

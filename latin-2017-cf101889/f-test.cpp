@@ -16,12 +16,12 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Point {
-	int x, y; ll v;
-	Point(const pii& p, ll v): x(p.first), y(p.second), v(v) {}
-	bool operator < (const Point& v) const {
-		if (x == v.x) return y > v.y;
-		else return x < v.x;
-	}
+  int x, y; ll v;
+  Point(const pii& p, ll v): x(p.first), y(p.second), v(v) {}
+  bool operator < (const Point& v) const {
+    if (x == v.x) return y > v.y;
+    else return x < v.x;
+  }
 };
 
 ll weighted_lis_len(const vector<pair<int,ll>>& a) {
@@ -50,35 +50,35 @@ ll weighted_lis_len(const vector<pair<int,ll>>& a) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, a, b, c;
-	cin >> n;
+  int n, a, b, c;
+  cin >> n;
 
-	map<pii,ll> p;
-	for (int i=0; i<n; i++) {
-		cin >> a >> b >> c;
-		p[pii(a,b)] += c;
-	}
+  map<pii,ll> p;
+  for (int i=0; i<n; i++) {
+    cin >> a >> b >> c;
+    p[pii(a,b)] += c;
+  }
 
-	vector<Point> arr;
-	for (const auto& it : p) {
-		arr.push_back(Point(it.first, it.second));
-	}
-	n = arr.size();
-	sort(arr.begin(), arr.end());
+  vector<Point> arr;
+  for (const auto& it : p) {
+    arr.push_back(Point(it.first, it.second));
+  }
+  n = arr.size();
+  sort(arr.begin(), arr.end());
 
-	vector<pair<int,ll>> lis;
-	for (const Point& it : arr) {
-		lis.push_back(pair<int,ll>(it.y, it.v));
-	}
-	cout << weighted_lis_len(lis) << nl;
+  vector<pair<int,ll>> lis;
+  for (const Point& it : arr) {
+    lis.push_back(pair<int,ll>(it.y, it.v));
+  }
+  cout << weighted_lis_len(lis) << nl;
 
-	return 0;
+  return 0;
 }

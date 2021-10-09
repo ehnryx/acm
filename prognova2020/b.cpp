@@ -28,40 +28,40 @@ int v[N], p[N];
 int dp[N][M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, a, b;
-	cin >> n >> a >> b;
-	if(a > b) swap(a,b);
-	for(int i=1; i<=n; i++) {
-		cin >> v[i];
-		p[i] = p[i-1] + v[i];
-	}
+  int n, a, b;
+  cin >> n >> a >> b;
+  if(a > b) swap(a,b);
+  for(int i=1; i<=n; i++) {
+    cin >> v[i];
+    p[i] = p[i-1] + v[i];
+  }
 
-	dp[0][0] = true;
-	for(int i=1; i<=n; i++) {
-		bool ok = false;
-		for(int t=0; t<=min(a,p[i]); t++) {
-			if(p[i]-t > b) continue;
-			if(dp[i-1][t]) {
-				dp[i][t] = true;
-			}
-			if(t >= v[i]) {
-				if(dp[i-1][t-v[i]]) {
-					dp[i][t] = true;
-				}
-			}
-			if(dp[i][t]) {
-				ok = true;
-			}
-		}
-		if(!ok) {
-			cout << i-1 << nl;
-			return 0;
-		}
-	}
-	cout << n << nl;
+  dp[0][0] = true;
+  for(int i=1; i<=n; i++) {
+    bool ok = false;
+    for(int t=0; t<=min(a,p[i]); t++) {
+      if(p[i]-t > b) continue;
+      if(dp[i-1][t]) {
+        dp[i][t] = true;
+      }
+      if(t >= v[i]) {
+        if(dp[i-1][t-v[i]]) {
+          dp[i][t] = true;
+        }
+      }
+      if(dp[i][t]) {
+        ok = true;
+      }
+    }
+    if(!ok) {
+      cout << i-1 << nl;
+      return 0;
+    }
+  }
+  cout << n << nl;
 
-	return 0;
+  return 0;
 }

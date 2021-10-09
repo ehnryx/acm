@@ -5,13 +5,13 @@ typedef long double ld;
 const char nl = '\n';
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int T; cin >> T;
-	for (int tt = 1; tt <= T; tt++) {
-		cout << "Case #" << tt << ": ";
-	}
+  int T; cin >> T;
+  for (int tt = 1; tt <= T; tt++) {
+    cout << "Case #" << tt << ": ";
+  }
 
-	return 0;
+  return 0;
 }

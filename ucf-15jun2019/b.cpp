@@ -27,48 +27,48 @@ ll ans[N];
 ll ncr[N][N];
 
 ll power(ll b, int e) {
-	ll res = 1;
-	for (; e>0; e/=2) {
-		if (e&1) res = res*b % MOD;
-		b = b*b % MOD;
-	}
-	return res;
+  ll res = 1;
+  for (; e>0; e/=2) {
+    if (e&1) res = res*b % MOD;
+    b = b*b % MOD;
+  }
+  return res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	For(i,N) {
-		ncr[i][0] = ncr[i][i] = 1;
-		FOR(j,1,i-1) {
-			ncr[i][j] = (ncr[i-1][j-1] + ncr[i-1][j]) % MOD;
-		}
-	}
+  For(i,N) {
+    ncr[i][0] = ncr[i][i] = 1;
+    FOR(j,1,i-1) {
+      ncr[i][j] = (ncr[i-1][j-1] + ncr[i-1][j]) % MOD;
+    }
+  }
 
-	For(n,N) {
-		FOR(k,0,n) {
-			FOR(j,0,k) {
-				if (j%2) ans[n] -= ncr[k][j] * power(k-j,n) % MOD;
-				else ans[n] += ncr[k][j] * power(k-j,n) % MOD;
-			}
-		}
-		ans[n] = (ans[n] % MOD + MOD) % MOD;
-	}
+  For(n,N) {
+    FOR(k,0,n) {
+      FOR(j,0,k) {
+        if (j%2) ans[n] -= ncr[k][j] * power(k-j,n) % MOD;
+        else ans[n] += ncr[k][j] * power(k-j,n) % MOD;
+      }
+    }
+    ans[n] = (ans[n] % MOD + MOD) % MOD;
+  }
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		cout << ans[n] << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    cout << ans[n] << nl;
+  }
 
-	return 0;
+  return 0;
 }

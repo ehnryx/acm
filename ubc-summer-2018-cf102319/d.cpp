@@ -33,28 +33,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int x,y,k;
-		cin>>x>>y>>k;
-		if(x>y) swap(x,y);
-		if((y-x)%(k+1) != 0) {
-			cout<<1<<nl;
-		} else {
-			ld r=(sqrt((k+1)*(k+1)+4)-(k-1))/2;
-			int n=(y-x)/(k+1);
-			if(x==floor(r*n)) {
-				cout<<2<<nl;
-			} else {
-				cout<<1<<nl;
-			}
-		}
-	}
+  int T;
+  cin>>T;
+  while(T--) {
+    int x,y,k;
+    cin>>x>>y>>k;
+    if(x>y) swap(x,y);
+    if((y-x)%(k+1) != 0) {
+      cout<<1<<nl;
+    } else {
+      ld r=(sqrt((k+1)*(k+1)+4)-(k-1))/2;
+      int n=(y-x)/(k+1);
+      if(x==floor(r*n)) {
+        cout<<2<<nl;
+      } else {
+        cout<<1<<nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

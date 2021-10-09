@@ -193,46 +193,46 @@ template <class T> struct Matrix {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n;
-	int m, k;
-	cin >> n >> m >> k;
+  ll n;
+  int m, k;
+  cin >> n >> m >> k;
 
-	Matrix<Int> ans(m,m,1);
-	Matrix<Int> mat(m,m);
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < m; j++) {
-			mat[i][j] = 1;
-		}
-	}
+  Matrix<Int> ans(m,m,1);
+  Matrix<Int> mat(m,m);
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < m; j++) {
+      mat[i][j] = 1;
+    }
+  }
 
-	char a, b;
-	int x, y;
-	for (int i = 0; i < k; i++) {
-		cin >> a >> b;
-		if (islower(a)) x = a-'a';
-		else x = a-'A' + 26;
-		if (islower(b)) y = b-'a';
-		else y = b-'A' + 26;
-		mat[x][y] = 0;
-	}
+  char a, b;
+  int x, y;
+  for (int i = 0; i < k; i++) {
+    cin >> a >> b;
+    if (islower(a)) x = a-'a';
+    else x = a-'A' + 26;
+    if (islower(b)) y = b-'a';
+    else y = b-'A' + 26;
+    mat[x][y] = 0;
+  }
 
-	--n;
-	while (n > 0) {
-		if (n & 1) ans *= mat;
-		mat *= mat;
-		n >>= 1;
-	}
+  --n;
+  while (n > 0) {
+    if (n & 1) ans *= mat;
+    mat *= mat;
+    n >>= 1;
+  }
 
-	vector<Int> sum = ans * vector<Int>(m,1);
-	Int res;
-	for (int i = 0; i < m; i++) {
-		res += sum[i];
-	}
-	cout << res << nl;
+  vector<Int> sum = ans * vector<Int>(m,1);
+  Int res;
+  for (int i = 0; i < m; i++) {
+    res += sum[i];
+  }
+  cout << res << nl;
 
-	return 0;
+  return 0;
 }

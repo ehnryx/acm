@@ -27,62 +27,62 @@ vector<int> adj[N];
 
 int dp[N][2];
 int solve(int u, int s, int p) {
-	if (dp[u][s] != -1) return dp[u][s];
-	int b1, b2;
-	b1 = b2 = -INF;
-	int res = 0;
-	for (int v : adj[u]) {
-		if (v != p) {
-			res += solve(v,0,u);
-			int cur = solve(v,1,u)+1 - solve(v,0,u);
-			if (cur > b1) { b2=b1; b1=cur; }
-			else if (cur > b2) { b2=cur; }
-		}
-	}
-	if (b1 == -INF) {
-		return res;
-	} else if (s || b2 == -INF) {
-		return dp[u][s] = res + b1;
-	} else {
-		return dp[u][s] = res + b1 + b2;
-	}
+  if (dp[u][s] != -1) return dp[u][s];
+  int b1, b2;
+  b1 = b2 = -INF;
+  int res = 0;
+  for (int v : adj[u]) {
+    if (v != p) {
+      res += solve(v,0,u);
+      int cur = solve(v,1,u)+1 - solve(v,0,u);
+      if (cur > b1) { b2=b1; b1=cur; }
+      else if (cur > b2) { b2=cur; }
+    }
+  }
+  if (b1 == -INF) {
+    return res;
+  } else if (s || b2 == -INF) {
+    return dp[u][s] = res + b1;
+  } else {
+    return dp[u][s] = res + b1 + b2;
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	memset(dp, -1, sizeof dp);
+  memset(dp, -1, sizeof dp);
 
-	int n,x,y;
-	cin >> n >> x >> y;
+  int n,x,y;
+  cin >> n >> x >> y;
 
-	For(i,n-1) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
+  For(i,n-1) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
 
-	if (x < y) {
-		int m = solve(1,0,0);
-		cout << (ll)m*x + (ll)(n-1-m)*y << nl;
-	} else {
-		bool block = false;
-		FOR(i,1,n) {
-			if (adj[i].size() == n-1) {
-				block = true;
-				break;
-			}
-		}
-		if (block) cout << x + (ll)(n-2)*y << nl;
-		else cout << (ll)(n-1)*y << nl;
-	}
-	return 0;
+  if (x < y) {
+    int m = solve(1,0,0);
+    cout << (ll)m*x + (ll)(n-1-m)*y << nl;
+  } else {
+    bool block = false;
+    FOR(i,1,n) {
+      if (adj[i].size() == n-1) {
+        block = true;
+        break;
+      }
+    }
+    if (block) cout << x + (ll)(n-2)*y << nl;
+    else cout << (ll)(n-1)*y << nl;
+  }
+  return 0;
 }

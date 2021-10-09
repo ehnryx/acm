@@ -21,44 +21,44 @@ ll sums[N][N];
 
 int dp[N][N];
 int possible(ll mask, int n, int k) {
-	if (k == 0) return n == 0;
-	if (dp[n][k] != -1) return dp[n][k];
+  if (k == 0) return n == 0;
+  if (dp[n][k] != -1) return dp[n][k];
 
-	for (int i=n; i>0; i--) {
-		if ((mask & sums[i][n]) == mask && possible(mask, i-1, k-1)) {
-			return dp[n][k] = true;
-		}
-	}
+  for (int i=n; i>0; i--) {
+    if ((mask & sums[i][n]) == mask && possible(mask, i-1, k-1)) {
+      return dp[n][k] = true;
+    }
+  }
 
-	return dp[n][k] = false;
+  return dp[n][k] = false;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	for (int i=1; i<=n; i++) {
-		cin >> arr[i];
-	}
+  for (int i=1; i<=n; i++) {
+    cin >> arr[i];
+  }
 
-	for (int i=1; i<=n; i++) {
-		for (int j=i; j<=n; j++) {
-			sums[i][j] = sums[i][j-1] + arr[j];
-		}
-	}
+  for (int i=1; i<=n; i++) {
+    for (int j=i; j<=n; j++) {
+      sums[i][j] = sums[i][j-1] + arr[j];
+    }
+  }
 
-	ll mask = 0;
-	for (int i=60; i>=0; i--) {
-		memset(dp, -1, sizeof dp);
-		if (possible(mask|1LL<<i, n, k)) {
-			mask |= 1LL<<i;
-		}
-	}
-	cout << mask << nl;
+  ll mask = 0;
+  for (int i=60; i>=0; i--) {
+    memset(dp, -1, sizeof dp);
+    if (possible(mask|1LL<<i, n, k)) {
+      mask |= 1LL<<i;
+    }
+  }
+  cout << mask << nl;
 
-	return 0;
+  return 0;
 }

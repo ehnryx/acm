@@ -31,47 +31,47 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	map<int,vector<int>> p;
-	For(i,n) {
-		int x, y;
-		cin >> x >> y;
-		p[y].push_back(x);
-	}
+  map<int,vector<int>> p;
+  For(i,n) {
+    int x, y;
+    cin >> x >> y;
+    p[y].push_back(x);
+  }
 
-	ll ans = 0;
-	ordered_set cur;
-	for (auto it = p.rbegin(); it != p.rend(); it++) {
-		auto& line = it->second;
-		line.push_back(-1);
-		line.push_back(INF);
-		sort(line.begin(), line.end());
-		int m = line.size();
+  ll ans = 0;
+  ordered_set cur;
+  for (auto it = p.rbegin(); it != p.rend(); it++) {
+    auto& line = it->second;
+    line.push_back(-1);
+    line.push_back(INF);
+    sort(line.begin(), line.end());
+    int m = line.size();
 
-		//cerr << "do line at " << it->first << nl;
-		ll sqr = 0;
-		ll sum = 0;
-		For(i,m-1) {
-			ll val = cur.order_of_key(line[i+1]) - cur.order_of_key(line[i]+1) + 1;
-			sum += val;
-			sqr += val*val;
-		}
-		FOR(i,1,m-2) {
-			cur.insert(line[i]);
-		}
+    //cerr << "do line at " << it->first << nl;
+    ll sqr = 0;
+    ll sum = 0;
+    For(i,m-1) {
+      ll val = cur.order_of_key(line[i+1]) - cur.order_of_key(line[i]+1) + 1;
+      sum += val;
+      sqr += val*val;
+    }
+    FOR(i,1,m-2) {
+      cur.insert(line[i]);
+    }
 
-		//cerr << "sum: " << sum << nl;
-		//cerr << "sqr: " << sqr << nl;
-		ans += (sum*sum - sqr)/2;
-	}
+    //cerr << "sum: " << sum << nl;
+    //cerr << "sqr: " << sqr << nl;
+    ans += (sum*sum - sqr)/2;
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -24,36 +24,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	int ans[m], v[m];
-	ll sum = 0;
-	for(int i=0; i<m; i++) {
-		cin >> v[i];
-		sum += v[i];
-	}
-	if(sum < n) {
-		cout << -1 << nl;
-		return 0;
-	}
+  int n, m;
+  cin >> n >> m;
+  int ans[m], v[m];
+  ll sum = 0;
+  for(int i=0; i<m; i++) {
+    cin >> v[i];
+    sum += v[i];
+  }
+  if(sum < n) {
+    cout << -1 << nl;
+    return 0;
+  }
 
-	int cur = n;
-	for(int i=0; i<m; i++) {
-		sum -= v[i];
-		ans[i] = min(sum+1, (ll)cur-v[i]+1);
-		if(ans[i] <= 0) {
-			cout << -1 << nl;
-			return 0;
-		}
-		cur = ans[i]+v[i]-2;
-	}
+  int cur = n;
+  for(int i=0; i<m; i++) {
+    sum -= v[i];
+    ans[i] = min(sum+1, (ll)cur-v[i]+1);
+    if(ans[i] <= 0) {
+      cout << -1 << nl;
+      return 0;
+    }
+    cur = ans[i]+v[i]-2;
+  }
 
-	for(int i=0; i<m; i++) {
-		cout << ans[i] << nl;
-	}
+  for(int i=0; i<m; i++) {
+    cout << ans[i] << nl;
+  }
 
-	return 0;
+  return 0;
 }

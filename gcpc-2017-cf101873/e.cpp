@@ -16,55 +16,55 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int a, b;
-	ld c;
-	Edge(){}
-	Edge(int a, int b, ld c): a(a), b(b), c(c) {}
+  int a, b;
+  ld c;
+  Edge(){}
+  Edge(int a, int b, ld c): a(a), b(b), c(c) {}
 };
 
 const int N = 800+1;
 ld dist[N];
 
 void init() {
-	fill(dist, dist+N, INF);
+  fill(dist, dist+N, INF);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
-	init();
+  init();
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a, b;
-	ld c;
-	vector<Edge> edges;
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b >> c;
-		edges.push_back(Edge(a,b,-log(c)));
-	}
+  int a, b;
+  ld c;
+  vector<Edge> edges;
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b >> c;
+    edges.push_back(Edge(a,b,-log(c)));
+  }
 
-	for (int i = 1; i < n; i++) {
-		for (const Edge& e : edges) {
-			dist[e.b] = min(dist[e.b], dist[e.a] + e.c);
-		}
-	}
+  for (int i = 1; i < n; i++) {
+    for (const Edge& e : edges) {
+      dist[e.b] = min(dist[e.b], dist[e.a] + e.c);
+    }
+  }
 
-	for (const Edge& e : edges) {
-		if (dist[e.b] > dist[e.a] + e.c + EPS) {
-			cout << "inadmissible" << nl;
-			return 0;
-		}
-	}
+  for (const Edge& e : edges) {
+    if (dist[e.b] > dist[e.a] + e.c + EPS) {
+      cout << "inadmissible" << nl;
+      return 0;
+    }
+  }
 
-	cout << "admissible" << nl;
+  cout << "admissible" << nl;
 
-	return 0;
+  return 0;
 }

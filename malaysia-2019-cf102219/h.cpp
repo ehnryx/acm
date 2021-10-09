@@ -57,64 +57,64 @@ inline bool on_boundary(const pol &v, const pt &p) { bool res = false;
     res |= on_segment(v[i], v[j], p) | (abs(p-v[i]) < EPS); return res; }
 
 bool pt_in_poly(const pt& p, const vector<pt>& v) {
-	if (on_boundary(v, p)) return false;
-	int n = v.size();
-	ld res = 0;
-	for (int i=n-1,j=0; j<n; i=j++) {
-		res += atan2(cp(v[i]-p, v[j]-p), dp(v[i]-p, v[j]-p));
-	}
-	return abs(res) > 1;
+  if (on_boundary(v, p)) return false;
+  int n = v.size();
+  ld res = 0;
+  for (int i=n-1,j=0; j<n; i=j++) {
+    res += atan2(cp(v[i]-p, v[j]-p), dp(v[i]-p, v[j]-p));
+  }
+  return abs(res) > 1;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	for (int tt=1; tt<=T; tt++) {
-		if (tt > 1) cout << nl;
+  int T;
+  cin >> T;
+  for (int tt=1; tt<=T; tt++) {
+    if (tt > 1) cout << nl;
 
-		int n, m;
-		cin >> n >> m;
-		vector<pt> p;
-		for (int i=0; i<n; i++) {
-			int x, y;
-			cin >> x >> y;
-			p.push_back(pt(x,y));
-		}
-		p = chull(p);
+    int n, m;
+    cin >> n >> m;
+    vector<pt> p;
+    for (int i=0; i<n; i++) {
+      int x, y;
+      cin >> x >> y;
+      p.push_back(pt(x,y));
+    }
+    p = chull(p);
 
-		cout << "Case " << tt << nl;
+    cout << "Case " << tt << nl;
 
-		int first = 0;
-		n = p.size();
-		for (int i=0; i<n; i++) {
-			if (llround(p[i].real()) < llround(p[first].real())) {
-				first = i;
-			} else if (llround(p[i].real()) == llround(p[first].real())) {
-				if (llround(p[i].imag()) < llround(p[first].imag())) {
-					first = i;
-				}
-			}
-		}
-		for (int i=0; i<=n; i++) {
-			cout << llround(p[(i+first)%n].real()) << " " << llround(p[(i+first)%n].imag()) << nl;
-		}
+    int first = 0;
+    n = p.size();
+    for (int i=0; i<n; i++) {
+      if (llround(p[i].real()) < llround(p[first].real())) {
+        first = i;
+      } else if (llround(p[i].real()) == llround(p[first].real())) {
+        if (llround(p[i].imag()) < llround(p[first].imag())) {
+          first = i;
+        }
+      }
+    }
+    for (int i=0; i<=n; i++) {
+      cout << llround(p[(i+first)%n].real()) << " " << llround(p[(i+first)%n].imag()) << nl;
+    }
 
-		for (int i=0; i<m; i++) {
-			int x, y;
-			cin >> x >> y;
-			cout << x << " " << y << " is ";
-			if (pt_in_poly(pt(x,y), p)) {
-				cout << "unsafe!" << nl;
-			} else {
-				cout << "safe!" << nl;
-			}
-		}
-	}
+    for (int i=0; i<m; i++) {
+      int x, y;
+      cin >> x >> y;
+      cout << x << " " << y << " is ";
+      if (pt_in_poly(pt(x,y), p)) {
+        cout << "unsafe!" << nl;
+      } else {
+        cout << "safe!" << nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }
 

@@ -26,59 +26,59 @@ int a[N];
 
 int dsu[N], sz[N];
 int find(int i) {
-	if(dsu[i] == -1) return i;
-	return dsu[i] = find(dsu[i]);
+  if(dsu[i] == -1) return i;
+  return dsu[i] = find(dsu[i]);
 }
 int link(int i, int j) {
-	if(find(i) != find(j)) {
-		sz[find(j)] += sz[find(i)];
-		dsu[find(i)] = find(j);
-	}
-	return sz[find(j)];
+  if(find(i) != find(j)) {
+    sz[find(j)] += sz[find(i)];
+    dsu[find(i)] = find(j);
+  }
+  return sz[find(j)];
 }
 
 // TODO
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		fill(dsu, dsu+n+1, -1);
-		fill(sz, sz+n+1, 1);
-		vector<pair<int,int>> order;
-		for(int i=0; i<n; i++) {
-			cin >> a[i];
-			order.emplace_back(a[i], i);
-		}
-		sort(order.begin(), order.end());
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    fill(dsu, dsu+n+1, -1);
+    fill(sz, sz+n+1, 1);
+    vector<pair<int,int>> order;
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+      order.emplace_back(a[i], i);
+    }
+    sort(order.begin(), order.end());
 
-		multiset<int> have;
-		for(int i=0; i<n; i++) {
-			have.insert(1);
-		}
+    multiset<int> have;
+    for(int i=0; i<n; i++) {
+      have.insert(1);
+    }
 
-		bool ok = true;
-		for(auto [v, i] : order) {
-			ok &= (sz[find(i)] == *have.rbegin());
-			if(!ok) break;
-			have.erase(prev(have.end()));
-			int cur = link(i, i+1);
-			if(find(i) < n) {
-				have.insert(cur);
-			}
-		}
-		if(ok) {
-			cout << "Yes" << nl;
-		} else {
-			cout << "No" << nl;
-		}
-	}
+    bool ok = true;
+    for(auto [v, i] : order) {
+      ok &= (sz[find(i)] == *have.rbegin());
+      if(!ok) break;
+      have.erase(prev(have.end()));
+      int cur = link(i, i+1);
+      if(find(i) < n) {
+        have.insert(cur);
+      }
+    }
+    if(ok) {
+      cout << "Yes" << nl;
+    } else {
+      cout << "No" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

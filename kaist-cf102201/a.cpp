@@ -25,40 +25,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll a, b;
-	cin >> a >> b;
+  ll a, b;
+  cin >> a >> b;
 
-	vector<string> ans;
-	while (a != b) {
-		int za = __builtin_ctzll(a);
-		int zb = __builtin_ctzll(b);
-		int maxz = max(za, zb);
-		for(int i=za; i<maxz; i++) {
-			ans.push_back("A+=A");
-		}
-		for(int i=zb; i<maxz; i++) {
-			ans.push_back("B+=B");
-		}
-		a >>= za;
-		b >>= zb;
-		if (a < b) {
-			ans.push_back("B+=A");
-			ans.push_back("A+=A");
-			b = (a+b)/2;
-		} else if (a > b) {
-			ans.push_back("A+=B");
-			ans.push_back("B+=B");
-			a = (a+b)/2;
-		}
-	}
+  vector<string> ans;
+  while (a != b) {
+    int za = __builtin_ctzll(a);
+    int zb = __builtin_ctzll(b);
+    int maxz = max(za, zb);
+    for(int i=za; i<maxz; i++) {
+      ans.push_back("A+=A");
+    }
+    for(int i=zb; i<maxz; i++) {
+      ans.push_back("B+=B");
+    }
+    a >>= za;
+    b >>= zb;
+    if (a < b) {
+      ans.push_back("B+=A");
+      ans.push_back("A+=A");
+      b = (a+b)/2;
+    } else if (a > b) {
+      ans.push_back("A+=B");
+      ans.push_back("B+=B");
+      a = (a+b)/2;
+    }
+  }
 
-	cout << ans.size() << nl;
-	for(const string& s : ans) {
-		cout << s << nl;
-	}
+  cout << ans.size() << nl;
+  for(const string& s : ans) {
+    cout << s << nl;
+  }
 
-	return 0;
+  return 0;
 }

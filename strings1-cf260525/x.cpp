@@ -51,123 +51,123 @@ int lhook[N][2][N], rhook[N][2][N];
 ll dp[N][2][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string g[2], grev[2];
-	for(int i=0;i<2;i++) {
-		cin >> g[i];
-		grev[i] = g[i];
-		reverse(grev[i].begin(), grev[i].end());
-	}
-	string grid = g[0] + g[1] + grev[0] + grev[1];
+  string g[2], grev[2];
+  for(int i=0;i<2;i++) {
+    cin >> g[i];
+    grev[i] = g[i];
+    reverse(grev[i].begin(), grev[i].end());
+  }
+  string grid = g[0] + g[1] + grev[0] + grev[1];
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	if(s.size() == 1) {
-		int ans = 0;
-		for(int i=0;i<2;i++) {
-			for(char c:g[i]) {
-				ans += (c == s[0]);
-			}
-		}
-		cout << ans << nl;
-		return 0;
-	}
+  if(s.size() == 1) {
+    int ans = 0;
+    for(int i=0;i<2;i++) {
+      for(char c:g[i]) {
+        ans += (c == s[0]);
+      }
+    }
+    cout << ans << nl;
+    return 0;
+  }
 
-	if(s.size() == 2) {
-		int ans = 0;
-		for(int i=0;i<2;i++) {
-			for(int j=0;j<g[i].size();j++) {
-				if(g[i][j] != s[0]) continue;
-				ans += (j>0 && g[i][j-1] == s[1]);
-				ans += (j+1<g[i].size() && g[i][j+1] == s[1]);
-				ans += (g[i^1][j] == s[1]);
-			}
-		}
-		cout << ans << nl;
-		return 0;
-	}
+  if(s.size() == 2) {
+    int ans = 0;
+    for(int i=0;i<2;i++) {
+      for(int j=0;j<g[i].size();j++) {
+        if(g[i][j] != s[0]) continue;
+        ans += (j>0 && g[i][j-1] == s[1]);
+        ans += (j+1<g[i].size() && g[i][j+1] == s[1]);
+        ans += (g[i^1][j] == s[1]);
+      }
+    }
+    cout << ans << nl;
+    return 0;
+  }
 
-	string srev = s;
-	reverse(srev.begin(), srev.end());
+  string srev = s;
+  reverse(srev.begin(), srev.end());
 
-	int n = g[0].size();
-	assert(g[0].size() == g[1].size());
-	int m = s.size();
+  int n = g[0].size();
+  assert(g[0].size() == g[1].size());
+  int m = s.size();
 
-	auto get_id = [&] (int i, int t) {
-		--i;
-		if(t == 0) return i;
-		else return n + i;
-	};
-	auto get_rev = [&] (int i, int t) {
-		--i;
-		if(t == 0) return 2*n + (n-1) - i;
-		else return 3*n + (n-1) - i;
-	};
-	auto get_str = [&] (int i) {
-		return 4*n + i;
-	};
+  auto get_id = [&] (int i, int t) {
+    --i;
+    if(t == 0) return i;
+    else return n + i;
+  };
+  auto get_rev = [&] (int i, int t) {
+    --i;
+    if(t == 0) return 2*n + (n-1) - i;
+    else return 3*n + (n-1) - i;
+  };
+  auto get_str = [&] (int i) {
+    return 4*n + i;
+  };
 
-	ll ans = 0;
-	ll hook = 0;
-	for(const string& it: {s, srev}) {
-		//cerr<<"solving "<<it<<nl;
-		memset(lhook, 0, sizeof lhook);
-		memset(rhook, 0, sizeof rhook);
-		memset(dp, 0, sizeof dp);
-		suff_array sa(grid + it);
+  ll ans = 0;
+  ll hook = 0;
+  for(const string& it: {s, srev}) {
+    //cerr<<"solving "<<it<<nl;
+    memset(lhook, 0, sizeof lhook);
+    memset(rhook, 0, sizeof rhook);
+    memset(dp, 0, sizeof dp);
+    suff_array sa(grid + it);
 
-		for(int i=0; i<=n+1; i++) {
-			for(int t=0; t<2; t++) {
-				lhook[i][t][0] = 1;
-				rhook[i][t][0] = 1;
-				if(i<1 || i>n) continue;
-				for(int j=2; j<=n && 2*j<=m; j++) {
-					if(i+j-1 <= n && sa.lcp(get_id(i,t), get_str(m-2*j)) >= j
-							&& sa.lcp(get_rev(i+j-1,t^1), get_str(m-j)) >= j) {
-						rhook[i][t][2*j] = 1;
-						//cerr<<"rook " << i << " " << t << " " << 2*j << nl;
-					}
-					//cerr<<"trying "<<i-j+1<<" "<<t<<" = "<<j<<" and "<<i<<" "<<(t^1)<<" = " << 0 << nl;
-					if(i-j+1 >= 1 && sa.lcp(get_id(i-j+1,t), get_str(j)) >= j
-							&& sa.lcp(get_rev(i,t^1), get_str(0)) >= j) {
-						lhook[i][t][2*j] = 1;
-						//cerr<<"look " << i << " " << t << " " << 2*j << nl;
-					}
-				}
-			}
-		}
+    for(int i=0; i<=n+1; i++) {
+      for(int t=0; t<2; t++) {
+        lhook[i][t][0] = 1;
+        rhook[i][t][0] = 1;
+        if(i<1 || i>n) continue;
+        for(int j=2; j<=n && 2*j<=m; j++) {
+          if(i+j-1 <= n && sa.lcp(get_id(i,t), get_str(m-2*j)) >= j
+              && sa.lcp(get_rev(i+j-1,t^1), get_str(m-j)) >= j) {
+            rhook[i][t][2*j] = 1;
+            //cerr<<"rook " << i << " " << t << " " << 2*j << nl;
+          }
+          //cerr<<"trying "<<i-j+1<<" "<<t<<" = "<<j<<" and "<<i<<" "<<(t^1)<<" = " << 0 << nl;
+          if(i-j+1 >= 1 && sa.lcp(get_id(i-j+1,t), get_str(j)) >= j
+              && sa.lcp(get_rev(i,t^1), get_str(0)) >= j) {
+            lhook[i][t][2*j] = 1;
+            //cerr<<"look " << i << " " << t << " " << 2*j << nl;
+          }
+        }
+      }
+    }
 
-		for(int i=1;i<=n;i++) {
-			for(int t=0;t<2;t++) {
-				for(int j=1;j<=m;j++) {
-					if(it[j-1] != g[t][i-1]) continue;
-					dp[i][t][j] += dp[i-1][t][j-1];
-					dp[i][t][j] += lhook[i-1][t][j-1];
-					if(j>1 && it[j-2] == g[t^1][i-1]) {
-						dp[i][t][j] += dp[i-1][t^1][j-2];
-						dp[i][t][j] += lhook[i-1][t^1][j-2];
-					}
-					dp[i][t][j] %= MOD;
-					//cerr<<"@ "<<i<<" "<<t<<" "<<j<<" -> "<<dp[i][t][j]<<" * "<<rhook[i+1][t][m-j]<<nl;
-					ans += dp[i][t][j] * rhook[i+1][t][m-j];
-				}
-				hook += lhook[i][t][m];
-				hook += rhook[i][t][m];
-				for(int j=2; j<m; j+=2) {
-					hook += 2 * lhook[i][t][j] * rhook[i+1][t][m-j];
-				}
-			}
-		}
-		//cerr<<nl;
-	}
+    for(int i=1;i<=n;i++) {
+      for(int t=0;t<2;t++) {
+        for(int j=1;j<=m;j++) {
+          if(it[j-1] != g[t][i-1]) continue;
+          dp[i][t][j] += dp[i-1][t][j-1];
+          dp[i][t][j] += lhook[i-1][t][j-1];
+          if(j>1 && it[j-2] == g[t^1][i-1]) {
+            dp[i][t][j] += dp[i-1][t^1][j-2];
+            dp[i][t][j] += lhook[i-1][t^1][j-2];
+          }
+          dp[i][t][j] %= MOD;
+          //cerr<<"@ "<<i<<" "<<t<<" "<<j<<" -> "<<dp[i][t][j]<<" * "<<rhook[i+1][t][m-j]<<nl;
+          ans += dp[i][t][j] * rhook[i+1][t][m-j];
+        }
+        hook += lhook[i][t][m];
+        hook += rhook[i][t][m];
+        for(int j=2; j<m; j+=2) {
+          hook += 2 * lhook[i][t][j] * rhook[i+1][t][m-j];
+        }
+      }
+    }
+    //cerr<<nl;
+  }
 
-	assert(hook%2 == 0);
-	//cerr << "ans " << ans << " + hook " << hook/2 << nl;
-	cout << (ans + hook/2) % MOD << nl;
+  assert(hook%2 == 0);
+  //cerr << "ans " << ans << " + hook " << hook/2 << nl;
+  cout << (ans + hook/2) % MOD << nl;
 
-	return 0;
+  return 0;
 }

@@ -22,38 +22,38 @@ const ld EPS = 1e-9;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ld cp(const pt& a, const pt& b) {
-	return imag(conj(a) * b);
+  return imag(conj(a) * b);
 }
 pt line_inter(const pt &a, const pt &b, const pt &c, const pt &d) {
   return a + cp(c - a, d - c) / cp(b - a, d - c) * (b - a);
 }
 
 pair<ll,ll> slope(const pt& a, const pt& b) {
-	ll dx = a.real() - b.real();
-	ll dy = a.imag() - b.imag();
-	ll g = __gcd(dx, dy);
-	return make_pair(dx / abs(g), dy / abs(g));
+  ll dx = a.real() - b.real();
+  ll dy = a.imag() - b.imag();
+  ll g = __gcd(dx, dy);
+  return make_pair(dx / abs(g), dy / abs(g));
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int a, b, x, y;
-	cin >> a >> b >> x >> y;
-	int A, B, X, Y;
-	cin >> A >> B >> X >> Y;
+  int a, b, x, y;
+  cin >> a >> b >> x >> y;
+  int A, B, X, Y;
+  cin >> A >> B >> X >> Y;
 
-	pt sa(a,b), sb(x,y);
-	pt SA(A,B), SB(X,Y);
-	if(abs(cp(sa-sb, sa-SA)) < EPS && abs(cp(sa-sb, sa-SB)) < EPS) {
-		cout << "coincident" << nl;
-	} else if(slope(sa, sb) == slope(SA, SB)) {
-		cout << "parallel" << nl;
-	} else {
-		pt it = line_inter(sa, sb, SA, SB);
-		cout << it.real() << " " << it.imag() << nl;
-	}
+  pt sa(a,b), sb(x,y);
+  pt SA(A,B), SB(X,Y);
+  if(abs(cp(sa-sb, sa-SA)) < EPS && abs(cp(sa-sb, sa-SB)) < EPS) {
+    cout << "coincident" << nl;
+  } else if(slope(sa, sb) == slope(SA, SB)) {
+    cout << "parallel" << nl;
+  } else {
+    pt it = line_inter(sa, sb, SA, SB);
+    cout << it.real() << " " << it.imag() << nl;
+  }
 
-	return 0;
+  return 0;
 }

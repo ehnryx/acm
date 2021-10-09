@@ -16,46 +16,46 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 void solve(int n, int k, char s, char t, char o) {
-	if (n == 1) {
-		if (k % 2 == 1) {
-			cout << s << " " << t << nl;
-			k -= 1;
-		} else {
-			cout << s << " " << o << nl;
-			cout << o << " " << t << nl;
-			k -= 2;
-		}
-		while (k > 0) {
-			cout << t << " " << o << nl;
-			cout << o << " " << t << nl;
-			k -= 2;
-		}
-	}
-	else {
-		solve(n-1, k, s, o, t);
-		cout << s << " " << t << nl;
-		solve(n-1, 1, o, t, s);
-	}
+  if (n == 1) {
+    if (k % 2 == 1) {
+      cout << s << " " << t << nl;
+      k -= 1;
+    } else {
+      cout << s << " " << o << nl;
+      cout << o << " " << t << nl;
+      k -= 2;
+    }
+    while (k > 0) {
+      cout << t << " " << o << nl;
+      cout << o << " " << t << nl;
+      k -= 2;
+    }
+  }
+  else {
+    solve(n-1, k, s, o, t);
+    cout << s << " " << t << nl;
+    solve(n-1, 1, o, t, s);
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
-	if (k < (1<<n)-1) {
-		cout << "N" << nl;
-	} else {
-		cout << "Y" << nl;
-		solve(n, k - ((1<<n)-1) + 1, 'A', 'C', 'B');
-	}
+  int n, k;
+  cin >> n >> k;
+  if (k < (1<<n)-1) {
+    cout << "N" << nl;
+  } else {
+    cout << "Y" << nl;
+    solve(n, k - ((1<<n)-1) + 1, 'A', 'C', 'B');
+  }
 
-	return 0;
+  return 0;
 }

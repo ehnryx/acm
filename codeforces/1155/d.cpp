@@ -26,38 +26,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, x;
-	cin >> n >> x;
+  int n, x;
+  cin >> n >> x;
 
-	ll a[n+1];
-	FOR(i,1,n) {
-		cin >> a[i];
-	}
+  ll a[n+1];
+  FOR(i,1,n) {
+    cin >> a[i];
+  }
 
-	ll dp[n+1][3];
-	memset(dp, 0, sizeof dp);
-	ll ans = 0;
-	FOR(i,1,n) {
-		For(j,3) {
-			if (j == 1) {
-				dp[i][j] = max(dp[i][j], dp[i-1][j] + x*a[i]);
-				dp[i][j] = max(dp[i][j], dp[i-1][j-1] + x*a[i]);
-			} else {
-				dp[i][j] = max(dp[i][j], dp[i-1][j] + a[i]);
-				if (j == 2) dp[i][j] = max(dp[i][j], dp[i-1][j-1] + a[i]);
-			}
-			ans = max(ans, dp[i][j]);
-		}
-	}
-	cout << ans << nl;
+  ll dp[n+1][3];
+  memset(dp, 0, sizeof dp);
+  ll ans = 0;
+  FOR(i,1,n) {
+    For(j,3) {
+      if (j == 1) {
+        dp[i][j] = max(dp[i][j], dp[i-1][j] + x*a[i]);
+        dp[i][j] = max(dp[i][j], dp[i-1][j-1] + x*a[i]);
+      } else {
+        dp[i][j] = max(dp[i][j], dp[i-1][j] + a[i]);
+        if (j == 2) dp[i][j] = max(dp[i][j], dp[i-1][j-1] + a[i]);
+      }
+      ans = max(ans, dp[i][j]);
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

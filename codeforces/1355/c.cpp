@@ -27,25 +27,25 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int a, b, c, d;
-	cin >> a >> b >> c >> d;
+  int a, b, c, d;
+  cin >> a >> b >> c >> d;
 
-	vector<ll> add(d+1);
-	for(int i=0; i<=d; i++) {
-		add[i] = max(0, min(c-b+1, c-i));
-	}
-	vector<ll> ps(d+2);
-	partial_sum(add.begin(), add.end(), ps.begin()+1);
+  vector<ll> add(d+1);
+  for(int i=0; i<=d; i++) {
+    add[i] = max(0, min(c-b+1, c-i));
+  }
+  vector<ll> ps(d+2);
+  partial_sum(add.begin(), add.end(), ps.begin()+1);
 
-	ll ans = 0;
-	for(int i=c, l=c-b, r=c-a; i<=d; i++, l++, r++) {
-		ans += ps[r+1] - ps[l];
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for(int i=c, l=c-b, r=c-a; i<=d; i++, l++, r++) {
+    ans += ps[r+1] - ps[l];
+  }
+  cout << ans << nl;
 
 
-	return 0;
+  return 0;
 }

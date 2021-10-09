@@ -22,132 +22,132 @@ const ll M = 10004205361450474;
 const ll K = 1e4;
 
 ll init(ll left = 1, int cnt = 4) {
-	if (cnt == 1) {
-		return left + min(left, K);
-	}
+  if (cnt == 1) {
+    return left + min(left, K);
+  }
 
-	vector<ll> cur;
-	ll first = left;
-	for (int i = 0; i < min(left, K); i++) {
-		ll mid = init(first, cnt-1);
-		cur.push_back(mid);
-		first = mid+1;
-	}
-	ll right = init(first, cnt-1);
-	q[pll(left, right-1)] = cur;
+  vector<ll> cur;
+  ll first = left;
+  for (int i = 0; i < min(left, K); i++) {
+    ll mid = init(first, cnt-1);
+    cur.push_back(mid);
+    first = mid+1;
+  }
+  ll right = init(first, cnt-1);
+  q[pll(left, right-1)] = cur;
 
-	return right;
+  return right;
 }
 
 int answer() {
-	int in;
-	cin >> in;
-	assert(in != -2);
-	return in;
+  int in;
+  cin >> in;
+  assert(in != -2);
+  return in;
 }
 
 int normal(int r, ll left, ll right, vector<ll>& query) {
-	query.clear();
+  query.clear();
 
-	ll diff = 1;
-	for (int i = 1; i < r; i++) {
-		diff = diff*(K+1);
-	}
+  ll diff = 1;
+  for (int i = 1; i < r; i++) {
+    diff = diff*(K+1);
+  }
 
-	int k = min(left, K) + 1;
-	ll cur = left-1 + diff;
-	for (int i = 1; i < k && cur <= right; i++) {
-		query.push_back(cur);
-		cur += diff;
-	}
+  int k = min(left, K) + 1;
+  ll cur = left-1 + diff;
+  for (int i = 1; i < k && cur <= right; i++) {
+    query.push_back(cur);
+    cur += diff;
+  }
 
-	cout << query.size() << " ";
-	for (const ll& it : query) {
-		cout << it << " ";
-	}
-	cout << endl;
+  cout << query.size() << " ";
+  for (const ll& it : query) {
+    cout << it << " ";
+  }
+  cout << endl;
 
-	return answer();
+  return answer();
 }
 
 int guess(int i, ll left, ll right, vector<ll>& query) {
-	query.clear();
+  query.clear();
 
-	if (i == 1) {
-		query = { init() };
-		cout << 1 << " " << query[0] << endl;
-		return answer();
-	}
+  if (i == 1) {
+    query = { init() };
+    cout << 1 << " " << query[0] << endl;
+    return answer();
+  }
 
-	if (left + min(left, K) >= right) {
-		cout << min(left, K) << " ";
-		for (ll i = 0; i < min(left, K); i++) {
-			cout << left+i << " ";
-		}
-		cout << endl;
+  if (left + min(left, K) >= right) {
+    cout << min(left, K) << " ";
+    for (ll i = 0; i < min(left, K); i++) {
+      cout << left+i << " ";
+    }
+    cout << endl;
 
-		return answer();
-	}
+    return answer();
+  }
 
-	assert(q.count(pll(left, right)));
-	query = q[pll(left, right)];
+  assert(q.count(pll(left, right)));
+  query = q[pll(left, right)];
 
-	cout << query.size() << nl;
-	for (const ll& it : query) {
-		cout << it << " ";
-	}
-	cout << endl;
+  cout << query.size() << nl;
+  for (const ll& it : query) {
+    cout << it << " ";
+  }
+  cout << endl;
 
-	return answer();
+  return answer();
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	ll left = 1;
-	ll right = M;
-	vector<ll> query;
+  ll left = 1;
+  ll right = M;
+  vector<ll> query;
 
-	for (int i = 1; i <= 5; i++) {
-		int res = guess(i, left, right, query);
-		if (res == -1) {
-			return 0;
-		} else if (res == 0) {
-			right = query.front()-1;
-		} else if (res == query.size()) {
-			left = query.back()+1;
-		} else {
-			left = query[res-1]+1;
-			right = query[res]-1;
-		}
+  for (int i = 1; i <= 5; i++) {
+    int res = guess(i, left, right, query);
+    if (res == -1) {
+      return 0;
+    } else if (res == 0) {
+      right = query.front()-1;
+    } else if (res == query.size()) {
+      left = query.back()+1;
+    } else {
+      left = query[res-1]+1;
+      right = query[res]-1;
+    }
 
-		if (i == 1 && left != 1) {
-			break;
-		}
-	}
+    if (i == 1 && left != 1) {
+      break;
+    }
+  }
 
-	for (int i = 4; i > 0; i--) {
-		int res = normal(i, left, right, query);
-		if (res == -1) {
-			return 0;
-		} else if (res == 0) {
-			right = query.front()-1;
-		} else if (res == query.size()) {
-			left = query.back()+1;
-		} else {
-			left = query[res-1]+1;
-			right = query[res]-1;
-		}
-	}
+  for (int i = 4; i > 0; i--) {
+    int res = normal(i, left, right, query);
+    if (res == -1) {
+      return 0;
+    } else if (res == 0) {
+      right = query.front()-1;
+    } else if (res == query.size()) {
+      left = query.back()+1;
+    } else {
+      left = query[res-1]+1;
+      right = query[res]-1;
+    }
+  }
 
-	assert(false);
+  assert(false);
 
-	return 0;
+  return 0;
 }

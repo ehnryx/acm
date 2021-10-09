@@ -18,21 +18,21 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -41,19 +41,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -82,10 +82,10 @@ struct suff_array {
 };
 
 struct Pair {
-	int i, j, len;
-	bool operator < (const Pair& o) const {
-		return len > o.len;
-	}
+  int i, j, len;
+  bool operator < (const Pair& o) const {
+    return len > o.len;
+  }
 };
 
 const int N = 1000+1;
@@ -96,48 +96,48 @@ void caseinit() {
 }
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string line;
-	for (int i=0; i<n; i++) {
-		cin >> s[i];
-		line += s[i];
-		pos[i] = line.size();
-	}
+  string line;
+  for (int i=0; i<n; i++) {
+    cin >> s[i];
+    line += s[i];
+    pos[i] = line.size();
+  }
 
-	int m = line.size();
-	reverse(line.begin(), line.end());
-	suff_array sa(line);
+  int m = line.size();
+  reverse(line.begin(), line.end());
+  suff_array sa(line);
 
-	vector<Pair> p;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<i; j++) {
-			int len = sa.lcp(m-pos[i],m-pos[j]);
-			len = min(len, (int)min(s[i].size(),s[j].size()));
-			p.push_back({i,j,len});
-		}
-	}
-	sort(p.begin(), p.end());
+  vector<Pair> p;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<i; j++) {
+      int len = sa.lcp(m-pos[i],m-pos[j]);
+      len = min(len, (int)min(s[i].size(),s[j].size()));
+      p.push_back({i,j,len});
+    }
+  }
+  sort(p.begin(), p.end());
 
-	unordered_set<int> done;
-	unordered_set<string> seen;
-	for (const Pair& it : p) {
-		if (done.count(it.i) || done.count(it.j)) continue;
-		for (int k=it.len; k>0; k--) {
-			string suff = s[it.i].substr(s[it.i].size()-k);
-			if (!seen.count(suff)) {
-				seen.insert(suff);
-				done.insert(it.i);
-				done.insert(it.j);
-				break;
-			}
-		}
-	}
-	cout << seen.size() * 2 << nl;
+  unordered_set<int> done;
+  unordered_set<string> seen;
+  for (const Pair& it : p) {
+    if (done.count(it.i) || done.count(it.j)) continue;
+    for (int k=it.len; k>0; k--) {
+      string suff = s[it.i].substr(s[it.i].size()-k);
+      if (!seen.count(suff)) {
+        seen.insert(suff);
+        done.insert(it.i);
+        done.insert(it.j);
+        break;
+      }
+    }
+  }
+  cout << seen.size() * 2 << nl;
 
-	return;
+  return;
 }
 

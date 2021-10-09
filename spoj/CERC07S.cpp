@@ -63,7 +63,7 @@ node* insertBefore(node* c, node* at, node* x){ // to insert "last", use at=null
   if(p==null)at->set_cld(x,1); else p->set_cld(x,0);} return splay(x);}
 //%%== Range query and update operations by iterator, range is EXCLUSIVE!
 node* rGet(node* c, node* l, node* r){ if(l==null){ if(r==null) return splay(c);
-	return splay(r)->l; } splay(l); if(r==null)return l->r; return splay(r,l)->l;}
+  return splay(r)->l; } splay(l); if(r==null)return l->r; return splay(r,l)->l;}
 ll pQuery(node* x) { return splay(x)->val; }
 ll rQuery(node* c, node* l, node* r) { return rGet(c, l, r)->acc; }
 void pUpdate(node* x, ll v) { splay(x)->val += v; update(x); }          //RMQ
@@ -74,15 +74,15 @@ node* splitBefore(node* x) { if (splay(x) == null) return null;
   fix(x); if (x->l != null) fix(x->l); node* ret = x->l; x->l = x->l->p = null;
   update(ret); update(x); return ret; }
 node* append(node* ref, node* other) { if (splay(ref)==null) return other;
-	if (splay(other)==null) return ref; node* x=splay(rbegin(ref)); fix(x);
-	fix(other); x->set_cld(other,0); update(x->r); update(x); return x; }
+  if (splay(other)==null) return ref; node* x=splay(rbegin(ref)); fix(x);
+  fix(other); x->set_cld(other,0); update(x->r); update(x); return x; }
 
 /* END code archive splay tree */
 
 int main() {
     int n; scanf("%d", &n);
     while (n != 0) {
-				node* root = null;
+        node* root = null;
         vector<pair<int, int>> vec;
         for (int i = 0; i < n; i++) {
             int x; scanf("%d", &x);

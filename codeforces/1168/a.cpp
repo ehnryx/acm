@@ -26,47 +26,47 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a[n];
-	For(i,n) {
-		cin >> a[i];
-	}
+  int a[n];
+  For(i,n) {
+    cin >> a[i];
+  }
 
-	function<bool(int)> solve = [&] (int v) {
-		int lb = 0;
-		For(i,n) {
-			if ((lb+m-a[i])%m <= v) {
-				// take lb
-			} else if (lb <= a[i]) {
-				lb = a[i];
-			} else {
-				return false;
-			}
-		}
-		return true;
-	};
+  function<bool(int)> solve = [&] (int v) {
+    int lb = 0;
+    For(i,n) {
+      if ((lb+m-a[i])%m <= v) {
+        // take lb
+      } else if (lb <= a[i]) {
+        lb = a[i];
+      } else {
+        return false;
+      }
+    }
+    return true;
+  };
 
-	int left = 0;
-	int right = m;
-	while (left < right) {
-		int mid = (left+right)/2;
-		if (solve(mid)) {
-			right = mid;
-		} else {
-			left = mid+1;
-		}
-	}
-	cout << left << nl;
+  int left = 0;
+  int right = m;
+  while (left < right) {
+    int mid = (left+right)/2;
+    if (solve(mid)) {
+      right = mid;
+    } else {
+      left = mid+1;
+    }
+  }
+  cout << left << nl;
 
-	return 0;
+  return 0;
 }

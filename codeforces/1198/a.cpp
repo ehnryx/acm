@@ -33,42 +33,42 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, s;
-	cin >> n >> s;
-	int k = 1<<min(20,s*8/n);
+  int n, s;
+  cin >> n >> s;
+  int k = 1<<min(20,s*8/n);
 
-	map<int,int> cnt;
-	For(i,n) {
-		int a;
-		cin >> a;
-		cnt[a]++;
-	}
-	int m = cnt.size();
+  map<int,int> cnt;
+  For(i,n) {
+    int a;
+    cin >> a;
+    cnt[a]++;
+  }
+  int m = cnt.size();
 
-	if (k >= m) {
-		cout << 0 << nl;
-		return 0;
-	}
+  if (k >= m) {
+    cout << 0 << nl;
+    return 0;
+  }
 
-	vector<int> freq;
-	for (const auto& it : cnt) {
-		freq.push_back(it.second);
-	}
-	int cur = 0;
-	for (int i=0; i<k; i++) {
-		cur += freq[i];
-	}
-	int ans = cur;
-	for (int i=k; i<m; i++) {
-		cur += freq[i];
-		cur -= freq[i-k];
-		ans = max(ans, cur);
-	}
-	cout << n-ans << nl;
+  vector<int> freq;
+  for (const auto& it : cnt) {
+    freq.push_back(it.second);
+  }
+  int cur = 0;
+  for (int i=0; i<k; i++) {
+    cur += freq[i];
+  }
+  int ans = cur;
+  for (int i=k; i<m; i++) {
+    cur += freq[i];
+    cur -= freq[i-k];
+    ans = max(ans, cur);
+  }
+  cout << n-ans << nl;
 
-	return 0;
+  return 0;
 }

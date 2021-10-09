@@ -17,8 +17,8 @@ void init(int n=N) {
   mc=0; fill(sz,sz+n,0); fill(adj,adj+n,vector<Edge>()); }
 void add_edge(int a, int b, ll c=1, ll p=0) { mc = max(mc,c); // scaling
   // mcf_edges.push_back({b,a,0,c,p});
-	adj[a].push_back({b,sz[b]++,0,c,p});
-	adj[b].push_back({a,sz[a]++,0,0,-p}); }
+  adj[a].push_back({b,sz[b]++,0,c,p});
+  adj[b].push_back({a,sz[a]++,0,0,-p}); }
 
 int L[N], cur[N], Q[N];
 bool bfs(int s, int t, ll lim=1) {

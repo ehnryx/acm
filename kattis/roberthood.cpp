@@ -37,28 +37,28 @@ vector<pt> chull(vector<pt> p) {
 } // pts returned in ccw order.
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	vector<pt> p;
-	for(int i=0;i<n;i++) {
-		int x,y;
-		cin>>x>>y;
-		p.push_back(pt(x,y));
-	}
-	p = chull(p);
-	n = p.size();
+  int n;
+  cin>>n;
+  vector<pt> p;
+  for(int i=0;i<n;i++) {
+    int x,y;
+    cin>>x>>y;
+    p.push_back(pt(x,y));
+  }
+  p = chull(p);
+  n = p.size();
 
-	ld ans = 0;
-	for(int i=0,j=0;i<n;i++) {
-		while(abs(p[(j+1)%n]-p[i]) > abs(p[j]-p[i])) {
-			j = (j+1)%n;
-		}
-		ans = max(ans, abs(p[j]-p[i]));
-	}
-	cout<<ans<<nl;
+  ld ans = 0;
+  for(int i=0,j=0;i<n;i++) {
+    while(abs(p[(j+1)%n]-p[i]) > abs(p[j]-p[i])) {
+      j = (j+1)%n;
+    }
+    ans = max(ans, abs(p[j]-p[i]));
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

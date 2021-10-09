@@ -34,25 +34,25 @@ bool chin_rem(ll a1, ll m1, ll a2, ll m2, ll& A, ll& M) {
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int a,b,c,d,e,f,g;
-	cin>>a>>b>>c>>d>>e>>f>>g;
+  int a,b,c,d,e,f,g;
+  cin>>a>>b>>c>>d>>e>>f>>g;
 
-	vector<int> v;
-	for(int x=1;2*x<min(a,b);x++) {
-		v.push_back(x*(a-2*x)*(b-2*x));
-	}
-	sort(v.begin(),v.end(),greater<int>());
+  vector<int> v;
+  for(int x=1;2*x<min(a,b);x++) {
+    v.push_back(x*(a-2*x)*(b-2*x));
+  }
+  sort(v.begin(),v.end(),greater<int>());
 
-	ll A,M,X,Y;
-	chin_rem(c,v[0],d,v[1],A,M);
-	chin_rem(A,M,e,v[2],X,Y);
-	X += f/Y * Y;
-	while(X<f) X += Y;
-	while(X>g) X -= Y;
-	cout<<(ll)X<<nl;
+  ll A,M,X,Y;
+  chin_rem(c,v[0],d,v[1],A,M);
+  chin_rem(A,M,e,v[2],X,Y);
+  X += f/Y * Y;
+  while(X<f) X += Y;
+  while(X>g) X -= Y;
+  cout<<(ll)X<<nl;
 
-	return 0;
+  return 0;
 }

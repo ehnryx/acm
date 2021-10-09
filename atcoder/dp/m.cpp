@@ -34,46 +34,46 @@ const int K = 1e5+2;
 const int N = 100+1;
 
 struct BIT {
-	ll f[K];
-	BIT() { memset(f, 0, sizeof f); }
-	ll query(int x) {
-		ll res = 0;
-		for ( ; x>0; x-=x&-x) {
-			res += f[x];
-		}
-		return res % MOD;
-	}
-	ll query(int l, int r) {
-		return (query(r) - query(l-1) + MOD) % MOD;
-	}
-	void insert(int x, ll v) {
-		for ( ; x<K; x+=x&-x) {
-			f[x] = (f[x]+v) % MOD;
-		}
-	}
+  ll f[K];
+  BIT() { memset(f, 0, sizeof f); }
+  ll query(int x) {
+    ll res = 0;
+    for ( ; x>0; x-=x&-x) {
+      res += f[x];
+    }
+    return res % MOD;
+  }
+  ll query(int l, int r) {
+    return (query(r) - query(l-1) + MOD) % MOD;
+  }
+  void insert(int x, ll v) {
+    for ( ; x<K; x+=x&-x) {
+      f[x] = (f[x]+v) % MOD;
+    }
+  }
 };
 
 BIT bit[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	bit[0].insert(1, 1);
-	FOR(i,1,n) {
-		int a;
-		cin >> a;
-		for (int j=1; j<=k+1; j++) {
-			ll cur = bit[i-1].query(max(1,j-a), j);
-			bit[i].insert(j, cur);
-		}
-	}
-	cout << bit[n].query(k+1, k+1) << nl;
+  bit[0].insert(1, 1);
+  FOR(i,1,n) {
+    int a;
+    cin >> a;
+    for (int j=1; j<=k+1; j++) {
+      ll cur = bit[i-1].query(max(1,j-a), j);
+      bit[i].insert(j, cur);
+    }
+  }
+  cout << bit[n].query(k+1, k+1) << nl;
 
-	return 0;
+  return 0;
 }
 

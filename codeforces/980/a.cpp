@@ -18,22 +18,22 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	int link, pearl;
-	link = pearl = 0;
-	for (char c : s) {
-		if (c == '-') link++;
-		else pearl++;
-	}
+  int link, pearl;
+  link = pearl = 0;
+  for (char c : s) {
+    if (c == '-') link++;
+    else pearl++;
+  }
 
-	if (pearl == 0 || link % pearl == 0) cout << "YES" << nl;
-	else cout << "NO" << nl;
+  if (pearl == 0 || link % pearl == 0) cout << "YES" << nl;
+  else cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

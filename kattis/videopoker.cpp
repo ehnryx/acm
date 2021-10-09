@@ -31,58 +31,58 @@ vector<char> SUIT = {'c','d','h','s'};
 int s[9];
 
 ld replace(const vector<pcc>& v, const vector<pcc>& p, int bm) {
-	ld tot = (ld)47*46*45*44*43/120;
-	ld sum = 0;
-	for(int a=0;a<47;a++) {
-		for(int b=0;b<a;b++) {
-			for(int c=0;c<b;c++) {
-				for(int d=0;d<c;d++) {
-					for(int e=0;e<d;e++) {
-					}
-				}
-			}
-		}
-	}
-	return sum / tot;
+  ld tot = (ld)47*46*45*44*43/120;
+  ld sum = 0;
+  for(int a=0;a<47;a++) {
+    for(int b=0;b<a;b++) {
+      for(int c=0;c<b;c++) {
+        for(int d=0;d<c;d++) {
+          for(int e=0;e<d;e++) {
+          }
+        }
+      }
+    }
+  }
+  return sum / tot;
 }
 
 ld solve(const vector<pcc>& v) {
-	vector<pcc> p;
-	for(char rank:RANK) {
-		for(char suit:SUIT) {
-			pcc cur(rank,suit);
-			if(v.find(cur)!=-1) {
-				p.push_back(cur);
-			}
-		}
-	}
+  vector<pcc> p;
+  for(char rank:RANK) {
+    for(char suit:SUIT) {
+      pcc cur(rank,suit);
+      if(v.find(cur)!=-1) {
+        p.push_back(cur);
+      }
+    }
+  }
 
-	ld best = 0;
-	for(int bm=0;bm<1<<5;bm++) {
-		best = max(best, replace(v,p,bm));
-	}
-	return best;
+  ld best = 0;
+  for(int bm=0;bm<1<<5;bm++) {
+    best = max(best, replace(v,p,bm));
+  }
+  return best;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int i=0;i<9;i++) {
-		cin>>s[i];
-	}
+  for(int i=0;i<9;i++) {
+    cin>>s[i];
+  }
 
-	int T;
-	cin>>T;
-	while(T--) {
-		vector<pcc> cards;
-		for(int i=0;i<5;i++) {
-			char rank, suit;
-			cin>>rank>>suit;
-			cards.push_back(make_pair(rank,suit));
-		}
-		cout<<solve(cards)<<nl;
-	}
+  int T;
+  cin>>T;
+  while(T--) {
+    vector<pcc> cards;
+    for(int i=0;i<5;i++) {
+      char rank, suit;
+      cin>>rank>>suit;
+      cards.push_back(make_pair(rank,suit));
+    }
+    cout<<solve(cards)<<nl;
+  }
 
-	return 0;
+  return 0;
 }

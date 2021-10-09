@@ -26,48 +26,48 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n; ll k;
-	cin >> n >> k;
+  int n; ll k;
+  cin >> n >> k;
 
-	ll fact[n];
-	fact[0] = 1;
-	for (int i=1; i<n; i++) {
-		fact[i] = 0;
-		for (int j=0; j<i; j++) {
-			fact[i] = min(INFLL, fact[i] + fact[i-1]);
-		}
-	}
+  ll fact[n];
+  fact[0] = 1;
+  for (int i=1; i<n; i++) {
+    fact[i] = 0;
+    for (int j=0; j<i; j++) {
+      fact[i] = min(INFLL, fact[i] + fact[i-1]);
+    }
+  }
 
-	vector<int> ans;
-	set<int> cur;
-	cur.insert(0);
-	int sum = 0;
-	for (int i=1; i<n; i++) {
-		for (int j=1; j<n; j++) {
-			if (cur.count((sum+j)%n)) continue;
-			if (fact[n-1-i] < k) {
-				k -= fact[n-1-i];
-			} else {
-				ans.push_back(j);
-				sum += j;
-				cur.insert(sum%n);
-				break;
-			}
-		}
-	}
+  vector<int> ans;
+  set<int> cur;
+  cur.insert(0);
+  int sum = 0;
+  for (int i=1; i<n; i++) {
+    for (int j=1; j<n; j++) {
+      if (cur.count((sum+j)%n)) continue;
+      if (fact[n-1-i] < k) {
+        k -= fact[n-1-i];
+      } else {
+        ans.push_back(j);
+        sum += j;
+        cur.insert(sum%n);
+        break;
+      }
+    }
+  }
 
-	for (int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  for (int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

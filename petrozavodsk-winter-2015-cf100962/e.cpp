@@ -16,45 +16,45 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 vector<int> join(int a, int b) {
-	vector<int> res = {a,b};
-	if (__builtin_clz(a) > __builtin_clz(b)) swap(a,b);
-	while (__builtin_clz(a) != __builtin_clz(b)) {
-		res.push_back(a^1);
-		a >>= 1;
-	}
-	if (a == b) {
-		return {-1};
-	}
+  vector<int> res = {a,b};
+  if (__builtin_clz(a) > __builtin_clz(b)) swap(a,b);
+  while (__builtin_clz(a) != __builtin_clz(b)) {
+    res.push_back(a^1);
+    a >>= 1;
+  }
+  if (a == b) {
+    return {-1};
+  }
 
-	while ((a^1) != b) {
-		res.push_back(a^1);
-		res.push_back(b^1);
-		a >>= 1;
-		b >>= 1;
-	}
+  while ((a^1) != b) {
+    res.push_back(a^1);
+    res.push_back(b^1);
+    a >>= 1;
+    b >>= 1;
+  }
 
-	a >>= 1;
-	while (a > 1) {
-		res.push_back(a^1);
-		a >>= 1;
-	}
+  a >>= 1;
+  while (a > 1) {
+    res.push_back(a^1);
+    a >>= 1;
+  }
 
-	sort(res.begin(), res.end());
-	return res;
+  sort(res.begin(), res.end());
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int a, b;
-	cin >> a >> b;
+  int a, b;
+  cin >> a >> b;
 
-	for (int it : join(a,b)) {
-		cout << it << " ";
-	}
-	cout << nl;
+  for (int it : join(a,b)) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

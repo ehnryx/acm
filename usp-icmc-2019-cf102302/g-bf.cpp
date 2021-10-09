@@ -34,36 +34,36 @@ const int N = 101;
 int dp[N][N][N];
 int m;
 bool solve(int a, int b, int c) {
-	if(dp[a][b][c]!=-1) return dp[a][b][c];
-	for(int i=1;i<=min(a,m);i++) {
-		if(!solve(a-i,b,c)) return dp[a][b][c]=true;
-	}
-	for(int i=1;i<=min(b,m);i++) {
-		if(i==b && a) continue;
-		if(!solve(a,b-i,c)) return dp[a][b][c]=true;
-	}
-	for(int i=1;i<=min(c,m);i++) {
-		if(i==c && b) continue;
-		if(!solve(a,b,c-i)) return dp[a][b][c]=true;
-	}
-	return dp[a][b][c]=false;
+  if(dp[a][b][c]!=-1) return dp[a][b][c];
+  for(int i=1;i<=min(a,m);i++) {
+    if(!solve(a-i,b,c)) return dp[a][b][c]=true;
+  }
+  for(int i=1;i<=min(b,m);i++) {
+    if(i==b && a) continue;
+    if(!solve(a,b-i,c)) return dp[a][b][c]=true;
+  }
+  for(int i=1;i<=min(c,m);i++) {
+    if(i==c && b) continue;
+    if(!solve(a,b,c-i)) return dp[a][b][c]=true;
+  }
+  return dp[a][b][c]=false;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(dp,-1,sizeof dp);
-	int n;
-	cin>>n>>m;
-			for(int k=1;k<=n;k++) {
-		for(int j=1;j<=n;j++) {
-	for(int i=1;i<=n;i++) {
-				cout<<i<<','<<j<<','<<k<<": "<<solve(i,j,k)<<nl;
-			}
-		}
-	}
+  memset(dp,-1,sizeof dp);
+  int n;
+  cin>>n>>m;
+      for(int k=1;k<=n;k++) {
+    for(int j=1;j<=n;j++) {
+  for(int i=1;i<=n;i++) {
+        cout<<i<<','<<j<<','<<k<<": "<<solve(i,j,k)<<nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

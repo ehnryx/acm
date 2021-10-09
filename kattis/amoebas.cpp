@@ -30,50 +30,50 @@ vector<int> dj = {1,-1,0,1,-1,0,1,-1};
 const int N = 2e4+1;
 int dsu[N];
 int find(int i) {
-	if(dsu[i]==-1) return i;
-	return dsu[i]=find(dsu[i]);
+  if(dsu[i]==-1) return i;
+  return dsu[i]=find(dsu[i]);
 }
 void link(int i, int j) {
-	if(find(i)!=find(j)) dsu[find(i)]=find(j);
+  if(find(i)!=find(j)) dsu[find(i)]=find(j);
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	memset(dsu,-1,sizeof dsu);
-	char g[n+2][m+2];
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=m;j++) {
-			cin>>g[i][j];
-		}
-	}
+  int n,m;
+  cin>>n>>m;
+  memset(dsu,-1,sizeof dsu);
+  char g[n+2][m+2];
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=m;j++) {
+      cin>>g[i][j];
+    }
+  }
 
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=m;j++) {
-			if(g[i][j]=='#') {
-				for(int d=0;d<8;d++) {
-					int ni = i+di[d];
-					int nj = j+dj[d];
-					if(g[ni][nj]=='#') {
-						link(i*(m+2)+j,ni*(m+2)+nj);
-					}
-				}
-			}
-		}
-	}
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=m;j++) {
+      if(g[i][j]=='#') {
+        for(int d=0;d<8;d++) {
+          int ni = i+di[d];
+          int nj = j+dj[d];
+          if(g[ni][nj]=='#') {
+            link(i*(m+2)+j,ni*(m+2)+nj);
+          }
+        }
+      }
+    }
+  }
 
-	int ans = 0;
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=m;j++) {
-			if(g[i][j]=='#' && find(i*(m+2)+j)==i*(m+2)+j) {
-				ans++;
-			}
-		}
-	}
-	cout<<ans<<nl;
+  int ans = 0;
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=m;j++) {
+      if(g[i][j]=='#' && find(i*(m+2)+j)==i*(m+2)+j) {
+        ans++;
+      }
+    }
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

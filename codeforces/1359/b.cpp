@@ -27,34 +27,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m, a, b;
-		cin >> n >> m >> a >> b;
-		vector<vector<char>> g(n, vector<char>(m+1));
-		int ans = 0;
-		for(int i=0; i<n; i++) {
-			int cur = 0;
-			for(int j=0; j<=m; j++) {
-				if(j < m) cin >> g[i][j];
-				if(g[i][j] == '.') {
-					if(j == 0 || g[i][j-1] != '.') {
-						cur = 1;
-					} else {
-						cur++;
-					}
-				} else {
-					ans += min(cur * a, cur/2 * b + cur%2 * a);
-					cur = 0;
-				}
-			}
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m, a, b;
+    cin >> n >> m >> a >> b;
+    vector<vector<char>> g(n, vector<char>(m+1));
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+      int cur = 0;
+      for(int j=0; j<=m; j++) {
+        if(j < m) cin >> g[i][j];
+        if(g[i][j] == '.') {
+          if(j == 0 || g[i][j-1] != '.') {
+            cur = 1;
+          } else {
+            cur++;
+          }
+        } else {
+          ans += min(cur * a, cur/2 * b + cur%2 * a);
+          cur = 0;
+        }
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

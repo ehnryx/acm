@@ -26,21 +26,21 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 // MAGIC IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 inline void read(int &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 void readchar(char& c) {
-	while (isspace(c = get()));
+  while (isspace(c = get()));
 }
 // END MAGIC IO
 
@@ -104,82 +104,82 @@ void rUpdate(node* c, node* l, node* r, ll v) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	//cin >> n;
-	read(n);
+  int n;
+  //cin >> n;
+  read(n);
 
-	node* root[n+1];
-	fill(root, root+n+1, null);
+  node* root[n+1];
+  fill(root, root+n+1, null);
 
-	node* ans = null;
+  node* ans = null;
 
-	int did = 0;
+  int did = 0;
 
-	For(i,n) {
-		int c, a;
-		//cin >> c >> a;
-		read(c); read(a);
+  For(i,n) {
+    int c, a;
+    //cin >> c >> a;
+    read(c); read(a);
 
-		node* w = SplayTree::lower_bound(root[c], n-a);
-		node* obj = new (&data[did++]) node(0,0,i+1);
-		node* cur = new (&data[did++]) node(obj,0);
-		enum { last, after, before } insert;
-		if (w == null) {
-			obj->val = n;
-			insert = last;
-		} else {
-			SplayTree::fixDownTo(w->key);
-			if (w->key->val == n-a) {
-				obj->val = w->key->val;
-				root[c] = w;
-				insert = after;
-			} else {
-				obj->val = w->key->val-1;
-				root[c] = w;
-				insert = before;
-			}
-		}
+    node* w = SplayTree::lower_bound(root[c], n-a);
+    node* obj = new (&data[did++]) node(0,0,i+1);
+    node* cur = new (&data[did++]) node(obj,0);
+    enum { last, after, before } insert;
+    if (w == null) {
+      obj->val = n;
+      insert = last;
+    } else {
+      SplayTree::fixDownTo(w->key);
+      if (w->key->val == n-a) {
+        obj->val = w->key->val;
+        root[c] = w;
+        insert = after;
+      } else {
+        obj->val = w->key->val-1;
+        root[c] = w;
+        insert = before;
+      }
+    }
 
-		ans = SplayTree::insertBefore(ans, SplayTree::nth(ans, obj->val-n+i), obj);
-		SplayTree::rUpdate(ans, null, obj, -1);
-		if (insert == last) {
-			root[c] = SplayTree::insertBefore(root[c], null, cur);
-		} else if (insert == after) {
-			root[c] = SplayTree::insertBefore(root[c], SplayTree::nxt(root[c]), cur);
-		} else {
-			root[c] = SplayTree::insertBefore(root[c], root[c], cur);
-		}
+    ans = SplayTree::insertBefore(ans, SplayTree::nth(ans, obj->val-n+i), obj);
+    SplayTree::rUpdate(ans, null, obj, -1);
+    if (insert == last) {
+      root[c] = SplayTree::insertBefore(root[c], null, cur);
+    } else if (insert == after) {
+      root[c] = SplayTree::insertBefore(root[c], SplayTree::nxt(root[c]), cur);
+    } else {
+      root[c] = SplayTree::insertBefore(root[c], root[c], cur);
+    }
 
 //#define DEBUG
 #ifdef DEBUG
-		cout << "after " << i << " -> ";
-		for (node* it=SplayTree::begin(ans); it!=null; it=SplayTree::nxt(it)) {
-			cout << it->id << " ";
-		}
-		cout << nl;
-		for (int j=1; j<=3; j++) {
-			cout << "TEAM " << j << " -> ";
-			for (node* it=SplayTree::begin(root[j]); it!=null; it=SplayTree::nxt(it)) {
-				cout << it->key->val << " ";
-			}
-			cout << nl;
-		}
-		cout << nl;
+    cout << "after " << i << " -> ";
+    for (node* it=SplayTree::begin(ans); it!=null; it=SplayTree::nxt(it)) {
+      cout << it->id << " ";
+    }
+    cout << nl;
+    for (int j=1; j<=3; j++) {
+      cout << "TEAM " << j << " -> ";
+      for (node* it=SplayTree::begin(root[j]); it!=null; it=SplayTree::nxt(it)) {
+        cout << it->key->val << " ";
+      }
+      cout << nl;
+    }
+    cout << nl;
 #endif
-	}
+  }
 
-	for (node* it=SplayTree::begin(ans); it!=null; it=SplayTree::nxt(it)) {
-		printf("%d ", it->id);
-	}
-	putchar('\n');
+  for (node* it=SplayTree::begin(ans); it!=null; it=SplayTree::nxt(it)) {
+    printf("%d ", it->id);
+  }
+  putchar('\n');
 
-	return 0;
+  return 0;
 }

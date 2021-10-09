@@ -25,35 +25,35 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string cur;
-	cin>>cur;
-	int n;
-	cin>>n;
-	string s[n];
-	map<char,int> cnt;
-	for(int i=0;i<n;i++) {
-		cin>>s[i];
-		cnt[s[i].front()]++;
-	}
-	for(int i=0;i<n;i++) {
-		if(s[i].front() == cur.back()) {
-			if(cnt[s[i].back()] - (s[i].back()==s[i].front()) == 0) {
-				cout<<s[i]<<"!"<<nl;
-				return 0;
-			}
-		}
-	}
-	for(int i=0;i<n;i++) {
-		if(s[i].front() == cur.back()) {
-			cout<<s[i]<<nl;
-			return 0;
-		}
-	}
-	cout<<"?"<<nl;
+  string cur;
+  cin>>cur;
+  int n;
+  cin>>n;
+  string s[n];
+  map<char,int> cnt;
+  for(int i=0;i<n;i++) {
+    cin>>s[i];
+    cnt[s[i].front()]++;
+  }
+  for(int i=0;i<n;i++) {
+    if(s[i].front() == cur.back()) {
+      if(cnt[s[i].back()] - (s[i].back()==s[i].front()) == 0) {
+        cout<<s[i]<<"!"<<nl;
+        return 0;
+      }
+    }
+  }
+  for(int i=0;i<n;i++) {
+    if(s[i].front() == cur.back()) {
+      cout<<s[i]<<nl;
+      return 0;
+    }
+  }
+  cout<<"?"<<nl;
 
-	return 0;
+  return 0;
 }

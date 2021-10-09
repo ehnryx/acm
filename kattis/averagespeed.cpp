@@ -27,34 +27,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(2);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(2);
 
-	int h = 0;
-	int m = 0;
-	int c = 0;
-	ld dist = 0;
-	int speed = 0;
-	for(string s; getline(cin, s); ) {
-		istringstream in(s);
-		vector<string> line;
-		for(string t; in >> t; ) {
-			line.push_back(t);
-		}
-		int hh = stoi(line[0].substr(0, 2));
-		int mm = stoi(line[0].substr(3, 2));
-		int cc = stoi(line[0].substr(6, 2));
-		ld dt = (hh - h) + (ld)(mm - m)/60 + (ld)(cc - c)/3600;
-		dist += dt * speed;
-		if(line.size() == 1) {
-			cout << line[0] << " " << dist << " " << "km" << nl;
-		} else {
-			speed = stoi(line[1]);
-		}
-		h = hh;
-		m = mm;
-		c = cc;
-	}
+  int h = 0;
+  int m = 0;
+  int c = 0;
+  ld dist = 0;
+  int speed = 0;
+  for(string s; getline(cin, s); ) {
+    istringstream in(s);
+    vector<string> line;
+    for(string t; in >> t; ) {
+      line.push_back(t);
+    }
+    int hh = stoi(line[0].substr(0, 2));
+    int mm = stoi(line[0].substr(3, 2));
+    int cc = stoi(line[0].substr(6, 2));
+    ld dt = (hh - h) + (ld)(mm - m)/60 + (ld)(cc - c)/3600;
+    dist += dt * speed;
+    if(line.size() == 1) {
+      cout << line[0] << " " << dist << " " << "km" << nl;
+    } else {
+      speed = stoi(line[1]);
+    }
+    h = hh;
+    m = mm;
+    c = cc;
+  }
 
-	return 0;
+  return 0;
 }

@@ -31,16 +31,16 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll power(ll b, ll e) {
-	ll r = 1;
-	for(;e;e/=2){
-		if(e&1) r = r*b % MOD;
-		b = b*b % MOD;
-	}
-	return r;
+  ll r = 1;
+  for(;e;e/=2){
+    if(e&1) r = r*b % MOD;
+    b = b*b % MOD;
+  }
+  return r;
 }
 
 ll inv(ll n) {
-	return power(n, MOD-2);
+  return power(n, MOD-2);
 }
 
 const int N = 2e5+1;
@@ -48,38 +48,38 @@ ll l[N], r[N];
 ll eq[N], neq[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=0;i<n;i++){
-		cin >> l[i];
-	}
-	for(int i=0;i<n;i++){
-		cin >> r[i];
-	}
+  int n;
+  cin >> n;
+  for(int i=0;i<n;i++){
+    cin >> l[i];
+  }
+  for(int i=0;i<n;i++){
+    cin >> r[i];
+  }
 
-	ll ans = 0;
-	ll sum = 1;
-	for(int i=1;i<n;i++){
-		ll top = max((ll)0, min(r[i],r[i-1]) - max(l[i],l[i-1]) + 1);
-		ll bot = (r[i]-l[i]+1) * (r[i-1]-l[i-1]+1) % MOD;
-		eq[i] = top * inv(bot) % MOD;
-		neq[i] = (1-eq[i]+MOD) % MOD;
-		sum += neq[i];
-		ans += neq[i] - neq[i]*neq[i] % MOD;
-		if(i>1){
-			ll t = max((ll)0, min(r[i],min(r[i-1],r[i-2])) - max(l[i],max(l[i-1],l[i-2])) + 1);
-			ll b = (r[i]-l[i]+1) * (r[i-1]-l[i-1]+1) % MOD * (r[i-2]-l[i-2]+1) % MOD;
-			ll p = (1 - eq[i] - eq[i-1] + t*inv(b) % MOD + 3*MOD) % MOD;
-			ans += 2*p - 2*neq[i]*neq[i-1] % MOD;
-		}
-	}
-	sum %= MOD;
-	ans = ans%MOD + sum*sum%MOD;
-	cout << (ans+MOD) % MOD << nl;
+  ll ans = 0;
+  ll sum = 1;
+  for(int i=1;i<n;i++){
+    ll top = max((ll)0, min(r[i],r[i-1]) - max(l[i],l[i-1]) + 1);
+    ll bot = (r[i]-l[i]+1) * (r[i-1]-l[i-1]+1) % MOD;
+    eq[i] = top * inv(bot) % MOD;
+    neq[i] = (1-eq[i]+MOD) % MOD;
+    sum += neq[i];
+    ans += neq[i] - neq[i]*neq[i] % MOD;
+    if(i>1){
+      ll t = max((ll)0, min(r[i],min(r[i-1],r[i-2])) - max(l[i],max(l[i-1],l[i-2])) + 1);
+      ll b = (r[i]-l[i]+1) * (r[i-1]-l[i-1]+1) % MOD * (r[i-2]-l[i-2]+1) % MOD;
+      ll p = (1 - eq[i] - eq[i-1] + t*inv(b) % MOD + 3*MOD) % MOD;
+      ans += 2*p - 2*neq[i]*neq[i-1] % MOD;
+    }
+  }
+  sum %= MOD;
+  ans = ans%MOD + sum*sum%MOD;
+  cout << (ans+MOD) % MOD << nl;
 
-	return 0;
+  return 0;
 }

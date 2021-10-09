@@ -27,37 +27,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int v[n+1], p[n+1];
-	int sum = 0;
-	for(int i=1; i<=n; i++) {
-		cin >> v[i] >> p[i];
-		sum += p[i];
-	}
+  int n;
+  cin >> n;
+  int v[n+1], p[n+1];
+  int sum = 0;
+  for(int i=1; i<=n; i++) {
+    cin >> v[i] >> p[i];
+    sum += p[i];
+  }
 
-	ll dp[5000+1];
-	memset(dp, INF, sizeof dp);
-	dp[0] = 0;
-	for(int i=1; i<=n; i++) {
-		int cost = (v[i]+2) / 2;
-		for(int j=sum; j>=0; j--) {
-			if(j >= p[i]) {
-				dp[j] = min(dp[j], dp[j-p[i]] + cost);
-			}
-		}
-	}
+  ll dp[5000+1];
+  memset(dp, INF, sizeof dp);
+  dp[0] = 0;
+  for(int i=1; i<=n; i++) {
+    int cost = (v[i]+2) / 2;
+    for(int j=sum; j>=0; j--) {
+      if(j >= p[i]) {
+        dp[j] = min(dp[j], dp[j-p[i]] + cost);
+      }
+    }
+  }
 
-	ll ans = INFLL;
-	for(int i=0; i<=sum; i++) {
-		if(2*i > sum) {
-			ans = min(ans, dp[i]);
-		}
-	}
-	cout << ans << nl;
+  ll ans = INFLL;
+  for(int i=0; i<=sum; i++) {
+    if(2*i > sum) {
+      ans = min(ans, dp[i]);
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

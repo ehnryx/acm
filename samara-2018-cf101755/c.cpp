@@ -16,44 +16,44 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Point {
-	int s, e;
-	Point() {}
-	Point(int s, int e): s(s), e(e) {}
-	bool operator < (const Point& v) const {
-		if (e == v.e) return s < v.s;
-		else return e < v.e;
-	}
+  int s, e;
+  Point() {}
+  Point(int s, int e): s(s), e(e) {}
+  bool operator < (const Point& v) const {
+    if (e == v.e) return s < v.s;
+    else return e < v.e;
+  }
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<Point> p;
-	int a, b;
-	for (int i = 0; i < n; i++) {
-		cin >> a >> b;
-		p.push_back(Point(a,b));
-	}
-	sort(p.begin(), p.end());
+  vector<Point> p;
+  int a, b;
+  for (int i = 0; i < n; i++) {
+    cin >> a >> b;
+    p.push_back(Point(a,b));
+  }
+  sort(p.begin(), p.end());
 
-	vector<int> ans;
-	int cur = -INF;
-	for (const Point& it : p) {
-		if (it.s <= cur) continue;
-		cur = it.e;
-		ans.push_back(cur);
-	}
+  vector<int> ans;
+  int cur = -INF;
+  for (const Point& it : p) {
+    if (it.s <= cur) continue;
+    cur = it.e;
+    ans.push_back(cur);
+  }
 
-	cout << ans.size() << nl;
-	for (int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  cout << ans.size() << nl;
+  for (int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

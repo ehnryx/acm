@@ -33,39 +33,39 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	int n = s.size();
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	int dist[10][10];
-	For(a,10) {
-		For(b,10) {
-			memset(dist, INF, sizeof dist);
-			For(i,10) {
-				dist[i][(i+a)%10] = 1;
-				dist[i][(i+b)%10] = 1;
-			}
-			For(k,10) {
-				For(i,10) {
-					For(j,10) {
-						dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]);
-					}
-				}
-			}
+  int dist[10][10];
+  For(a,10) {
+    For(b,10) {
+      memset(dist, INF, sizeof dist);
+      For(i,10) {
+        dist[i][(i+a)%10] = 1;
+        dist[i][(i+b)%10] = 1;
+      }
+      For(k,10) {
+        For(i,10) {
+          For(j,10) {
+            dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]);
+          }
+        }
+      }
 
-			int ans = 0;
-			For(i,n-1 && ans<INF) {
-				ans += dist[s[i]-'0'][s[i+1]-'0'];
-			}
-			if (ans<INF) cout << ans - (n-1) << " ";
-			else cout << -1 << " ";
-		}
-		cout << nl;
-	}
+      int ans = 0;
+      For(i,n-1 && ans<INF) {
+        ans += dist[s[i]-'0'][s[i+1]-'0'];
+      }
+      if (ans<INF) cout << ans - (n-1) << " ";
+      else cout << -1 << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

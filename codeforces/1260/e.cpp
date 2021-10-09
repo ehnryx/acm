@@ -28,45 +28,45 @@ ll dp[N+1][L+1];
 int tot[L+1];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	for(int i=0; i<n; i++) {
-		cin >> a[i];
-	}
+  int a[n];
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
 
-	tot[0] = 0;
-	for(int i=1; i<=L; i++) {
-		tot[i] = tot[i-1] + (n>>i);
-	}
+  tot[0] = 0;
+  for(int i=1; i<=L; i++) {
+    tot[i] = tot[i-1] + (n>>i);
+  }
 
-	for(int j=1; j<=L; j++) {
-		dp[n][j] = INFLL;
-	}
+  for(int j=1; j<=L; j++) {
+    dp[n][j] = INFLL;
+  }
 
-	for(int i=n-1; i>=0; i--) {
-		if(a[i] == -1) {
-			ll ans = INFLL;
-			for(int j=0; j<=L; j++) {
-				ans = min(ans, dp[i+1][j]);
-			}
-			cout << ans << nl;
-			break;
-		}
-		for(int j=0; j<=L; j++) {
-			dp[i][j] = INFLL;
-			if(i+tot[j] >= n) {
-				dp[i][j] = min(dp[i][j], dp[i+1][j]);
-			}
-			if(j>0) {
-				dp[i][j] = min(dp[i][j], dp[i+1][j-1] + a[i]);
-			}
-		}
-	}
+  for(int i=n-1; i>=0; i--) {
+    if(a[i] == -1) {
+      ll ans = INFLL;
+      for(int j=0; j<=L; j++) {
+        ans = min(ans, dp[i+1][j]);
+      }
+      cout << ans << nl;
+      break;
+    }
+    for(int j=0; j<=L; j++) {
+      dp[i][j] = INFLL;
+      if(i+tot[j] >= n) {
+        dp[i][j] = min(dp[i][j], dp[i+1][j]);
+      }
+      if(j>0) {
+        dp[i][j] = min(dp[i][j], dp[i+1][j-1] + a[i]);
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

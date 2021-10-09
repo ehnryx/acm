@@ -24,24 +24,24 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		string s;
-		cin >> s;
-		int cnt = 0;
-		deque<char> t;
-		for(char c : s) {
-			t.push_back(c);
-			cnt += (c == '0');
-		}
-		while(!t.empty() && t.front() == '0') { t.pop_front(); cnt--; }
-		while(!t.empty() && t.back() == '0') { t.pop_back(); cnt--; }
-		cout << cnt << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    string s;
+    cin >> s;
+    int cnt = 0;
+    deque<char> t;
+    for(char c : s) {
+      t.push_back(c);
+      cnt += (c == '0');
+    }
+    while(!t.empty() && t.front() == '0') { t.pop_front(); cnt--; }
+    while(!t.empty() && t.back() == '0') { t.pop_back(); cnt--; }
+    cout << cnt << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -71,42 +71,42 @@ namespace MinArb {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	for(int tt=1;tt<=T;tt++) {
-		int n,m;
-		cin>>n>>m;
-		MinArb::init();
-		for(int i=0;i<m;i++) {
-			int a,b,c;
-			cin>>a>>b>>c;
-			MinArb::add_edge(a,b,c);
-		}
-		for(int i=0;i<n;i++) {
-			MinArb::add_edge(i,(i+1)%n,INF);
-		}
-		MinArb::contract(n-1);
-		MinArb::save(n-1);
-		for(int i=1;i<min(n,7);i++) {
-			MinArb::expand(i);
-			MinArb::load(n-1);
-		}
-		MinArb::expand(0);
-		ll ans = 0;
-		for(int i=1;i<n;i++) {
-			ans -= MinArb::cost[MinArb::in[i]];
-		}
-		cout<<"Case #"<<tt<<": ";
-		if(ans >= INF) {
-			cout<<"Possums!"<<nl;
-		} else {
-			cout<<ans<<nl;
-		}
-	}
+  int T;
+  cin>>T;
+  for(int tt=1;tt<=T;tt++) {
+    int n,m;
+    cin>>n>>m;
+    MinArb::init();
+    for(int i=0;i<m;i++) {
+      int a,b,c;
+      cin>>a>>b>>c;
+      MinArb::add_edge(a,b,c);
+    }
+    for(int i=0;i<n;i++) {
+      MinArb::add_edge(i,(i+1)%n,INF);
+    }
+    MinArb::contract(n-1);
+    MinArb::save(n-1);
+    for(int i=1;i<min(n,7);i++) {
+      MinArb::expand(i);
+      MinArb::load(n-1);
+    }
+    MinArb::expand(0);
+    ll ans = 0;
+    for(int i=1;i<n;i++) {
+      ans -= MinArb::cost[MinArb::in[i]];
+    }
+    cout<<"Case #"<<tt<<": ";
+    if(ans >= INF) {
+      cout<<"Possums!"<<nl;
+    } else {
+      cout<<ans<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

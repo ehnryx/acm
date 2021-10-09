@@ -27,34 +27,34 @@ int a[N], b[N], c[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	FOR(i,1,1<<n) {
-		cin >> a[i];
-		c[i] = i;
-	}
+  FOR(i,1,1<<n) {
+    cin >> a[i];
+    c[i] = i;
+  }
 
-	do {
-		unordered_set<int> vals;
-		FOR(i,1,1<<n) {
-			b[i] = a[i]^c[i];
-			vals.insert(b[i]);
-		}
-		if (vals.size() == (1<<n)) {
-			cout << "Shi" << nl;
-			return 0;
-		}
-	} while (next_permutation(c+1,c+1+(1<<n)));
-	cout << "Fou" << nl;
+  do {
+    unordered_set<int> vals;
+    FOR(i,1,1<<n) {
+      b[i] = a[i]^c[i];
+      vals.insert(b[i]);
+    }
+    if (vals.size() == (1<<n)) {
+      cout << "Shi" << nl;
+      return 0;
+    }
+  } while (next_permutation(c+1,c+1+(1<<n)));
+  cout << "Fou" << nl;
 
-	return 0;
+  return 0;
 }

@@ -25,47 +25,47 @@ int vals[N];
 bool seen[M], left[M];
 
 void solve() {
-	memset(seen, 0, sizeof seen);
-	memset(left, 0, sizeof left);
+  memset(seen, 0, sizeof seen);
+  memset(left, 0, sizeof left);
 
-	int n;
-	cin >> n;
-	for (int i=0; i<n; i++) {
-		cin >> vals[i];
-		seen[vals[i]] = left[vals[i]] = true;
-	}
+  int n;
+  cin >> n;
+  for (int i=0; i<n; i++) {
+    cin >> vals[i];
+    seen[vals[i]] = left[vals[i]] = true;
+  }
 
-	for (int i=1; i<n-4; i++) {
-		for (int j=i+1; j<n-4; j++) {
-			for (int k=j+1; k<n-4; k++) {
-				for (int l=k+1; l<n-4; l++) {
-					for (int m=l+1; m<n-4; m++) {
-						for (int v=1; v<vals[0]; v++) {
-							for (int s=0; s<n; s++) {
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  for (int i=1; i<n-4; i++) {
+    for (int j=i+1; j<n-4; j++) {
+      for (int k=j+1; k<n-4; k++) {
+        for (int l=k+1; l<n-4; l++) {
+          for (int m=l+1; m<n-4; m++) {
+            for (int v=1; v<vals[0]; v++) {
+              for (int s=0; s<n; s++) {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
-	freopen(TESTFILE ".in", "r", stdin);
+  freopen(TESTFILE ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	for (int tt=1; tt<=T; tt++) {
-		cout << "Case " << tt << ": ";
-		solve();
-	}
+  for (int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

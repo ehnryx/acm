@@ -39,66 +39,66 @@ int vis[N][LCM];
 int ans[N][LCM];
 
 void dfs(int u, int k) {
-	vector<pii> path;
-	while (!vis[u][k]) {
-		vis[u][k] = 2;
-		path.push_back(pii(u,k));
-		k = ((k+val[u])%LCM + LCM) % LCM;
-		u = adj[u][k%m[u]];
-	}
-	if (vis[u][k] == 1) {
-		for (const pii& it : path) {
-			ans[it.first][it.second] = ans[u][k];
-			vis[it.first][it.second] = 1;
-		}
-	} else {
-		unordered_set<int> cur;
-		cur.insert(u);
-		for (int i=path.size()-1; path[i]!=pii(u,k); i--) {
-			cur.insert(path[i].first);
-		}
-		for (const pii& it : path) {
-			ans[it.first][it.second] = cur.size();
-			vis[it.first][it.second] = 1;
-		}
-	}
+  vector<pii> path;
+  while (!vis[u][k]) {
+    vis[u][k] = 2;
+    path.push_back(pii(u,k));
+    k = ((k+val[u])%LCM + LCM) % LCM;
+    u = adj[u][k%m[u]];
+  }
+  if (vis[u][k] == 1) {
+    for (const pii& it : path) {
+      ans[it.first][it.second] = ans[u][k];
+      vis[it.first][it.second] = 1;
+    }
+  } else {
+    unordered_set<int> cur;
+    cur.insert(u);
+    for (int i=path.size()-1; path[i]!=pii(u,k); i--) {
+      cur.insert(path[i].first);
+    }
+    for (const pii& it : path) {
+      ans[it.first][it.second] = cur.size();
+      vis[it.first][it.second] = 1;
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	FOR(i,1,n) {
-		cin >> val[i];
-	}
+  FOR(i,1,n) {
+    cin >> val[i];
+  }
 
-	FOR(i,1,n) {
-		cin >> m[i];
-		For(j,m[i]) {
-			cin >> adj[i][j];
-		}
-	}
+  FOR(i,1,n) {
+    cin >> m[i];
+    For(j,m[i]) {
+      cin >> adj[i][j];
+    }
+  }
 
-	FOR(i,1,n) {
-		For(k,LCM) {
-			if (!vis[i][k]) {
-				dfs(i,k);
-			}
-		}
-	}
+  FOR(i,1,n) {
+    For(k,LCM) {
+      if (!vis[i][k]) {
+        dfs(i,k);
+      }
+    }
+  }
 
-	int q;
-	cin >> q;
-	For(i,q) {
-		int x, y;
-		cin >> x >> y;
-		y = (y%LCM + LCM) % LCM;
-		cout << ans[x][y] << nl;
-	}
+  int q;
+  cin >> q;
+  For(i,q) {
+    int x, y;
+    cin >> x >> y;
+    y = (y%LCM + LCM) % LCM;
+    cout << ans[x][y] << nl;
+  }
 
-	return 0;
+  return 0;
 }

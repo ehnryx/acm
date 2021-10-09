@@ -18,30 +18,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	unordered_map<int,int> id;
-	for (int i = 0; i < n; i++) {
-		int a;
-		cin >> a;
-		id[a] = i;
-	}
+  unordered_map<int,int> id;
+  for (int i = 0; i < n; i++) {
+    int a;
+    cin >> a;
+    id[a] = i;
+  }
 
-	map<int,int> ans;
-	for (const pii& it : id) {
-		ans[it.second] = it.first;
-	}
+  map<int,int> ans;
+  for (const pii& it : id) {
+    ans[it.second] = it.first;
+  }
 
-	cout << ans.size() << nl;
-	for (const pii& it : ans) {
-		cout << it.second << " ";
-	}
-	cout << nl;
+  cout << ans.size() << nl;
+  for (const pii& it : ans) {
+    cout << it.second << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

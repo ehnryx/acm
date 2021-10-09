@@ -25,31 +25,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(string s,t;cin>>s>>t;) {
-		swap(s,t);
-		int n=s.size(); int m=t.size();
-		unordered_set<string> tt[3];
-		vector<int> ans(3);
-		tt[1].insert(t);
-		for(int j=0;j<=m;j++) {
-			if(j<m) tt[0].insert(t.substr(0,j) + t.substr(j+1));
-			for(string c:{"A","G","C","T"}) {
-				tt[2].insert(t.substr(0,j) + c + t.substr(j));
-			}
-		}
-		s += "eyqs";
-		for(int i=0;i+m-1<=n;i++) {
-			for(int j=0;j<3;j++) {
-				for(const string& ss:tt[j]) {
-					ans[j] += (s.substr(i,m+j-1) == ss);
-				}
-			}
-		}
-		cout<<ans[1]<<" "<<ans[0]<<" "<<ans[2]<<nl;
-	}
+  for(string s,t;cin>>s>>t;) {
+    swap(s,t);
+    int n=s.size(); int m=t.size();
+    unordered_set<string> tt[3];
+    vector<int> ans(3);
+    tt[1].insert(t);
+    for(int j=0;j<=m;j++) {
+      if(j<m) tt[0].insert(t.substr(0,j) + t.substr(j+1));
+      for(string c:{"A","G","C","T"}) {
+        tt[2].insert(t.substr(0,j) + c + t.substr(j));
+      }
+    }
+    s += "eyqs";
+    for(int i=0;i+m-1<=n;i++) {
+      for(int j=0;j<3;j++) {
+        for(const string& ss:tt[j]) {
+          ans[j] += (s.substr(i,m+j-1) == ss);
+        }
+      }
+    }
+    cout<<ans[1]<<" "<<ans[0]<<" "<<ans[2]<<nl;
+  }
 
-	return 0;
+  return 0;
 }

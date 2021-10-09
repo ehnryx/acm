@@ -16,33 +16,33 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int cost[n], value[m];
+  int cost[n], value[m];
 
-	for (int i=0; i<n; i++) {
-		cin >> cost[i];
-	}
+  for (int i=0; i<n; i++) {
+    cin >> cost[i];
+  }
 
-	for (int i=0; i<m; i++) {
-		cin >> value[i];
-	}
+  for (int i=0; i<m; i++) {
+    cin >> value[i];
+  }
 
-	int ans = 0;
-	int cur = 0;
-	for (int i=0; i<n; i++) {
-		if (cur < m && value[cur] >= cost[i]) {
-			ans++;
-			cur++;
-		}
-	}
+  int ans = 0;
+  int cur = 0;
+  for (int i=0; i<n; i++) {
+    if (cur < m && value[cur] >= cost[i]) {
+      ans++;
+      cur++;
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

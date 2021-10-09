@@ -27,61 +27,61 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m, A, B, C;
-		cin >> n >> m >> A >> B >> C;
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m, A, B, C;
+    cin >> n >> m >> A >> B >> C;
 
-		vector<ll> cost(m);
-		for(int i=0; i<m; i++) {
-			cin >> cost[i];
-		}
-		sort(cost.begin(), cost.end());
-		vector<ll> sum(m+1);
-		partial_sum(cost.begin(), cost.end(), sum.begin() + 1);
+    vector<ll> cost(m);
+    for(int i=0; i<m; i++) {
+      cin >> cost[i];
+    }
+    sort(cost.begin(), cost.end());
+    vector<ll> sum(m+1);
+    partial_sum(cost.begin(), cost.end(), sum.begin() + 1);
 
-		vector<vector<int>> adj(n+1);
-		for(int i=0; i<m; i++) {
-			int a, b;
-			cin >> a >> b;
-			adj[a].push_back(b);
-			adj[b].push_back(a);
-		}
+    vector<vector<int>> adj(n+1);
+    for(int i=0; i<m; i++) {
+      int a, b;
+      cin >> a >> b;
+      adj[a].push_back(b);
+      adj[b].push_back(a);
+    }
 
-		function<vector<int>(int)> get_dists = [=](int s) {
-			vector<int> d(n+1, -1);
-			queue<int> bfs;
-			d[s] = 0;
-			bfs.push(s);
-			while(!bfs.empty()) {
-				int u = bfs.front();
-				bfs.pop();
-				for(int v : adj[u]) {
-					if(d[v] == -1) {
-						d[v] = d[u] + 1;
-						bfs.push(v);
-					}
-				}
-			}
-			return d;
-		};
+    function<vector<int>(int)> get_dists = [=](int s) {
+      vector<int> d(n+1, -1);
+      queue<int> bfs;
+      d[s] = 0;
+      bfs.push(s);
+      while(!bfs.empty()) {
+        int u = bfs.front();
+        bfs.pop();
+        for(int v : adj[u]) {
+          if(d[v] == -1) {
+            d[v] = d[u] + 1;
+            bfs.push(v);
+          }
+        }
+      }
+      return d;
+    };
 
-		vector<int> adist = get_dists(A);
-		vector<int> bdist = get_dists(B);
-		vector<int> cdist = get_dists(C);
-		ll ans = INFLL;
-		for(int i=1; i<=n; i++) {
-			int total = adist[i] + bdist[i] + cdist[i];
-			if(total <= m) {
-				ans = min(ans, sum[total] + sum[bdist[i]]);
-			}
-		}
-		cout << ans << nl;
-	}
+    vector<int> adist = get_dists(A);
+    vector<int> bdist = get_dists(B);
+    vector<int> cdist = get_dists(C);
+    ll ans = INFLL;
+    for(int i=1; i<=n; i++) {
+      int total = adist[i] + bdist[i] + cdist[i];
+      if(total <= m) {
+        ans = min(ans, sum[total] + sum[bdist[i]]);
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

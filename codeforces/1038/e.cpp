@@ -20,38 +20,38 @@ int id[N][N];
 int cnt[N*N];
 
 void init() {
-	id[1][2] = 0;
-	id[1][3] = 1;
-	id[1][4] = 2;
-	id[2][3] = 3;
-	id[2][4] = 4;
-	id[3][4] = 5;
-	id[1][1] = 6;
-	id[2][2] = 7;
-	id[3][3] = 8;
-	id[4][4] = 9;
+  id[1][2] = 0;
+  id[1][3] = 1;
+  id[1][4] = 2;
+  id[2][3] = 3;
+  id[2][4] = 4;
+  id[3][4] = 5;
+  id[1][1] = 6;
+  id[2][2] = 7;
+  id[3][3] = 8;
+  id[4][4] = 9;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
-	init();
+  init();
 
-	int n, a, b, c;
-	cin >> n;
+  int n, a, b, c;
+  cin >> n;
 
-	for (int i=0; i<n; i++) {
-		cin >> a >> c >> b;
-		if (a>b) swap(a,b);
-		cnt[adj[a][b]]++;
-	}
+  for (int i=0; i<n; i++) {
+    cin >> a >> c >> b;
+    if (a>b) swap(a,b);
+    cnt[adj[a][b]]++;
+  }
 
 
-	return 0;
+  return 0;
 }

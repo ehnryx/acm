@@ -25,33 +25,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n;
-		cin>>n;
-		unordered_map<string,int> cnt;
-		for(int i=0;i<n;i++) {
-			string s; int a;
-			cin>>s>>a;
-			cnt[s]+=a;
-		}
+  int T;
+  cin>>T;
+  while(T--) {
+    int n;
+    cin>>n;
+    unordered_map<string,int> cnt;
+    for(int i=0;i<n;i++) {
+      string s; int a;
+      cin>>s>>a;
+      cnt[s]+=a;
+    }
 
-		vector<pair<int,string>> res;
-		for(const auto& it:cnt) {
-			res.push_back(make_pair(-it.second,it.first));
-		}
-		sort(res.begin(),res.end());
+    vector<pair<int,string>> res;
+    for(const auto& it:cnt) {
+      res.push_back(make_pair(-it.second,it.first));
+    }
+    sort(res.begin(),res.end());
 
-		cout<<res.size()<<nl;
-		for(const auto& it:res) {
-			cout<<it.second<<" "<<-it.first<<nl;
-		}
-	}
+    cout<<res.size()<<nl;
+    for(const auto& it:res) {
+      cout<<it.second<<" "<<-it.first<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -63,41 +63,41 @@ Int dp[N][4][2*N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	dp[1][0][1] = 1;
-	dp[1][1][2] = 1;
-	dp[1][2][2] = 1;
-	dp[1][3][1] = 1;
-	for (int i=2; i<=n; i++) {
-		for (int cur=0; cur<4; cur++) {
-			for (int v=0; v<=2*n; v++) {
-				dp[i][cur][v] += dp[i-1][cur][v];
-				if (cur == 0 || cur == 3) {
-					dp[i][cur][v] += dp[i-1][1][v] + dp[i-1][2][v];
-					if (v>0) dp[i][cur][v] += dp[i-1][3-cur][v-1];
-				} else {
-					if (v>2) dp[i][cur][v] += dp[i-1][3-cur][v-2];
-					if (v>1) dp[i][cur][v] += dp[i-1][0][v-1] + dp[i-1][3][v-1];
-				}
-			}
-		}
-	}
+  dp[1][0][1] = 1;
+  dp[1][1][2] = 1;
+  dp[1][2][2] = 1;
+  dp[1][3][1] = 1;
+  for (int i=2; i<=n; i++) {
+    for (int cur=0; cur<4; cur++) {
+      for (int v=0; v<=2*n; v++) {
+        dp[i][cur][v] += dp[i-1][cur][v];
+        if (cur == 0 || cur == 3) {
+          dp[i][cur][v] += dp[i-1][1][v] + dp[i-1][2][v];
+          if (v>0) dp[i][cur][v] += dp[i-1][3-cur][v-1];
+        } else {
+          if (v>2) dp[i][cur][v] += dp[i-1][3-cur][v-2];
+          if (v>1) dp[i][cur][v] += dp[i-1][0][v-1] + dp[i-1][3][v-1];
+        }
+      }
+    }
+  }
 
-	Int ans = 0;
-	for (int i=0; i<4; i++) {
-		ans += dp[n][i][k];
-	}
-	cout << ans << nl;
+  Int ans = 0;
+  for (int i=0; i<4; i++) {
+    ans += dp[n][i][k];
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

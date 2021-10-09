@@ -33,34 +33,34 @@ int lcis[2][N];
 int a[N], b[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	FOR(i,1,n) {
-		cin >> a[i];
-	}
-	FOR(j,1,m) {
-		cin >> b[j];
-	}
+  FOR(i,1,n) {
+    cin >> a[i];
+  }
+  FOR(j,1,m) {
+    cin >> b[j];
+  }
 
-	FOR(i,1,n) {
-		int maxv = 0;
-		FOR(j,1,m) {
-			lcis[i&1][j] = lcis[(i&1)^1][j];
-			if (a[i] == b[j]) lcis[i&1][j] = maxv+1;
-			else if (a[i] > b[j]) maxv = max(maxv, lcis[(i&1)^1][j]);
-		}
-	}
+  FOR(i,1,n) {
+    int maxv = 0;
+    FOR(j,1,m) {
+      lcis[i&1][j] = lcis[(i&1)^1][j];
+      if (a[i] == b[j]) lcis[i&1][j] = maxv+1;
+      else if (a[i] > b[j]) maxv = max(maxv, lcis[(i&1)^1][j]);
+    }
+  }
 
-	int ans = 0;
-	FOR(j,1,m) {
-		ans = max(ans, lcis[n&1][j]);
-	}
-	cout << 2*ans << nl;
+  int ans = 0;
+  FOR(j,1,m) {
+    ans = max(ans, lcis[n&1][j]);
+  }
+  cout << 2*ans << nl;
 
-	return 0;
+  return 0;
 }

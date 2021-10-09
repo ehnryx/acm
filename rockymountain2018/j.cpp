@@ -23,10 +23,10 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int i, d, c;
-	bool operator < (const Edge& o) const {
-		return d > o.d;
-	}
+  int i, d, c;
+  bool operator < (const Edge& o) const {
+    return d > o.d;
+  }
 };
 
 const int N = 345;
@@ -35,52 +35,52 @@ int dist[N][1<<7];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	unordered_map<char,int> col;
-	col['R'] = 0;
-	col['O'] = 1;
-	col['Y'] = 2;
-	col['G'] = 3;
-	col['B'] = 4;
-	col['I'] = 5;
-	col['V'] = 6;
-	int goal = (1<<7)-1;
+  unordered_map<char,int> col;
+  col['R'] = 0;
+  col['O'] = 1;
+  col['Y'] = 2;
+  col['G'] = 3;
+  col['B'] = 4;
+  col['I'] = 5;
+  col['V'] = 6;
+  int goal = (1<<7)-1;
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	for (int i=0; i<m; i++) {
-		int a, b, d; char c;
-		cin >> a >> b >> d >> c;
-		adj[a].push_back({b,d,col[c]});
-		adj[b].push_back({a,d,col[c]});
-	}
+  for (int i=0; i<m; i++) {
+    int a, b, d; char c;
+    cin >> a >> b >> d >> c;
+    adj[a].push_back({b,d,col[c]});
+    adj[b].push_back({a,d,col[c]});
+  }
 
-	memset(dist, -1, sizeof dist);
-	priority_queue<Edge> dijk;
-	dijk.push({1,0,0});
-	while (!dijk.empty()) {
-		Edge cur = dijk.top();
-		dijk.pop();
-		if (cur.i == 1 && cur.c == goal) {
-			cout << cur.d << nl;
-			return 0;
-		}
-		if (dist[cur.i][cur.c] == -1) {
-			dist[cur.i][cur.c] = cur.d;
-			for (const Edge& e : adj[cur.i]) {
-				dijk.push({e.i, e.d+cur.d, 1<<e.c|cur.c});
-			}
-		}
-	}
-	assert(false);
+  memset(dist, -1, sizeof dist);
+  priority_queue<Edge> dijk;
+  dijk.push({1,0,0});
+  while (!dijk.empty()) {
+    Edge cur = dijk.top();
+    dijk.pop();
+    if (cur.i == 1 && cur.c == goal) {
+      cout << cur.d << nl;
+      return 0;
+    }
+    if (dist[cur.i][cur.c] == -1) {
+      dist[cur.i][cur.c] = cur.d;
+      for (const Edge& e : adj[cur.i]) {
+        dijk.push({e.i, e.d+cur.d, 1<<e.c|cur.c});
+      }
+    }
+  }
+  assert(false);
 
-	return 0;
+  return 0;
 }

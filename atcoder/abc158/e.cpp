@@ -25,52 +25,52 @@ const int M = 1e4 + 1;
 int cnt[M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, p;
-	cin >> n >> p;
-	string s;
-	cin >> s;
+  int n, p;
+  cin >> n >> p;
+  string s;
+  cin >> s;
 
-	if(p == 2) {
-		ll ans = 0;
-		for(int i=0; i<n; i++) {
-			if((s[i]-'0') % 2 == 0) {
-				ans += i+1;
-			}
-		}
-		cout << ans << nl;
-	}
+  if(p == 2) {
+    ll ans = 0;
+    for(int i=0; i<n; i++) {
+      if((s[i]-'0') % 2 == 0) {
+        ans += i+1;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	else if(p == 5) {
-		ll ans = 0;
-		for(int i=0; i<n; i++) {
-			if((s[i]-'0') % 5 == 0) {
-				ans += i+1;
-			}
-		}
-		cout << ans << nl;
-	}
+  else if(p == 5) {
+    ll ans = 0;
+    for(int i=0; i<n; i++) {
+      if((s[i]-'0') % 5 == 0) {
+        ans += i+1;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	else {
-		reverse(s.begin(), s.end());
+  else {
+    reverse(s.begin(), s.end());
 
-		ll cur = 0;
-		ll mp = 1;
-		cnt[0] = 1;
-		for(char c : s) {
-			cur = (cur + (c-'0') * mp) % p;
-			mp = mp * 10 % p;
-			cnt[cur]++;
-		}
+    ll cur = 0;
+    ll mp = 1;
+    cnt[0] = 1;
+    for(char c : s) {
+      cur = (cur + (c-'0') * mp) % p;
+      mp = mp * 10 % p;
+      cnt[cur]++;
+    }
 
-		ll ans = 0;
-		for(int i=0; i<p; i++) {
-			ans += (ll) cnt[i] * (cnt[i]-1) / 2;
-		}
-		cout << ans << nl;
-	}
+    ll ans = 0;
+    for(int i=0; i<p; i++) {
+      ans += (ll) cnt[i] * (cnt[i]-1) / 2;
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

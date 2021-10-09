@@ -35,69 +35,69 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	string grid[n], trans[n];
-	For(i,n) {
-		cin >> grid[i];
-		For(j,n) {
-			trans[j].push_back(grid[i][j]);
-		}
-	}
+  int n, k;
+  cin >> n >> k;
+  string grid[n], trans[n];
+  For(i,n) {
+    cin >> grid[i];
+    For(j,n) {
+      trans[j].push_back(grid[i][j]);
+    }
+  }
 
-	int last[n];
-	int ans[n][n];
-	memset(ans, 0, sizeof ans);
+  int last[n];
+  int ans[n][n];
+  memset(ans, 0, sizeof ans);
 
-	For(i,n) {
-		last[i] = grid[i].find_last_of('B');
-	}
-	For(j,n-k+1) {
-		int cnt = 0;
-		For(i,n) {
-			if (i<k) cnt += (last[i] < j+k);
-			else cnt += (last[i] < 0);
-		}
-		ans[0][j] += cnt;
-		for (int i=k; i<n; i++) {
-			cnt += (last[i-k] < 0) - (last[i-k] < j+k);
-			cnt += (last[i] < j+k) - (last[i] < 0);
-			ans[i-k+1][j] += cnt;
-		}
-		For(i,n) {
-			if (grid[i][j] == 'B') {
-				last[i] = INF;
-			}
-		}
-	}
+  For(i,n) {
+    last[i] = grid[i].find_last_of('B');
+  }
+  For(j,n-k+1) {
+    int cnt = 0;
+    For(i,n) {
+      if (i<k) cnt += (last[i] < j+k);
+      else cnt += (last[i] < 0);
+    }
+    ans[0][j] += cnt;
+    for (int i=k; i<n; i++) {
+      cnt += (last[i-k] < 0) - (last[i-k] < j+k);
+      cnt += (last[i] < j+k) - (last[i] < 0);
+      ans[i-k+1][j] += cnt;
+    }
+    For(i,n) {
+      if (grid[i][j] == 'B') {
+        last[i] = INF;
+      }
+    }
+  }
 
-	For(i,n) {
-		last[i] = trans[i].find_last_of('B');
-	}
-	For(j,n-k+1) {
-		int cnt = 0;
-		For(i,n) {
-			if (i<k) cnt += (last[i] < j+k);
-			else cnt += (last[i] < 0);
-		}
-		ans[j][0] += cnt;
-		for (int i=k; i<n; i++) {
-			cnt += (last[i-k] < 0) - (last[i-k] < j+k);
-			cnt += (last[i] < j+k) - (last[i] < 0);
-			ans[j][i-k+1] += cnt;
-		}
-		For(i,n) {
-			if (trans[i][j] == 'B') {
-				last[i] = INF;
-			}
-		}
-	}
+  For(i,n) {
+    last[i] = trans[i].find_last_of('B');
+  }
+  For(j,n-k+1) {
+    int cnt = 0;
+    For(i,n) {
+      if (i<k) cnt += (last[i] < j+k);
+      else cnt += (last[i] < 0);
+    }
+    ans[j][0] += cnt;
+    for (int i=k; i<n; i++) {
+      cnt += (last[i-k] < 0) - (last[i-k] < j+k);
+      cnt += (last[i] < j+k) - (last[i] < 0);
+      ans[j][i-k+1] += cnt;
+    }
+    For(i,n) {
+      if (trans[i][j] == 'B') {
+        last[i] = INF;
+      }
+    }
+  }
 
-	cout << *max_element(&ans[0][0], &ans[0][0]+n*n) << nl;
+  cout << *max_element(&ans[0][0], &ans[0][0]+n*n) << nl;
 
-	return 0;
+  return 0;
 }

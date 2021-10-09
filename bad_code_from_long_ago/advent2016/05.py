@@ -14,12 +14,12 @@ i = 0
 c = 0
 ans = ['-']*8
 while c < 8:
-	s = md5(n + str(i)).hexdigest()
-	i += 1
-	if s[:5] == "00000":
-		if s[5].isdigit() and int(s[5]) < 8 and ans[int(s[5])] == '-':
-			ans[int(s[5])] = s[6]
-			print i
-			c += 1
+  s = md5(n + str(i)).hexdigest()
+  i += 1
+  if s[:5] == "00000":
+    if s[5].isdigit() and int(s[5]) < 8 and ans[int(s[5])] == '-':
+      ans[int(s[5])] = s[6]
+      print i
+      c += 1
 print ''.join(ans)
 

@@ -25,48 +25,48 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		string s,t;
-		cin>>s>>t;
-		int n = s.size();
+  int T;
+  cin>>T;
+  while(T--) {
+    string s,t;
+    cin>>s>>t;
+    int n = s.size();
 
-		set<vector<int>> seen;
-		for(int i=0;i<n;i++) {
-			vector<int> cnt(26,0);
-			for(int j=i;j<n;j++) {
-				cnt[t[j]-'a']++;
-				seen.insert(cnt);
-			}
-		}
+    set<vector<int>> seen;
+    for(int i=0;i<n;i++) {
+      vector<int> cnt(26,0);
+      for(int j=i;j<n;j++) {
+        cnt[t[j]-'a']++;
+        seen.insert(cnt);
+      }
+    }
 
-		int best = 0;
-		int start = -1;
-		for(int i=0;i<n;i++) {
-			vector<int> cnt(26,0);
-			for(int j=i;j<n;j++) {
-				cnt[s[j]-'a']++;
-				if(j-i+1 > best && seen.count(cnt)) {
-					best = j-i+1;
-					start = i;
-				}
-			}
-		}
+    int best = 0;
+    int start = -1;
+    for(int i=0;i<n;i++) {
+      vector<int> cnt(26,0);
+      for(int j=i;j<n;j++) {
+        cnt[s[j]-'a']++;
+        if(j-i+1 > best && seen.count(cnt)) {
+          best = j-i+1;
+          start = i;
+        }
+      }
+    }
 
-		if(best) {
-			for(int i=0;i<best;i++) {
-				cout<<s[start+i];
-			}
-			cout<<nl;
-		} else {
-			cout<<"NONE"<<nl;
-		}
-	}
+    if(best) {
+      for(int i=0;i<best;i++) {
+        cout<<s[start+i];
+      }
+      cout<<nl;
+    } else {
+      cout<<"NONE"<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

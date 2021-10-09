@@ -7,8 +7,8 @@ const char nl = '\n';
 
 
 int main() {
-	ll a, b;
-	cin >> a >> b;
-	cout << a * b << nl;
-	return 0;
+  ll a, b;
+  cin >> a >> b;
+  cout << a * b << nl;
+  return 0;
 }

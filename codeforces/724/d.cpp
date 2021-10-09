@@ -27,81 +27,81 @@ int tot[M];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int m;
-	cin >> m;
-	string s;
-	cin >> s;
-	int n = s.size();
+  int m;
+  cin >> m;
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	for (char c : s) {
-		tot[c-'a']++;
-	}
+  for (char c : s) {
+    tot[c-'a']++;
+  }
 
-	int last = -1;
-	For(c,M) {
-		int cur = -1;
-		For(i,n) {
-			if (s[i]-'a' <= c) {
-				if (i-cur > m) {
-					break;
-				} else {
-					cur = i;
-				}
-			}
-		}
-		if (n-cur > m) {
-			continue;
-		} else {
-			last = c;
-			break;
-		}
-	}
-	assert(last != -1);
+  int last = -1;
+  For(c,M) {
+    int cur = -1;
+    For(i,n) {
+      if (s[i]-'a' <= c) {
+        if (i-cur > m) {
+          break;
+        } else {
+          cur = i;
+        }
+      }
+    }
+    if (n-cur > m) {
+      continue;
+    } else {
+      last = c;
+      break;
+    }
+  }
+  assert(last != -1);
 
-	vector<int> idc, idx;
-	For(i,n) {
-		if (s[i]-'a' == last) {
-			idc.push_back(i);
-		} else if (s[i]-'a' < last) {
-			idx.push_back(i);
-		}
-	}
-	idx.push_back(n);
+  vector<int> idc, idx;
+  For(i,n) {
+    if (s[i]-'a' == last) {
+      idc.push_back(i);
+    } else if (s[i]-'a' < last) {
+      idx.push_back(i);
+    }
+  }
+  idx.push_back(n);
 
-	function<int(int,int)> solve = [&] (int l, int r) {
-		int res = 0;
-		int rb = r;
-		while (rb-l > m) {
-			rb = *lower_bound(idc.begin(), idc.end(), rb-m);
-			res++;
-		}
-		return res;
-	};
+  function<int(int,int)> solve = [&] (int l, int r) {
+    int res = 0;
+    int rb = r;
+    while (rb-l > m) {
+      rb = *lower_bound(idc.begin(), idc.end(), rb-m);
+      res++;
+    }
+    return res;
+  };
 
-	int pre = -1;
-	int cnt = 0;
-	for (int i : idx) {
-		cnt += solve(pre, i);
-		pre = i;
-	}
+  int pre = -1;
+  int cnt = 0;
+  for (int i : idx) {
+    cnt += solve(pre, i);
+    pre = i;
+  }
 
-	for (int i=0; i<last; i++) {
-		while (tot[i]--) {
-			cout << (char)(i+'a');
-		}
-	}
-	while (cnt--) {
-		cout << (char)(last+'a');
-	}
-	cout << nl;
+  for (int i=0; i<last; i++) {
+    while (tot[i]--) {
+      cout << (char)(i+'a');
+    }
+  }
+  while (cnt--) {
+    cout << (char)(last+'a');
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

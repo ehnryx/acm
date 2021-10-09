@@ -26,44 +26,44 @@ int a[N], cost[N], ret[2*N];
 int dp[2*N][N]; // val, cnt
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	for(int i=1; i<=n; i++) {
-		cin >> a[i];
-	}
-	for(int i=1; i<=n; i++) {
-		cin >> cost[i];
-	}
-	for(int i=1; i<=n+m; i++) {
-		cin >> ret[i];
-	}
+  int n, m;
+  cin >> n >> m;
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+  }
+  for(int i=1; i<=n; i++) {
+    cin >> cost[i];
+  }
+  for(int i=1; i<=n+m; i++) {
+    cin >> ret[i];
+  }
 
-	fill(&dp[0][0], &dp[0][0]+2*N*N, -INF);
-	for(int v=1; v<=n+m; v++) {
-		dp[v][0] = 0;
-	}
+  fill(&dp[0][0], &dp[0][0]+2*N*N, -INF);
+  for(int v=1; v<=n+m; v++) {
+    dp[v][0] = 0;
+  }
 
-	for(int i=n; i>=1; i--) {
-		int v = a[i];
-		for(int j=n-i+1; j>=1; j--) {
-			dp[v][j] = max(dp[v][j], dp[v][j-1] + ret[v] - cost[i]);
-		}
-		for(int ub=(n-i+1)/2, add=1; v+add<=n+m; add++, ub/=2) {
-			for(int j=ub; j>=0; j--) {
-				dp[v+add][j] = max(dp[v+add][j], dp[v+add-1][2*j] + j*ret[v+add]);
-				dp[v+add][j] = max(dp[v+add][j], dp[v+add-1][2*j+1] + j*ret[v+add]);
-			}
-		}
-	}
+  for(int i=n; i>=1; i--) {
+    int v = a[i];
+    for(int j=n-i+1; j>=1; j--) {
+      dp[v][j] = max(dp[v][j], dp[v][j-1] + ret[v] - cost[i]);
+    }
+    for(int ub=(n-i+1)/2, add=1; v+add<=n+m; add++, ub/=2) {
+      for(int j=ub; j>=0; j--) {
+        dp[v+add][j] = max(dp[v+add][j], dp[v+add-1][2*j] + j*ret[v+add]);
+        dp[v+add][j] = max(dp[v+add][j], dp[v+add-1][2*j+1] + j*ret[v+add]);
+      }
+    }
+  }
 
-	int ans = 0;
-	for(int i=1; i<=n+m; i++) {
-		ans = max(ans, dp[i][0]);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for(int i=1; i<=n+m; i++) {
+    ans = max(ans, dp[i][0]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -24,48 +24,48 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	int n = s.size();
-	string t = "0" + s + "0";
-	set<int> zero;
-	vector<int> two;
-	for(int i=0; i<=n+1; i++) {
-		if(t[i] == '0') {
-			zero.insert(i);
-		} else if(t[i] == '2') {
-			two.push_back(i);
-		}
-	}
+  string s;
+  cin >> s;
+  int n = s.size();
+  string t = "0" + s + "0";
+  set<int> zero;
+  vector<int> two;
+  for(int i=0; i<=n+1; i++) {
+    if(t[i] == '0') {
+      zero.insert(i);
+    } else if(t[i] == '2') {
+      two.push_back(i);
+    }
+  }
 
-	for(int i : two) {
-		if(t[i] != '2') continue;
-		auto it = zero.upper_bound(i);
-		int l = *prev(it);
-		int r = *it;
-		int j = r + l - i;
-		--t[i];
-		if(--t[j] == '0') {
-			zero.insert(j);
-		}
-		if(l > 0) {
-			t[l] = '1';
-			zero.erase(l);
-		}
-		if(r <= n) {
-			t[r] = '1';
-			zero.erase(r);
-		}
-	}
+  for(int i : two) {
+    if(t[i] != '2') continue;
+    auto it = zero.upper_bound(i);
+    int l = *prev(it);
+    int r = *it;
+    int j = r + l - i;
+    --t[i];
+    if(--t[j] == '0') {
+      zero.insert(j);
+    }
+    if(l > 0) {
+      t[l] = '1';
+      zero.erase(l);
+    }
+    if(r <= n) {
+      t[r] = '1';
+      zero.erase(r);
+    }
+  }
 
-	for(int i=1; i<=n; i++) {
-		cout << t[i];
-	}
-	cout << nl;
+  for(int i=1; i<=n; i++) {
+    cout << t[i];
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }
 

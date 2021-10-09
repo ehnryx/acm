@@ -18,54 +18,54 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int x, y;
-	cin >> x >> y;
+  int x, y;
+  cin >> x >> y;
 
-	string dir;
-	cin >> dir;
+  string dir;
+  cin >> dir;
 
-	int best = INF;
-	string ans;
+  int best = INF;
+  string ans;
 
-	int n;
-	cin >> n;
-	for (int i=0; i<n; i++) {
-		string s;
-		int a, b;
-		cin >> s >> a >> b;
-		a -= x;
-		b -= y;
+  int n;
+  cin >> n;
+  for (int i=0; i<n; i++) {
+    string s;
+    int a, b;
+    cin >> s >> a >> b;
+    a -= x;
+    b -= y;
 
-		int cur;
-		if (dir == "LEFT") {
-			a += (abs(b)+1)/2;
-			if (a<0) cur = (abs(b)+1)/2 + (abs(a)+2)/3;
-			else cur = (abs(b)+1)/2 + abs(a);
-		} else if (dir == "RIGHT") {
-			a -= (abs(b)+1)/2;
-			if (a>0) cur = (abs(b)+1)/2 + (abs(a)+2)/3;
-			else cur = (abs(b)+1)/2 + abs(a);
-		} else if (dir == "UP") {
-			b -= (abs(a)+1)/2;
-			if (b>0) cur = (abs(a)+1)/2 + (abs(b)+2)/3;
-			else cur = (abs(a)+1)/2 + abs(b);
-		} else {
-			b += (abs(a)+1)/2;
-			if (b<0) cur = (abs(a)+1)/2 + (abs(b)+2)/3;
-			else cur = (abs(a)+1)/2 + abs(b);
-		}
+    int cur;
+    if (dir == "LEFT") {
+      a += (abs(b)+1)/2;
+      if (a<0) cur = (abs(b)+1)/2 + (abs(a)+2)/3;
+      else cur = (abs(b)+1)/2 + abs(a);
+    } else if (dir == "RIGHT") {
+      a -= (abs(b)+1)/2;
+      if (a>0) cur = (abs(b)+1)/2 + (abs(a)+2)/3;
+      else cur = (abs(b)+1)/2 + abs(a);
+    } else if (dir == "UP") {
+      b -= (abs(a)+1)/2;
+      if (b>0) cur = (abs(a)+1)/2 + (abs(b)+2)/3;
+      else cur = (abs(a)+1)/2 + abs(b);
+    } else {
+      b += (abs(a)+1)/2;
+      if (b<0) cur = (abs(a)+1)/2 + (abs(b)+2)/3;
+      else cur = (abs(a)+1)/2 + abs(b);
+    }
 
-		if (cur < best) {
-			best = cur;
-			ans = s;
-		}
-	}
+    if (cur < best) {
+      best = cur;
+      ans = s;
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

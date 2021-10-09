@@ -27,41 +27,41 @@ int a[N], have[N];
 unordered_map<int,int> cnt[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	ll tot = 0;
-	for(int i=1; i<=n; i++) {
-		cin >> a[i];
-		tot += a[i];
-	}
+  int n;
+  cin >> n;
+  ll tot = 0;
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+    tot += a[i];
+  }
 
-	int m;
-	cin >> m;
-	int ans = 0;
-	for(int i=0; i<m; i++) {
-		int s, t, u;
-		cin >> s >> t >> u;
-		if(cnt[s].count(t)) {
-			int v = cnt[s][t];
-			cnt[s].erase(t);
-			if(have[v] <= a[v]) {
-				ans--;
-			}
-			have[v]--;
-			assert(have[v] >= 0);
-		}
-		if(u) {
-			cnt[s][t] = u;
-			if(have[u] < a[u]) {
-				ans++;
-			}
-			have[u]++;
-		}
-		cout << tot - ans << nl;
-	}
+  int m;
+  cin >> m;
+  int ans = 0;
+  for(int i=0; i<m; i++) {
+    int s, t, u;
+    cin >> s >> t >> u;
+    if(cnt[s].count(t)) {
+      int v = cnt[s][t];
+      cnt[s].erase(t);
+      if(have[v] <= a[v]) {
+        ans--;
+      }
+      have[v]--;
+      assert(have[v] >= 0);
+    }
+    if(u) {
+      cnt[s][t] = u;
+      if(have[u] < a[u]) {
+        ans++;
+      }
+      have[u]++;
+    }
+    cout << tot - ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

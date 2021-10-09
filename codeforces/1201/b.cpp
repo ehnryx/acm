@@ -33,25 +33,25 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	ll sum = 0;
-	ll maxv = 0;
-	ll a[n];
-	For(i,n) {
-		cin >> a[i];
-		sum += a[i];
-		maxv = (max(maxv, a[i]));
-	}
-	if (sum%2 == 1 || sum-maxv < maxv) {
-		cout << "NO" << nl;
-	} else {
-		cout << "YES" << nl;
-	}
+  int n;
+  cin >> n;
+  ll sum = 0;
+  ll maxv = 0;
+  ll a[n];
+  For(i,n) {
+    cin >> a[i];
+    sum += a[i];
+    maxv = (max(maxv, a[i]));
+  }
+  if (sum%2 == 1 || sum-maxv < maxv) {
+    cout << "NO" << nl;
+  } else {
+    cout << "YES" << nl;
+  }
 
-	return 0;
+  return 0;
 }

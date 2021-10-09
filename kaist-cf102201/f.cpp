@@ -23,50 +23,50 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 pii merge(int mode, int cnt, pii o) {
-	if(mode == o.first) {
-		return make_pair(mode, cnt + o.second);
-	} else if(cnt > o.second) {
-		return make_pair(mode, cnt - o.second);
-	} else {
-		return make_pair(o.first, o.second - cnt);
-	}
+  if(mode == o.first) {
+    return make_pair(mode, cnt + o.second);
+  } else if(cnt > o.second) {
+    return make_pair(mode, cnt - o.second);
+  } else {
+    return make_pair(o.first, o.second - cnt);
+  }
 }
 
 int sparse_count(const unordered_map<int,vector<int>>& mp, int v, int l, int r) {
-	if(!mp.count(v)) return 0;
-	const auto& vec = mp.at(v);
-	auto lb = lower_bound(vec.begin(), vec.end(), l);
-	auto rb = upper_bound(vec.begin(), vec.end(), r);
-	return rb - lb;
+  if(!mp.count(v)) return 0;
+  const auto& vec = mp.at(v);
+  auto lb = lower_bound(vec.begin(), vec.end(), l);
+  auto rb = upper_bound(vec.begin(), vec.end(), r);
+  return rb - lb;
 }
 
 struct SegTree {
-	int n;
-	pii* segt;
+  int n;
+  pii* segt;
   SegTree(int len) {
-		n = 1<<(32-__builtin_clz(len));
+    n = 1<<(32-__builtin_clz(len));
     segt = new pii[2*n];
-		fill(segt, segt+2*n, pii(0,0));
-	}
-	void update(int i, int v) {
-		segt[i+n] = make_pair(v, 1);
-	}
-	void pull(int i) {
-		segt[i] = merge(segt[2*i].first, segt[2*i].second, segt[2*i+1]);
-	}
-	void build() {
-		for(int i=n-1; i>0; i--) {
-			pull(i);
-		}
-	}
-	pii query(int l, int r) {
-		pii res(0, 0);
-		for(l+=n, r+=n+1; l<r; l/=2, r/=2) {
-			if(l&1) res = merge(res.first, res.second, segt[l++]);
-			if(r&1) res = merge(res.first, res.second, segt[--r]);
-		}
-		return res;
-	}
+    fill(segt, segt+2*n, pii(0,0));
+  }
+  void update(int i, int v) {
+    segt[i+n] = make_pair(v, 1);
+  }
+  void pull(int i) {
+    segt[i] = merge(segt[2*i].first, segt[2*i].second, segt[2*i+1]);
+  }
+  void build() {
+    for(int i=n-1; i>0; i--) {
+      pull(i);
+    }
+  }
+  pii query(int l, int r) {
+    pii res(0, 0);
+    for(l+=n, r+=n+1; l<r; l/=2, r/=2) {
+      if(l&1) res = merge(res.first, res.second, segt[l++]);
+      if(r&1) res = merge(res.first, res.second, segt[--r]);
+    }
+    return res;
+  }
 };
 
 const int N = 250000 + 1;
@@ -84,83 +84,83 @@ namespace HLD { SegTree* segt[N]; unordered_map<int,vector<int>> idx[N];
     for (int i=0; i<cn; i++) segt[i] = new SegTree(sz[i]); }
 
   // Returns LCA of path ab, MODIFY for insert_node, query_path, query_node
-	void insert_node(int u, int v) {
-		segt[ch[u]]->update(pos[u], v);
-		idx[ch[u]][v].push_back(pos[u]);
-	}
-	void build_tree() {
-		for(int i=0; i<cn; i++) {
-			segt[i]->build();
-			for(auto& it : idx[i]) {
-				sort(it.second.begin(), it.second.end());
-			}
-		}
-	}
+  void insert_node(int u, int v) {
+    segt[ch[u]]->update(pos[u], v);
+    idx[ch[u]][v].push_back(pos[u]);
+  }
+  void build_tree() {
+    for(int i=0; i<cn; i++) {
+      segt[i]->build();
+      for(auto& it : idx[i]) {
+        sort(it.second.begin(), it.second.end());
+      }
+    }
+  }
 
   pii query_path(int a, int b) {
-		int mode = 0;
-		int cnt = 0;
-		int len = 0;
+    int mode = 0;
+    int cnt = 0;
+    int len = 0;
     while (ch[a] != ch[b]) {
-			if (d[root[ch[a]]] < d[root[ch[b]]]) swap(a,b);
+      if (d[root[ch[a]]] < d[root[ch[b]]]) swap(a,b);
       pii valcur = segt[ch[a]]->query(0, pos[a]);
-			tie(mode, cnt) = merge(mode, cnt, valcur);
-			len += pos[a] + 1;
-			a = par[root[ch[a]]];
-		}
+      tie(mode, cnt) = merge(mode, cnt, valcur);
+      len += pos[a] + 1;
+      a = par[root[ch[a]]];
+    }
     if (d[a] < d[b]) swap(a,b);
-		pii valcur = segt[ch[a]]->query(pos[b], pos[a]);
-		tie(mode, cnt) = merge(mode, cnt, valcur);
-		len += pos[a] - pos[b] + 1;
-		return make_pair(mode, len);
-	}
+    pii valcur = segt[ch[a]]->query(pos[b], pos[a]);
+    tie(mode, cnt) = merge(mode, cnt, valcur);
+    len += pos[a] - pos[b] + 1;
+    return make_pair(mode, len);
+  }
 
-	int query_mode(int a, int b, int v) {
-		int res = 0;
-		while (ch[a] != ch[b]) {
-			if (d[root[ch[a]]] < d[root[ch[b]]]) swap(a,b);
-			res += sparse_count(idx[ch[a]], v, 0, pos[a]);
-			a = par[root[ch[a]]];
-		}
-		if (d[a] < d[b]) swap(a,b);
-		res += sparse_count(idx[ch[a]], v, pos[b], pos[a]);
-		return res;
-	}
+  int query_mode(int a, int b, int v) {
+    int res = 0;
+    while (ch[a] != ch[b]) {
+      if (d[root[ch[a]]] < d[root[ch[b]]]) swap(a,b);
+      res += sparse_count(idx[ch[a]], v, 0, pos[a]);
+      a = par[root[ch[a]]];
+    }
+    if (d[a] < d[b]) swap(a,b);
+    res += sparse_count(idx[ch[a]], v, pos[b], pos[a]);
+    return res;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, q;
-	cin >> n >> q;
-	int val[n+1];
-	for(int i=1; i<=n; i++) {
-		cin >> val[i];
-	}
-	for(int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	HLD::build(1);
-	for(int i=1; i<=n; i++) {
-		HLD::insert_node(i, val[i]);
-	}
-	HLD::build_tree();
+  int n, q;
+  cin >> n >> q;
+  int val[n+1];
+  for(int i=1; i<=n; i++) {
+    cin >> val[i];
+  }
+  for(int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  HLD::build(1);
+  for(int i=1; i<=n; i++) {
+    HLD::insert_node(i, val[i]);
+  }
+  HLD::build_tree();
 
-	for(int i=0; i<q; i++) {
-		int a, b;
-		cin >> a >> b;
-		auto [mode, len] = HLD::query_path(a, b);
-		int cnt = HLD::query_mode(a, b, mode);
-		if(2*cnt > len) {
-			cout << mode << nl;
-		} else {
-			cout << -1 << nl;
-		}
-	}
+  for(int i=0; i<q; i++) {
+    int a, b;
+    cin >> a >> b;
+    auto [mode, len] = HLD::query_path(a, b);
+    int cnt = HLD::query_mode(a, b, mode);
+    if(2*cnt > len) {
+      cout << mode << nl;
+    } else {
+      cout << -1 << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -12,25 +12,25 @@ const int INF = 0x7f7f7f7f;
 const ll INFLL = 0x7f7f7f7f7f7f7f7f;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int n, a, g;
-	ll sum;
-	int T;
-	cin >> T;
-	while (T--) {
-		g = 0;
-		sum = 0;
-		cin >> n;
-		for (int i = 0; i < n; i++) {
-			cin >> a;
-			if (g == 0) g = a;
-			else g = __gcd(g, a);
-			sum += a;
-		}
-		cout << sum << " " << g << endl;
-	}
+  int n, a, g;
+  ll sum;
+  int T;
+  cin >> T;
+  while (T--) {
+    g = 0;
+    sum = 0;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+      cin >> a;
+      if (g == 0) g = a;
+      else g = __gcd(g, a);
+      sum += a;
+    }
+    cout << sum << " " << g << endl;
+  }
 
-	return 0;
+  return 0;
 }

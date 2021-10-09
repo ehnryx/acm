@@ -146,30 +146,30 @@ template <class T> struct Matrix {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	for (;;) {
-		int n;
-		cin >> n;
-		if (n == -1) break;
+  for (;;) {
+    int n;
+    cin >> n;
+    if (n == -1) break;
 
-		Matrix<ll> mat({
-			{0,1,1,0},
-			{1,0,0,0},
-			{2,0,0,1},
-			{0,0,1,0}});
-		Matrix<ll> ans(4,4,1);
+    Matrix<ll> mat({
+      {0,1,1,0},
+      {1,0,0,0},
+      {2,0,0,1},
+      {0,0,1,0}});
+    Matrix<ll> ans(4,4,1);
 
-		while (n > 0) {
-			if (n & 1) ans *= mat;
-			mat *= mat;
-			n >>= 1;
-		}
+    while (n > 0) {
+      if (n & 1) ans *= mat;
+      mat *= mat;
+      n >>= 1;
+    }
 
-		cout << ans[0][0] << nl;
-	}
+    cout << ans[0][0] << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -60,93 +60,93 @@ ll dfs(int u, int t, ll f) {
 // MAGIC IO
 #ifdef USE_MAGIC_IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 inline void read(int &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 #else
 #define get() getchar()
 #define read(x) scanf("%d",&x)
 #endif
 void readchar(char& c) {
-	while (isspace(c = get()));
+  while (isspace(c = get()));
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	FLOW::init();
+  FLOW::init();
 
-	int n, m; read(n); read(m);
-	vector<pt> people(n);
-	for (int i = 0; i < n; i++) {
-		int x, y; read(x); read(y);
-		people[i] = {x, y};
-	}
+  int n, m; read(n); read(m);
+  vector<pt> people(n);
+  for (int i = 0; i < n; i++) {
+    int x, y; read(x); read(y);
+    people[i] = {x, y};
+  }
 
-	set<ldouble> lines;
-	unordered_map<ldouble, int> dumb;
-	int cap[m];
-	for (int i = 0; i < m; i++) {
-		int x, y; read(x); read(y); read(cap[i]);
-		lines.insert(arg(pt(x, y)));
-		dumb[arg(pt(x,y))] = i+1;
-		FLOW::add_edge(200000+i+1, 400001, cap[i]);
-	}
+  set<ldouble> lines;
+  unordered_map<ldouble, int> dumb;
+  int cap[m];
+  for (int i = 0; i < m; i++) {
+    int x, y; read(x); read(y); read(cap[i]);
+    lines.insert(arg(pt(x, y)));
+    dumb[arg(pt(x,y))] = i+1;
+    FLOW::add_edge(200000+i+1, 400001, cap[i]);
+  }
 
-	for (int i = 0; i < n; i++) {
-		ldouble a = arg(people[i]);
-		auto it = lines.lower_bound(a);
-		auto it2 = it;
-		FLOW::add_edge(0, i+1);
-		if (it == lines.begin()) {
-			it2 = --lines.end();
-			if (abs((*it - a) - (a - (*it2 - 2*M_PI))) < EPS)
-				FLOW::add_edge(i+1, 200000+dumb[*it]), FLOW::add_edge(i+1, 200000+dumb[*it2]);
-			else if ((*it - a) < (a - (*it2 - 2*M_PI)))
-				FLOW::add_edge(i+1, 200000+dumb[*it]);
-			else FLOW::add_edge(i+1, 200000+dumb[*it2]);
-		} else if (it == lines.end()) {
-			it = lines.begin(), --it2;
-			if (abs((*it - a + 2*M_PI) - (a - (*it2))) < EPS)
-				FLOW::add_edge(i+1, 200000+dumb[*it]), FLOW::add_edge(i+1, 200000+dumb[*it2]);
-			else if ((*it - a + 2*M_PI) < (a - (*it2)))
-				FLOW::add_edge(i+1, 200000+dumb[*it]);
-			else FLOW::add_edge(i+1, 200000+dumb[*it2]);
-		}
-		else {
-			--it2;
-			if (abs((*it - a) - (a - (*it2))) < EPS)
-				FLOW::add_edge(i+1, 200000+dumb[*it]), FLOW::add_edge(i+1, 200000+dumb[*it2]);
-			else if ((*it - a) < (a - (*it2)))
-				FLOW::add_edge(i+1, 200000+dumb[*it]);
-			else FLOW::add_edge(i+1, 200000+dumb[*it2]);
-		}
-	}
+  for (int i = 0; i < n; i++) {
+    ldouble a = arg(people[i]);
+    auto it = lines.lower_bound(a);
+    auto it2 = it;
+    FLOW::add_edge(0, i+1);
+    if (it == lines.begin()) {
+      it2 = --lines.end();
+      if (abs((*it - a) - (a - (*it2 - 2*M_PI))) < EPS)
+        FLOW::add_edge(i+1, 200000+dumb[*it]), FLOW::add_edge(i+1, 200000+dumb[*it2]);
+      else if ((*it - a) < (a - (*it2 - 2*M_PI)))
+        FLOW::add_edge(i+1, 200000+dumb[*it]);
+      else FLOW::add_edge(i+1, 200000+dumb[*it2]);
+    } else if (it == lines.end()) {
+      it = lines.begin(), --it2;
+      if (abs((*it - a + 2*M_PI) - (a - (*it2))) < EPS)
+        FLOW::add_edge(i+1, 200000+dumb[*it]), FLOW::add_edge(i+1, 200000+dumb[*it2]);
+      else if ((*it - a + 2*M_PI) < (a - (*it2)))
+        FLOW::add_edge(i+1, 200000+dumb[*it]);
+      else FLOW::add_edge(i+1, 200000+dumb[*it2]);
+    }
+    else {
+      --it2;
+      if (abs((*it - a) - (a - (*it2))) < EPS)
+        FLOW::add_edge(i+1, 200000+dumb[*it]), FLOW::add_edge(i+1, 200000+dumb[*it2]);
+      else if ((*it - a) < (a - (*it2)))
+        FLOW::add_edge(i+1, 200000+dumb[*it]);
+      else FLOW::add_edge(i+1, 200000+dumb[*it2]);
+    }
+  }
 
-	int S = 0, T = 400001;
-	ll flow=0; 
-	while (FLOW::bfs(S, T))
-		flow += FLOW::dfs(S, T, INF);
+  int S = 0, T = 400001;
+  ll flow=0; 
+  while (FLOW::bfs(S, T))
+    flow += FLOW::dfs(S, T, INF);
 
-	using namespace FLOW;
-	cout << flow << nl;
-	for (int u = 1; u <= n; u++) {
-		for (int e = first[u]; e != -1; e = nxt[e]) {
-			int v = ep[e^1];
-			if (v && flo[e]) cout << u-1 << " " << v - 200001 << nl;
-		}
-	}
+  using namespace FLOW;
+  cout << flow << nl;
+  for (int u = 1; u <= n; u++) {
+    for (int e = first[u]; e != -1; e = nxt[e]) {
+      int v = ep[e^1];
+      if (v && flo[e]) cout << u-1 << " " << v - 200001 << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

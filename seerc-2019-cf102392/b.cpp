@@ -28,56 +28,56 @@ ll dp[N][N], ndp[N][N];
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, a, b;
-	cin >> n >> a >> b;
+  int n, a, b;
+  cin >> n >> a >> b;
 
-	vector<tuple<int,int,int,int>> vals;
-	for(int i=0; i<n; i++) {
-		int x, t, y, r;
-		cin >> x >> t >> y >> r;
-		vals.emplace_back(x, t, y, r);
-	}
-	sort(vals.begin(), vals.end());
+  vector<tuple<int,int,int,int>> vals;
+  for(int i=0; i<n; i++) {
+    int x, t, y, r;
+    cin >> x >> t >> y >> r;
+    vals.emplace_back(x, t, y, r);
+  }
+  sort(vals.begin(), vals.end());
 
-	memset(dp, 0x3f, sizeof dp);
-	dp[0][0] = 0;
-	for(auto [x, t, y, r] : vals) {
-		// skip
-		for(int u=0; u<=a; u++) {
-			for(int v=0; v<=b; v++) {
-				ndp[u][v] = dp[u][v];
-			}
-		}
+  memset(dp, 0x3f, sizeof dp);
+  dp[0][0] = 0;
+  for(auto [x, t, y, r] : vals) {
+    // skip
+    for(int u=0; u<=a; u++) {
+      for(int v=0; v<=b; v++) {
+        ndp[u][v] = dp[u][v];
+      }
+    }
 
-		// use
-		for(int u=0; u<=a; u++) {
-			for(int v=0; v<=b; v++) {
-				int nu, nv;
-				// use on first level
-				if(u < a) {
-					nu = min(a, u + x);
-					nv = min(b, v + max(0, u+x-a));
-					ndp[nu][nv] = min(ndp[nu][nv], dp[u][v] + t);
-				}
-				// use on second level
-				if(v < b) {
-					nu = u;
-					nv = min(b, v + y);
-					ndp[nu][nv] = min(ndp[nu][nv], dp[u][v] + r);
-				}
-			}
-		}
-		swap(dp, ndp);
-	}
+    // use
+    for(int u=0; u<=a; u++) {
+      for(int v=0; v<=b; v++) {
+        int nu, nv;
+        // use on first level
+        if(u < a) {
+          nu = min(a, u + x);
+          nv = min(b, v + max(0, u+x-a));
+          ndp[nu][nv] = min(ndp[nu][nv], dp[u][v] + t);
+        }
+        // use on second level
+        if(v < b) {
+          nu = u;
+          nv = min(b, v + y);
+          ndp[nu][nv] = min(ndp[nu][nv], dp[u][v] + r);
+        }
+      }
+    }
+    swap(dp, ndp);
+  }
 
-	if(dp[a][b] < INFLL) {
-		cout << dp[a][b] << nl;
-	} else {
-		cout << -1 << nl;
-	}
+  if(dp[a][b] < INFLL) {
+    cout << dp[a][b] << nl;
+  } else {
+    cout << -1 << nl;
+  }
 
-	return 0;
+  return 0;
 }

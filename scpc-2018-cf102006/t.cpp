@@ -28,20 +28,20 @@ void solve() {
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #define FILENAME crap
-	cerr << "File IO: " << FILENAME << nl;
+  cerr << "File IO: " << FILENAME << nl;
 #ifdef ONLINE_JUDGE
-	freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		solve();
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

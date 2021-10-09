@@ -26,41 +26,41 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	ll s = 0;
-	ll pre = -1;
-	ll g = 0;
-	For(i,n) {
-		ll cur;
-		cin >> cur;
-		if (i>0) {
-			g = __gcd(g, cur-pre);
-		} else {
-			s = cur;
-		}
-		pre = cur;
-	}
+  ll s = 0;
+  ll pre = -1;
+  ll g = 0;
+  For(i,n) {
+    ll cur;
+    cin >> cur;
+    if (i>0) {
+      g = __gcd(g, cur-pre);
+    } else {
+      s = cur;
+    }
+    pre = cur;
+  }
 
-	For(i,m) {
-		ll cur;
-		cin >> cur;
-		if (g%cur == 0) {
-			cout << "YES" << nl;
-			cout << s << " " << i+1 << nl;
-			return 0;
-		}
-	}
-	cout << "NO" << nl;
+  For(i,m) {
+    ll cur;
+    cin >> cur;
+    if (g%cur == 0) {
+      cout << "YES" << nl;
+      cout << s << " " << i+1 << nl;
+      return 0;
+    }
+  }
+  cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

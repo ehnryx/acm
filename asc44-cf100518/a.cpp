@@ -26,13 +26,13 @@ struct Point {
 ld solve1(int r, const vector<Point>& p) {
   const int M = 4;
   int left[M], right[M], top[M], bot[M];
-	memset(left, -1, sizeof left);
-	memset(right, -1, sizeof right);
-	memset(top, -1, sizeof top);
-	memset(bot, -1, sizeof bot);
+  memset(left, -1, sizeof left);
+  memset(right, -1, sizeof right);
+  memset(top, -1, sizeof top);
+  memset(bot, -1, sizeof bot);
   auto uleft = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (left[i] == -1 || p[id].x <= p[left[i]].x) {
+      if (left[i] == -1 || p[id].x <= p[left[i]].x) {
         for (int j=M-1; j>i; j--) {
           left[j] = left[j-1];
         }
@@ -43,7 +43,7 @@ ld solve1(int r, const vector<Point>& p) {
   };
   auto uright = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (right[i] == -1 || p[id].x >= p[right[i]].x) {
+      if (right[i] == -1 || p[id].x >= p[right[i]].x) {
         for (int j=M-1; j>i; j--) {
           right[j] = right[j-1];
         }
@@ -54,7 +54,7 @@ ld solve1(int r, const vector<Point>& p) {
   };
   auto utop = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (top[i] == -1 || p[id].y >= p[top[i]].y) {
+      if (top[i] == -1 || p[id].y >= p[top[i]].y) {
         for (int j=M-1; j>i; j--) {
           top[j] = top[j-1];
         }
@@ -65,7 +65,7 @@ ld solve1(int r, const vector<Point>& p) {
   };
   auto ubot = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (bot[i] == -1 || p[id].y <= p[bot[i]].y) {
+      if (bot[i] == -1 || p[id].y <= p[bot[i]].y) {
         for (int j=M-1; j>i; j--) {
           bot[j] = bot[j-1];
         }
@@ -136,7 +136,7 @@ ld search1(const pt& lb, const pt& c, int r) {
 ld search2(const pt& lb, const pt& ub, int r) {
   ld left = PI;
   ld right = 3*PI/2;
-	cerr << "left: " << left << "   right: " << right << nl;
+  cerr << "left: " << left << "   right: " << right << nl;
   for (int bs=0; bs<BS; bs++) {
     ld mid1 = (2*left+right)/3;
     ld mid2 = (left+2*right)/3;
@@ -148,7 +148,7 @@ ld search2(const pt& lb, const pt& ub, int r) {
       left = mid1;
     }
   }
-	cerr << "search1 " << lb+polar(r,left) << " " << ub << nl;
+  cerr << "search1 " << lb+polar(r,left) << " " << ub << nl;
   return search1(lb+polar(r,left), ub, r);
 }
 
@@ -159,13 +159,13 @@ ld solve2(int r, vector<Point> p) {
 
   const int M = 4;
   int left[M], right[M], top[M], bot[M];
-	memset(left, -1, sizeof left);
-	memset(right, -1, sizeof right);
-	memset(top, -1, sizeof top);
-	memset(bot, -1, sizeof bot);
+  memset(left, -1, sizeof left);
+  memset(right, -1, sizeof right);
+  memset(top, -1, sizeof top);
+  memset(bot, -1, sizeof bot);
   auto uleft = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (left[i] == -1 || p[id].x <= p[left[i]].x) {
+      if (left[i] == -1 || p[id].x <= p[left[i]].x) {
         for (int j=M-1; j>i; j--) {
           left[j] = left[j-1];
         }
@@ -176,7 +176,7 @@ ld solve2(int r, vector<Point> p) {
   };
   auto uright = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (right[i] == -1 || p[id].x >= p[right[i]].x) {
+      if (right[i] == -1 || p[id].x >= p[right[i]].x) {
         for (int j=M-1; j>i; j--) {
           right[j] = right[j-1];
         }
@@ -187,7 +187,7 @@ ld solve2(int r, vector<Point> p) {
   };
   auto utop = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (top[i] == -1 || p[id].y >= p[top[i]].y) {
+      if (top[i] == -1 || p[id].y >= p[top[i]].y) {
         for (int j=M-1; j>i; j--) {
           top[j] = top[j-1];
         }
@@ -198,7 +198,7 @@ ld solve2(int r, vector<Point> p) {
   };
   auto ubot = [&] (int id) {
     for (int i=0; i<M; i++) {
-			if (bot[i] == -1 || p[id].y <= p[bot[i]].y) {
+      if (bot[i] == -1 || p[id].y <= p[bot[i]].y) {
         for (int j=M-1; j>i; j--) {
           bot[j] = bot[j-1];
         }
@@ -244,7 +244,7 @@ ld solve2(int r, vector<Point> p) {
       if (a==b) continue;
       for (int c : topright) {
         if (a==c||b==c) continue;
-				cerr << "check " << a << " " << b << " " << c << endl;
+        cerr << "check " << a << " " << b << " " << c << endl;
         ld cur = search1(pt(p[a].x-r,p[b].y-r), p[c], r);
         res = max(res, cur);
       }
@@ -254,7 +254,7 @@ ld solve2(int r, vector<Point> p) {
   for (int a : botleft) {
     for (int b : topright) {
       if (a==b) continue;
-				cerr << "check " << a << " " << b << endl;
+        cerr << "check " << a << " " << b << endl;
       ld cur = search2(p[a], p[b], r);
       res = max(res, cur);
     }

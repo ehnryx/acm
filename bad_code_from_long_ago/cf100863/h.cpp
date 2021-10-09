@@ -63,35 +63,35 @@ struct HullDynamic : public multiset<Line> {
   }
 
   Line eval(ll x) {
-	  return *lower_bound((Line) { x, is_query });
+    return *lower_bound((Line) { x, is_query });
   }
 };
 ////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int n, m, f;
-	cin >> n >> m >> f;
+  int n, m, f;
+  cin >> n >> m >> f;
 
-	vector<int> v(n+1);
-	for (int i = 0; i < n; i++) {
-		cin >> v[i];
-	}
-	v[n] = 0;
+  vector<int> v(n+1);
+  for (int i = 0; i < n; i++) {
+    cin >> v[i];
+  }
+  v[n] = 0;
 
-	HullDynamic chull;
+  HullDynamic chull;
 
-	lli ans = m;
-	int prev[n+1];
-	lli value[n+1];
-	memset(prev, -1, sizeof(prev));
-	memset(value, 0, sizeof(value));
+  lli ans = m;
+  int prev[n+1];
+  lli value[n+1];
+  memset(prev, -1, sizeof(prev));
+  memset(value, 0, sizeof(value));
 
-	for (int i = 0; i < n; i++) {
-		auto res = chull.eval(v[i]);
-	}
+  for (int i = 0; i < n; i++) {
+    auto res = chull.eval(v[i]);
+  }
 
-	return 0;
+  return 0;
 }

@@ -15,14 +15,14 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		;
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    ;
+  }
 
-	return 0;
+  return 0;
 }

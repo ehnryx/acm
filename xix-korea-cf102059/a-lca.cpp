@@ -21,54 +21,54 @@ vector<int> adj[N];
 int ans[N], cnt[N];
 
 struct SegTree {
-	int n; int *lazy, *col;
-	SegTree(int len) { n = 1<<(32-__builtin_clz(len));
-		lazy = new int[2*n]; fill(lazy, lazy+2*n, 0);
-		col = new int[2*n]; fill(col, col+2*n, 0);
-	}
+  int n; int *lazy, *col;
+  SegTree(int len) { n = 1<<(32-__builtin_clz(len));
+    lazy = new int[2*n]; fill(lazy, lazy+2*n, 0);
+    col = new int[2*n]; fill(col, col+2*n, 0);
+  }
 
-	void push(int i) {
-		if (lazy[i]) {
-			lazy[2*i] = lazy[2*i+1] = lazy[i];
-			col[2*i] = col[2*i+1] = lazy[i];
-			lazy[i] = 0;
-		}
-	}
+  void push(int i) {
+    if (lazy[i]) {
+      lazy[2*i] = lazy[2*i+1] = lazy[i];
+      col[2*i] = col[2*i+1] = lazy[i];
+      lazy[i] = 0;
+    }
+  }
 
-	void pull(int i) {
-		if (col[2*i] == col[2*i+1]) {
-			col[i] = col[2*i];
-		} else {
-			col[i] = -1;
-		}
-	}
+  void pull(int i) {
+    if (col[2*i] == col[2*i+1]) {
+      col[i] = col[2*i];
+    } else {
+      col[i] = -1;
+    }
+  }
 
-	// UPDATE
-	void update(int a, int b, int v, int i, int l, int r) {
-		if (b<l || r<a) return;
-		if (a<=l && r<=b && col[i] != -1) {
-			// update old
-			if (col[i] != 0) {
-				ans[cnt[col[i]]]--;
-				cnt[col[i]] -= r-l+1;
-				ans[cnt[col[i]]]++;
-			}
-			// update seg
-			col[i] = v;
-			lazy[i] = v;
-			// update new
-			ans[cnt[col[i]]]--;
-			cnt[col[i]] += r-l+1;
-			ans[cnt[col[i]]]++;
-			return;
-		}
-		push(i);
-		int m = (l+r)/2;
-		update(a, b, v, 2*i, l, m);
-		update(a, b, v, 2*i+1, m+1, r);
-		pull(i);
-	}
-	void update(int a, int b, int v) { update(a,b,v,1,0,n-1); }
+  // UPDATE
+  void update(int a, int b, int v, int i, int l, int r) {
+    if (b<l || r<a) return;
+    if (a<=l && r<=b && col[i] != -1) {
+      // update old
+      if (col[i] != 0) {
+        ans[cnt[col[i]]]--;
+        cnt[col[i]] -= r-l+1;
+        ans[cnt[col[i]]]++;
+      }
+      // update seg
+      col[i] = v;
+      lazy[i] = v;
+      // update new
+      ans[cnt[col[i]]]--;
+      cnt[col[i]] += r-l+1;
+      ans[cnt[col[i]]]++;
+      return;
+    }
+    push(i);
+    int m = (l+r)/2;
+    update(a, b, v, 2*i, l, m);
+    update(a, b, v, 2*i+1, m+1, r);
+    pull(i);
+  }
+  void update(int a, int b, int v) { update(a,b,v,1,0,n-1); }
 };
 
 namespace HLD {
@@ -91,27 +91,27 @@ namespace HLD {
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int n, C, Q;
-	cin >> n >> C >> Q;
-	ans[0] = C;
+  int n, C, Q;
+  cin >> n >> C >> Q;
+  ans[0] = C;
 
-	for (int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	HLD::build(1);
+  for (int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  HLD::build(1);
 
-	while (Q--) {
-		int u, c, m;
-		cin >> u >> c >> m;
-		HLD::insert_path(1, u, c);
-		cout << ans[m] << nl;
-	}
+  while (Q--) {
+    int u, c, m;
+    cin >> u >> c >> m;
+    HLD::insert_path(1, u, c);
+    cout << ans[m] << nl;
+  }
 
-	return 0;
+  return 0;
 }

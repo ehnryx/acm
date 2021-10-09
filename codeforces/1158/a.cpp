@@ -26,47 +26,47 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int b[n], g[m];
-	multiset<int> x;
-	int ming = INF;
-	ll sumg = 0;
-	for (int i=0; i<n; i++) {
-		cin >> b[i];
-		x.insert(b[i]);
-	}
-	for (int i=0; i<m; i++) {
-		cin >> g[i];
-		ming = min(ming, g[i]);
-		sumg += g[i];
-	}
+  int b[n], g[m];
+  multiset<int> x;
+  int ming = INF;
+  ll sumg = 0;
+  for (int i=0; i<n; i++) {
+    cin >> b[i];
+    x.insert(b[i]);
+  }
+  for (int i=0; i<m; i++) {
+    cin >> g[i];
+    ming = min(ming, g[i]);
+    sumg += g[i];
+  }
 
-	int maxb = *x.rbegin();
-	if (maxb > ming) {
-		cout << -1 << nl;
-	} else {
-		ll ans = 0;
-		for (int i=0; i<n; i++) {
-			ans += (ll)m*b[i];
-		}
-		ans += sumg - (ll)m*maxb;
-		if (maxb == ming) {
-			cout << ans << nl;
-		} else {
-			ans += maxb - *next(x.rbegin());
-			cout << ans << nl;
-		}
-	}
+  int maxb = *x.rbegin();
+  if (maxb > ming) {
+    cout << -1 << nl;
+  } else {
+    ll ans = 0;
+    for (int i=0; i<n; i++) {
+      ans += (ll)m*b[i];
+    }
+    ans += sumg - (ll)m*maxb;
+    if (maxb == ming) {
+      cout << ans << nl;
+    } else {
+      ans += maxb - *next(x.rbegin());
+      cout << ans << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

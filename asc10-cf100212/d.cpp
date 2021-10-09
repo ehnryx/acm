@@ -49,8 +49,8 @@ pair<ll,int> solve(ll n, ll cur, int last, int i) {
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
@@ -61,5 +61,5 @@ int main() {
   auto [ans, cnt] = solve(n, 1, INF, 0);
   cout << ans << nl;
 
-	return 0;
+  return 0;
 }

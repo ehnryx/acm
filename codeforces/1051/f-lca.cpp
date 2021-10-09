@@ -16,9 +16,9 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int pre, id;
-	ll dist;
-	Edge(int p, int i, ll d): pre(p), id(i), dist(d) {}
+  int pre, id;
+  ll dist;
+  Edge(int p, int i, ll d): pre(p), id(i), dist(d) {}
 };
 
 const int N = 1e5+1;
@@ -32,26 +32,26 @@ vector<Edge> adj[N];
 // 3. dsu.find(i) to find the root of the set containing i
 //*!
 struct DSU {
-	vector<int> root;
-	vector<int> sz;
-	DSU(int n) {
-		root.resize(n, -1);
-		sz.resize(n, 1);
-	}
-	int find(int i) {
-		if (root[i] == -1) return i;
-		return root[i] = find(root[i]);
-	}
-	// returns true if we combine two sets
-	bool link(int i, int j) {
-		i = find(i);
-		j = find(j);
-		if (i == j) return false;
-		if (sz[i] < sz[j]) swap(i,j);
-		root[j] = i;
-		sz[i] += sz[j];
-		return true;
-	}
+  vector<int> root;
+  vector<int> sz;
+  DSU(int n) {
+    root.resize(n, -1);
+    sz.resize(n, 1);
+  }
+  int find(int i) {
+    if (root[i] == -1) return i;
+    return root[i] = find(root[i]);
+  }
+  // returns true if we combine two sets
+  bool link(int i, int j) {
+    i = find(i);
+    j = find(j);
+    if (i == j) return false;
+    if (sz[i] < sz[j]) swap(i,j);
+    root[j] = i;
+    sz[i] += sz[j];
+    return true;
+  }
 };
 //*/
 
@@ -98,14 +98,14 @@ template <class T> struct RMQ {
 //*!
 struct LCA : RMQ<pii> {
     vector<int> depth, segpos;
-	vector<ll> len;
+  vector<ll> len;
     int lcanum = 0;
     LCA(int n): RMQ<pii>(2*n) {
         lcanum = 0;
         depth.resize(n);
         segpos.resize(n);
-		len.resize(n);
-		len[0] = depth[0] = 0;
+    len.resize(n);
+    len[0] = depth[0] = 0;
     }
     void build(int root) {
         build(root, 0, 0);
@@ -113,7 +113,7 @@ struct LCA : RMQ<pii> {
     }
     void build(int cur, int par, ll dist) {
         depth[cur] = depth[par] + 1;
-		len[cur] = len[par] + dist;
+    len[cur] = len[par] + dist;
         segpos[cur] = lcanum;
         RMQ::rmq[lcanum++][0] = pii(depth[cur], cur);
         for (Edge& x : adj[cur]) {
@@ -125,85 +125,85 @@ struct LCA : RMQ<pii> {
     }
     ll query(int a, int b) {
         int c = RMQ::query(segpos[a],segpos[b]).second;
-		return len[a]+len[b]-2*len[c];
+    return len[a]+len[b]-2*len[c];
     }
 };
 //*/
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, a, b, c;
-	cin >> n >> m;
+  int n, m, a, b, c;
+  cin >> n >> m;
 
-	vector<Edge> edges;
-	for (int i=0; i<m; i++) {
-		cin >> a >> b >> c;
-		edges.push_back(Edge(a,b,c));
-	}
+  vector<Edge> edges;
+  for (int i=0; i<m; i++) {
+    cin >> a >> b >> c;
+    edges.push_back(Edge(a,b,c));
+  }
 
-	DSU dsu(n+1);
-	unordered_set<int> seen;
-	vector<Edge> cross;
-	for (const Edge& e : edges) {
-		if (dsu.link(e.pre, e.id)) {
-			adj[e.pre].push_back(Edge(e.pre, e.id, e.dist));
-			adj[e.id].push_back(Edge(e.id, e.pre, e.dist));
-		} else {
-			cross.push_back(e);
-			seen.insert(e.pre);
-			seen.insert(e.id);
-		}
-	}
+  DSU dsu(n+1);
+  unordered_set<int> seen;
+  vector<Edge> cross;
+  for (const Edge& e : edges) {
+    if (dsu.link(e.pre, e.id)) {
+      adj[e.pre].push_back(Edge(e.pre, e.id, e.dist));
+      adj[e.id].push_back(Edge(e.id, e.pre, e.dist));
+    } else {
+      cross.push_back(e);
+      seen.insert(e.pre);
+      seen.insert(e.id);
+    }
+  }
 
-	LCA lca(n+1);
-	lca.build(1);
+  LCA lca(n+1);
+  lca.build(1);
 
-	vector<int> node;
-	unordered_map<int,int> nid;
-	for (int i : seen) {
-		nid[i] = node.size();
-		node.push_back(i);
-	}
-	m = node.size();
+  vector<int> node;
+  unordered_map<int,int> nid;
+  for (int i : seen) {
+    nid[i] = node.size();
+    node.push_back(i);
+  }
+  m = node.size();
 
-	ll trivial[m][m];
-	memset(trivial, INF, sizeof trivial);
-	for (const Edge& e : cross) {
-		trivial[nid[e.pre]][nid[e.id]] = trivial[nid[e.id]][nid[e.pre]] = e.dist;
-	}
-	for (int i=0; i<m; i++) {
-		for (int j=0; j<m; j++) {
-			trivial[i][j] = min(trivial[i][j], lca.query(node[i],node[j]));
-		}
-	}
-	for (int k=0; k<m; k++) {
-		for (int i=0; i<m; i++) {
-			for (int j=0; j<m; j++) {
-				trivial[i][j] = min(trivial[i][j], trivial[i][k]+trivial[k][j]);
-			}
-		}
-	}
+  ll trivial[m][m];
+  memset(trivial, INF, sizeof trivial);
+  for (const Edge& e : cross) {
+    trivial[nid[e.pre]][nid[e.id]] = trivial[nid[e.id]][nid[e.pre]] = e.dist;
+  }
+  for (int i=0; i<m; i++) {
+    for (int j=0; j<m; j++) {
+      trivial[i][j] = min(trivial[i][j], lca.query(node[i],node[j]));
+    }
+  }
+  for (int k=0; k<m; k++) {
+    for (int i=0; i<m; i++) {
+      for (int j=0; j<m; j++) {
+        trivial[i][j] = min(trivial[i][j], trivial[i][k]+trivial[k][j]);
+      }
+    }
+  }
 
-	int q;
-	cin >> q;
-	while (q--) {
-		cin >> a >> b;
-		ll ans = lca.query(a, b);
-		for (int i=0; i<m; i++) {
-			for (int j=0; j<m; j++) {
-				ans = min(ans, lca.query(a,node[i])+lca.query(b,node[j])+trivial[i][j]);
-			}
-		}
-		cout << ans << nl;
-	}
+  int q;
+  cin >> q;
+  while (q--) {
+    cin >> a >> b;
+    ll ans = lca.query(a, b);
+    for (int i=0; i<m; i++) {
+      for (int j=0; j<m; j++) {
+        ans = min(ans, lca.query(a,node[i])+lca.query(b,node[j])+trivial[i][j]);
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

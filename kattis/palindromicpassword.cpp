@@ -25,35 +25,35 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 bool is_palindrome(int n) {
-	vector<int> a;
-	for(;n>0;n/=10) {
-		a.push_back(n%10);
-	}
-	vector<int> b = a;
-	reverse(b.begin(),b.end());
-	return a == b;
+  vector<int> a;
+  for(;n>0;n/=10) {
+    a.push_back(n%10);
+  }
+  vector<int> b = a;
+  reverse(b.begin(),b.end());
+  return a == b;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		int v;
-		cin>>v;
-		for(int j=0;;j++) {
-			if(v-j>99999 && is_palindrome(v-j)) {
-				cout<<v-j<<nl;
-				break;
-			}
-			if(v+j<1000000 && is_palindrome(v+j)) {
-				cout<<v+j<<nl;
-				break;
-			}
-		}
-	}
+  int n;
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    int v;
+    cin>>v;
+    for(int j=0;;j++) {
+      if(v-j>99999 && is_palindrome(v-j)) {
+        cout<<v-j<<nl;
+        break;
+      }
+      if(v+j<1000000 && is_palindrome(v+j)) {
+        cout<<v+j<<nl;
+        break;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

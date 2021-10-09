@@ -27,24 +27,24 @@ typedef long long ll;
 const ll MOD = 998244353;
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
+  ios::sync_with_stdio(0); cin.tie(0);
 
-	int n, t;
-	cin >> n >> t;
-	vector<int> x(n+1);
-	int tot = 0;
-	for(int i=1; i<=n; i++) {
-		cin >> x[i];
-		tot += x[i];
-	}
+  int n, t;
+  cin >> n >> t;
+  vector<int> x(n+1);
+  int tot = 0;
+  for(int i=1; i<=n; i++) {
+    cin >> x[i];
+    tot += x[i];
+  }
 
-	ll sum = x[1];
-	ll ans = t-tot+1;
-	for(int i=2; i<=n; i++) {
-		ans = ans * (t-tot+1+n - (i-1) + sum) % MOD;
-		sum += x[i];
-	}
-	cout << ans << nl;
+  ll sum = x[1];
+  ll ans = t-tot+1;
+  for(int i=2; i<=n; i++) {
+    ans = ans * (t-tot+1+n - (i-1) + sum) % MOD;
+    sum += x[i];
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -25,28 +25,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int lb = -INF;
-	int ub = INF;
-	for(int n;cin>>n&&n;) {
-		string s;
-		cin>>s>>s;
-		if(s=="high") {
-			ub = min(ub,n);
-		} else if(s=="low") {
-			lb = max(lb,n);
-		} else {
-			if(lb<n && n<ub) {
-				cout<<"Stan may be honest"<<nl;
-			} else {
-				cout<<"Stan is dishonest"<<nl;
-			}
-			lb = -INF;
-			ub = INF;
-		}
-	}
+  int lb = -INF;
+  int ub = INF;
+  for(int n;cin>>n&&n;) {
+    string s;
+    cin>>s>>s;
+    if(s=="high") {
+      ub = min(ub,n);
+    } else if(s=="low") {
+      lb = max(lb,n);
+    } else {
+      if(lb<n && n<ub) {
+        cout<<"Stan may be honest"<<nl;
+      } else {
+        cout<<"Stan is dishonest"<<nl;
+      }
+      lb = -INF;
+      ub = INF;
+    }
+  }
 
-	return 0;
+  return 0;
 }

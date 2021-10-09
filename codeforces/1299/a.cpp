@@ -27,38 +27,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<int> a(n);
-	for(int i=0; i<n; i++) {
-		cin >> a[i];
-	}
+  int n;
+  cin >> n;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
 
-	vector<int> pref(n), suff(n);
-	pref[0] = (1<<30)-1;
-	for(int i=1; i<n; i++) {
-		pref[i] = pref[i-1] & ~a[i-1];
-	}
-	suff[n-1] = (1<<30)-1;
-	for(int i=n-2; i>=0; i--) {
-		suff[i] = suff[i+1] & ~a[i+1];
-	}
+  vector<int> pref(n), suff(n);
+  pref[0] = (1<<30)-1;
+  for(int i=1; i<n; i++) {
+    pref[i] = pref[i-1] & ~a[i-1];
+  }
+  suff[n-1] = (1<<30)-1;
+  for(int i=n-2; i>=0; i--) {
+    suff[i] = suff[i+1] & ~a[i+1];
+  }
 
-	int s = 0;
-	for(int i=1; i<n; i++) {
-		if((pref[i] & suff[i] & a[i]) > (pref[s] & suff[s] & a[s])) {
-			s = i;
-		}
-	}
+  int s = 0;
+  for(int i=1; i<n; i++) {
+    if((pref[i] & suff[i] & a[i]) > (pref[s] & suff[s] & a[s])) {
+      s = i;
+    }
+  }
 
-	swap(a[s], a[0]);
-	for(int i=0; i<n; i++) {
-		cout << a[i] << " ";
-	}
-	cout << nl;
+  swap(a[s], a[0]);
+  for(int i=0; i<n; i++) {
+    cout << a[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

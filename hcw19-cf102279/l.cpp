@@ -31,10 +31,10 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int u; ll c;
-	bool operator < (const Edge& o) const {
-		return c>o.c;
-	}
+  int u; ll c;
+  bool operator < (const Edge& o) const {
+    return c>o.c;
+  }
 };
 
 const int N = 2e5+1;
@@ -42,45 +42,45 @@ vector<Edge> adj[N];
 ll dist[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,l,r,c;
-	cin>>n>>l>>r>>c;
+  int n,l,r,c;
+  cin>>n>>l>>r>>c;
 
-	int u, v;
-	cin >> u >> v;
+  int u, v;
+  cin >> u >> v;
 
-	int a[n+1];
-	unordered_map<int,int> idx;
-	int id=n+1;
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-		if(!idx.count(a[i])) idx[a[i]]=id++;
-		if(i>1) adj[i].push_back({i-1,l});
-		if(i<n) adj[i].push_back({i+1,r});
-		adj[i].push_back({idx[a[i]],c});
-		adj[idx[a[i]]].push_back({i,0});
-	}
+  int a[n+1];
+  unordered_map<int,int> idx;
+  int id=n+1;
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+    if(!idx.count(a[i])) idx[a[i]]=id++;
+    if(i>1) adj[i].push_back({i-1,l});
+    if(i<n) adj[i].push_back({i+1,r});
+    adj[i].push_back({idx[a[i]],c});
+    adj[idx[a[i]]].push_back({i,0});
+  }
 
-	memset(dist,-1,sizeof dist);
-	priority_queue<Edge> bfs;
-	bfs.push({u,0});
-	while(!bfs.empty()) {
-		Edge cur = bfs.top();bfs.pop();
-		if(dist[cur.u]==-1) {
-			if(cur.u==v) {
-				cout << cur.c << nl;
-				return 0;
-			}
-			dist[cur.u]=cur.c;
-			for(const Edge& e:adj[cur.u]) {
-				if(dist[e.u]==-1) bfs.push({e.u,e.c+cur.c});
-			}
-		}
-	}
-	assert(false);
+  memset(dist,-1,sizeof dist);
+  priority_queue<Edge> bfs;
+  bfs.push({u,0});
+  while(!bfs.empty()) {
+    Edge cur = bfs.top();bfs.pop();
+    if(dist[cur.u]==-1) {
+      if(cur.u==v) {
+        cout << cur.c << nl;
+        return 0;
+      }
+      dist[cur.u]=cur.c;
+      for(const Edge& e:adj[cur.u]) {
+        if(dist[e.u]==-1) bfs.push({e.u,e.c+cur.c});
+      }
+    }
+  }
+  assert(false);
 
-	return 0;
+  return 0;
 }

@@ -113,19 +113,19 @@ pn append(pn l, pn r) { if (splay(l) == nil) return r;
 
 struct LinkCutTree {
   vector<pn> nds;
-	LinkCutTree(int n=0) { init(n); }
+  LinkCutTree(int n=0) { init(n); }
   void init(int n) { nds.resize(n, nil);
     for(int i=0;i<n;i++) nds[i] = new_node(i); }
   pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
     x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
-	pn join(pn l, pn r) { pn x = splay(first(r)); x->pp = l->pp;
-		push(x); push(splay(l)); x->setc(l,0); pull(x->l); pull(x); }
+  pn join(pn l, pn r) { pn x = splay(first(r)); x->pp = l->pp;
+    push(x); push(splay(l)); x->setc(l,0); pull(x->l); pull(x); }
   pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
     for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
       if(w->r!=nil) { splitAfter(w)->pp=w; } join(w,x); } return x; }
   void link(int x, int y) { join(access(nds[y]), reroot(nds[x])); }
   void cut(int x, int y) {
-		reroot(nds[y]); access(nds[x]); splitAfter(nds[y]); }
+    reroot(nds[y]); access(nds[x]); splitAfter(nds[y]); }
   int lca(int x, int y) { return lca(nds[x], nds[y])->key; }
   pn lca(pn x, pn y) { access(x); access(y); splay(x);
     return (x->pp == nil ? x : x->pp); }
@@ -150,48 +150,48 @@ char c[N];
 int fail[N];
 int failj = 0;
 void update(int i) {
-	while(failj>0 && c[failj+1] != c[i]) {
-		failj = fail[failj];
-	}
-	if(failj+1 < i && c[failj+1] == c[i]) {
-		fail[i] = ++failj;
-	} else {
-		assert(failj == 0);
-		fail[i] = failj;
-	}
+  while(failj>0 && c[failj+1] != c[i]) {
+    failj = fail[failj];
+  }
+  if(failj+1 < i && c[failj+1] == c[i]) {
+    fail[i] = ++failj;
+  } else {
+    assert(failj == 0);
+    fail[i] = failj;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	SplayTree::LinkCutTree lct(n+1);
-	int id = 0;
-	int last = 0;
-	for(int i=0; i<n; i++) {
-		string s;
-		cin >> s;
-		if(s == "add") {
-			cin >> c[++id];
-			c[id] = (c[id]-'a' + last) % 26 + 'a';
-			//cerr<<"insert "<<c[id]<<nl;
-			update(id);
-			lct.link(id, fail[id]);
-			//cerr<<"lct link "<<id<<" "<<fail[id]<<nl;
-			lct.insert_path(id, 0, 1);
-			//cerr<<"insert path "<<0<<" "<<id<<nl;
-		} else {
-			int x;
-			cin >> x;
-			x = (x-1+last) % id + 1;
-			//cerr<<"query "<<x<<nl;
-			last = lct.query_node(x);
-			cout << last << nl;
-		}
-	}
+  SplayTree::LinkCutTree lct(n+1);
+  int id = 0;
+  int last = 0;
+  for(int i=0; i<n; i++) {
+    string s;
+    cin >> s;
+    if(s == "add") {
+      cin >> c[++id];
+      c[id] = (c[id]-'a' + last) % 26 + 'a';
+      //cerr<<"insert "<<c[id]<<nl;
+      update(id);
+      lct.link(id, fail[id]);
+      //cerr<<"lct link "<<id<<" "<<fail[id]<<nl;
+      lct.insert_path(id, 0, 1);
+      //cerr<<"insert path "<<0<<" "<<id<<nl;
+    } else {
+      int x;
+      cin >> x;
+      x = (x-1+last) % id + 1;
+      //cerr<<"query "<<x<<nl;
+      last = lct.query_node(x);
+      cout << last << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

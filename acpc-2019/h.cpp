@@ -25,32 +25,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int m, n;
-	cin >> m >> n;
-	string s;
-	cin >> s;
-	unordered_set<int> vals;
-	vals.insert(s.size());
-	vector<pii> ord;
-	for (int i=0;i<n;i++) {
-		int a,b;
-		cin >> a >> b;
-		ord.push_back(pii(b, a));
-		vals.insert(a);
-	}
-	sort(ord.begin(), ord.end());
+  int m, n;
+  cin >> m >> n;
+  string s;
+  cin >> s;
+  unordered_set<int> vals;
+  vals.insert(s.size());
+  vector<pii> ord;
+  for (int i=0;i<n;i++) {
+    int a,b;
+    cin >> a >> b;
+    ord.push_back(pii(b, a));
+    vals.insert(a);
+  }
+  sort(ord.begin(), ord.end());
 
-	string ans;
-	for(const pii& it:ord) {
-		int i = it.second;
-		do {
-			ans.push_back(s[i]);
-		} while (!vals.count(++i));
-	}
-	cout << ans << nl;
+  string ans;
+  for(const pii& it:ord) {
+    int i = it.second;
+    do {
+      ans.push_back(s[i]);
+    } while (!vals.count(++i));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -27,39 +27,39 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(1);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(1);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m;
-		cin >> n >> m;
-		int a[m];
-		for(int i=0; i<m; i++) {
-			cin >> a[i];
-		}
-		sort(a, a+m);
-		ld l = 0;
-		ld r = a[m-1];
-		while(r-l > 1e-2) {
-			ld v = (l+r) / 2;
-			int cnt = 0;
-			ld ub = -INF;
-			for(int i=0; i<m; i++) {
-				if(a[i] > ub) {
-					ub = a[i] + 2*v;
-					cnt++;
-				}
-			}
-			if(cnt <= n) {
-				r = v;
-			} else {
-				l = v;
-			}
-		}
-		cout << r << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    int a[m];
+    for(int i=0; i<m; i++) {
+      cin >> a[i];
+    }
+    sort(a, a+m);
+    ld l = 0;
+    ld r = a[m-1];
+    while(r-l > 1e-2) {
+      ld v = (l+r) / 2;
+      int cnt = 0;
+      ld ub = -INF;
+      for(int i=0; i<m; i++) {
+        if(a[i] > ub) {
+          ub = a[i] + 2*v;
+          cnt++;
+        }
+      }
+      if(cnt <= n) {
+        r = v;
+      } else {
+        l = v;
+      }
+    }
+    cout << r << nl;
+  }
 
-	return 0;
+  return 0;
 }

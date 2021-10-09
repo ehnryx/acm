@@ -195,27 +195,27 @@ template <class T> struct Matrix {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int h, w;
-	cin >> h >> w;
+  int h, w;
+  cin >> h >> w;
 
-	vector<Int> goal(h,0);
-	Matrix<Int> mat(h,w);
-	for (int i=0; i<h; i++) {
-		for (int j=0; j<w; j++) {
-			int a;
-			cin >> a;
-			mat[i][j] = Int(a);
-		}
-	}
+  vector<Int> goal(h,0);
+  Matrix<Int> mat(h,w);
+  for (int i=0; i<h; i++) {
+    for (int j=0; j<w; j++) {
+      int a;
+      cin >> a;
+      mat[i][j] = Int(a);
+    }
+  }
 
-	int x;
-	vector<int> piv;
-	mat.solve(goal, x, piv);
-	cout << x << nl;
+  int x;
+  vector<int> piv;
+  mat.solve(goal, x, piv);
+  cout << x << nl;
 
-	return 0;
+  return 0;
 }

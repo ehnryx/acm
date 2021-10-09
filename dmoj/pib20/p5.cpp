@@ -25,32 +25,32 @@ const int N = 1e3 + 1;
 int d[N][N], p[N][N], a[N][N], m[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int h = (n-1) / 2;
+  int n;
+  cin >> n;
+  int h = (n-1) / 2;
 
-	for(int i=0; i<n; i++) {
-		for(int j=1; j<n; j++) {
-			cin >> d[i][j];
-			a[j][i] = a[j-1][i] + d[i][j];
-		}
-	}
+  for(int i=0; i<n; i++) {
+    for(int j=1; j<n; j++) {
+      cin >> d[i][j];
+      a[j][i] = a[j-1][i] + d[i][j];
+    }
+  }
 
-	for(int i=0; i<n; i++) {
-		sort(a[i], a[i]+n);
-		m[i] = a[i][h];
-	}
-	sort(m, m+n);
-	int v = -m[h];
+  for(int i=0; i<n; i++) {
+    sort(a[i], a[i]+n);
+    m[i] = a[i][h];
+  }
+  sort(m, m+n);
+  int v = -m[h];
 
-	cout << "YES" << nl;
-	for(int i=0; i<n; i++) {
-		cout << v << " ";
-	}
-	cout << nl;
+  cout << "YES" << nl;
+  for(int i=0; i<n; i++) {
+    cout << v << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

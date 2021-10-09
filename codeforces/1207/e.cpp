@@ -33,55 +33,55 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	cout<<"? ";
-	for(int i=0;i<100;i++) {
-		cout<<i<<" ";
-	}
-	cout<<endl;
+  cout<<"? ";
+  for(int i=0;i<100;i++) {
+    cout<<i<<" ";
+  }
+  cout<<endl;
 
-	int n;
-	cin>>n;
-	assert(n!=-1);
-	vector<int> v;
-	for(int i=0;i<100;i++) {
-		v.push_back(i^n);
-	}
+  int n;
+  cin>>n;
+  assert(n!=-1);
+  vector<int> v;
+  for(int i=0;i<100;i++) {
+    v.push_back(i^n);
+  }
 
-	const int C = 1<<14;
-	unordered_map<int,int> val;
-	vector<int> q;
-	for(int i=100;i<C&&q.size()<100;i++) {
-		bool ok = true;
-		vector<pii> cur;
-		for(int j:v) {
-			if(val.count(j^i)) {
-				ok = false;
-				break;
-			}
-			cur.push_back(pii(j^i,j));
-		}
-		if(ok) {
-			for(pii it:cur) {
-				val.insert(it);
-			}
-			q.push_back(i);
-		}
-	}
-	assert(q.size()==100);
+  const int C = 1<<14;
+  unordered_map<int,int> val;
+  vector<int> q;
+  for(int i=100;i<C&&q.size()<100;i++) {
+    bool ok = true;
+    vector<pii> cur;
+    for(int j:v) {
+      if(val.count(j^i)) {
+        ok = false;
+        break;
+      }
+      cur.push_back(pii(j^i,j));
+    }
+    if(ok) {
+      for(pii it:cur) {
+        val.insert(it);
+      }
+      q.push_back(i);
+    }
+  }
+  assert(q.size()==100);
 
-	cout<<"? ";
-	for(int i:q) {
-		cout<<i<<" ";
-	}
-	cout<<endl;
+  cout<<"? ";
+  for(int i:q) {
+    cout<<i<<" ";
+  }
+  cout<<endl;
 
-	cin>>n;
-	assert(n!=-1);
-	cout<<"! "<<val[n]<<endl;
+  cin>>n;
+  assert(n!=-1);
+  cout<<"! "<<val[n]<<endl;
 
-	return 0;
+  return 0;
 }

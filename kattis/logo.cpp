@@ -27,31 +27,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(0);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(0);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		pt cur(0, 0);
-		pt dir(1, 0);
-		for(int i=0; i<n; i++) {
-			string s; int v;
-			cin >> s >> v;
-			if(s == "fd") {
-				cur += (ld)v * dir;
-			} else if(s == "bk") {
-				cur -= (ld)v * dir;
-			} else if(s == "lt") {
-				dir *= exp(pt(0, M_PIl*v/180));
-			} else { // s == "rt"
-				dir *= exp(pt(0, -M_PIl*v/180));
-			}
-		}
-		cout << abs(cur) << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    pt cur(0, 0);
+    pt dir(1, 0);
+    for(int i=0; i<n; i++) {
+      string s; int v;
+      cin >> s >> v;
+      if(s == "fd") {
+        cur += (ld)v * dir;
+      } else if(s == "bk") {
+        cur -= (ld)v * dir;
+      } else if(s == "lt") {
+        dir *= exp(pt(0, M_PIl*v/180));
+      } else { // s == "rt"
+        dir *= exp(pt(0, -M_PIl*v/180));
+      }
+    }
+    cout << abs(cur) << nl;
+  }
 
-	return 0;
+  return 0;
 }

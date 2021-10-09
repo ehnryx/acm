@@ -248,13 +248,13 @@ int main() {
   set<int> roots;
   for(int i=1; i<=n; i++) {
     if(adj[i].size() % 2) {
-			adj[i].insert(0);
-			adj[0].insert(i);
+      adj[i].insert(0);
+      adj[0].insert(i);
     }
   }
 
   list<int> ans;
-	euler(0, ans, ans.begin());
+  euler(0, ans, ans.begin());
   if(ans.size() <= 1) ans.clear();
   euler(1, ans, ans.begin());
   if(*ans.begin() != 0) {

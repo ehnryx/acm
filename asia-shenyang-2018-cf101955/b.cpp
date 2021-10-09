@@ -14,23 +14,23 @@ int w[N][10];
 int b[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int TT; cin >> TT;
-	for (int tt = 1; tt <= TT; tt++) {
-		cout << "Case #" << tt << ":\n";
-		int n, m; cin >> n >> m;
-		for (int i = 0; i < n; i++) {
-			cin >> l[i] >> r[i];
-			for (int j = 0; j < r[i] - l[i] + 1; j++) {
-				cin >> w[i][j];
-			}
-		}
-		for (int i = 0; i < m; i++) {
-			cin >> b[i];
-		}
-	}
+  int TT; cin >> TT;
+  for (int tt = 1; tt <= TT; tt++) {
+    cout << "Case #" << tt << ":\n";
+    int n, m; cin >> n >> m;
+    for (int i = 0; i < n; i++) {
+      cin >> l[i] >> r[i];
+      for (int j = 0; j < r[i] - l[i] + 1; j++) {
+        cin >> w[i][j];
+      }
+    }
+    for (int i = 0; i < m; i++) {
+      cin >> b[i];
+    }
+  }
 
-	return 0;
+  return 0;
 }

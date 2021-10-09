@@ -26,25 +26,25 @@ const int N = 1e3+1;
 int cnt[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	For(i,n) {
-		int v;
-		cin >> v;
-		cnt[v]++;
-	}
+  int n, k;
+  cin >> n >> k;
+  For(i,n) {
+    int v;
+    cin >> v;
+    cnt[v]++;
+  }
 
-	int odd = 0;
-	FOR(i,1,k) {
-		odd += cnt[i]%2;
-	}
-	if (n%2) odd--;
+  int odd = 0;
+  FOR(i,1,k) {
+    odd += cnt[i]%2;
+  }
+  if (n%2) odd--;
 
-	cout << n - odd/2 << nl;
+  cout << n - odd/2 << nl;
 
-	return 0;
+  return 0;
 }

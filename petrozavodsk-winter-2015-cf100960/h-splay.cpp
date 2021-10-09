@@ -40,7 +40,7 @@ inline void modifyNode(pn x, ll v) { if (x != nil) {
 inline void setpp(pn x, pn pp) { if(x!=nil) x->pp = pp; }
 inline void push(pn x) {
   if (x->rev) { rev(x->l); rev(x->r); x->rev=0; }                  // REV
-	setpp(x->l, x->pp); setpp(x->r, x->pp);
+  setpp(x->l, x->pp); setpp(x->r, x->pp);
   //modifyNode(x->l, x->lazy); modifyNode(x->r, x->lazy); x->lazy=0; RMQ
 }
 //%%== call pushTo before using node if ancestor may have unpushed lazy
@@ -103,56 +103,56 @@ pn append(pn l, pn r) { if (splay(l) == nil) return r;
   push(r); x->setc(r,1); pull(x->r); pull(x); return x; }
 
 struct LinkCutTree {
-	vector<pn> nds;
-	void init(int n) { nds.resize(n, nil);
-		for(int i=0;i<n;i++) nds[i] = new node(i); }
-	pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
-		x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
-	pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
-		for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
-			if(w->r!=nil) { splitAfter(w)->pp=w; } append(w,x); } return x; }
-	void link(int x, int y) { append(access(nds[y]), reroot(nds[x])); }
-	void cut(int x, int y){ reroot(nds[y]); splitBefore(access(nds[x])); }
-	void reroot(int x) { reroot(nds[x]); }
-	pn reroot(pn x) { rev(access(x)); push(x); return x; }
-	int findroot(int x) { return findroot(nds[x])->key; }
-	pn findroot(pn x) { return first(access(x)); }
+  vector<pn> nds;
+  void init(int n) { nds.resize(n, nil);
+    for(int i=0;i<n;i++) nds[i] = new node(i); }
+  pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
+    x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
+  pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
+    for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
+      if(w->r!=nil) { splitAfter(w)->pp=w; } append(w,x); } return x; }
+  void link(int x, int y) { append(access(nds[y]), reroot(nds[x])); }
+  void cut(int x, int y){ reroot(nds[y]); splitBefore(access(nds[x])); }
+  void reroot(int x) { reroot(nds[x]); }
+  pn reroot(pn x) { rev(access(x)); push(x); return x; }
+  int findroot(int x) { return findroot(nds[x])->key; }
+  pn findroot(pn x) { return first(access(x)); }
 };
 
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	SplayTree::LinkCutTree lct;
-	lct.init(n+1);
+  SplayTree::LinkCutTree lct;
+  lct.init(n+1);
 
-	for (char c; cin >> c && c != 'E'; ) {
-		int a, b;
-		cin >> a >> b;
-		if (c == 'C') {
-			lct.link(a,b);
-		} else if (c == 'D') {
-			lct.cut(a,b);
-		} else {
-			lct.reroot(a);
-			if (lct.findroot(b) == a) {
-				cout << "YES" << endl;
-			} else {
-				cout << "NO" << endl;
-			}
-		}
-	}
+  for (char c; cin >> c && c != 'E'; ) {
+    int a, b;
+    cin >> a >> b;
+    if (c == 'C') {
+      lct.link(a,b);
+    } else if (c == 'D') {
+      lct.cut(a,b);
+    } else {
+      lct.reroot(a);
+      if (lct.findroot(b) == a) {
+        cout << "YES" << endl;
+      } else {
+        cout << "NO" << endl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

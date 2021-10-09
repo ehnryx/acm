@@ -25,51 +25,51 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	string all[n];
-	for(int i=0; i<n; i++) {
-		cin >> all[i];
-	}
-	sort(all, all+n);
+  int n;
+  cin >> n;
+  string all[n];
+  for(int i=0; i<n; i++) {
+    cin >> all[i];
+  }
+  sort(all, all+n);
 
-	int m;
-	cin >> m;
-	for(int j=0; j<m; j++) {
-		string s;
-		cin >> s;
-		string res;
-		for(int i=0; i<s.size(); i++) {
-			if(s[i] != '#') {
-				res.push_back(s[i]);
-			} else {
-				auto lb = lower_bound(all, all+n, res + " ");
-				auto rb = upper_bound(all, all+n, res + "|");
-				if(lb == rb) {
-					for(; i<s.size(); i++) {
-						if(s[i] != '#') {
-							res.push_back(s[i]);
-						}
-					}
-					break;
-				} else {
-					int cnt = rb - lb;
-					int tabs = 0;
-					for(; i<s.size() && s[i]=='#'; i++) {
-						tabs++;
-					}
-					assert(tabs > 0);
-					tabs = (tabs-1) % cnt;
-					res = *(lb + tabs);
-					--i;
-				}
-			}
-		}
-		cout << res << nl;
-	}
+  int m;
+  cin >> m;
+  for(int j=0; j<m; j++) {
+    string s;
+    cin >> s;
+    string res;
+    for(int i=0; i<s.size(); i++) {
+      if(s[i] != '#') {
+        res.push_back(s[i]);
+      } else {
+        auto lb = lower_bound(all, all+n, res + " ");
+        auto rb = upper_bound(all, all+n, res + "|");
+        if(lb == rb) {
+          for(; i<s.size(); i++) {
+            if(s[i] != '#') {
+              res.push_back(s[i]);
+            }
+          }
+          break;
+        } else {
+          int cnt = rb - lb;
+          int tabs = 0;
+          for(; i<s.size() && s[i]=='#'; i++) {
+            tabs++;
+          }
+          assert(tabs > 0);
+          tabs = (tabs-1) % cnt;
+          res = *(lb + tabs);
+          --i;
+        }
+      }
+    }
+    cout << res << nl;
+  }
 
-	return 0;
+  return 0;
 }

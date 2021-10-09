@@ -24,23 +24,23 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	set<int> seen;
-	int n, a;
-	cin >> n;
-	int ans = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> a;
-		if (seen.count(a)) {
-			ans++;
-		} else {
-			seen.insert(a);
-		}
-	}
-	cout << ans << nl;
+  set<int> seen;
+  int n, a;
+  cin >> n;
+  int ans = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> a;
+    if (seen.count(a)) {
+      ans++;
+    } else {
+      seen.insert(a);
+    }
+  }
+  cout << ans << nl;
 
 
-	return 0;
+  return 0;
 }

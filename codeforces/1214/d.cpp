@@ -33,42 +33,42 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	char a[n+2][m+2];
-	fill(&a[0][0],&a[0][0]+(n+2)*(m+2),'#');
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=m;j++) {
-			cin>>a[i][j];
-		}
-	}
+  int n,m;
+  cin>>n>>m;
+  char a[n+2][m+2];
+  fill(&a[0][0],&a[0][0]+(n+2)*(m+2),'#');
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=m;j++) {
+      cin>>a[i][j];
+    }
+  }
 
-	int dp[n][m];
-	memset(dp,0,sizeof dp);
-	for(int i=3;i<m+2;i++) dp[0][i] = 1;
-	for(int i=0;i<n-1;i++) dp[i][m+1] = 1;
-	for(int i=3;i<n+2;i++) dp[i][0] = 1;
-	for(int i=0;i<m-1;i++) dp[n+1][i] = 1;
+  int dp[n][m];
+  memset(dp,0,sizeof dp);
+  for(int i=3;i<m+2;i++) dp[0][i] = 1;
+  for(int i=0;i<n-1;i++) dp[i][m+1] = 1;
+  for(int i=3;i<n+2;i++) dp[i][0] = 1;
+  for(int i=0;i<m-1;i++) dp[n+1][i] = 1;
 
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=m;j++) {
-			if(i==1&&j==1) continue;
-			if(a[i][j]=='#') {
-				dp[i][j] = dp[i-1][j+1];
-			} else {
-				dp[i][j] = dp[i][j-1];
-			}
-		}
-		for(int j=m;j>0;j--) {
-			if(a[i][j]=='#') {
-				dp[i][j] |= dp[i][j+1];
-			}
-		}
-	}
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=m;j++) {
+      if(i==1&&j==1) continue;
+      if(a[i][j]=='#') {
+        dp[i][j] = dp[i-1][j+1];
+      } else {
+        dp[i][j] = dp[i][j-1];
+      }
+    }
+    for(int j=m;j>0;j--) {
+      if(a[i][j]=='#') {
+        dp[i][j] |= dp[i][j+1];
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -38,48 +38,48 @@ inline ld abs(const pt &a) {return sqrt(a.x*a.x + a.y*a.y);}
 ld sqr(ld x) { return x*x; }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,r;
-	cin >> n >> r;
+  int n,r;
+  cin >> n >> r;
 
-	vector<pt> p;
-	for (int i=0;i<n;i++) {
-		int x,y;
-		cin >> x >> y;
-		p.push_back(pt(x,y));
-	}
+  vector<pt> p;
+  for (int i=0;i<n;i++) {
+    int x,y;
+    cin >> x >> y;
+    p.push_back(pt(x,y));
+  }
 
-	int check = 0;
-	for (int i=0;i<n;i++) {
-		for (int j=0;j<i;j++) {
-			if(abs(p[i]-p[j]) < EPS) continue;
-			check++;
-			ld d = abs(p[i]-p[j]);
-			ld h2 = sqr(2*r) - sqr(d/2);
-			if(h2 < 0) continue;
-			ld h = sqrt(h2);
-			pt m = (p[i]+p[j]) / (ld)2;
-			pt perp = (p[i]-p[j])*pt(0,1) / abs(p[i]-p[j]);
-			pt c1 = m + perp*h;
-			pt c2 = m - perp*h;
+  int check = 0;
+  for (int i=0;i<n;i++) {
+    for (int j=0;j<i;j++) {
+      if(abs(p[i]-p[j]) < EPS) continue;
+      check++;
+      ld d = abs(p[i]-p[j]);
+      ld h2 = sqr(2*r) - sqr(d/2);
+      if(h2 < 0) continue;
+      ld h = sqrt(h2);
+      pt m = (p[i]+p[j]) / (ld)2;
+      pt perp = (p[i]-p[j])*pt(0,1) / abs(p[i]-p[j]);
+      pt c1 = m + perp*h;
+      pt c2 = m - perp*h;
 
-			int cnt1 = 0;
-			int cnt2 = 0;
-			for (int k=0;k<n;k++) {
-				if(abs(p[k]-c1) < 2*r+EPS) cnt1++;
-				if(abs(p[k]-c2) < 2*r+EPS) cnt2++;
-			}
-			if(cnt1 == n || cnt2 == n) {
-				cout << "possible" << nl;
-				return 0;
-			}
-		}
-	}
+      int cnt1 = 0;
+      int cnt2 = 0;
+      for (int k=0;k<n;k++) {
+        if(abs(p[k]-c1) < 2*r+EPS) cnt1++;
+        if(abs(p[k]-c2) < 2*r+EPS) cnt2++;
+      }
+      if(cnt1 == n || cnt2 == n) {
+        cout << "possible" << nl;
+        return 0;
+      }
+    }
+  }
 
-	if(check) cout << "impossible" << nl;
-	else cout << "possible" << nl;
+  if(check) cout << "impossible" << nl;
+  else cout << "possible" << nl;
 
-	return 0;
+  return 0;
 }

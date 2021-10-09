@@ -31,59 +31,59 @@ int cnt[M+N];
 vector<int> vals[T];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
+  int n,m;
+  cin>>n>>m;
 
-	for(int i=0;i<n;i++) {
-		int a;
-		cin>>a;
-		cnt[a]++;
-		for(int j=2;j<T;j++) {
-			if(a%j == 0) {
-				vals[j].push_back(a);
-			}
-		}
-	}
+  for(int i=0;i<n;i++) {
+    int a;
+    cin>>a;
+    cnt[a]++;
+    for(int j=2;j<T;j++) {
+      if(a%j == 0) {
+        vals[j].push_back(a);
+      }
+    }
+  }
 
-	ll ans = 0;
-	for(int i=0;i<m;i++) {
-		int v;
-		cin>>v;
-		if(v<T) {
-			for(int j:vals[v]) {
-				int cur = cnt[j];
-				ans += cur;
-				cnt[j+1] += cur;
-				cnt[j] = 0;
-				if(cur>0 && cnt[j+1] == cur) {
-					for(int k=2;k<T;k++) {
-						if((j+1)%k == 0) {
-							vals[k].push_back(j+1);
-						}
-					}
-				}
-			}
-			vals[v].clear();
-		} else {
-			for(int j=v;j<M+N;j+=v) {
-				int cur = cnt[j];
-				ans += cur;
-				cnt[j+1] += cur;
-				cnt[j] = 0;
-				if(cur>0 && cnt[j+1] == cur) {
-					for(int k=2;k<T;k++) {
-						if((j+1)%k == 0) {
-							vals[k].push_back(j+1);
-						}
-					}
-				}
-			}
-		}
-	}
-	cout<<ans<<nl;
+  ll ans = 0;
+  for(int i=0;i<m;i++) {
+    int v;
+    cin>>v;
+    if(v<T) {
+      for(int j:vals[v]) {
+        int cur = cnt[j];
+        ans += cur;
+        cnt[j+1] += cur;
+        cnt[j] = 0;
+        if(cur>0 && cnt[j+1] == cur) {
+          for(int k=2;k<T;k++) {
+            if((j+1)%k == 0) {
+              vals[k].push_back(j+1);
+            }
+          }
+        }
+      }
+      vals[v].clear();
+    } else {
+      for(int j=v;j<M+N;j+=v) {
+        int cur = cnt[j];
+        ans += cur;
+        cnt[j+1] += cur;
+        cnt[j] = 0;
+        if(cur>0 && cnt[j+1] == cur) {
+          for(int k=2;k<T;k++) {
+            if((j+1)%k == 0) {
+              vals[k].push_back(j+1);
+            }
+          }
+        }
+      }
+    }
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

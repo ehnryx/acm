@@ -13,12 +13,12 @@ inline void srand() { srand(clock() + time(nullptr)); }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	os << "(" << v.first << "," << v.second << ")"; return os;
+  os << "(" << v.first << "," << v.second << ")"; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 
 template <class T>
@@ -36,14 +36,14 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
 
-	int n, k;
-	cin >> n >> k;
-	cout << max(2, 1 + (2*n-1)/k) << nl;
+  int n, k;
+  cin >> n >> k;
+  cout << max(2, 1 + (2*n-1)/k) << nl;
 
-	return 0;
+  return 0;
 }

@@ -19,40 +19,40 @@ const int N = 1e6+1;
 int ans[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, s;
-		cin >> n >> s;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, s;
+    cin >> n >> s;
 
-		if (s == 1) {
-			if (n == 1) cout << 1 << nl;
-			else cout << -1 << nl;
-		}
-		else if (s > 9*n) {
-			cout << -1 << nl;
-		}
-		else if (s%2 == 1 && n%2 == 0) {
-			cout << -1 << nl;
-		}
-		else {
-			for (int i = 0; i < n/2; i++) {
-				ans[n-1-i] = ans[i] = min(s/2,9);
-				s -= 2*ans[i];
-			}
-			if (n%2 == 1) {
-				ans[n/2] = s;
-			}
-			for (int i = 0; i < n; i++) {
-				cout << ans[i];
-			}
-			cout << nl;
-		}
-	}
+    if (s == 1) {
+      if (n == 1) cout << 1 << nl;
+      else cout << -1 << nl;
+    }
+    else if (s > 9*n) {
+      cout << -1 << nl;
+    }
+    else if (s%2 == 1 && n%2 == 0) {
+      cout << -1 << nl;
+    }
+    else {
+      for (int i = 0; i < n/2; i++) {
+        ans[n-1-i] = ans[i] = min(s/2,9);
+        s -= 2*ans[i];
+      }
+      if (n%2 == 1) {
+        ans[n/2] = s;
+      }
+      for (int i = 0; i < n; i++) {
+        cout << ans[i];
+      }
+      cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

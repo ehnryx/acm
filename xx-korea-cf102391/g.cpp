@@ -28,59 +28,59 @@ vector<int> rev[N];
 int vis[N];
 
 void traverse(int u) {
-	vis[u] = true;
-	for(int v:rev[u]) {
-		if(!vis[v]) {
-			traverse(v);
-		}
-	}
+  vis[u] = true;
+  for(int v:rev[u]) {
+    if(!vis[v]) {
+      traverse(v);
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m,s,t;
-	cin>>n>>m>>s>>t;
+  int n,m,s,t;
+  cin>>n>>m>>s>>t;
 
-	for(int i=0;i<m;i++) {
-		int a,b,c;
-		cin>>a>>b>>c;
-		adj[a].push_back({c,b});
-		rev[b].push_back(a);
-	}
-	traverse(t);
-	if(!vis[s]) {
-		cout<<"IMPOSSIBLE"<<nl;
-		return 0;
-	}
+  for(int i=0;i<m;i++) {
+    int a,b,c;
+    cin>>a>>b>>c;
+    adj[a].push_back({c,b});
+    rev[b].push_back(a);
+  }
+  traverse(t);
+  if(!vis[s]) {
+    cout<<"IMPOSSIBLE"<<nl;
+    return 0;
+  }
 
-	vector<int> ans;
-	unordered_set<int> seen;
-	for(int u=s;u!=t;) {
-		pii cur(INF,INF);
-		for(pii e:adj[u]) {
-			if(vis[e.second]) {
-				cur = min(cur,e);
-			}
-		}
-		if(cur.first==INF) {
-			cout<<"IMPOSSIBLE"<<nl;
-			return 0;
-		}
-		if(seen.count(cur.first)) {
-			cout<<"TOO LONG"<<nl;
-			return 0;
-		}
-		ans.push_back(cur.first);
-		seen.insert(cur.first);
-		u = cur.second;
-	}
-	for(int it:ans) {
-		cout<<it<<" ";
-	}
-	cout<<nl;
+  vector<int> ans;
+  unordered_set<int> seen;
+  for(int u=s;u!=t;) {
+    pii cur(INF,INF);
+    for(pii e:adj[u]) {
+      if(vis[e.second]) {
+        cur = min(cur,e);
+      }
+    }
+    if(cur.first==INF) {
+      cout<<"IMPOSSIBLE"<<nl;
+      return 0;
+    }
+    if(seen.count(cur.first)) {
+      cout<<"TOO LONG"<<nl;
+      return 0;
+    }
+    ans.push_back(cur.first);
+    seen.insert(cur.first);
+    u = cur.second;
+  }
+  for(int it:ans) {
+    cout<<it<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

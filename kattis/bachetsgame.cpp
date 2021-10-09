@@ -21,35 +21,35 @@ int valid[10];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	while (cin >> n >> m) {
-		for (int i=0; i<m; i++) {
-			cin >> valid[i];
-		}
-		win.reset();
-		for (int i=0; i<n; i++) {
-			if (!win[i]) {
-				for (int j=0; j<m; j++) {
-					if (i+valid[j]<N) {
-						win[i+valid[j]] = true;
-					}
-				}
-			}
-		}
-		if (win[n]) {
-			cout << "Stan wins" << nl;
-		} else {
-			cout << "Ollie wins" << nl;
-		}
-	}
+  int n, m;
+  while (cin >> n >> m) {
+    for (int i=0; i<m; i++) {
+      cin >> valid[i];
+    }
+    win.reset();
+    for (int i=0; i<n; i++) {
+      if (!win[i]) {
+        for (int j=0; j<m; j++) {
+          if (i+valid[j]<N) {
+            win[i+valid[j]] = true;
+          }
+        }
+      }
+    }
+    if (win[n]) {
+      cout << "Stan wins" << nl;
+    } else {
+      cout << "Ollie wins" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

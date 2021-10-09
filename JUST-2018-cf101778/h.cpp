@@ -16,43 +16,43 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m;
-		cin >> n >> m;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
 
-		string s;
-		cin >> s;
+    string s;
+    cin >> s;
 
-		int unmatched = 0;
-		for (int i = 0; i < n/2; i++) {
-			if (s[i] != s[n-1-i]) unmatched++;
-		}
+    int unmatched = 0;
+    for (int i = 0; i < n/2; i++) {
+      if (s[i] != s[n-1-i]) unmatched++;
+    }
 
-		int ans = 0;
-		int p;
-		char c;
-		for (int i = 0; i < m; i++) {
-			cin >> p >> c;
-			--p;
+    int ans = 0;
+    int p;
+    char c;
+    for (int i = 0; i < m; i++) {
+      cin >> p >> c;
+      --p;
 
-			int before = (s[p] != s[n-1-p]);
-			s[p] = c;
-			int after = (s[p] != s[n-1-p]);
+      int before = (s[p] != s[n-1-p]);
+      s[p] = c;
+      int after = (s[p] != s[n-1-p]);
 
-			unmatched += after-before;
-			if (unmatched == 0) {
-				ans++;
-			}
-		}
+      unmatched += after-before;
+      if (unmatched == 0) {
+        ans++;
+      }
+    }
 
-		cout << ans << nl;
-	}
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

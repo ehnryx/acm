@@ -133,25 +133,25 @@ struct RectangleUnion {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, a, b, x, y;
-	cin >> n;
+  int n, a, b, x, y;
+  cin >> n;
 
-	RectangleUnion ru;
-	for (int i=0; i<n; i++) {
-		cin >> a >> b >> x >> y;
-		ru.add_rect(a,b,x,y);
-	}
-	ru.add_query(-1,1e9+2);
-	ru.solve();
-	cout << ru.query(-1,1e9+2) << nl;
+  RectangleUnion ru;
+  for (int i=0; i<n; i++) {
+    cin >> a >> b >> x >> y;
+    ru.add_rect(a,b,x,y);
+  }
+  ru.add_query(-1,1e9+2);
+  ru.solve();
+  cout << ru.query(-1,1e9+2) << nl;
 
-	return 0;
+  return 0;
 }

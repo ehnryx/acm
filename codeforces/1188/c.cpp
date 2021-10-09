@@ -37,45 +37,45 @@ int a[N];
 ll dp[N][N], sum[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	For(i,n) {
-		cin >> a[i];
-	}
-	sort(a,a+n);
+  int n, k;
+  cin >> n >> k;
+  For(i,n) {
+    cin >> a[i];
+  }
+  sort(a,a+n);
 
-	function<ll(int)> count = [&] (int lb) {
-		memset(sum, 0, sizeof sum);
-		int pre = 0;
-		For(i,n) {
-			dp[i][0] = 1;
-			while (a[i]-a[pre] >= lb) {
-				For(j,k) {
-					sum[j] = (sum[j] + dp[pre][j]) % MOD;
-				}
-				pre++;
-			}
-			for (int j=1; j<k; j++) {
-				dp[i][j] = sum[j-1];
-			}
-		}
-		ll res = 0;
-		For(i,n) {
-			res += dp[i][k-1];
-		}
-		return res % MOD;
-	};
+  function<ll(int)> count = [&] (int lb) {
+    memset(sum, 0, sizeof sum);
+    int pre = 0;
+    For(i,n) {
+      dp[i][0] = 1;
+      while (a[i]-a[pre] >= lb) {
+        For(j,k) {
+          sum[j] = (sum[j] + dp[pre][j]) % MOD;
+        }
+        pre++;
+      }
+      for (int j=1; j<k; j++) {
+        dp[i][j] = sum[j-1];
+      }
+    }
+    ll res = 0;
+    For(i,n) {
+      res += dp[i][k-1];
+    }
+    return res % MOD;
+  };
 
-	ll ans = 0;
-	for (int i=M/(k-1); i>0; i--) {
-		cnt[i] = count(i);
-		ans += (cnt[i]-cnt[i+1])*i % MOD;
-	}
-	cout << (ans % MOD + MOD) % MOD << nl;
+  ll ans = 0;
+  for (int i=M/(k-1); i>0; i--) {
+    cnt[i] = count(i);
+    ans += (cnt[i]-cnt[i+1])*i % MOD;
+  }
+  cout << (ans % MOD + MOD) % MOD << nl;
 
-	return 0;
+  return 0;
 }

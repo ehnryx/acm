@@ -19,33 +19,33 @@ int sqr(int x) { return x*x; }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int r, x, y;
-	cin >> r >> x >> y;
+  int r, x, y;
+  cin >> r >> x >> y;
 
-	int best = 1e5;
-	bool good = false;
-	for (int i=0; i<3; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		if (c < best) {
-			best = c;
-			if (sqr(x-a)+sqr(y-b)<r*r) {
-				good = true;
-			} else {
-				good = false;
-			}
-		}
-	}
+  int best = 1e5;
+  bool good = false;
+  for (int i=0; i<3; i++) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    if (c < best) {
+      best = c;
+      if (sqr(x-a)+sqr(y-b)<r*r) {
+        good = true;
+      } else {
+        good = false;
+      }
+    }
+  }
 
-	cout << (good ? "What a beauty!" : "Time to move my telescope!") << nl;
+  cout << (good ? "What a beauty!" : "Time to move my telescope!") << nl;
 
-	return 0;
+  return 0;
 }

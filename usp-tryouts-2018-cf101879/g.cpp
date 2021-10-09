@@ -84,56 +84,56 @@ struct SegmentTree {
 //*/
 
 struct Node {
-	int minv, maxv;
-	Node(pii v = pii(-INF,INF)): minv(v.first), maxv(v.second) {}
-	bool put() { return true; }
-	bool get() { return true; }
-	void update(pii v, int len) {
-		minv = v.first;
-		maxv = v.second;
-	}
-	void push(Node& left, Node& right, int len) {}
-	Node pull(Node left, Node right) {
-		minv = max(left.minv, right.minv);
-		maxv = min(left.maxv, right.maxv);
-		return *this;
-	}
-	int value() {
-		return max(0, maxv-minv+1);
-	}
+  int minv, maxv;
+  Node(pii v = pii(-INF,INF)): minv(v.first), maxv(v.second) {}
+  bool put() { return true; }
+  bool get() { return true; }
+  void update(pii v, int len) {
+    minv = v.first;
+    maxv = v.second;
+  }
+  void push(Node& left, Node& right, int len) {}
+  Node pull(Node left, Node right) {
+    minv = max(left.minv, right.minv);
+    maxv = min(left.maxv, right.maxv);
+    return *this;
+  }
+  int value() {
+    return max(0, maxv-minv+1);
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, q, a, b, c;
-	cin >> n >> q;
+  int n, q, a, b, c;
+  cin >> n >> q;
 
-	SegmentTree<Node,pii> lca(n+1);
-	for (int i=1; i<=n; i++) {
-		cin >> a >> b;
-		lca.set(i, pii(a,b));
-	}
-	lca.build();
+  SegmentTree<Node,pii> lca(n+1);
+  for (int i=1; i<=n; i++) {
+    cin >> a >> b;
+    lca.set(i, pii(a,b));
+  }
+  lca.build();
 
-	char t;
-	while (q--) {
-		cin >> t;
-		if (t == '?') {
-			cin >> a >> b;
-			cout << lca.query(a,b).value() << nl;
-		} else {
-			cin >> c >> a >> b;
-			lca.update(c,c,pii(a,b));
-		}
-	}
+  char t;
+  while (q--) {
+    cin >> t;
+    if (t == '?') {
+      cin >> a >> b;
+      cout << lca.query(a,b).value() << nl;
+    } else {
+      cin >> c >> a >> b;
+      lca.update(c,c,pii(a,b));
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -30,50 +30,50 @@ int cc_inter(pt p1, ld r1, pt p2, ld r2, pt &i1, pt &i2) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(17);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(17);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	pt o(0,0);
+  pt o(0,0);
 
-	int T;
-	cin >> T;
-	while (T--) {
+  int T;
+  cin >> T;
+  while (T--) {
 
-		int m, R;
-		cin >> m >> R;
+    int m, R;
+    cin >> m >> R;
 
-		ld ans = 2*PI*R;
-		for (int i=0; i<m; i++) {
-			int x, y, r;
-			cin >> x >> y >> r;
-			pt i1, i2, c(x,y);
-			if (x*x+y*y==(R+r)*(R+r)) continue;
-			if (r<R && x*x+y*y==(R-r)*(R-r)) {
-				ans += 2*PI*r;
-				continue;
-			}
-			if (cc_inter(o, R, c, r, i1, i2) == 2) {
-				if (cp(c,i1)<0) swap(i1,i2);
-				ld ang = arg(i1/i2);
-				if (ang < -EPS) ang += 2*PI;
-				ans -= ang*R;
-				if (cp(i2-i1, c-i1) > 0) {
-					ld cur = arg((i2-c)/(i1-c))*r;
-					ans += cur;
-				} else {
-					ld cur = 2*PI*r - arg((i1-c)/(i2-c))*r;
-					ans += cur;
-				}
-			}
-		}
-		cout << ans << nl;
+    ld ans = 2*PI*R;
+    for (int i=0; i<m; i++) {
+      int x, y, r;
+      cin >> x >> y >> r;
+      pt i1, i2, c(x,y);
+      if (x*x+y*y==(R+r)*(R+r)) continue;
+      if (r<R && x*x+y*y==(R-r)*(R-r)) {
+        ans += 2*PI*r;
+        continue;
+      }
+      if (cc_inter(o, R, c, r, i1, i2) == 2) {
+        if (cp(c,i1)<0) swap(i1,i2);
+        ld ang = arg(i1/i2);
+        if (ang < -EPS) ang += 2*PI;
+        ans -= ang*R;
+        if (cp(i2-i1, c-i1) > 0) {
+          ld cur = arg((i2-c)/(i1-c))*r;
+          ans += cur;
+        } else {
+          ld cur = 2*PI*r - arg((i1-c)/(i2-c))*r;
+          ans += cur;
+        }
+      }
+    }
+    cout << ans << nl;
 
-	}
+  }
 
-	return 0;
+  return 0;
 }

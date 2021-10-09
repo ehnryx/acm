@@ -25,42 +25,42 @@ const int M = 50 + 1;
 ll ans[M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int c, n, m;
-	cin >> c >> n >> m;
-	vector<int> v(n);
-	for(int i=0; i<n; i++) {
-		cin >> v[i];
-	}
+  int c, n, m;
+  cin >> c >> n >> m;
+  vector<int> v(n);
+  for(int i=0; i<n; i++) {
+    cin >> v[i];
+  }
 
-	ans[0] = n;
-	ll over = 0;
-	for(int d=1; d<M; d++) {
-		over *= 2;
-		for(int j=0; j<v.size(); j++) {
-			v[j] *= 2;
-			if(v[j] > c) {
-				v[j] = 0;
-				over += 2;
-			}
-		}
-		for(int j=0; j<v.size(); j++) {
-			if(v[j] == 0) {
-				swap(v[j], v[v.size()-1]);
-				v.pop_back();
-				--j;
-			}
-		}
-		ans[d] = over + v.size();
-	}
+  ans[0] = n;
+  ll over = 0;
+  for(int d=1; d<M; d++) {
+    over *= 2;
+    for(int j=0; j<v.size(); j++) {
+      v[j] *= 2;
+      if(v[j] > c) {
+        v[j] = 0;
+        over += 2;
+      }
+    }
+    for(int j=0; j<v.size(); j++) {
+      if(v[j] == 0) {
+        swap(v[j], v[v.size()-1]);
+        v.pop_back();
+        --j;
+      }
+    }
+    ans[d] = over + v.size();
+  }
 
-	for(int j=0; j<m; j++) {
-		int k;
-		cin >> k;
-		cout << ans[k] << nl;
-	}
+  for(int j=0; j<m; j++) {
+    int k;
+    cin >> k;
+    cout << ans[k] << nl;
+  }
 
-	return 0;
+  return 0;
 }

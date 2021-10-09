@@ -25,37 +25,37 @@ const int N = 1e5 + 1;
 bool ans[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int id = 0;
-	int last = 0;
-	for(int i=0; i<n; i++) {
-		int t;
-		cin >> t;
-		if(t == 1) {
-			for(int j=id; j>=last; j--) {
-				ans[j] = ((id - j) % 2 == 0);
-			}
-			last = ++id;
-		} else if(t == 2) {
-			++id;
-		} else {
-			int x;
-			cin >> x;
-			if(x < last) {
-				cout << ans[x] << nl;
-			} else {
-				if((id - x) % 2 == 0) {
-					cout << true << nl;
-				} else {
-					cout << false << nl;
-				}
-			}
-		}
-	}
+  int n;
+  cin >> n;
+  int id = 0;
+  int last = 0;
+  for(int i=0; i<n; i++) {
+    int t;
+    cin >> t;
+    if(t == 1) {
+      for(int j=id; j>=last; j--) {
+        ans[j] = ((id - j) % 2 == 0);
+      }
+      last = ++id;
+    } else if(t == 2) {
+      ++id;
+    } else {
+      int x;
+      cin >> x;
+      if(x < last) {
+        cout << ans[x] << nl;
+      } else {
+        if((id - x) % 2 == 0) {
+          cout << true << nl;
+        } else {
+          cout << false << nl;
+        }
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

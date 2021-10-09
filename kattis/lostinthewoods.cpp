@@ -24,32 +24,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
-	vector<int> adj[n];
-	for(int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	vector<ld> nxt(n, 0), cur(n, 0);
-	cur[0] = 1;
-	ld ans = 0;
-	for(int t=1; clock()<0.618*CLOCKS_PER_SEC; t++) {
-		fill(nxt.begin(), nxt.end(), 0);
-		for(int i=0; i<n-1; i++) {
-			for(int j : adj[i]) {
-				nxt[j] += cur[i] / adj[i].size();
-			}
-		}
-		ans += t * nxt[n-1];
-		swap(nxt, cur);
-	}
-	cout << ans << nl;
+  int n, m;
+  cin >> n >> m;
+  vector<int> adj[n];
+  for(int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  vector<ld> nxt(n, 0), cur(n, 0);
+  cur[0] = 1;
+  ld ans = 0;
+  for(int t=1; clock()<0.618*CLOCKS_PER_SEC; t++) {
+    fill(nxt.begin(), nxt.end(), 0);
+    for(int i=0; i<n-1; i++) {
+      for(int j : adj[i]) {
+        nxt[j] += cur[i] / adj[i].size();
+      }
+    }
+    ans += t * nxt[n-1];
+    swap(nxt, cur);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

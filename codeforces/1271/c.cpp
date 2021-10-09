@@ -25,32 +25,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, x, y;
-	cin >> n >> x >> y;
-	int a[n], b[n];
-	vector<int> cnt(4, 0);
-	for(int i=0; i<n; i++) {
-		cin >> a[i] >> b[i];
-		if(a[i] < x) cnt[0]++;
-		if(a[i] > x) cnt[1]++;
-		if(b[i] < y) cnt[2]++;
-		if(b[i] > y) cnt[3]++;
-	}
+  int n, x, y;
+  cin >> n >> x >> y;
+  int a[n], b[n];
+  vector<int> cnt(4, 0);
+  for(int i=0; i<n; i++) {
+    cin >> a[i] >> b[i];
+    if(a[i] < x) cnt[0]++;
+    if(a[i] > x) cnt[1]++;
+    if(b[i] < y) cnt[2]++;
+    if(b[i] > y) cnt[3]++;
+  }
 
-	int maxv = max(max(cnt[0], cnt[1]), max(cnt[2], cnt[3]));
-	cout << maxv << nl;
-	if(maxv == cnt[0]) {
-		cout << x-1 << " " << y << nl;
-	} else if(maxv == cnt[1]) {
-		cout << x+1 << " " << y << nl;
-	} else if(maxv == cnt[2]) {
-		cout << x << " " << y-1 << nl;
-	} else {
-		cout << x << " " << y+1 << nl;
-	}
+  int maxv = max(max(cnt[0], cnt[1]), max(cnt[2], cnt[3]));
+  cout << maxv << nl;
+  if(maxv == cnt[0]) {
+    cout << x-1 << " " << y << nl;
+  } else if(maxv == cnt[1]) {
+    cout << x+1 << " " << y << nl;
+  } else if(maxv == cnt[2]) {
+    cout << x << " " << y-1 << nl;
+  } else {
+    cout << x << " " << y+1 << nl;
+  }
 
-	return 0;
+  return 0;
 }

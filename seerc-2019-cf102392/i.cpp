@@ -27,29 +27,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<int> a(n), b(n);
-	for(int i=0; i<n; i++) {
-		cin >> a[i];
-	}
-	for(int i=0; i<n; i++) {
-		cin >> b[i];
-	}
-	sort(b.begin(), b.end());
+  int n;
+  cin >> n;
+  vector<int> a(n), b(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  for(int i=0; i<n; i++) {
+    cin >> b[i];
+  }
+  sort(b.begin(), b.end());
 
-	int ans = 0;
-	for(int i=0; i<n; i++) {
-		auto it = lower_bound(b.begin(), b.end(), a[i]);
-		int cur = INF;
-		if(it != b.end()) cur = min(cur, *it - a[i]);
-		if(it != b.begin()) cur = min(cur, a[i] - *prev(it));
-		ans = max(ans, cur);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for(int i=0; i<n; i++) {
+    auto it = lower_bound(b.begin(), b.end(), a[i]);
+    int cur = INF;
+    if(it != b.end()) cur = min(cur, *it - a[i]);
+    if(it != b.begin()) cur = min(cur, a[i] - *prev(it));
+    ans = max(ans, cur);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

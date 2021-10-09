@@ -24,60 +24,60 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const int N = 1<<19;
 struct SegTree {
-	ll t[2*N];
-	SegTree() {
-		memset(t, 0, sizeof t);
-	}
-	void insert(int x, int v) {
-		for (t[x+=N]+=v; x>1; x/=2) {
-			t[x/2] = (t[x] + t[x^1]) % MOD;
-		}
-	}
-	ll query(int l, int r) {
-		ll res = 0;
-		for (l+=N,r+=N+1; l<r; l/=2,r/=2) {
-			if (l&1) res += t[l++];
-			if (r&1) res += t[--r];
-		}
-		return res % MOD;
-	}
+  ll t[2*N];
+  SegTree() {
+    memset(t, 0, sizeof t);
+  }
+  void insert(int x, int v) {
+    for (t[x+=N]+=v; x>1; x/=2) {
+      t[x/2] = (t[x] + t[x^1]) % MOD;
+    }
+  }
+  ll query(int l, int r) {
+    ll res = 0;
+    for (l+=N,r+=N+1; l<r; l/=2,r/=2) {
+      if (l&1) res += t[l++];
+      if (r&1) res += t[--r];
+    }
+    return res % MOD;
+  }
 };
 
 SegTree Left, Right;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<pii> p;
-	for (int i=1; i<=n; i++) {
-		int a;
-		cin >> a;
-		p.push_back(pii(a,i));
-	}
-	sort(p.begin(), p.end());
+  vector<pii> p;
+  for (int i=1; i<=n; i++) {
+    int a;
+    cin >> a;
+    p.push_back(pii(a,i));
+  }
+  sort(p.begin(), p.end());
 
-	ll ans = 0;
-	for (const pii& it : p) {
-		int v, x;
-		tie(v,x) = it;
-		Left.insert(x, x);
-		ll lsum = Left.query(1,x);
-		ll rsum = Right.query(x,n);
-		ll cur = lsum*(n-x+1) % MOD + rsum*x % MOD;
-		Right.insert(x, n-x+1);
-		ans += cur * v % MOD;
-	}
-	cout << ans % MOD << nl;
+  ll ans = 0;
+  for (const pii& it : p) {
+    int v, x;
+    tie(v,x) = it;
+    Left.insert(x, x);
+    ll lsum = Left.query(1,x);
+    ll rsum = Right.query(x,n);
+    ll cur = lsum*(n-x+1) % MOD + rsum*x % MOD;
+    Right.insert(x, n-x+1);
+    ans += cur * v % MOD;
+  }
+  cout << ans % MOD << nl;
 
-	return 0;
+  return 0;
 }

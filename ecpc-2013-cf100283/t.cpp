@@ -23,20 +23,20 @@ void solve() {
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
-	freopen(TESTFILE ".in", "r", stdin);
+  freopen(TESTFILE ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	for (int tt=1; tt<=T; tt++) {
-		cout << "Case " << tt << ": ";
-		solve();
-	}
+  for (int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

@@ -15,66 +15,66 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 struct Point {
-	ll x, y;
+  ll x, y;
 };
 
 ll area(const vector<Point>& c, int i, int j, int k) {
-	return abs((c[i].x*c[j].y + c[j].x*c[k].y + c[k].x*c[i].y) - (c[i].y*c[j].x + c[j].y*c[k].x + c[k].y*c[i].x));
+  return abs((c[i].x*c[j].y + c[j].x*c[k].y + c[k].x*c[i].y) - (c[i].y*c[j].x + c[j].y*c[k].x + c[k].y*c[i].x));
 }
 
 struct Answer {
-	ll area;
-	int a, b;
+  ll area;
+  int a, b;
 };
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int n;
-	cin >> n;
-	vector<Point> cake(n);
-	for (int i = 0; i < n; i++) {
-		cin >> cake[i].x >> cake[i].y;
-	}
+  int n;
+  cin >> n;
+  vector<Point> cake(n);
+  for (int i = 0; i < n; i++) {
+    cin >> cake[i].x >> cake[i].y;
+  }
 
-	ll total = 0;
-	for (int i = 2; i < n; i++) {
-		total += 2*area(cake, 0, i, i-1);
-	}
-	ll half = total/2;
+  ll total = 0;
+  for (int i = 2; i < n; i++) {
+    total += 2*area(cake, 0, i, i-1);
+  }
+  ll half = total/2;
 
-	Answer ans;
-	ll current;
-	int first, second;
-	first = 0;
-	second = 1;
-	current = 0;
-	for (;;) {
-		if (current == half) {
-			cout << first+1 << " " << second+1 << nl;
-			return 0;
-		}
-		else if (current < half) {
-			second = (second+1)%n;
-			current += 2*area(cake, first, second, second-1);
-		}
-		else {
-			first++;
-			if (first == n) {
-				break;
-			}
-			current -= 2*area(cake, first, first-1, second);
-		}
-		if (abs(half-current) < abs(half-ans.area)) {
-			ans.a = first;
-			ans.b = second;
-			ans.area = current;
-		}
-	}
+  Answer ans;
+  ll current;
+  int first, second;
+  first = 0;
+  second = 1;
+  current = 0;
+  for (;;) {
+    if (current == half) {
+      cout << first+1 << " " << second+1 << nl;
+      return 0;
+    }
+    else if (current < half) {
+      second = (second+1)%n;
+      current += 2*area(cake, first, second, second-1);
+    }
+    else {
+      first++;
+      if (first == n) {
+        break;
+      }
+      current -= 2*area(cake, first, first-1, second);
+    }
+    if (abs(half-current) < abs(half-ans.area)) {
+      ans.a = first;
+      ans.b = second;
+      ans.area = current;
+    }
+  }
 
 
-	cout << ans.a+1 << " " << ans.b+1 << nl;
+  cout << ans.a+1 << " " << ans.b+1 << nl;
 
-	return 0;
+  return 0;
 }

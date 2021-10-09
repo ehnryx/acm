@@ -27,87 +27,87 @@ bool good[N];
 ll val[N], p[N];
 
 ll power(ll x, int e) {
-	ll res = 1;
-	for (; e>0; e/=2) {
-		if (e&1) res = res*x % MOD;
-		x = x*x % MOD;
-	}
-	return res;
+  ll res = 1;
+  for (; e>0; e/=2) {
+    if (e&1) res = res*x % MOD;
+    x = x*x % MOD;
+  }
+  return res;
 }
 
 ll inv(ll x) {
-	return power(x, MOD-2);
+  return power(x, MOD-2);
 }
 
 struct Int {
-	ll n, d;
-	Int(ll a, ll b) {
-		n = a%MOD;
-		d = b%MOD;
-	}
-	Int operator + (const Int& o) const {
-		return Int(n*o.d + d*o.n, d*o.d);
-	}
-	Int operator * (const Int& o) const {
-		return Int(n*o.n, d*o.d);
-	}
-	Int operator / (const Int& o) const {
-		return Int(n*o.d, d*o.n);
-	}
-	ll value() const {
-		return n*inv(d);
-	}
-	ld eval() const {
-		return (ld)n/d;
-	}
+  ll n, d;
+  Int(ll a, ll b) {
+    n = a%MOD;
+    d = b%MOD;
+  }
+  Int operator + (const Int& o) const {
+    return Int(n*o.d + d*o.n, d*o.d);
+  }
+  Int operator * (const Int& o) const {
+    return Int(n*o.n, d*o.d);
+  }
+  Int operator / (const Int& o) const {
+    return Int(n*o.d, d*o.n);
+  }
+  ll value() const {
+    return n*inv(d);
+  }
+  ld eval() const {
+    return (ld)n/d;
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	For(i,n) {
-		cin >> good[i];
-	}
+  For(i,n) {
+    cin >> good[i];
+  }
 
-	ll sum = 0;
-	For(i,n) {
-		cin >> val[i];
-		sum += val[i];
-	}
+  ll sum = 0;
+  For(i,n) {
+    cin >> val[i];
+    sum += val[i];
+  }
 
-	ll invsum = inv(sum);
-	ll pp = 0;
-	ll pm = 0;
-	For(i,n) {
-		p[i] = val[i] * invsum;
-		if (good[i]) {
-		}
-	}
+  ll invsum = inv(sum);
+  ll pp = 0;
+  ll pm = 0;
+  For(i,n) {
+    p[i] = val[i] * invsum;
+    if (good[i]) {
+    }
+  }
 
-	For(i,m) {
-		For(j,n) {
-			if (good[j]) {
-				val[j] = (val[j] + p[j]) % MOD;
-				p[j] = (p[j] * (p[j]+
-			} else {
-				val[j] = (val[j] - p[j]) % MOD;
-			}
-		}
-	}
+  For(i,m) {
+    For(j,n) {
+      if (good[j]) {
+        val[j] = (val[j] + p[j]) % MOD;
+        p[j] = (p[j] * (p[j]+
+      } else {
+        val[j] = (val[j] - p[j]) % MOD;
+      }
+    }
+  }
 
-	For(i,n) {
-		cout << (val[i]+MOD) % MOD << nl;
-	}
+  For(i,n) {
+    cout << (val[i]+MOD) % MOD << nl;
+  }
 
-	return 0;
+  return 0;
 }

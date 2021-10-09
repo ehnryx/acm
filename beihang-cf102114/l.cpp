@@ -19,8 +19,8 @@ const int N = 6e4+1;
 ll fact[N], invf[N];
 
 ll ncr(int n, int r) {
-	if (r<0 || r>n) return 0;
-	return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
+  if (r<0 || r>n) return 0;
+  return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
 }
 
 ll dp[N], ds[N];
@@ -32,15 +32,15 @@ ll summ(int);
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	
+  
 
-	return 0;
+  return 0;
 }

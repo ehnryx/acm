@@ -21,41 +21,41 @@ char s[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	two[0] = 1;
-	for (int i=1; i<N; i++) {
-		two[i] = two[i-1]*2 % MOD;
-	}
+  two[0] = 1;
+  for (int i=1; i<N; i++) {
+    two[i] = two[i-1]*2 % MOD;
+  }
 
-	scanf("%s",s);
-	int tot = 0;
-	for (int i=0; s[i]; i++) {
-		tot += (s[i]=='?');
-	}
+  scanf("%s",s);
+  int tot = 0;
+  for (int i=0; s[i]; i++) {
+    tot += (s[i]=='?');
+  }
 
-	ll ans = 0;
-	int ones = 0;
-	int n = 0;
-	for (int i=0; s[i]; i++) {
-		if (s[i]=='1') {
-			ones += 1;
-		} else if (s[i]=='0') {
-			ans += two[tot]*ones % MOD;
-			if (n>0) ans += two[tot-1]*n % MOD;
-		} else {
-			ans += two[tot-1]*ones % MOD;
-			if (n>0) ans += two[tot-2]*n % MOD;
-			n += 1;
-		}
-	}
-	printf("%d\n", ans%MOD); 
+  ll ans = 0;
+  int ones = 0;
+  int n = 0;
+  for (int i=0; s[i]; i++) {
+    if (s[i]=='1') {
+      ones += 1;
+    } else if (s[i]=='0') {
+      ans += two[tot]*ones % MOD;
+      if (n>0) ans += two[tot-1]*n % MOD;
+    } else {
+      ans += two[tot-1]*ones % MOD;
+      if (n>0) ans += two[tot-2]*n % MOD;
+      n += 1;
+    }
+  }
+  printf("%d\n", ans%MOD); 
 
-	return 0;
+  return 0;
 }

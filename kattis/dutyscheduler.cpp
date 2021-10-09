@@ -23,7 +23,7 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace Flow {
-	const int N = 60+31+2;
+  const int N = 60+31+2;
   struct Edge { int v, r; ll f, c, p; };
   vector<Edge> adj[N]; int sz[N]; ll mc;
   vector<Edge> mcf_edges; // for mcf on large graphs with negative costs
@@ -54,49 +54,49 @@ namespace Flow {
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int m,n;
-	cin>>m>>n;
-	string s[m];
-	vector<int> d[m];
-	for(int i=0;i<m;i++) {
-		cin>>s[i];
-		int k;
-		cin>>k;
-		d[i].resize(k);
-		for(int j=0;j<k;j++) {
-			cin>>d[i][j];
-		}
-	}
+  int m,n;
+  cin>>m>>n;
+  string s[m];
+  vector<int> d[m];
+  for(int i=0;i<m;i++) {
+    cin>>s[i];
+    int k;
+    cin>>k;
+    d[i].resize(k);
+    for(int j=0;j<k;j++) {
+      cin>>d[i][j];
+    }
+  }
 
-	const int S = m;
-	const int T = n+m+1;
-	for(int ans=1;ans<=n;ans++) {
-		Flow::init(n+m+2);
-		for(int i=0;i<m;i++) {
-			Flow::add_edge(S,i,ans);
-			for(int j:d[i]) {
-				Flow::add_edge(i,j+m,1);
-			}
-		}
-		for(int i=1;i<=n;i++) {
-			Flow::add_edge(i+m,T,2);
-		}
-		if(Flow::flow(S,T)==2*n) {
-			cout<<ans<<nl;
-			for(int i=1;i<=n;i++) {
-				cout<<"Day "<<i<<": ";
-				for(const Flow::Edge& e:Flow::adj[i+m]) {
-					if(e.f<0) cout<<s[e.v]<<" ";
-				}
-				cout<<nl;
-			}
-			return 0;
-		}
-	}
-	assert(false);
+  const int S = m;
+  const int T = n+m+1;
+  for(int ans=1;ans<=n;ans++) {
+    Flow::init(n+m+2);
+    for(int i=0;i<m;i++) {
+      Flow::add_edge(S,i,ans);
+      for(int j:d[i]) {
+        Flow::add_edge(i,j+m,1);
+      }
+    }
+    for(int i=1;i<=n;i++) {
+      Flow::add_edge(i+m,T,2);
+    }
+    if(Flow::flow(S,T)==2*n) {
+      cout<<ans<<nl;
+      for(int i=1;i<=n;i++) {
+        cout<<"Day "<<i<<": ";
+        for(const Flow::Edge& e:Flow::adj[i+m]) {
+          if(e.f<0) cout<<s[e.v]<<" ";
+        }
+        cout<<nl;
+      }
+      return 0;
+    }
+  }
+  assert(false);
 
-	return 0;
+  return 0;
 }

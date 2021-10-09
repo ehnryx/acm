@@ -32,22 +32,22 @@ const int N = 1e5+1;
 int dp[N][2];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	int n = s.size();
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	dp[0][0] = s[0]-'0';
-	dp[0][1] = 10-(s[0]-'0')+1;
-	FOR(i,1,n-1) {
-		int c = s[i]-'0';
-		dp[i][0] = min(dp[i-1][0], dp[i-1][1]) + c;
-		dp[i][1] = min(dp[i-1][0], dp[i-1][1]-2) + 10-c+1;
-	}
-	cout << min(dp[n-1][0],dp[n-1][1]) << nl;
+  dp[0][0] = s[0]-'0';
+  dp[0][1] = 10-(s[0]-'0')+1;
+  FOR(i,1,n-1) {
+    int c = s[i]-'0';
+    dp[i][0] = min(dp[i-1][0], dp[i-1][1]) + c;
+    dp[i][1] = min(dp[i-1][0], dp[i-1][1]-2) + 10-c+1;
+  }
+  cout << min(dp[n-1][0],dp[n-1][1]) << nl;
 
-	return 0;
+  return 0;
 }

@@ -70,19 +70,19 @@ struct Dinic {
 };
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
+  int n,m;
+  cin>>n>>m;
   Dinic dinic(n);
-	for(int i=0;i<m;i++) {
-		int a,b,c;
-		cin>>a>>b>>c;
-		dinic.add_edge(a-1,b-1,c);
+  for(int i=0;i<m;i++) {
+    int a,b,c;
+    cin>>a>>b>>c;
+    dinic.add_edge(a-1,b-1,c);
     dinic.add_edge(b-1,a-1,c);
-	}
-	cout<<dinic.calc(0,n-1)<<nl;
+  }
+  cout<<dinic.calc(0,n-1)<<nl;
 
-	return 0;
+  return 0;
 }

@@ -19,44 +19,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	const int N = 26;
-	int a[N];
+  const int N = 26;
+  int a[N];
 
-	int T;
-	cin >> T;
-	while (T--) {
-		bool one = false;
-		int two = 0;
-		int minv = INF;
-		int ocnt = 0;
-		for (int i=0; i<N; i++) {
-			cin >> a[i];
-			if (a[i]>=2) {
-				two++;
-				minv = min(minv, a[i]);
-			}
-			if (a[i]==1) {
-				one=true;
-				ocnt++;
-			}
-		}
+  int T;
+  cin >> T;
+  while (T--) {
+    bool one = false;
+    int two = 0;
+    int minv = INF;
+    int ocnt = 0;
+    for (int i=0; i<N; i++) {
+      cin >> a[i];
+      if (a[i]>=2) {
+        two++;
+        minv = min(minv, a[i]);
+      }
+      if (a[i]==1) {
+        one=true;
+        ocnt++;
+      }
+    }
 
-		int len = two*2 + one;
-		int ans = minv/2;
-		if (one) {
-			ans = min(ans, ocnt);
-		}
-		if (len==0) ans=0;
-		cout << len << " " << ans << nl;
-	}
+    int len = two*2 + one;
+    int ans = minv/2;
+    if (one) {
+      ans = min(ans, ocnt);
+    }
+    if (len==0) ans=0;
+    cout << len << " " << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

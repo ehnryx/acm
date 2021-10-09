@@ -21,33 +21,33 @@ map<char,vector<string>> adj;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	string s, t;
-	for (int i=0; i<k; i++) {
-		cin >> s >> t;
-		adj[t[0]].push_back(s);
-	}
+  string s, t;
+  for (int i=0; i<k; i++) {
+    cin >> s >> t;
+    adj[t[0]].push_back(s);
+  }
 
-	cnt[1].insert("a");
-	for (int i=2; i<=n; i++) {
-		for (const auto& it : cnt[i-1]) {
-			for (const auto& pre : adj[it[0]]) {
-				cnt[i].insert(pre + it.substr(1,i-1));
-			}
-		}
-	}
+  cnt[1].insert("a");
+  for (int i=2; i<=n; i++) {
+    for (const auto& it : cnt[i-1]) {
+      for (const auto& pre : adj[it[0]]) {
+        cnt[i].insert(pre + it.substr(1,i-1));
+      }
+    }
+  }
 
-	cout << cnt[n].size() << nl;
+  cout << cnt[n].size() << nl;
 
-	return 0;
+  return 0;
 }

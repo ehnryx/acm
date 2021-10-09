@@ -14,24 +14,24 @@ typedef long double ld;
 const ll MOD = 1e9+7;
 
 ll power(ll n, int e) {
-	ll r = 1;
-	for(;e;e/=2) {
-		if(e&1) r = r*n % MOD;
-		n = n*n % MOD;
-	}
-	return r;
+  ll r = 1;
+  for(;e;e/=2) {
+    if(e&1) r = r*n % MOD;
+    n = n*n % MOD;
+  }
+  return r;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
+  ios::sync_with_stdio(0); cin.tie(0);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m;
-		cin >> n >> m;
-		cout << power(3, n+m) * power(2, n*m) % MOD << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    cout << power(3, n+m) * power(2, n*m) % MOD << nl;
+  }
 
-	return 0;
+  return 0;
 }

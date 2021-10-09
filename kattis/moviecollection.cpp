@@ -20,11 +20,11 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // Warning: possibly SLOW! because Node is copied when querying
 //
 // USAGE:
-// 	SegmentTree<Node,T> magic(length);
-// 	magic.set(i,v); sets ith value to v, DOES NOT PULL
-// 	magic.build(); pulls leaves up
-// 	magic.query(l,r); range [l,r], combines segments using pull
-// 	magic.update(l,r,v); range [l,r], updates with v
+//   SegmentTree<Node,T> magic(length);
+//   magic.set(i,v); sets ith value to v, DOES NOT PULL
+//   magic.build(); pulls leaves up
+//   magic.query(l,r); range [l,r], combines segments using pull
+//   magic.update(l,r,v); range [l,r], updates with v
 // 
 // The Node class requires the following: (SEE EXAMPLE BELOW)
 // Node();
@@ -92,52 +92,52 @@ struct SegmentTree {
 //*/
 
 struct Node {
-	int val;
-	Node(int v=0): val(v) {}
-	bool put(int v) { return true; }
-	bool get() { return true; }
-	void update(int v, int len) { val = v; }
-	void push(Node& left, Node& right, int len) {}
-	Node pull(const Node& left, const Node& right) {
-		val = left.val + right.val;
-		return *this;
-	}
+  int val;
+  Node(int v=0): val(v) {}
+  bool put(int v) { return true; }
+  bool get() { return true; }
+  void update(int v, int len) { val = v; }
+  void push(Node& left, Node& right, int len) {}
+  Node pull(const Node& left, const Node& right) {
+    val = left.val + right.val;
+    return *this;
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m;
-		cin >> n >> m;
-		SegmentTree<Node,int> segt(n+m+1);
-		int pos[n+1];
-		for (int i=1; i<=n; i++) {
-			segt.set(n-i, 1);
-			pos[i] = n-i;
-		}
-		segt.build();
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
+    SegmentTree<Node,int> segt(n+m+1);
+    int pos[n+1];
+    for (int i=1; i<=n; i++) {
+      segt.set(n-i, 1);
+      pos[i] = n-i;
+    }
+    segt.build();
 
-		int top = n;
-		for (int i=0; i<m; i++) {
-			int a;
-			cin >> a;
-			cout << segt.query(pos[a]+1,top).val << " ";
-			segt.update(pos[a], pos[a], 0);
-			segt.update(top, top, 1);
-			pos[a] = top++;
-		}
-		cout << nl;
-	}
+    int top = n;
+    for (int i=0; i<m; i++) {
+      int a;
+      cin >> a;
+      cout << segt.query(pos[a]+1,top).val << " ";
+      segt.update(pos[a], pos[a], 0);
+      segt.update(top, top, 1);
+      pos[a] = top++;
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

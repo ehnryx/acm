@@ -24,32 +24,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int s, t, n;
-	cin >> s >> t >> n;
-	int d[n+1], b[n], c[n];
-	for(int i=0; i<=n; i++) {
-		cin >> d[i];
-	}
-	for(int i=0; i<n; i++) {
-		cin >> b[i];
-	}
-	for(int i=0; i<n; i++) {
-		cin >> c[i];
-	}
-	for(int i=0; i<n; i++) {
-		s += d[i];
-		s = (s + c[i]-1) / c[i] * c[i];
-		s += b[i];
-	}
-	s += d[n];
-	if(s <= t) {
-		cout << "yes" << nl;
-	} else {
-		cout << "no" << nl;
-	}
+  int s, t, n;
+  cin >> s >> t >> n;
+  int d[n+1], b[n], c[n];
+  for(int i=0; i<=n; i++) {
+    cin >> d[i];
+  }
+  for(int i=0; i<n; i++) {
+    cin >> b[i];
+  }
+  for(int i=0; i<n; i++) {
+    cin >> c[i];
+  }
+  for(int i=0; i<n; i++) {
+    s += d[i];
+    s = (s + c[i]-1) / c[i] * c[i];
+    s += b[i];
+  }
+  s += d[n];
+  if(s <= t) {
+    cout << "yes" << nl;
+  } else {
+    cout << "no" << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -55,61 +55,61 @@ struct HullDynamic : public multiset<Line> {
 };
 
 struct Flight {
-	int id, other;
-	int time, other_t;
-	bool dest;
-	Flight(int i, int t, int o, int ot, bool d):
-		id(i), time(t), other(o), other_t(ot), dest(d) {}
-	bool operator < (const Flight& other) const {
-		if (time == other.time) return !dest;
-		else return time < other.time;
-	}
+  int id, other;
+  int time, other_t;
+  bool dest;
+  Flight(int i, int t, int o, int ot, bool d):
+    id(i), time(t), other(o), other_t(ot), dest(d) {}
+  bool operator < (const Flight& other) const {
+    if (time == other.time) return !dest;
+    else return time < other.time;
+  }
 };
 
 inline ll sqr(ll x) { return x*x; }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(0);
 
-	int a, b, s, e;
-	vector<Flight> f;
+  int a, b, s, e;
+  vector<Flight> f;
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	map<int,ll> value[n+1];
-	HullDynamic hulls[n+1];
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b >> s >> e;
-		if (a == b && s == e)
-			continue;
-		f.push_back(Flight(a,s,b,e,false));
-		f.push_back(Flight(b,e,a,s,true));
-	}
-	sort(f.begin(), f.end());
+  map<int,ll> value[n+1];
+  HullDynamic hulls[n+1];
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b >> s >> e;
+    if (a == b && s == e)
+      continue;
+    f.push_back(Flight(a,s,b,e,false));
+    f.push_back(Flight(b,e,a,s,true));
+  }
+  sort(f.begin(), f.end());
 
-	value[1][0] = 0;
-	hulls[1].insert_line(0, 0);
-	ll ans = INFLL;
-	m = f.size();
-	for (int i = 0; i < m; i++) {
-		if (f[i].dest) {
-			assert(value[f[i].other].count(f[i].other_t));
-			if (f[i].id == n) {
-				ans = min(ans, value[f[i].other][f[i].other_t]);
-			} else {
-				hulls[f[i].id].insert_line(-2*f[i].time, value[f[i].other][f[i].other_t] + sqr(f[i].time));
-			}
-		} 
-		else {
-			value[f[i].id][f[i].time] = sqr(f[i].time) + hulls[f[i].id].eval(f[i].time);
-		}
-	}
+  value[1][0] = 0;
+  hulls[1].insert_line(0, 0);
+  ll ans = INFLL;
+  m = f.size();
+  for (int i = 0; i < m; i++) {
+    if (f[i].dest) {
+      assert(value[f[i].other].count(f[i].other_t));
+      if (f[i].id == n) {
+        ans = min(ans, value[f[i].other][f[i].other_t]);
+      } else {
+        hulls[f[i].id].insert_line(-2*f[i].time, value[f[i].other][f[i].other_t] + sqr(f[i].time));
+      }
+    } 
+    else {
+      value[f[i].id][f[i].time] = sqr(f[i].time) + hulls[f[i].id].eval(f[i].time);
+    }
+  }
 
-	//cout << (long long) ans << nl;
-	cout << ans << nl;
+  //cout << (long long) ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

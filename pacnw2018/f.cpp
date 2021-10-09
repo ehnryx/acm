@@ -39,7 +39,7 @@ struct SegmentTree {
         if (e < l || s > r) return;
         if (l <= s && e <= r && segt[i].put(v)) {
             segt[i].update(v, e-s+1);
-						if (i<n) segt[i].pull(segt[2*i], segt[2*i+1]);
+            if (i<n) segt[i].pull(segt[2*i], segt[2*i+1]);
             return;
         }
         segt[i].push(segt[2*i], segt[2*i+1], e-s+1);
@@ -157,7 +157,7 @@ template<int K> struct ModRectangleUnion {
                     else segt.update(cmpr[s.a], cmpr[s.b]-1, s.v);
                 }
             }
-						pre = it.first;
+            pre = it.first;
         }
     }
 };
@@ -165,26 +165,26 @@ template<int K> struct ModRectangleUnion {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ModRectangleUnion<2> ru;
-	for (int i=0; i<n; i++) {
-		int a, b, x, y;
-		cin >> a >> b >> x >> y;
-		ru.add_rect(a,b,x,y);
-	}
-	ru.add_query(-1, 1e9+2);
-	ru.solve();
-	cout << ru.query(1, -1, 1e9+2) << nl;
+  ModRectangleUnion<2> ru;
+  for (int i=0; i<n; i++) {
+    int a, b, x, y;
+    cin >> a >> b >> x >> y;
+    ru.add_rect(a,b,x,y);
+  }
+  ru.add_query(-1, 1e9+2);
+  ru.solve();
+  cout << ru.query(1, -1, 1e9+2) << nl;
 
-	return 0;
+  return 0;
 }

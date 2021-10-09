@@ -19,32 +19,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int x, y, z;
-	cin >> x >> y >> z;
+  int x, y, z;
+  cin >> x >> y >> z;
 
-	int a, b, c;
-	cin >> a >> b >> c;
+  int a, b, c;
+  cin >> a >> b >> c;
 
-	if (a<x) goto gulag;
-	a -= x;
-	a += b;
-	if (a<y) goto gulag;
-	a -= y;
-	a += c;
-	if (a<z) goto gulag;
-	cout << "YES" << nl;
-	return 0;
+  if (a<x) goto gulag;
+  a -= x;
+  a += b;
+  if (a<y) goto gulag;
+  a -= y;
+  a += c;
+  if (a<z) goto gulag;
+  cout << "YES" << nl;
+  return 0;
 
 gulag:
-	cout << "NO" << nl;
+  cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

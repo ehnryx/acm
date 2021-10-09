@@ -23,98 +23,98 @@ vector<int> adj[N+420];
 int degree[N+420];
 
 void init() {
-	bitset<N+420> np;
-	int lim = sqrt(N+400);
-	np[0] = np[1] = true;
-	for (int i = 2; i < lim; i++) {
-		if (!np[i]) {
-			for (int j = i*i; j < N+400; j += i) {
-				np[j] = true;
-			}
-		}
-	}
-	for (int i = 0; i < N+400; i++) {
-		if (!np[i]) {
-			primes.push_back(i);
-			if (i >= N) break;
-		}
-	}
+  bitset<N+420> np;
+  int lim = sqrt(N+400);
+  np[0] = np[1] = true;
+  for (int i = 2; i < lim; i++) {
+    if (!np[i]) {
+      for (int j = i*i; j < N+400; j += i) {
+        np[j] = true;
+      }
+    }
+  }
+  for (int i = 0; i < N+400; i++) {
+    if (!np[i]) {
+      primes.push_back(i);
+      if (i >= N) break;
+    }
+  }
 
-	int n = primes.back();
-	for (int i = 2; i <= n; i++) {
-		if (!np[i]) {
-			adj[1].push_back(i);
-			degree[i]++;
-		}
-		else {
-			adj[i+1].push_back(i);
-			degree[i]++;
-			for (int p : primes) {
-				if (i % p == 0) {
-					adj[i/p].push_back(i);
-					degree[i]++;
-				}
-			}
-		}
-	}
+  int n = primes.back();
+  for (int i = 2; i <= n; i++) {
+    if (!np[i]) {
+      adj[1].push_back(i);
+      degree[i]++;
+    }
+    else {
+      adj[i+1].push_back(i);
+      degree[i]++;
+      for (int p : primes) {
+        if (i % p == 0) {
+          adj[i/p].push_back(i);
+          degree[i]++;
+        }
+      }
+    }
+  }
 
-	memset(dp, INF, sizeof dp);
-	queue<int> nxt;
-	nxt.push(1);
-	while (!nxt.empty()) {
-		int cur = nxt.front();
-		nxt.pop();
+  memset(dp, INF, sizeof dp);
+  queue<int> nxt;
+  nxt.push(1);
+  while (!nxt.empty()) {
+    int cur = nxt.front();
+    nxt.pop();
 
-		for (int x : adj[cur]) {
-			if (min(cur, dp[cur][2]) < dp[x][0]) {
-				dp[x][0] = min(cur, dp[cur][2]);
-				dp[x][1] = dp[cur][0];
-				dp[x][2] = dp[cur][1];
-			}
+    for (int x : adj[cur]) {
+      if (min(cur, dp[cur][2]) < dp[x][0]) {
+        dp[x][0] = min(cur, dp[cur][2]);
+        dp[x][1] = dp[cur][0];
+        dp[x][2] = dp[cur][1];
+      }
 
-			degree[x]--;
-			if (degree[x] == 0) {
-				nxt.push(x);
-			}
-		}
-	}
+      degree[x]--;
+      if (degree[x] == 0) {
+        nxt.push(x);
+      }
+    }
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	init();
+  init();
 
-	map<char,int> cnt;
-	cnt['O'] = 0;
-	cnt['E'] = 1;
-	cnt['I'] = 2;
+  map<char,int> cnt;
+  cnt['O'] = 0;
+  cnt['E'] = 1;
+  cnt['I'] = 2;
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	char t;
-	int v;
-	vector<int> ans(3,0);
-	for (int i = 0; i < n; i++) {
-		cin >> t >> v;
-		int id = cnt[t];
-		for (int j = 0; j < 3; j++) {
-			ans[(id+j)%3] += min(v, dp[v][j]);
-		}
-	}
+  char t;
+  int v;
+  vector<int> ans(3,0);
+  for (int i = 0; i < n; i++) {
+    cin >> t >> v;
+    int id = cnt[t];
+    for (int j = 0; j < 3; j++) {
+      ans[(id+j)%3] += min(v, dp[v][j]);
+    }
+  }
 
-	for (int i = 0; i < 3; i++) {
-		cout << ans[i] << " ";
-	}
-	cout << nl;
+  for (int i = 0; i < 3; i++) {
+    cout << ans[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

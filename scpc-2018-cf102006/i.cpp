@@ -61,41 +61,41 @@ struct Miniball { list<ndpt> L; int m; vector<vector<ld> > v, a; vector<ndpt> c;
 };
 
 ndpt to_ndpt(const pt& v) {
-	return { v.real(), v.imag() };
+  return { v.real(), v.imag() };
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #define FILENAME "robots"
 #ifdef ONLINE_JUDGE
-	freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
+  int T;
+  cin >> T;
+  while (T--) {
 
-		int n, R, r;
-		cin >> n >> R >> r;
+    int n, R, r;
+    cin >> n >> R >> r;
 
-		Miniball mb;
-		vector<ndpt> p;
-		pt cur(0,0);
-		p.push_back(to_ndpt(cur));
-		mb.add(p.back());
-		for (int i=0; i<n; i++) {
-			int x, y;
-			cin >> x >> y;
-			cur += pt(x,y);
-			p.push_back(to_ndpt(cur));
-			mb.add(p.back());
-		}
-		mb.build();
-		cout << -mb.c_c[0] << " " << -mb.c_c[1] << nl;
+    Miniball mb;
+    vector<ndpt> p;
+    pt cur(0,0);
+    p.push_back(to_ndpt(cur));
+    mb.add(p.back());
+    for (int i=0; i<n; i++) {
+      int x, y;
+      cin >> x >> y;
+      cur += pt(x,y);
+      p.push_back(to_ndpt(cur));
+      mb.add(p.back());
+    }
+    mb.build();
+    cout << -mb.c_c[0] << " " << -mb.c_c[1] << nl;
 
-	}
+  }
 
-	return 0;
+  return 0;
 }

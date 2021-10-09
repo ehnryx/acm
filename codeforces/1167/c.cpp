@@ -26,44 +26,44 @@ const int N = 5e5+1;
 vector<int> root(N,-1);
 vector<int> sz(N,1);
 int find(int i) {
-	if (root[i] == -1) return i;
-	return root[i] = find(root[i]);
+  if (root[i] == -1) return i;
+  return root[i] = find(root[i]);
 }
 void link(int i, int j) {
-	if ((i=find(i)) != (j=find(j))) {
-		root[i] = j;
-		sz[j] += sz[i];
-	}
+  if ((i=find(i)) != (j=find(j))) {
+    root[i] = j;
+    sz[j] += sz[i];
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	for (int i=0; i<m; i++) {
-		int k;
-		cin >> k;
-		for (int r,j=0; j<k; j++) {
-			int a;
-			cin >> a;
-			if (j == 0) r = a;
-			else link(a,r);
-		}
-	}
+  for (int i=0; i<m; i++) {
+    int k;
+    cin >> k;
+    for (int r,j=0; j<k; j++) {
+      int a;
+      cin >> a;
+      if (j == 0) r = a;
+      else link(a,r);
+    }
+  }
 
-	for (int i=1; i<=n; i++) {
-		cout << sz[find(i)] << " ";
-	}
-	cout << nl;
+  for (int i=1; i<=n; i++) {
+    cout << sz[find(i)] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

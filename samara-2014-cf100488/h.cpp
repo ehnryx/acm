@@ -17,59 +17,59 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a[n], b[n];
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
-	for (int i = 0; i < n; i++) {
-		cin >> b[i];
-	}
+  int a[n], b[n];
+  for (int i = 0; i < n; i++) {
+    cin >> a[i];
+  }
+  for (int i = 0; i < n; i++) {
+    cin >> b[i];
+  }
 
-	auto count = [&] (int lb) {
-		if (lb == 1) return (ll)INF;
-		ll cnt = 0;
-		for (int i = 0; i < n; i++) {
-			if (a[i] >= lb) {
-				cnt += 1 + (a[i]-lb)/b[i];
-			}
-		}
-		return cnt;
-	};
+  auto count = [&] (int lb) {
+    if (lb == 1) return (ll)INF;
+    ll cnt = 0;
+    for (int i = 0; i < n; i++) {
+      if (a[i] >= lb) {
+        cnt += 1 + (a[i]-lb)/b[i];
+      }
+    }
+    return cnt;
+  };
 
-	auto answer = [&] (int lb) {
-		ll res = 0;
-		for (int i = 0; i < n; i++) {
-			if (a[i] >= lb) {
-				ll cnt = 1 + (a[i]-lb)/b[i];
-				res += cnt * a[i] - cnt*(cnt-1)/2 * b[i];
-			}
-		}
-		return res;
-	};
+  auto answer = [&] (int lb) {
+    ll res = 0;
+    for (int i = 0; i < n; i++) {
+      if (a[i] >= lb) {
+        ll cnt = 1 + (a[i]-lb)/b[i];
+        res += cnt * a[i] - cnt*(cnt-1)/2 * b[i];
+      }
+    }
+    return res;
+  };
 
-	int left, right, mid;
-	left = 1;
-	right = 1e9;
-	while (left <= right) {
-		mid = (left+right)/2;
-		if (count(mid) >= m) left = mid+1;
-		else right = mid-1;
-	}
-	if (count(mid) >= m) mid++;
+  int left, right, mid;
+  left = 1;
+  right = 1e9;
+  while (left <= right) {
+    mid = (left+right)/2;
+    if (count(mid) >= m) left = mid+1;
+    else right = mid-1;
+  }
+  if (count(mid) >= m) mid++;
 
-	int num = count(mid);
-	cout << answer(mid) + (ll)(mid-1)*(m-num) << nl;
+  int num = count(mid);
+  cout << answer(mid) + (ll)(mid-1)*(m-num) << nl;
 
-	return 0;
+  return 0;
 }

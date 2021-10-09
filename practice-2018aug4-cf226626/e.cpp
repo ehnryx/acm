@@ -21,77 +21,77 @@ bool vis[N*N];
 int p[N], suff[N];
 
 void init() {
-	memset(dist, INF, sizeof dist);
+  memset(dist, INF, sizeof dist);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
-	init();
+  init();
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	p[n] = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> p[i];
-	}
+  p[n] = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> p[i];
+  }
 
-	suff[n] = 0;
-	for (int i = n-1; i >= 0; i--) {
-		suff[i] = max(suff[i+1], p[i]);
-	}
+  suff[n] = 0;
+  for (int i = n-1; i >= 0; i--) {
+    suff[i] = max(suff[i+1], p[i]);
+  }
 
-	auto get = [&] (int i, int j) {
-		return i*(n+1) + j;
-	};
+  auto get = [&] (int i, int j) {
+    return i*(n+1) + j;
+  };
 
-	int ans = 0;
-	queue<int> bfs;
-	bfs.push(get(0, 1));
-	dist[get(0,1)] = 0;
-	while (!bfs.empty()) {
-		int cur = bfs.front();
-		bfs.pop();
+  int ans = 0;
+  queue<int> bfs;
+  bfs.push(get(0, 1));
+  dist[get(0,1)] = 0;
+  while (!bfs.empty()) {
+    int cur = bfs.front();
+    bfs.pop();
 
-		if (!vis[cur]) {
-			vis[cur] = true;
-			if (dist[cur] <= k) {
-				ans++;
-			}
+    if (!vis[cur]) {
+      vis[cur] = true;
+      if (dist[cur] <= k) {
+        ans++;
+      }
 
-			int i = cur / (n+1);
-			int j = cur % (n+1);
-			if (p[i] > 0 && suff[j] > 0) {
-				int nxt = get(min(n, j+1), min(n, j+2));
-				dist[nxt] = dist[cur]+1;
-				bfs.push(nxt);
-			}
-			if (p[i] > 0 && suff[j] < 100) {
-				int nxt = get(min(n, i), min(n, j+1));
-				dist[nxt] = dist[cur]+1;
-				bfs.push(nxt);
-			}
-			if (p[i] < 100 && suff[j] > 0) {
-				int nxt = get(min(n, j), min(n, j+1));
-				dist[nxt] = dist[cur]+1;
-				bfs.push(nxt);
-			}
-			if (p[i] < 100 && suff[j] < 100) {
-				int nxt = get(min(n, i), min(n, j));
-				dist[nxt] = dist[cur]+1;
-				bfs.push(nxt);
-			}
-		}
-	}
+      int i = cur / (n+1);
+      int j = cur % (n+1);
+      if (p[i] > 0 && suff[j] > 0) {
+        int nxt = get(min(n, j+1), min(n, j+2));
+        dist[nxt] = dist[cur]+1;
+        bfs.push(nxt);
+      }
+      if (p[i] > 0 && suff[j] < 100) {
+        int nxt = get(min(n, i), min(n, j+1));
+        dist[nxt] = dist[cur]+1;
+        bfs.push(nxt);
+      }
+      if (p[i] < 100 && suff[j] > 0) {
+        int nxt = get(min(n, j), min(n, j+1));
+        dist[nxt] = dist[cur]+1;
+        bfs.push(nxt);
+      }
+      if (p[i] < 100 && suff[j] < 100) {
+        int nxt = get(min(n, i), min(n, j));
+        dist[nxt] = dist[cur]+1;
+        bfs.push(nxt);
+      }
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

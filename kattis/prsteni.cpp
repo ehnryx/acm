@@ -23,40 +23,40 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Frac {
-	ll n, d;
-	Frac(ll a, ll b) {
-		ll g = __gcd(a,b);
-		n=a/g; d=b/g;
-	}
-	Frac operator * (const Frac& o) const {
-		return Frac(n*o.n, d*o.d);
-	}
+  ll n, d;
+  Frac(ll a, ll b) {
+    ll g = __gcd(a,b);
+    n=a/g; d=b/g;
+  }
+  Frac operator * (const Frac& o) const {
+    return Frac(n*o.n, d*o.d);
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int pre;
-	cin >> pre;
+  int pre;
+  cin >> pre;
 
-	Frac ans(1,1);
-	for (int i=1; i<n; i++) {
-		int cur;
-		cin >> cur;
-		ans = ans * Frac(pre,cur);
-		cout << ans.n << "/" << ans.d << nl;
-		pre = cur;
-	}
+  Frac ans(1,1);
+  for (int i=1; i<n; i++) {
+    int cur;
+    cin >> cur;
+    ans = ans * Frac(pre,cur);
+    cout << ans.n << "/" << ans.d << nl;
+    pre = cur;
+  }
 
-	return 0;
+  return 0;
 }

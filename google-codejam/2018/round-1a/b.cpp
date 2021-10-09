@@ -17,21 +17,21 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -40,19 +40,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -66,44 +66,44 @@ pair<ll,ll> line[N]; // (slope, intercept)
 ll maxv[N];
 
 bool valid(ll t) {
-	vector<ll> res;
-	for (int i = 0; i < cashiers; i++) {
-		res.push_back(min(maxv[i], (t - line[i].second) / line[i].first));
-	}
-	sort(res.begin(), res.end(), greater<ll>());
+  vector<ll> res;
+  for (int i = 0; i < cashiers; i++) {
+    res.push_back(min(maxv[i], (t - line[i].second) / line[i].first));
+  }
+  sort(res.begin(), res.end(), greater<ll>());
 
-	ll ans = 0;
-	for (int i = 0; i < robots; i++) {
-		ans += res[i];
-		if (ans >= bits) return true;
-	}
-	return false;
+  ll ans = 0;
+  for (int i = 0; i < robots; i++) {
+    ans += res[i];
+    if (ans >= bits) return true;
+  }
+  return false;
 }
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	cin >> robots >> bits >> cashiers;
-	for (int i = 0; i < cashiers; i++) {
-		cin >> maxv[i] >> line[i].first >> line[i].second;
-	}
+  cin >> robots >> bits >> cashiers;
+  for (int i = 0; i < cashiers; i++) {
+    cin >> maxv[i] >> line[i].first >> line[i].second;
+  }
 
-	ll left, right, mid;
-	left = 0;
-	right = INFLL;
-	while (left <= right) {
-		mid = (left + right) / 2;
-		if (!valid(mid)) {
-			left = mid+1;
-		} else {
-			right = mid-1;
-		}
-	}
-	if (!valid(mid)) {
-		mid++;
-	}
-	cout << mid << nl;
+  ll left, right, mid;
+  left = 0;
+  right = INFLL;
+  while (left <= right) {
+    mid = (left + right) / 2;
+    if (!valid(mid)) {
+      left = mid+1;
+    } else {
+      right = mid-1;
+    }
+  }
+  if (!valid(mid)) {
+    mid++;
+  }
+  cout << mid << nl;
 
-	return;
+  return;
 }
 

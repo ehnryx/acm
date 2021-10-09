@@ -24,54 +24,54 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s, t;
-	cin >> s >> t;
-	int n = s.size();
-	multiset<int> S, T;
-	for(char c : s) {
-		S.insert(c);
-	}
-	for(char c : t) {
-		T.insert(c);
-	}
+  string s, t;
+  cin >> s >> t;
+  int n = s.size();
+  multiset<int> S, T;
+  for(char c : s) {
+    S.insert(c);
+  }
+  for(char c : t) {
+    T.insert(c);
+  }
 
-	int half = (n+1)/2;
-	while(S.size() > half) {
-		S.erase(prev(S.end()));
-	}
-	while(T.size() > n-half) {
-		T.erase(T.begin());
-	}
+  int half = (n+1)/2;
+  while(S.size() > half) {
+    S.erase(prev(S.end()));
+  }
+  while(T.size() > n-half) {
+    T.erase(T.begin());
+  }
 
-	vector<char> ans(n);
-	int f = 0;
-	int b = n;
-	for(int i=0; i<n; i++) {
-		if(i%2 == 0) {
-			if(!T.empty() && *S.begin() >= *T.rbegin()) {
-				ans[--b] = *S.rbegin();
-				S.erase(prev(S.end()));
-			} else {
-				ans[f++] = *S.begin();
-				S.erase(S.begin());
-			}
-		} else {
-			if(!S.empty() && *T.rbegin() <= *S.begin()) {
-				ans[--b] = *T.begin();
-				T.erase(T.begin());
-			} else {
-				ans[f++] = *T.rbegin();
-				T.erase(prev(T.end()));
-			}
-		}
-	}
-	for(int i=0; i<n; i++) {
-		cout << ans[i];
-	}
-	cout << nl;
+  vector<char> ans(n);
+  int f = 0;
+  int b = n;
+  for(int i=0; i<n; i++) {
+    if(i%2 == 0) {
+      if(!T.empty() && *S.begin() >= *T.rbegin()) {
+        ans[--b] = *S.rbegin();
+        S.erase(prev(S.end()));
+      } else {
+        ans[f++] = *S.begin();
+        S.erase(S.begin());
+      }
+    } else {
+      if(!S.empty() && *T.rbegin() <= *S.begin()) {
+        ans[--b] = *T.begin();
+        T.erase(T.begin());
+      } else {
+        ans[f++] = *T.rbegin();
+        T.erase(prev(T.end()));
+      }
+    }
+  }
+  for(int i=0; i<n; i++) {
+    cout << ans[i];
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

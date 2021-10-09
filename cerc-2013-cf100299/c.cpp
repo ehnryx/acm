@@ -18,38 +18,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const int N = 1<<17;
 
 struct SegTree {
-	ll t[2*N];
-	
-	void build(int n, ll a[]) {
-		memset(t, 0, sizeof t);
-	}
+  ll t[2*N];
+  
+  void build(int n, ll a[]) {
+    memset(t, 0, sizeof t);
+  }
 
-	int next(int x) {
-	}
+  int next(int x) {
+  }
 };
 
 ll arr[N];
 SegTree segt;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		for (int i = 0; i < n; i++) {
-			cin >> arr[i];
-		}
-		segt.build(n, arr);
+    for (int i = 0; i < n; i++) {
+      cin >> arr[i];
+    }
+    segt.build(n, arr);
 
-		for (int i = 0; i < n; i++) {
-		}
-	}
+    for (int i = 0; i < n; i++) {
+    }
+  }
 
-	return 0;
+  return 0;
 }

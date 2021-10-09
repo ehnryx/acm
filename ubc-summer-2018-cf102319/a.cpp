@@ -33,52 +33,52 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int l,r;
-	cin>>l>>r;
-	int a[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
+  int n;
+  cin>>n;
+  int l,r;
+  cin>>l>>r;
+  int a[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
 
-	int dp[r+1];
-	memset(dp,INF,sizeof dp);
-	dp[0] = 0;
-	for(int i=1;i<=r;i++) {
-		for(int k:a) {
-			if(i-k>=0) {
-				dp[i] = min(dp[i], dp[i-k]+1);
-			}
-		}
-	}
+  int dp[r+1];
+  memset(dp,INF,sizeof dp);
+  dp[0] = 0;
+  for(int i=1;i<=r;i++) {
+    for(int k:a) {
+      if(i-k>=0) {
+        dp[i] = min(dp[i], dp[i-k]+1);
+      }
+    }
+  }
 
-	int best = 0;
-	int bestv = 0;
-	for(int i=l;i<=r;i++) {
-		best += dp[i];
-	}
-	for(int v=1;v<=r;v++) {
-		int cur = 0;
-		for(int i=l;i<=r;i++) {
-			int val = INF;
-			for(int j=0;j*v<=r;j++) {
-				if(i-j*v>=0) {
-					val = min(val, dp[i-j*v]+j);
-				}
-			}
-			cur += val;
-		}
-		if(cur<best) {
-			best = cur;
-			bestv = v;
-		}
-	}
-	cout<<bestv<<nl;
+  int best = 0;
+  int bestv = 0;
+  for(int i=l;i<=r;i++) {
+    best += dp[i];
+  }
+  for(int v=1;v<=r;v++) {
+    int cur = 0;
+    for(int i=l;i<=r;i++) {
+      int val = INF;
+      for(int j=0;j*v<=r;j++) {
+        if(i-j*v>=0) {
+          val = min(val, dp[i-j*v]+j);
+        }
+      }
+      cur += val;
+    }
+    if(cur<best) {
+      best = cur;
+      bestv = v;
+    }
+  }
+  cout<<bestv<<nl;
 
-	return 0;
+  return 0;
 }

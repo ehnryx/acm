@@ -33,29 +33,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m, k;
-		cin >> n >> m >> k;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m, k;
+    cin >> n >> m >> k;
 
-		int pre, h;
-		cin >> pre;
-		int cur = m;
-		int minv = 0;
-		for (int i=1; i<n; i++) {
-			cin >> h;
-			cur += pre - max(0, h-k);
-			minv = min(minv, cur);
-			pre = h;
-		}
-		if (minv<0) cout << "NO" << nl;
-		else cout << "YES" << nl;
-	}
+    int pre, h;
+    cin >> pre;
+    int cur = m;
+    int minv = 0;
+    for (int i=1; i<n; i++) {
+      cin >> h;
+      cur += pre - max(0, h-k);
+      minv = min(minv, cur);
+      pre = h;
+    }
+    if (minv<0) cout << "NO" << nl;
+    else cout << "YES" << nl;
+  }
 
-	return 0;
+  return 0;
 }

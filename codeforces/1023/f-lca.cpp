@@ -18,12 +18,12 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int a, b, c;
-	Edge(){}
-	Edge(int a, int b, int c): a(a), b(b), c(c) {}
-	bool operator < (const Edge& v) const {
-		return c < v.c;
-	}
+  int a, b, c;
+  Edge(){}
+  Edge(int a, int b, int c): a(a), b(b), c(c) {}
+  bool operator < (const Edge& v) const {
+    return c < v.c;
+  }
 };
 
 const int N = 1<<19;
@@ -31,62 +31,62 @@ const int L = 20;
 vector<int> adj[N];
 
 struct DSU {
-	vector<int> root;
-	vector<int> sz;
+  vector<int> root;
+  vector<int> sz;
 
-	DSU(int n) {
-		root.resize(n, -1);
-		sz.resize(n, 1);
-	}
+  DSU(int n) {
+    root.resize(n, -1);
+    sz.resize(n, 1);
+  }
 
-	int find(int i) {
-		if (root[i] == -1) return i;
-		return root[i] = find(root[i]);
-	}
+  int find(int i) {
+    if (root[i] == -1) return i;
+    return root[i] = find(root[i]);
+  }
 
-	// returns true if we combine two sets
-	bool link(int i, int j) {
-		i = find(i);
-		j = find(j);
-		if (i == j) return false;
-		if (sz[i] < sz[j]) swap(i,j);
-		root[j] = i;
-		sz[i] += sz[j];
-		return true;
-	}
+  // returns true if we combine two sets
+  bool link(int i, int j) {
+    i = find(i);
+    j = find(j);
+    if (i == j) return false;
+    if (sz[i] < sz[j]) swap(i,j);
+    root[j] = i;
+    sz[i] += sz[j];
+    return true;
+  }
 };
 DSU dsu(5e5+1);
 
 struct SegTree {
-	int n; int *segt;
+  int n; int *segt;
 
-	SegTree(int len) {
-		n = 1<<(32-__builtin_clz(len));
-		segt = new int [2*n]; fill(segt, segt+2*n, INF);
-	}
+  SegTree(int len) {
+    n = 1<<(32-__builtin_clz(len));
+    segt = new int [2*n]; fill(segt, segt+2*n, INF);
+  }
 
-	void update(int l, int r, int v) {
-		for (l += n, r += n+1; l < r; l /= 2, r /= 2) {
-			if (l&1) {
-				assert(0<=l && l<2*n);
-				segt[l] = min(segt[l], v);
-				l++;
-			}
-			if (r&1) {
-				--r;
-				assert(0<=r && r<2*n);
-				segt[r] = min(segt[r], v);
-			}
-		}
-	}
+  void update(int l, int r, int v) {
+    for (l += n, r += n+1; l < r; l /= 2, r /= 2) {
+      if (l&1) {
+        assert(0<=l && l<2*n);
+        segt[l] = min(segt[l], v);
+        l++;
+      }
+      if (r&1) {
+        --r;
+        assert(0<=r && r<2*n);
+        segt[r] = min(segt[r], v);
+      }
+    }
+  }
 
-	int query(int x) {
-		int res = INF;
-		for (x += n; x > 0; x /= 2) {
-			res = min(res, segt[x]);
-		}
-		return res;
-	}
+  int query(int x) {
+    int res = INF;
+    for (x += n; x > 0; x /= 2) {
+      res = min(res, segt[x]);
+    }
+    return res;
+  }
 };
 
 namespace HLD {
@@ -106,83 +106,83 @@ namespace HLD {
       segt[ch[a]]->update(0, pos[a], v); a = par[root[ch[a]]]; }
     if (pos[a] != pos[b]) { if (d[a] < d[b]) swap(a,b);
       segt[ch[a]]->update(pos[b]+1, pos[a], v); } return b; } // returns lca
-	int query_node(int a) { return segt[ch[a]]->query(pos[a]); }
+  int query_node(int a) { return segt[ch[a]]->query(pos[a]); }
 }
 
 namespace std {
-	template<> struct hash<pii> {
-		size_t operator () (const pii& v) const {
-			return hash<int>()(v.first) ^ hash<int>()(v.second<<11);
-		}
-	};
+  template<> struct hash<pii> {
+    size_t operator () (const pii& v) const {
+      return hash<int>()(v.first) ^ hash<int>()(v.second<<11);
+    }
+  };
 }
 unordered_set<pii> orig;
 
 ll answer(int cur) {
-	ll res = 0;
-	if (orig.count(pii(cur, HLD::par[cur]))) {
-		int v = HLD::query_node(cur);
-		if (v == INF) return -1;
-		res += v;
-	}
+  ll res = 0;
+  if (orig.count(pii(cur, HLD::par[cur]))) {
+    int v = HLD::query_node(cur);
+    if (v == INF) return -1;
+    res += v;
+  }
 
-	for (int x : adj[cur]) {
-		if (x != HLD::par[cur]) {
-			ll v = answer(x);
-			if (v == -1) return -1;
-			res += v;
-		}
-	}
-	return res;
+  for (int x : adj[cur]) {
+    if (x != HLD::par[cur]) {
+      ll v = answer(x);
+      if (v == -1) return -1;
+      res += v;
+    }
+  }
+  return res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k, m, a, b, c;
-	cin >> n >> k >> m;
+  int n, k, m, a, b, c;
+  cin >> n >> k >> m;
 
-	int root = -1;
-	int groups = n;
-	for (int i = 0; i < k; i++) {
-		cin >> a >> b;
-		root = a;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-		orig.insert(pii(a,b));
-		orig.insert(pii(b,a));
-		groups -= dsu.link(a,b);
-	}
+  int root = -1;
+  int groups = n;
+  for (int i = 0; i < k; i++) {
+    cin >> a >> b;
+    root = a;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+    orig.insert(pii(a,b));
+    orig.insert(pii(b,a));
+    groups -= dsu.link(a,b);
+  }
 
-	vector<Edge> edges;
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b >> c;
-		edges.push_back(Edge(a,b,c));
-	}
-	sort(edges.begin(), edges.end());
+  vector<Edge> edges;
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b >> c;
+    edges.push_back(Edge(a,b,c));
+  }
+  sort(edges.begin(), edges.end());
 
-	for (const Edge& e : edges) {
-		if (groups == 1) break;
-		if (dsu.link(e.a, e.b)) {
-			adj[e.a].push_back(e.b);
-			adj[e.b].push_back(e.a);
-			groups--;
-		}
-	}
-	HLD::build(root);
+  for (const Edge& e : edges) {
+    if (groups == 1) break;
+    if (dsu.link(e.a, e.b)) {
+      adj[e.a].push_back(e.b);
+      adj[e.b].push_back(e.a);
+      groups--;
+    }
+  }
+  HLD::build(root);
 
-	for (const Edge& e : edges) {
-		HLD::insert_path(e.a, e.b, e.c);
-	}
+  for (const Edge& e : edges) {
+    HLD::insert_path(e.a, e.b, e.c);
+  }
 
-	cout << answer(root) << nl;
+  cout << answer(root) << nl;
 
-	return 0;
+  return 0;
 }

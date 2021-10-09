@@ -27,41 +27,41 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<pair<int,int>> v;
-	for(int i=1; i<=n; i++) {
-		int a;
-		cin >> a;
-		v.emplace_back(a, i);
-	}
-	sort(v.begin(), v.end(), greater<pair<int,int>>());
+  int n;
+  cin >> n;
+  vector<pair<int,int>> v;
+  for(int i=1; i<=n; i++) {
+    int a;
+    cin >> a;
+    v.emplace_back(a, i);
+  }
+  sort(v.begin(), v.end(), greater<pair<int,int>>());
 
-	set<int> active;
-	vector<int> res(n+1);
-	for(int i=n, j=0; i>=1; i--) {
-		while(j < n && v[j].first >= i) {
-			active.insert(v[j].second);
-			j++;
-		}
-		if(active.empty()) {
-			cout << -1 << nl;
-			return 0;
-		}
-		res[i] = *active.rbegin();
-		active.erase(prev(active.end()));
-	}
+  set<int> active;
+  vector<int> res(n+1);
+  for(int i=n, j=0; i>=1; i--) {
+    while(j < n && v[j].first >= i) {
+      active.insert(v[j].second);
+      j++;
+    }
+    if(active.empty()) {
+      cout << -1 << nl;
+      return 0;
+    }
+    res[i] = *active.rbegin();
+    active.erase(prev(active.end()));
+  }
 
-	ll ans = 0;
-	ordered_set<int> seen;
-	for(int i=n; i>=1; i--) {
-		ans += seen.order_of_key(res[i]);
-		seen.insert(res[i]);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  ordered_set<int> seen;
+  for(int i=n; i>=1; i--) {
+    ans += seen.order_of_key(res[i]);
+    seen.insert(res[i]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

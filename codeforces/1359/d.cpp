@@ -27,27 +27,27 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<int> res(30 + 1);
-	int ans = 0;
-	for(int i=0; i<n; i++) {
-		int v;
-		cin >> v;
-		for(int j=0; j<=30; j++) {
-			if(v <= j) {
-				res[j] = max(res[j], 0) + v;
-			} else {
-				res[j] = 0;
-			}
-			ans = max(ans, res[j] - j);
-		}
-	}
-	cout << ans << nl;
+  vector<int> res(30 + 1);
+  int ans = 0;
+  for(int i=0; i<n; i++) {
+    int v;
+    cin >> v;
+    for(int j=0; j<=30; j++) {
+      if(v <= j) {
+        res[j] = max(res[j], 0) + v;
+      } else {
+        res[j] = 0;
+      }
+      ans = max(ans, res[j] - j);
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

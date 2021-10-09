@@ -28,47 +28,47 @@ int dp[N][N];
 vector<int> adj[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, k;
-	cin >> n >> m >> k;
-	for(int i=1; i<=n; i++) {
-		cin >> a[i] >> b[i] >> c[i];
-		last[i] = i;
-	}
-	for(int i=1; i<=m; i++) {
-		int u, v;
-		cin >> u >> v;
-		last[v] = max(last[v], u);
-	}
+  int n, m, k;
+  cin >> n >> m >> k;
+  for(int i=1; i<=n; i++) {
+    cin >> a[i] >> b[i] >> c[i];
+    last[i] = i;
+  }
+  for(int i=1; i<=m; i++) {
+    int u, v;
+    cin >> u >> v;
+    last[v] = max(last[v], u);
+  }
 
-	for(int i=1; i<=n; i++) {
-		adj[last[i]].push_back(c[i]);
-	}
-	for(int i=1; i<=n; i++) {
-		sort(adj[i].begin(), adj[i].end(), greater<>());
-	}
+  for(int i=1; i<=n; i++) {
+    adj[last[i]].push_back(c[i]);
+  }
+  for(int i=1; i<=n; i++) {
+    sort(adj[i].begin(), adj[i].end(), greater<>());
+  }
 
-	fill(&dp[0][0], &dp[0][0]+N*N, -INF);
-	dp[0][k] = 0;
-	for(int i=1; i<=n; i++) {
-		for(int j=a[i]; j<N; j++) {
-			if(dp[i-1][j] < 0) continue;
-			int nj = j + b[i];
-			dp[i][nj] = max(dp[i][nj], dp[i-1][j]);
-			for(int t=1, add=0; t<=nj && t<=adj[i].size(); t++) {
-				add += adj[i][t-1];
-				dp[i][nj-t] = max(dp[i][nj-t], dp[i-1][j] + add);
-			}
-		}
-	}
+  fill(&dp[0][0], &dp[0][0]+N*N, -INF);
+  dp[0][k] = 0;
+  for(int i=1; i<=n; i++) {
+    for(int j=a[i]; j<N; j++) {
+      if(dp[i-1][j] < 0) continue;
+      int nj = j + b[i];
+      dp[i][nj] = max(dp[i][nj], dp[i-1][j]);
+      for(int t=1, add=0; t<=nj && t<=adj[i].size(); t++) {
+        add += adj[i][t-1];
+        dp[i][nj-t] = max(dp[i][nj-t], dp[i-1][j] + add);
+      }
+    }
+  }
 
-	int res = -1;
-	for(int j=0; j<N; j++) {
-		res = max(res, dp[n][j]);
-	}
-	cout << res << nl;
+  int res = -1;
+  for(int j=0; j<N; j++) {
+    res = max(res, dp[n][j]);
+  }
+  cout << res << nl;
 
-	return 0;
+  return 0;
 }

@@ -33,31 +33,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int a[n], b[n];
-	int m=0;
-	For(i,n) {
-		cin >> a[i];
-		b[i] = a[i];
-		if (a[i]>a[m]) {
-			m = i;
-		}
-	}
-	sort(b,b+m);
-	sort(b+m+1,b+n,greater<int>());
+  int n;
+  cin >> n;
+  int a[n], b[n];
+  int m=0;
+  For(i,n) {
+    cin >> a[i];
+    b[i] = a[i];
+    if (a[i]>a[m]) {
+      m = i;
+    }
+  }
+  sort(b,b+m);
+  sort(b+m+1,b+n,greater<int>());
 
-	For(i,n) {
-		if (a[i] != b[i]) {
-			cout << "NO" << nl;
-			return 0;
-		}
-	}
-	cout << "YES" << nl;
+  For(i,n) {
+    if (a[i] != b[i]) {
+      cout << "NO" << nl;
+      return 0;
+    }
+  }
+  cout << "YES" << nl;
 
-	return 0;
+  return 0;
 }

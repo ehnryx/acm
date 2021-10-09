@@ -53,44 +53,44 @@ pol chull(pol p) {
   } ch.resize(max(1, top-1)); return ch; } // pts returned in ccw order.
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int circ = 5000;
+  int circ = 5000;
 
-	string s;
-	int n;
-	cin >> n;
-	cin >> s;
-	vector<pt> points;
-	for (int i = 0; i < n; i++) {
-		if (s[i] == 'T') {
-			if (i == 0 || s[i-1] == 'C')
-				points.push_back(pt(i, 0));
-			points.push_back(pt(i+1, 0));
-			points.push_back(pt((2*i+1)/2.0, sqrt(3)/2.0));
-		}
-		else if (s[i] == 'S') {
-			if (i == 0 || s[i-1] == 'C')
-				points.push_back(pt(i, 0));
-			points.push_back(pt(i+1, 0));
-			if (i == 0 || s[i-1] != 'S')
-				points.push_back(pt(i, 1));
-			points.push_back(pt(i+1, 1));
-		}
-		else {
-			for (int j = 0; j < circ; j++) {
-				points.push_back(pt((2*i+1)/2.0, 0.5) + 0.5L*exp(pt(0, 2*PI*j/circ)));
-			}
-		}
-	}
-	vector<pt> hull = graham(points);
-	//vector<pt> hull = chull(points);
-	ld ans = abs(hull[0] - hull.back());
-	for (int i = 1; i < hull.size(); i++) {
-		ans += abs(hull[i] - hull[i-1]);
-	}
-	cout << fixed << setprecision(10) << ans << nl;
+  string s;
+  int n;
+  cin >> n;
+  cin >> s;
+  vector<pt> points;
+  for (int i = 0; i < n; i++) {
+    if (s[i] == 'T') {
+      if (i == 0 || s[i-1] == 'C')
+        points.push_back(pt(i, 0));
+      points.push_back(pt(i+1, 0));
+      points.push_back(pt((2*i+1)/2.0, sqrt(3)/2.0));
+    }
+    else if (s[i] == 'S') {
+      if (i == 0 || s[i-1] == 'C')
+        points.push_back(pt(i, 0));
+      points.push_back(pt(i+1, 0));
+      if (i == 0 || s[i-1] != 'S')
+        points.push_back(pt(i, 1));
+      points.push_back(pt(i+1, 1));
+    }
+    else {
+      for (int j = 0; j < circ; j++) {
+        points.push_back(pt((2*i+1)/2.0, 0.5) + 0.5L*exp(pt(0, 2*PI*j/circ)));
+      }
+    }
+  }
+  vector<pt> hull = graham(points);
+  //vector<pt> hull = chull(points);
+  ld ans = abs(hull[0] - hull.back());
+  for (int i = 1; i < hull.size(); i++) {
+    ans += abs(hull[i] - hull[i-1]);
+  }
+  cout << fixed << setprecision(10) << ans << nl;
 
-	return 0;
+  return 0;
 }

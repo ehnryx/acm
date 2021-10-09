@@ -23,32 +23,32 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll solve(ll n, ll k) {
-	ll ans = 0;
-	while (n>0) {
-		ll r = n%k;
-		if (r == 0) {
-			ans++;
-			n /= k;
-		} else {
-			ans += r;
-			n -= r;
-		}
-	}
-	return ans;
+  ll ans = 0;
+  while (n>0) {
+    ll r = n%k;
+    if (r == 0) {
+      ans++;
+      n /= k;
+    } else {
+      ans += r;
+      n -= r;
+    }
+  }
+  return ans;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		ll n, k;
-		cin >> n >> k;
-		cout << solve(n,k) << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    ll n, k;
+    cin >> n >> k;
+    cout << solve(n,k) << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -27,37 +27,37 @@ typedef bitset<N> BM;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int m, n;
-	cin >> m >> n;
+  int m, n;
+  cin >> m >> n;
 
-	vector<BM> sets;
-	for (int i=0; i<m; i++) {
-		int k;
-		cin >> k;
-		BM cur;
-		for (int j=0; j<k; j++) {
-			int v;
-			cin >> v;
-			cur.set(v);
-		}
-		sets.push_back(cur);
-		for (int j=0; j<i; j++) {
-			if ((sets[i]&sets[j]).count() == 0) {
-				cout << "impossible" << nl;
-				return 0;
-			}
-		}
-	}
+  vector<BM> sets;
+  for (int i=0; i<m; i++) {
+    int k;
+    cin >> k;
+    BM cur;
+    for (int j=0; j<k; j++) {
+      int v;
+      cin >> v;
+      cur.set(v);
+    }
+    sets.push_back(cur);
+    for (int j=0; j<i; j++) {
+      if ((sets[i]&sets[j]).count() == 0) {
+        cout << "impossible" << nl;
+        return 0;
+      }
+    }
+  }
 
-	cout << "possible" << nl;
+  cout << "possible" << nl;
 
-	return 0;
+  return 0;
 }

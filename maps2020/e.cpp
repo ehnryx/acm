@@ -24,57 +24,57 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const int D = 10000;
 
 ll lower(ll g, ll t) {
-	ll l = 0;
-	ll r = INFLL;
-	while(l<r) {
-		ll v = (l+r)/2;
-		__int128 nv = (__int128)v * (D+t);
-		__int128 fv = nv / D;
-		__int128 cv = (nv+D-1) / D;
-		ll res = (nv - fv*D < cv*D - nv ? fv : cv);
-		if(res < g) {
-			l = v+1;
-		} else {
-			r = v;
-		}
-	}
-	return r;
+  ll l = 0;
+  ll r = INFLL;
+  while(l<r) {
+    ll v = (l+r)/2;
+    __int128 nv = (__int128)v * (D+t);
+    __int128 fv = nv / D;
+    __int128 cv = (nv+D-1) / D;
+    ll res = (nv - fv*D < cv*D - nv ? fv : cv);
+    if(res < g) {
+      l = v+1;
+    } else {
+      r = v;
+    }
+  }
+  return r;
 }
 
 ll upper(ll g, ll t) {
-	ll l = 0;
-	ll r = INFLL;
-	while(l<r) {
-		ll v = (l+r)/2;
-		__int128 nv = (__int128)v * (D+t);
-		__int128 fv = nv / D;
-		__int128 cv = (nv+D-1) / D;
-		ll res = (nv - fv*D < cv*D - nv ? fv : cv);
-		if(res <= g) {
-			l = v+1;
-		} else {
-			r = v;
-		}
-	}
-	return r;
+  ll l = 0;
+  ll r = INFLL;
+  while(l<r) {
+    ll v = (l+r)/2;
+    __int128 nv = (__int128)v * (D+t);
+    __int128 fv = nv / D;
+    __int128 cv = (nv+D-1) / D;
+    ll res = (nv - fv*D < cv*D - nv ? fv : cv);
+    if(res <= g) {
+      l = v+1;
+    } else {
+      r = v;
+    }
+  }
+  return r;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		ld aa, bb, tt;
-		cin >> aa >> bb >> tt;
-		ll a = llround(aa*100);
-		ll b = llround(bb*100);
-		ll t = llround(tt*100);
-		ll l = lower(a, t);
-		ll r = upper(b, t);
-		cout << (b-a+1) - (r-l) << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    ld aa, bb, tt;
+    cin >> aa >> bb >> tt;
+    ll a = llround(aa*100);
+    ll b = llround(bb*100);
+    ll t = llround(tt*100);
+    ll l = lower(a, t);
+    ll r = upper(b, t);
+    cout << (b-a+1) - (r-l) << nl;
+  }
 
-	return 0;
+  return 0;
 }

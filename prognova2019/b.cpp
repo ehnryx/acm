@@ -25,57 +25,57 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	string g[n];
-	for(int i=0; i<n; i++) {
-		cin >> g[i];
-	}
+  int n;
+  cin >> n;
+  string g[n];
+  for(int i=0; i<n; i++) {
+    cin >> g[i];
+  }
 
-	multiset<int> open;
-	bool ok = true;
-	for(int j=0; j<n; j++) {
-		int add = 0;
-		int need = 0;
-		for(int i=0; i<n; i++) {
-			if(g[i][j] == '(') {
-				add++;
-			} else {
-				need++;
-			}
-		}
-		if(need > open.size()) {
-			ok = false;
-			break;
-		}
-		vector<int> fix;
-		for(int i=0; i<need; i++) {
-			fix.push_back(*open.rbegin() - 1);
-			open.erase(prev(open.end()));
-		}
-		for(int i=0; i<add; i++) {
-			if(open.empty()) {
-				fix.push_back(1);
-			} else {
-				fix.push_back(*open.begin() + 1);
-				open.erase(open.begin());
-			}
-		}
-		for(int it : fix) {
-			if(it > 0) {
-				open.insert(it);
-			}
-		}
-	}
+  multiset<int> open;
+  bool ok = true;
+  for(int j=0; j<n; j++) {
+    int add = 0;
+    int need = 0;
+    for(int i=0; i<n; i++) {
+      if(g[i][j] == '(') {
+        add++;
+      } else {
+        need++;
+      }
+    }
+    if(need > open.size()) {
+      ok = false;
+      break;
+    }
+    vector<int> fix;
+    for(int i=0; i<need; i++) {
+      fix.push_back(*open.rbegin() - 1);
+      open.erase(prev(open.end()));
+    }
+    for(int i=0; i<add; i++) {
+      if(open.empty()) {
+        fix.push_back(1);
+      } else {
+        fix.push_back(*open.begin() + 1);
+        open.erase(open.begin());
+      }
+    }
+    for(int it : fix) {
+      if(it > 0) {
+        open.insert(it);
+      }
+    }
+  }
 
-	if(ok && open.size() == 0) {
-		cout << "Yes" << nl;
-	} else {
-		cout << "No" << nl;
-	}
+  if(ok && open.size() == 0) {
+    cout << "Yes" << nl;
+  } else {
+    cout << "No" << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -14,16 +14,16 @@ const int INF = 0x7f7f7f7f;
 const ll INFLL = 0x7f7f7f7f7f7f7f7f;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	double radius, angle;
-	int T;
-	cin >> T;
-	while (T--) {
-		cin >> radius >> angle;
-		cout << fixed << setprecision(6) << radius*radius*(M_PI*angle/360 - 0.5*sin(angle/180*M_PI)) << endl;
-	}
+  double radius, angle;
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> radius >> angle;
+    cout << fixed << setprecision(6) << radius*radius*(M_PI*angle/360 - 0.5*sin(angle/180*M_PI)) << endl;
+  }
 
-	return 0;
+  return 0;
 }

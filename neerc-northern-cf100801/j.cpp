@@ -35,87 +35,87 @@ int p[N], d[N];
 ll dp[N];
 
 struct PSegTree {
-	int sid;
-	PSegTree() { clear(); }
-	void clear() {
-		sid = 0;
-		rmq[0] = INFLL;
-	}
+  int sid;
+  PSegTree() { clear(); }
+  void clear() {
+    sid = 0;
+    rmq[0] = INFLL;
+  }
 
-	void insert(int& ver, int old, int x, ll v, int s=0, int e=N-1) {
-		ver = ++sid;
-		if(s == e) {
-			rmq[ver] = min(rmq[old], v);
-			return;
-		}
-		ls[ver] = ls[old];
-		rs[ver] = rs[old];
+  void insert(int& ver, int old, int x, ll v, int s=0, int e=N-1) {
+    ver = ++sid;
+    if(s == e) {
+      rmq[ver] = min(rmq[old], v);
+      return;
+    }
+    ls[ver] = ls[old];
+    rs[ver] = rs[old];
 
-		int m = (s+e)/2;
-		if(x <= m) insert(ls[ver], ls[old], x, v, s, m);
-		else insert(rs[ver], rs[old], x, v, m+1, e);
-		rmq[ver] = min(rmq[ls[ver]], rmq[rs[ver]]);
-		assert(ver != ls[ver] && ver != rs[ver]);
-	}
+    int m = (s+e)/2;
+    if(x <= m) insert(ls[ver], ls[old], x, v, s, m);
+    else insert(rs[ver], rs[old], x, v, m+1, e);
+    rmq[ver] = min(rmq[ls[ver]], rmq[rs[ver]]);
+    assert(ver != ls[ver] && ver != rs[ver]);
+  }
 
-	ll query(int ver, int l, int r, int s=0, int e=N-1) {
-		if(r<s || e<l) return INFLL;
-		if(l<=s && e<=r) {
-			return rmq[ver];
-		}
+  ll query(int ver, int l, int r, int s=0, int e=N-1) {
+    if(r<s || e<l) return INFLL;
+    if(l<=s && e<=r) {
+      return rmq[ver];
+    }
 
-		int m = (s+e)/2;
-		return min(query(ls[ver], l, r, s, m), query(rs[ver], l, r, m+1, e));
-	}
+    int m = (s+e)/2;
+    return min(query(ls[ver], l, r, s, m), query(rs[ver], l, r, m+1, e));
+  }
 };
 
 PSegTree segt;
 
 ll value(int r, int n) {
-	segt.clear();
-	dp[1] = 0;
-	segt.insert(root[1], root[0], 1, 0);
-	for(int i=2; i<=n; i++) {
-		dp[i] = segt.query(root[i-1], i-r, i-1);
-		segt.insert(root[i], root[i-1], i, dp[i] + d[i]);
-	}
-	return dp[n] + n-1;
+  segt.clear();
+  dp[1] = 0;
+  segt.insert(root[1], root[0], 1, 0);
+  for(int i=2; i<=n; i++) {
+    dp[i] = segt.query(root[i-1], i-r, i-1);
+    segt.insert(root[i], root[i-1], i, dp[i] + d[i]);
+  }
+  return dp[n] + n-1;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	if(fopen(FILENAME ".in", "r")) {
-		freopen(FILENAME ".in", "r", stdin);
-		freopen(FILENAME ".out", "w", stdout);
-	}
+  if(fopen(FILENAME ".in", "r")) {
+    freopen(FILENAME ".in", "r", stdin);
+    freopen(FILENAME ".out", "w", stdout);
+  }
 
-	int n, t;
-	cin >> n >> t;
-	for(int i=1; i<n; i++) {
-		cin >> p[i];
-	}
-	for(int i=2; i<n; i++) {
-		cin >> d[i];
-	}
+  int n, t;
+  cin >> n >> t;
+  for(int i=1; i<n; i++) {
+    cin >> p[i];
+  }
+  for(int i=2; i<n; i++) {
+    cin >> d[i];
+  }
 
-	int l = 1;
-	int r = n-1;
-	while(l<r) {
-		int m = (l+r)/2;
-		if(value(m, n) <= t) {
-			r = m;
-		} else {
-			l = m+1;
-		}
-	}
+  int l = 1;
+  int r = n-1;
+  while(l<r) {
+    int m = (l+r)/2;
+    if(value(m, n) <= t) {
+      r = m;
+    } else {
+      l = m+1;
+    }
+  }
 
-	int ans = INF;
-	for(int i=r; i<n; i++) {
-		ans = min(ans, p[i]);
-	}
-	cout << ans << nl;
+  int ans = INF;
+  for(int i=r; i<n; i++) {
+    ans = min(ans, p[i]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

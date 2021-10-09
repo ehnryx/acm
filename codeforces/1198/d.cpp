@@ -36,44 +36,44 @@ int pre[N][N];
 int dp[N][N][N][N];
 
 int sum(int a, int b, int x, int y) {
-	return pre[x][y] + pre[a-1][b-1] - pre[x][b-1] - pre[a-1][y];
+  return pre[x][y] + pre[a-1][b-1] - pre[x][b-1] - pre[a-1][y];
 }
 
 int solve(int a, int b, int x, int y) {
-	if (a>x || b>y) return 0;
-	if (dp[a][b][x][y] != -1) return dp[a][b][x][y];
-	if (sum(a,b,x,y) == 0) return dp[a][b][x][y] = 0;
-	int res = max(x-a, y-b) + 1;
-	for (int i=a; i<=x; i++) {
-		if (sum(i,b,i,y) == 0 && solve(a,b,i-1,y) < res) {
-			res = min(res, solve(a,b,i-1,y) + solve(i+1,b,x,y));
-		}
-	}
-	for (int j=b; j<=y; j++) {
-		if (sum(a,j,x,j) == 0 && solve(a,b,x,j-1) < res) {
-			res = min(res, solve(a,b,x,j-1) + solve(a,j+1,x,y));
-		}
-	}
-	return dp[a][b][x][y] = res;
+  if (a>x || b>y) return 0;
+  if (dp[a][b][x][y] != -1) return dp[a][b][x][y];
+  if (sum(a,b,x,y) == 0) return dp[a][b][x][y] = 0;
+  int res = max(x-a, y-b) + 1;
+  for (int i=a; i<=x; i++) {
+    if (sum(i,b,i,y) == 0 && solve(a,b,i-1,y) < res) {
+      res = min(res, solve(a,b,i-1,y) + solve(i+1,b,x,y));
+    }
+  }
+  for (int j=b; j<=y; j++) {
+    if (sum(a,j,x,j) == 0 && solve(a,b,x,j-1) < res) {
+      res = min(res, solve(a,b,x,j-1) + solve(a,j+1,x,y));
+    }
+  }
+  return dp[a][b][x][y] = res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(dp, -1, sizeof dp);
+  memset(dp, -1, sizeof dp);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	FOR(i,1,n) {
-		FOR(j,1,n) {
-			cin >> grid[i][j];
-			pre[i][j] = pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1] + (grid[i][j] == '#');
-		}
-	}
-	cout << solve(1,1,n,n) << nl;
+  FOR(i,1,n) {
+    FOR(j,1,n) {
+      cin >> grid[i][j];
+      pre[i][j] = pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1] + (grid[i][j] == '#');
+    }
+  }
+  cout << solve(1,1,n,n) << nl;
 
-	return 0;
+  return 0;
 }

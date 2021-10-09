@@ -1,7 +1,7 @@
 if raw_input().find("ACM") == -1:
-	print "boring..."
+  print "boring..."
 else:
-	print "Fun!"
+  print "Fun!"
 
 
 

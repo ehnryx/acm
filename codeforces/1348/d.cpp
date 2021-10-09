@@ -27,28 +27,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		int m = 31 - __builtin_clz(n);
-		cout << m << nl;
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    int m = 31 - __builtin_clz(n);
+    cout << m << nl;
 
-		int cur = 1;
-		n -= cur;
-		for(int j=0; j<m; j++) {
-			int split = max(0, min(cur, n/(m-j) - cur));
-			cur += split;
-			n -= cur;
-			cout << split << " ";
-		}
-		cout << nl;
-		assert(n == 0);
-	}
+    int cur = 1;
+    n -= cur;
+    for(int j=0; j<m; j++) {
+      int split = max(0, min(cur, n/(m-j) - cur));
+      cur += split;
+      n -= cur;
+      cout << split << " ";
+    }
+    cout << nl;
+    assert(n == 0);
+  }
 
-	return 0;
+  return 0;
 }

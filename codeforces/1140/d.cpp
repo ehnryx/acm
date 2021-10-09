@@ -19,29 +19,29 @@ const int N = 500+1;
 ll dp[N][N];
 
 ll solve(int l, int r) {
-	if (dp[l][r] != -1) return dp[l][r];
-	if (r-l < 2) return dp[l][r] = 0;
-	ll res = INFLL;
-	for (int i=l+1; i<r; i++) {
-		res = min(res, l*r*i + solve(l,i) + solve(i,r));
-	}
-	return dp[l][r] = res;
+  if (dp[l][r] != -1) return dp[l][r];
+  if (r-l < 2) return dp[l][r] = 0;
+  ll res = INFLL;
+  for (int i=l+1; i<r; i++) {
+    res = min(res, l*r*i + solve(l,i) + solve(i,r));
+  }
+  return dp[l][r] = res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
-	memset(dp, -1, sizeof dp);
-	cout << solve(1,n) << nl;
+  int n;
+  cin >> n;
+  memset(dp, -1, sizeof dp);
+  cout << solve(1,n) << nl;
 
-	return 0;
+  return 0;
 }

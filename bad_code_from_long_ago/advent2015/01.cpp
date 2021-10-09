@@ -23,15 +23,15 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	string s; cin >> s;
-	int ans = 0;
-	for (char i : s)
-		if (i == '(') ans++;
-		else ans--;
-	cout << ans << nl;
+  string s; cin >> s;
+  int ans = 0;
+  for (char i : s)
+    if (i == '(') ans++;
+    else ans--;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

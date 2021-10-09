@@ -69,29 +69,29 @@ struct HullDynamic : public multiset<Line> {
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n],b[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
-	for(int i=0;i<n;i++) {
-		cin>>b[i];
-	}
+  int n;
+  cin>>n;
+  int a[n],b[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
+  for(int i=0;i<n;i++) {
+    cin>>b[i];
+  }
 
-	ll dp[n];
-	dp[0]=0;
-	HullDynamic hull;
-	hull.insert_line(b[0],dp[0]);
-	for(int i=1;i<n;i++) {
-		dp[i] = hull.eval(a[i]);
-		hull.insert_line(b[i],dp[i]);
-	}
-	cout<<dp[n-1]<<nl;
+  ll dp[n];
+  dp[0]=0;
+  HullDynamic hull;
+  hull.insert_line(b[0],dp[0]);
+  for(int i=1;i<n;i++) {
+    dp[i] = hull.eval(a[i]);
+    hull.insert_line(b[i],dp[i]);
+  }
+  cout<<dp[n-1]<<nl;
 
-	return 0;
+  return 0;
 }

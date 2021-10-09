@@ -34,37 +34,37 @@ const int N = 24;
 int sum[1<<N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		string s;
-		cin>>s;
-		int bm = 0;
-		for(int j=0;j<3;j++) {
-			bm |= 1<<(s[j]-'a');
-		}
-		sum[bm]++;
-	}
+  int n;
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    string s;
+    cin>>s;
+    int bm = 0;
+    for(int j=0;j<3;j++) {
+      bm |= 1<<(s[j]-'a');
+    }
+    sum[bm]++;
+  }
 
-	for(int i=0;i<N;i++) {
-		for(int bm=0;bm<1<<N;bm++) {
-			if(bm&1<<i) {
-				sum[bm] += sum[bm^1<<i];
-			}
-		}
-	}
+  for(int i=0;i<N;i++) {
+    for(int bm=0;bm<1<<N;bm++) {
+      if(bm&1<<i) {
+        sum[bm] += sum[bm^1<<i];
+      }
+    }
+  }
 
-	ll ans = 0;
-	for(int i=0;i<1<<N;i++) {
-		sum[i] = n-sum[i];
-		assert(sum[i]>=0);
-		ans ^= (ll)sum[i]*sum[i];
-	}
-	cout<<ans<<nl;
+  ll ans = 0;
+  for(int i=0;i<1<<N;i++) {
+    sum[i] = n-sum[i];
+    assert(sum[i]>=0);
+    ans ^= (ll)sum[i]*sum[i];
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

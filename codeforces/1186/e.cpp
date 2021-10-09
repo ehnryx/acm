@@ -28,66 +28,66 @@ int pre[N][N], inv[N][N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, q;
-	cin >> n >> m >> q;
+  int n, m, q;
+  cin >> n >> m >> q;
 
-	For(i,n) {
-		cin >> grid[i];
-	}
+  For(i,n) {
+    cin >> grid[i];
+  }
 
-	For(i,n) {
-		For(j,m) {
-			pre[i+1][j+1] = pre[i][j+1] + pre[i+1][j] - pre[i][j] + (grid[i][j]=='1');
-			inv[i+1][j+1] = inv[i][j+1] + inv[i+1][j] - inv[i][j] + (grid[i][j]=='0');
-		}
-	}
+  For(i,n) {
+    For(j,m) {
+      pre[i+1][j+1] = pre[i][j+1] + pre[i+1][j] - pre[i][j] + (grid[i][j]=='1');
+      inv[i+1][j+1] = inv[i][j+1] + inv[i+1][j] - inv[i][j] + (grid[i][j]=='0');
+    }
+  }
 
-	function<ll(ll,ll)> get = [&] (ll x, ll y) {
-		ll bigx = x/n;
-		ll bigy = y/m;
-		ll dx = x%n;
-		ll dy = y%m;
-		ll res = ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2==0 ? pre[dx][dy] : inv[dx][dy]);
-		if (bigx%2 && bigy%2) {
-			res += (bigx*bigy-1)*(pre[n][m]+inv[n][m])/2;
-			if ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2) {
-				res += inv[n][m];
-			} else {
-				res += pre[n][m];
-			}
-		} else {
-			res += bigx*bigy*(pre[n][m]+inv[n][m])/2;
-		}
-		if (bigx%2) {
-			res += (bigx-1)*(pre[n][dy]+inv[n][dy])/2;
-			res += ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2 ? pre[n][dy] : inv[n][dy]);
-		} else {
-			res += bigx*(pre[n][dy]+inv[n][dy])/2;
-		}
-		if (bigy%2) {
-			res += (bigy-1)*(pre[dx][m]+inv[dx][m])/2;
-			res += ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2 ? pre[dx][m] : inv[dx][m]);
-		} else {
-			res += bigy*(pre[dx][m]+inv[dx][m])/2;
-		}
-		return res;
-	};
+  function<ll(ll,ll)> get = [&] (ll x, ll y) {
+    ll bigx = x/n;
+    ll bigy = y/m;
+    ll dx = x%n;
+    ll dy = y%m;
+    ll res = ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2==0 ? pre[dx][dy] : inv[dx][dy]);
+    if (bigx%2 && bigy%2) {
+      res += (bigx*bigy-1)*(pre[n][m]+inv[n][m])/2;
+      if ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2) {
+        res += inv[n][m];
+      } else {
+        res += pre[n][m];
+      }
+    } else {
+      res += bigx*bigy*(pre[n][m]+inv[n][m])/2;
+    }
+    if (bigx%2) {
+      res += (bigx-1)*(pre[n][dy]+inv[n][dy])/2;
+      res += ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2 ? pre[n][dy] : inv[n][dy]);
+    } else {
+      res += bigx*(pre[n][dy]+inv[n][dy])/2;
+    }
+    if (bigy%2) {
+      res += (bigy-1)*(pre[dx][m]+inv[dx][m])/2;
+      res += ((__builtin_popcount(bigx)+__builtin_popcount(bigy))%2 ? pre[dx][m] : inv[dx][m]);
+    } else {
+      res += bigy*(pre[dx][m]+inv[dx][m])/2;
+    }
+    return res;
+  };
 
-	while (q--) {
-		int x1,y1,x2,y2;
-		cin >> x1 >> y1 >> x2 >> y2;
-		//cerr << get(x1-1,y1-1) << " + " << get(x2,y2) << " - " << get(x1-1,y2) << " - " << get(x2,y1-1) << " = " << nl;
-		cout << get(x1-1,y1-1) + get(x2,y2) - get(x1-1,y2) - get(x2,y1-1) << nl;
-		//cerr << nl;
-	}
+  while (q--) {
+    int x1,y1,x2,y2;
+    cin >> x1 >> y1 >> x2 >> y2;
+    //cerr << get(x1-1,y1-1) << " + " << get(x2,y2) << " - " << get(x1-1,y2) << " - " << get(x2,y1-1) << " = " << nl;
+    cout << get(x1-1,y1-1) + get(x2,y2) - get(x1-1,y2) - get(x2,y1-1) << nl;
+    //cerr << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -18,24 +18,24 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, q;
-	cin >> n >> q;
+  int n, q;
+  cin >> n >> q;
 
-	while (q--) {
-		int a, b;
-		cin >> a >> b;
+  while (q--) {
+    int a, b;
+    cin >> a >> b;
 
-		int sum = a+b;
-		int base = n/sum;
-		int add = (n - base*sum >= a);
+    int sum = a+b;
+    int base = n/sum;
+    int add = (n - base*sum >= a);
 
-		cout << 2*base + add << " ";
-	}
-	cout << nl;
+    cout << 2*base + add << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

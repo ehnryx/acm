@@ -25,7 +25,7 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace Flow {
-	const int N = 1004;
+  const int N = 1004;
 
   struct Edge { int v, r; ll f, c, p; };
   vector<Edge> adj[N]; int sz[N]; ll mc;
@@ -47,7 +47,7 @@ namespace Flow {
     // only need one of the branches below
     if(sparse) { // replace priority_queue with queue for SPFA
       queue<int> dk; dk.push(s); while(!dk.empty()) {
-				int u = dk.front(); dk.pop(); if(vis[u]) continue;
+        int u = dk.front(); dk.pop(); if(vis[u]) continue;
         for(const Edge& e:adj[u]) {
           if (e.f < e.c && dist[e.v] > dist[u] + pot[u] - pot[e.v] + e.p) {
             dist[e.v] = dist[u] + pot[u] - pot[e.v] + e.p; par[e.v] = e.r;
@@ -63,11 +63,11 @@ namespace Flow {
     for(int u = t; u != s; ) { const Edge& r = adj[u][par[u]];
       df = min(df, adj[r.v][r.r].c - adj[r.v][r.r].f); u = r.v; }
     for(int u = t; u != s; ) { Edge& r=adj[u][par[u]], &e=adj[r.v][r.r];
-			e.f += df; r.f -= df; price += df*e.p; u = r.v; }
+      e.f += df; r.f -= df; price += df*e.p; u = r.v; }
     for(int i=0; i<n; i++) { pot[i] = min(INF, dist[i]+pot[i]); } return df; }
-	ll min_cost_flow(int s, int t, ll& price, int n=N, bool sparse=false) {
-		pot_init(n); ll flow = price = 0;
-		while(ll df=mcf(s, t, price, n, sparse)) { flow += df; } return flow; }
+  ll min_cost_flow(int s, int t, ll& price, int n=N, bool sparse=false) {
+    pot_init(n); ll flow = price = 0;
+    while(ll df=mcf(s, t, price, n, sparse)) { flow += df; } return flow; }
 }
 
 unordered_map<string,vector<string>> tree;
@@ -76,42 +76,42 @@ unordered_map<string,int> id;
 
 unordered_set<string> leftn;
 void build_graph(string curr) {
-	for (string child : tree[curr]) {
-		if (!leftn.count(curr)) {
-			Flow::add_edge(0, id[child], 1, 0);
-			if (curr != "CEO") {
-				Flow::add_edge(id[child], id[curr], 1, 20000-1000*min(speed[curr], speed[child]));
-			}
-			leftn.insert(child);
-		} else {
-			Flow::add_edge(id[child], 1002, 1, 0);
-			Flow::add_edge(id[curr], id[child], 1, 20000-1000*min(speed[curr], speed[child]));
-		}
-		build_graph(child);
-	}
+  for (string child : tree[curr]) {
+    if (!leftn.count(curr)) {
+      Flow::add_edge(0, id[child], 1, 0);
+      if (curr != "CEO") {
+        Flow::add_edge(id[child], id[curr], 1, 20000-1000*min(speed[curr], speed[child]));
+      }
+      leftn.insert(child);
+    } else {
+      Flow::add_edge(id[child], 1002, 1, 0);
+      Flow::add_edge(id[curr], id[child], 1, 20000-1000*min(speed[curr], speed[child]));
+    }
+    build_graph(child);
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string name, sup;
-	double spd;
-	int n;
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> name >> spd >> sup;
-		tree[sup].push_back(name);
-		speed[name] = spd;
-		id[name] = i+1;
-	}
-	build_graph("CEO");
+  string name, sup;
+  double spd;
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; i++) {
+    cin >> name >> spd >> sup;
+    tree[sup].push_back(name);
+    speed[name] = spd;
+    id[name] = i+1;
+  }
+  build_graph("CEO");
 
-	ll numV = 1003;
-	int s = 0, t = 1002;
-	ll price, flow = Flow::min_cost_flow(s, t, price, numV, true);
-	cout << flow << " " << 20 - (price/1000.0)/flow << endl;
+  ll numV = 1003;
+  int s = 0, t = 1002;
+  ll price, flow = Flow::min_cost_flow(s, t, price, numV, true);
+  cout << flow << " " << 20 - (price/1000.0)/flow << endl;
 
-	return 0;
+  return 0;
 }

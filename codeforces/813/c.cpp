@@ -26,39 +26,39 @@ vector<int> adj[N];
 int height[N], depth[N], parent[N];
 
 int build(int u, int p) {
-	if(p) adj[u].erase(find(adj[u].begin(), adj[u].end(), p));
-	height[u] = 0;
-	depth[u] = depth[p] + 1;
-	parent[u] = p;
-	for(int v : adj[u]) {
-		height[u] = max(height[u], 1 + build(v, u));
-	}
-	return height[u];
+  if(p) adj[u].erase(find(adj[u].begin(), adj[u].end(), p));
+  height[u] = 0;
+  depth[u] = depth[p] + 1;
+  parent[u] = p;
+  for(int v : adj[u]) {
+    height[u] = max(height[u], 1 + build(v, u));
+  }
+  return height[u];
 }
 
 // double-check correctness
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, x;
-	cin >> n >> x;
-	for(int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	build(1, 0);
+  int n, x;
+  cin >> n >> x;
+  for(int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  build(1, 0);
 
-	int allow = (depth[x] - 2) / 2;
-	int ans = 0;
-	for(int i=0; i<=allow; i++, x=parent[x]) {
-		ans = max(ans, height[x] + depth[x] - 1);
-	}
-	cout << 2 * ans << nl;
+  int allow = (depth[x] - 2) / 2;
+  int ans = 0;
+  for(int i=0; i<=allow; i++, x=parent[x]) {
+    ans = max(ans, height[x] + depth[x] - 1);
+  }
+  cout << 2 * ans << nl;
 
-	return 0;
+  return 0;
 }

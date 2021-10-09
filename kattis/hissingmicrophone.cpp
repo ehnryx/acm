@@ -27,18 +27,18 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin>>s;
-	for(int i=1;i<s.size();i++) {
-		if(s[i]=='s' && s[i-1]=='s') {
-			cout<<"hiss"<<nl;
-			return 0;
-		}
-	}
-	cout<<"no hiss"<<nl;
+  string s;
+  cin>>s;
+  for(int i=1;i<s.size();i++) {
+    if(s[i]=='s' && s[i-1]=='s') {
+      cout<<"hiss"<<nl;
+      return 0;
+    }
+  }
+  cout<<"no hiss"<<nl;
 
-	return 0;
+  return 0;
 }

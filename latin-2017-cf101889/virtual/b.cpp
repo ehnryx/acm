@@ -19,42 +19,42 @@ const set<int> vow = {'a', 'e', 'i', 'o', 'u'};
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	string s; cin >> s;
-	bool shit = 0;
-	for (char c : s) {
-		if (vow.count(c)) {
-			shit = 1;
-			break;
-		}
-	}
-	if (!shit) {
-		puts("1");
-		return 0;
-	}
-	if (!vow.count(s[0])) {
-		puts("0");
-		return 0;
-	}
-	vector<int> dumb;
-	int cur = 0;
-	for (int i = 1; i < s.size(); i++) {
-		if (vow.count(s[i])) {
-			dumb.push_back(cur);
-			cur = 0;
-		} else {
-			cur++;
-		}
-	}
-	dumb.push_back(cur);
-	cout << dumb[(dumb.size()-1)/2]+1 << endl;
+  string s; cin >> s;
+  bool shit = 0;
+  for (char c : s) {
+    if (vow.count(c)) {
+      shit = 1;
+      break;
+    }
+  }
+  if (!shit) {
+    puts("1");
+    return 0;
+  }
+  if (!vow.count(s[0])) {
+    puts("0");
+    return 0;
+  }
+  vector<int> dumb;
+  int cur = 0;
+  for (int i = 1; i < s.size(); i++) {
+    if (vow.count(s[i])) {
+      dumb.push_back(cur);
+      cur = 0;
+    } else {
+      cur++;
+    }
+  }
+  dumb.push_back(cur);
+  cout << dumb[(dumb.size()-1)/2]+1 << endl;
 
-	return 0;
+  return 0;
 }

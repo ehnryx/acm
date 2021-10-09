@@ -20,17 +20,17 @@ string s;
 int dp[75][11][2][2];
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int T; cin >> T;
-	while (T--) {
-		cin >> s;
-		bool good = 1, dec = 0;
-		for (int i = 1; i < s.size(); i++) {
-			if (s[i] < s[i-1]) {
-				decr = 1;
-			} else if (decr && 
+  int T; cin >> T;
+  while (T--) {
+    cin >> s;
+    bool good = 1, dec = 0;
+    for (int i = 1; i < s.size(); i++) {
+      if (s[i] < s[i-1]) {
+        decr = 1;
+      } else if (decr && 
 
-	return 0;
+  return 0;
 }

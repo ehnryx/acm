@@ -25,23 +25,23 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n+1];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
-	a[n] = 0;
-	sort(a,a+n+1);
+  int n;
+  cin>>n;
+  int a[n+1];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
+  a[n] = 0;
+  sort(a,a+n+1);
 
-	int ans = INF;
-	for(int i=0;i<=n;i++) {
-		ans = min(ans,a[i]+n-i);
-	}
-	cout<<ans<<nl;
+  int ans = INF;
+  for(int i=0;i<=n;i++) {
+    ans = min(ans,a[i]+n-i);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

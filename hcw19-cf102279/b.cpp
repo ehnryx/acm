@@ -48,77 +48,77 @@ const int L = 18;
 int anc[N][L];
 int depth[N];
 void build(int u, int p) {
-	depth[u] = depth[p]+1;
-	anc[u][0] = p;
-	for(int j=1;j<L;j++) {
-		anc[u][j] = anc[anc[u][j-1]][j-1];
-	}
-	for(int v:adj[u]) {
-		if(v!=p) build(v,u);
-	}
+  depth[u] = depth[p]+1;
+  anc[u][0] = p;
+  for(int j=1;j<L;j++) {
+    anc[u][j] = anc[anc[u][j-1]][j-1];
+  }
+  for(int v:adj[u]) {
+    if(v!=p) build(v,u);
+  }
 }
 
 pii lca(int a, int b) {
-	int u = a;
-	if(depth[a]<depth[b]) swap(a,b);
-	for(int j=L-1;j>=0;j--) {
-		if(depth[anc[a][j]]>=depth[b]) a = anc[a][j];
-	}
-	if(a==b) {
-		for(int j=L-1;j>=0;j--) {
-			if(depth[anc[u][j]]>depth[b]) u = anc[u][j];
-		}
-		return pii(a,u);
-	}
-	for(int j=L-1;j>=0;j--) {
-		if(anc[a][j]!=anc[b][j]) {
-			a=anc[a][j];b=anc[b][j];
-		}
-	}
-	return pii(anc[a][0],-1);
+  int u = a;
+  if(depth[a]<depth[b]) swap(a,b);
+  for(int j=L-1;j>=0;j--) {
+    if(depth[anc[a][j]]>=depth[b]) a = anc[a][j];
+  }
+  if(a==b) {
+    for(int j=L-1;j>=0;j--) {
+      if(depth[anc[u][j]]>depth[b]) u = anc[u][j];
+    }
+    return pii(a,u);
+  }
+  for(int j=L-1;j>=0;j--) {
+    if(anc[a][j]!=anc[b][j]) {
+      a=anc[a][j];b=anc[b][j];
+    }
+  }
+  return pii(anc[a][0],-1);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=1;i<n;i++) {
-		int a,b;
-		cin>>a>>b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	depth[0] = -1;
-	build(1,0);
+  int n;
+  cin>>n;
+  for(int i=1;i<n;i++) {
+    int a,b;
+    cin>>a>>b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  depth[0] = -1;
+  build(1,0);
 
-	init();
-	int r = -1;
-	for(int i=1;i<=n;i++) {
-		if(cpar[i]!=-1) {
-			int j,k;
-			tie(j,k) = lca(i,cpar[i]);
-			if(j==cpar[i]) j = k;
-			else j = anc[cpar[i]][0];
-			assert(j!=-1);
-			nxt[cpar[i]][j] = i;
-		} else r=i;
-	}
-	assert(r!=-1);
+  init();
+  int r = -1;
+  for(int i=1;i<=n;i++) {
+    if(cpar[i]!=-1) {
+      int j,k;
+      tie(j,k) = lca(i,cpar[i]);
+      if(j==cpar[i]) j = k;
+      else j = anc[cpar[i]][0];
+      assert(j!=-1);
+      nxt[cpar[i]][j] = i;
+    } else r=i;
+  }
+  assert(r!=-1);
 
-	for(;;) {
-		cout << "? 2 " << r << endl;
-		int v; cin >> v;
-		assert(v!=-1);
-		if (v==0) {
-			cout << "! " << r << endl;
-			return 0;
-		} else {
-			r = nxt[r][v];
-		}
-	}
+  for(;;) {
+    cout << "? 2 " << r << endl;
+    int v; cin >> v;
+    assert(v!=-1);
+    if (v==0) {
+      cout << "! " << r << endl;
+      return 0;
+    } else {
+      r = nxt[r][v];
+    }
+  }
 
-	return 0;
+  return 0;
 }

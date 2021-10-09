@@ -25,36 +25,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		string s;
-		cin >> s;
-		int n = s.size();
-		vector<bool> done(n);
-		int ans = 0;
-		for(int i=0; i<n; i++) {
-			if(done[i]) continue;
-			if(i+5 <= n && s.substr(i,5) == "twone") {
-				done[i+2] = true;
-				ans++;
-			} else {
-				string t = s.substr(i,3);
-				if(t == "one" || t == "two") {
-					done[i+1] = true;
-					ans++;
-				}
-			}
-		}
-		cout << ans << nl;
-		for(int i=0; i<n; i++) {
-			if(done[i]) cout << i+1 << " ";
-		}
-		cout << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    string s;
+    cin >> s;
+    int n = s.size();
+    vector<bool> done(n);
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+      if(done[i]) continue;
+      if(i+5 <= n && s.substr(i,5) == "twone") {
+        done[i+2] = true;
+        ans++;
+      } else {
+        string t = s.substr(i,3);
+        if(t == "one" || t == "two") {
+          done[i+1] = true;
+          ans++;
+        }
+      }
+    }
+    cout << ans << nl;
+    for(int i=0; i<n; i++) {
+      if(done[i]) cout << i+1 << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

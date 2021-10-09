@@ -28,43 +28,43 @@ vector<int> rev[N];
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m;
-		cin >> n >> m;
-		for(int i=1; i<=n; i++) {
-			rev[i].clear();
-		}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    for(int i=1; i<=n; i++) {
+      rev[i].clear();
+    }
 
-		for(int i=0; i<m; i++) {
-			int a, b;
-			cin >> a >> b;
-			rev[b].push_back(a);
-		}
+    for(int i=0; i<m; i++) {
+      int a, b;
+      cin >> a >> b;
+      rev[b].push_back(a);
+    }
 
-		vector<int> ans;
-		vector<int> dist(n+1);
-		for(int i=1; i<=n; i++) {
-			for(int v : rev[i]) {
-				dist[i] = max(dist[i], dist[v] + 1);
-			}
-			if(dist[i] >= 2) {
-				dist[i] = -1;
-				ans.push_back(i);
-			}
-		}
+    vector<int> ans;
+    vector<int> dist(n+1);
+    for(int i=1; i<=n; i++) {
+      for(int v : rev[i]) {
+        dist[i] = max(dist[i], dist[v] + 1);
+      }
+      if(dist[i] >= 2) {
+        dist[i] = -1;
+        ans.push_back(i);
+      }
+    }
 
-		assert(ans.size() * 7 <= 4*n);
-		cout << ans.size() << nl;
-		for(int it : ans) {
-			cout << it << " ";
-		}
-		cout << nl;
-	}
+    assert(ans.size() * 7 <= 4*n);
+    cout << ans.size() << nl;
+    for(int it : ans) {
+      cout << it << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

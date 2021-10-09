@@ -164,90 +164,90 @@ pair<pt, pt> circle_tangent(pt p1, ld r1, pt p2, ld r2, int k) {
 
 vector<pt> p;
 int solve(int n, int cur) {
-	//cerr << "SOLVE " << cur << nl;
-	int base = 1;
-	vector<pair<ld,int>> line;
-	for (int i=0; i<n; i++) {
-		if (i==cur) continue;
-		if (eq(p[i], p[cur])) base++;
-		else {
-			ld d = abs(p[i]-p[cur]);
-			pt a, b; ld s, t;
-			if (d < 2+EPS) {
-				tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 0);
-				t = arg(a-p[cur])+EPS/2;
-				tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 1);
-				s = arg(a-p[cur])-EPS/2;
-				line.push_back(pair<ld,int>(s,-1));
-				line.push_back(pair<ld,int>(2*PI+t,1));
-				//cerr << "add " << s << " " << t << nl;
-				if (s < t) {
-					line.push_back(pair<ld,int>(2*PI+s,-1));
-					line.push_back(pair<ld,int>(t,1));
-				}
-			} else {
-				tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 0);
-				t = arg(a-p[cur])+EPS/2;
-				tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 2);
-				s = arg(a-p[cur])-EPS/2;
-				line.push_back(pair<ld,int>(s,-1));
-				line.push_back(pair<ld,int>(2*PI+t,1));
-				//cerr << "add " << s << " " << t << nl;
-				if (s < t) {
-					line.push_back(pair<ld,int>(2*PI+s,-1));
-					line.push_back(pair<ld,int>(t,1));
-				}
-				tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 3);
-				t = arg(a-p[cur])+EPS/2;
-				tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 1);
-				s = arg(a-p[cur])-EPS/2;
-				line.push_back(pair<ld,int>(s,-1));
-				line.push_back(pair<ld,int>(2*PI+t,1));
-				//cerr << "add " << s << " " << t << nl;
-				if (s < t) {
-					line.push_back(pair<ld,int>(2*PI+s,-1));
-					line.push_back(pair<ld,int>(t,1));
-				}
-			}
-		}
-	}
-	sort(line.begin(), line.end());
+  //cerr << "SOLVE " << cur << nl;
+  int base = 1;
+  vector<pair<ld,int>> line;
+  for (int i=0; i<n; i++) {
+    if (i==cur) continue;
+    if (eq(p[i], p[cur])) base++;
+    else {
+      ld d = abs(p[i]-p[cur]);
+      pt a, b; ld s, t;
+      if (d < 2+EPS) {
+        tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 0);
+        t = arg(a-p[cur])+EPS/2;
+        tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 1);
+        s = arg(a-p[cur])-EPS/2;
+        line.push_back(pair<ld,int>(s,-1));
+        line.push_back(pair<ld,int>(2*PI+t,1));
+        //cerr << "add " << s << " " << t << nl;
+        if (s < t) {
+          line.push_back(pair<ld,int>(2*PI+s,-1));
+          line.push_back(pair<ld,int>(t,1));
+        }
+      } else {
+        tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 0);
+        t = arg(a-p[cur])+EPS/2;
+        tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 2);
+        s = arg(a-p[cur])-EPS/2;
+        line.push_back(pair<ld,int>(s,-1));
+        line.push_back(pair<ld,int>(2*PI+t,1));
+        //cerr << "add " << s << " " << t << nl;
+        if (s < t) {
+          line.push_back(pair<ld,int>(2*PI+s,-1));
+          line.push_back(pair<ld,int>(t,1));
+        }
+        tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 3);
+        t = arg(a-p[cur])+EPS/2;
+        tie(a,b) = circle_tangent(p[cur], 1, p[i], 1, 1);
+        s = arg(a-p[cur])-EPS/2;
+        line.push_back(pair<ld,int>(s,-1));
+        line.push_back(pair<ld,int>(2*PI+t,1));
+        //cerr << "add " << s << " " << t << nl;
+        if (s < t) {
+          line.push_back(pair<ld,int>(2*PI+s,-1));
+          line.push_back(pair<ld,int>(t,1));
+        }
+      }
+    }
+  }
+  sort(line.begin(), line.end());
 
-	int res = 0;
-	int cval = 0;
-	for (const auto& it : line) {
-		//cerr << it.first << " " << it.second << nl;
-		cval -= it.second;
-		res = max(res, cval);
-		assert(cval >= 0);
-	}
-	return base+res;
+  int res = 0;
+  int cval = 0;
+  for (const auto& it : line) {
+    //cerr << it.first << " " << it.second << nl;
+    cval -= it.second;
+    res = max(res, cval);
+    assert(cval >= 0);
+  }
+  return base+res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ld x, y;
-	for (int i=0; i<n; i++) {
-		cin >> x >> y;
-		p.push_back(pt(x,y));
-	}
+  ld x, y;
+  for (int i=0; i<n; i++) {
+    cin >> x >> y;
+    p.push_back(pt(x,y));
+  }
 
-	int ans = 0;
-	for (int i=0; i<n; i++) {
-		ans = max(ans, solve(n, i));
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=0; i<n; i++) {
+    ans = max(ans, solve(n, i));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

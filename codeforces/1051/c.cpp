@@ -19,51 +19,51 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	vector<int> cnt(101,0);
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-		cnt[a[i]]++;
-	}
+  int a[n];
+  vector<int> cnt(101,0);
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+    cnt[a[i]]++;
+  }
 
-	char ans[n];
-	int val = 0;
-	int split = -1;
-	for (int i=0; i<n; i++) {
-		if (cnt[a[i]] == 1) {
-			ans[i] = 'A'+val;
-			val ^= 1;
-		} else {
-			ans[i] = 'A';
-		}
-		if (cnt[a[i]] > 2) {
-			split = i;
-		}
-	}
+  char ans[n];
+  int val = 0;
+  int split = -1;
+  for (int i=0; i<n; i++) {
+    if (cnt[a[i]] == 1) {
+      ans[i] = 'A'+val;
+      val ^= 1;
+    } else {
+      ans[i] = 'A';
+    }
+    if (cnt[a[i]] > 2) {
+      split = i;
+    }
+  }
 
-	if (val && split == -1) {
-		cout << "NO" << nl;
-	} else{
-		if (val) {
-			ans[split] = 'B';
-		}
-		cout << "YES" << nl;
-		for (char c : ans) {
-			cout << c;
-		}
-		cout << nl;
-	}
+  if (val && split == -1) {
+    cout << "NO" << nl;
+  } else{
+    if (val) {
+      ans[split] = 'B';
+    }
+    cout << "YES" << nl;
+    for (char c : ans) {
+      cout << c;
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

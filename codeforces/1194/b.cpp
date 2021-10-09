@@ -27,36 +27,36 @@ string grid[N];
 int row[N], col[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m;
-		cin >> n >> m;
-		For(i,n) {
-			cin >> grid[i];
-			row[i] = 0;
-			For(j,m) {
-				row[i] += (grid[i][j]=='.');
-			}
-		}
-		For(j,m) {
-			col[j] = 0;
-			For(i,n) {
-				col[j] += (grid[i][j]=='.');
-			}
-		}
-		int ans = INF;
-		For(i,n) {
-			For(j,m) {
-				ans = min(ans, row[i]+col[j]-(grid[i][j]=='.'));
-			}
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
+    For(i,n) {
+      cin >> grid[i];
+      row[i] = 0;
+      For(j,m) {
+        row[i] += (grid[i][j]=='.');
+      }
+    }
+    For(j,m) {
+      col[j] = 0;
+      For(i,n) {
+        col[j] += (grid[i][j]=='.');
+      }
+    }
+    int ans = INF;
+    For(i,n) {
+      For(j,m) {
+        ans = min(ans, row[i]+col[j]-(grid[i][j]=='.'));
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

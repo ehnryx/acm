@@ -22,31 +22,31 @@ const ld s = sqrt(2);
 
 int n;
 ld solve(int sz, int cnt, ld len) {
-	if (sz == n) return INFLL;
-	if (num[sz+1] >= 2*cnt) {
-		return cnt * len;
-	} else {
-		return cnt * len + solve(sz+1, 2*cnt-num[sz+1], len/s);
-	}
+  if (sz == n) return INFLL;
+  if (num[sz+1] >= 2*cnt) {
+    return cnt * len;
+  } else {
+    return cnt * len + solve(sz+1, 2*cnt-num[sz+1], len/s);
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	cin >> n;
-	for (int i=2; i<=n; i++) {
-		cin >> num[i];
-	}
-	ld ans = solve(1, 1, pow(2,-3./4));
-	if (ans > INFLL - EPS) cout << "impossible" << nl;
-	else cout << ans << nl;
+  cin >> n;
+  for (int i=2; i<=n; i++) {
+    cin >> num[i];
+  }
+  ld ans = solve(1, 1, pow(2,-3./4));
+  if (ans > INFLL - EPS) cout << "impossible" << nl;
+  else cout << ans << nl;
 
-	return 0;
+  return 0;
 }

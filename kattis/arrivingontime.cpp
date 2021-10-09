@@ -23,18 +23,18 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int i, t, p, d;
-	int dist(int x) const {
-		if (x<t+d) return -1;
-		return x - ((p-(x-(t+d))%p)%p + d);
-	}
+  int i, t, p, d;
+  int dist(int x) const {
+    if (x<t+d) return -1;
+    return x - ((p-(x-(t+d))%p)%p + d);
+  }
 };
 
 struct Node {
-	int i, d;
-	bool operator < (const Node& o) const {
-		return d < o.d;
-	}
+  int i, d;
+  bool operator < (const Node& o) const {
+    return d < o.d;
+  }
 };
 
 const int N = 1e5+1;
@@ -43,45 +43,45 @@ int dist[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, s;
-	cin >> n >> m >> s;
-	const int S = 0;
-	const int T = n-1;
+  int n, m, s;
+  cin >> n >> m >> s;
+  const int S = 0;
+  const int T = n-1;
 
-	for (int i=0; i<m; i++) {
-		int u,v,t,p,d;
-		cin >> u >> v >> t >> p >> d;
-		adj[v].push_back({u,t,p,d});
-	}
+  for (int i=0; i<m; i++) {
+    int u,v,t,p,d;
+    cin >> u >> v >> t >> p >> d;
+    adj[v].push_back({u,t,p,d});
+  }
 
-	fill(dist, dist+N, -2);
-	priority_queue<Node> dijk;
-	dijk.push({T,s});
-	while (!dijk.empty()) {
-		Node cur = dijk.top();
-		dijk.pop();
-		if (cur.i == S) {
-			cout << cur.d << nl;
-			return 0;
-		}
-		if (dist[cur.i] == -2) {
-			dist[cur.i] = cur.d;
-			for (const Edge& e : adj[cur.i]) {
-				if (dist[e.i] == -2) {
-					dijk.push({e.i, e.dist(cur.d)});
-				}
-			}
-		}
-	}
-	cout << "impossible" << nl;
+  fill(dist, dist+N, -2);
+  priority_queue<Node> dijk;
+  dijk.push({T,s});
+  while (!dijk.empty()) {
+    Node cur = dijk.top();
+    dijk.pop();
+    if (cur.i == S) {
+      cout << cur.d << nl;
+      return 0;
+    }
+    if (dist[cur.i] == -2) {
+      dist[cur.i] = cur.d;
+      for (const Edge& e : adj[cur.i]) {
+        if (dist[e.i] == -2) {
+          dijk.push({e.i, e.dist(cur.d)});
+        }
+      }
+    }
+  }
+  cout << "impossible" << nl;
 
-	return 0;
+  return 0;
 }

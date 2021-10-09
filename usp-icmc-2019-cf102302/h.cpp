@@ -34,53 +34,53 @@ const int N = 9;
 ll mat[N][N], res[N][N], tmp[N][N];
 
 void mult(ll r[N][N], ll a[N][N], ll b[N][N]) {
-	for(int i=0;i<N;i++) {
-		for(int j=0;j<N;j++) {
-			r[i][j]=0;
-			for(int k=0;k<N;k++) {
-				r[i][j] += a[i][k]*b[k][j]%MOD;
-			}
-			r[i][j]%=MOD;
-		}
-	}
+  for(int i=0;i<N;i++) {
+    for(int j=0;j<N;j++) {
+      r[i][j]=0;
+      for(int k=0;k<N;k++) {
+        r[i][j] += a[i][k]*b[k][j]%MOD;
+      }
+      r[i][j]%=MOD;
+    }
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int i=0;i<3;i++) {
-		for(int j=0;j<3;j++) {
-			for(int k=0;k<3;k++) {
-				if(i*k<=j*j) {
-					mat[i*3+j][j*3+k]=1;
-				}
-			}
-		}
-	}
-	for(int i=0;i<N;i++) {
-		res[i][i]=1;
-	}
+  for(int i=0;i<3;i++) {
+    for(int j=0;j<3;j++) {
+      for(int k=0;k<3;k++) {
+        if(i*k<=j*j) {
+          mat[i*3+j][j*3+k]=1;
+        }
+      }
+    }
+  }
+  for(int i=0;i<N;i++) {
+    res[i][i]=1;
+  }
 
-	ll n;
-	cin>>n;
-	for(n-=2;n;n/=2) {
-		if(n&1) {
-			mult(tmp,res,mat);
-			swap(tmp,res);
-		}
-		mult(tmp,mat,mat);
-		swap(tmp,mat);
-	}
+  ll n;
+  cin>>n;
+  for(n-=2;n;n/=2) {
+    if(n&1) {
+      mult(tmp,res,mat);
+      swap(tmp,res);
+    }
+    mult(tmp,mat,mat);
+    swap(tmp,mat);
+  }
 
-	ll ans = 0;
-	for(int i=0;i<N;i++) {
-		for(int j=0;j<N;j++) {
-			ans+=res[i][j];
-		}
-	}
-	cout<<ans%MOD<<nl;
+  ll ans = 0;
+  for(int i=0;i<N;i++) {
+    for(int j=0;j<N;j++) {
+      ans+=res[i][j];
+    }
+  }
+  cout<<ans%MOD<<nl;
 
-	return 0;
+  return 0;
 }

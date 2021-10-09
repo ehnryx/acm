@@ -13,26 +13,26 @@ inline void srand() { srand(clock() + time(nullptr)); }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	os << "(" << v.first << "," << v.second << ")"; return os;
+  os << "(" << v.first << "," << v.second << ")"; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ ";
-	for (const T& it : v) os << it << " ";
-	os << "}"; return os;
+  os << "{ ";
+  for (const T& it : v) os << it << " ";
+  os << "}"; return os;
 }
 
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ ";
-	for (const pair<T,U>& it : v) os << "{" << it.first << "," << it.second << "} "; 
-	os << "}"; return os;
+  os << "{ ";
+  for (const pair<T,U>& it : v) os << "{" << it.first << "," << it.second << "} "; 
+  os << "}"; return os;
 }
 
 template <class T>
@@ -67,36 +67,36 @@ inline ld lp_dist(const pt &a, const pt &b, const pt &p) {
   return cp(b - a, p - a) / abs(b - a); }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, r;
-	cin >> n >> r;
+  int n, r;
+  cin >> n >> r;
 
-	int x, y;
-	vector<pt> points;
-	for (int i = 0; i < n; i++) {
-		cin >> x >> y;
-		points.push_back(pt(x,y));
-	}
-	vector<pt> hull = chull(points);
+  int x, y;
+  vector<pt> points;
+  for (int i = 0; i < n; i++) {
+    cin >> x >> y;
+    points.push_back(pt(x,y));
+  }
+  vector<pt> hull = chull(points);
 
-	int m = hull.size();
-	int other = 1;
-	ld ans = INFLL;
-	for (int i = 0; i < m; i++) {
-		while (abs(lp_dist(hull[i], hull[(i+1)%m], hull[other%m]))
-				<= abs(lp_dist(hull[i], hull[(i+1)%m], hull[(other+1)%m]))) {
-			other++;
-			if (other > 3*m) {
-				cout << 0 << nl;
-				return 0;
-			}
-		}
-		ans = min(ans, abs(lp_dist(hull[i], hull[(i+1)%m], hull[other%m])));
-	}
-	cout << ans << nl;
+  int m = hull.size();
+  int other = 1;
+  ld ans = INFLL;
+  for (int i = 0; i < m; i++) {
+    while (abs(lp_dist(hull[i], hull[(i+1)%m], hull[other%m]))
+        <= abs(lp_dist(hull[i], hull[(i+1)%m], hull[(other+1)%m]))) {
+      other++;
+      if (other > 3*m) {
+        cout << 0 << nl;
+        return 0;
+      }
+    }
+    ans = min(ans, abs(lp_dist(hull[i], hull[(i+1)%m], hull[other%m])));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

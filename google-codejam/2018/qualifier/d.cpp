@@ -17,21 +17,21 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -40,19 +40,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -126,113 +126,113 @@ pol chull(pol p) {
 ////////////////////////////////////////////////////////////////////////////////
 
 vector<p3d> cube1({
-		{0.5L, 0.5L, 0.5L}, 
-		{-0.5L, 0.5L, 0.5L},
-		{0.5L, -0.5L, 0.5L},
-		{0.5L, 0.5L, -0.5L},
-		{-0.5L, -0.5L, 0.5L},
-		{-0.5L, 0.5L, -0.5L},
-		{0.5L, -0.5L, -0.5L},
-		{-0.5L, -0.5L, -0.5L}});
+    {0.5L, 0.5L, 0.5L}, 
+    {-0.5L, 0.5L, 0.5L},
+    {0.5L, -0.5L, 0.5L},
+    {0.5L, 0.5L, -0.5L},
+    {-0.5L, -0.5L, 0.5L},
+    {-0.5L, 0.5L, -0.5L},
+    {0.5L, -0.5L, -0.5L},
+    {-0.5L, -0.5L, -0.5L}});
 vector<p3d> cube2;
 p3d normal = {0,1,0};
 
 void caseinit() {
-	cout << nl;
-	for (const p3d& p : cube1) {
-		cube2.push_back(rotate(p, {1,0,0}, M_PIl/4));
-	}
+  cout << nl;
+  for (const p3d& p : cube1) {
+    cube2.push_back(rotate(p, {1,0,0}, M_PIl/4));
+  }
 }
 
 vector<p3d> get_points1(ld angle) {
-	vector<p3d> res;
-	for (const p3d& p : cube1) {
-		res.push_back(rotate(p, {1,0,0}, angle));
-	}
-	return res;
+  vector<p3d> res;
+  for (const p3d& p : cube1) {
+    res.push_back(rotate(p, {1,0,0}, angle));
+  }
+  return res;
 }
 
 vector<p3d> get_points2(ld angle) {
-	vector<p3d> res;
-	for (const p3d& p : cube2) {
-		res.push_back(rotate(p, {0,0,1}, angle));
-	}
-	return res;
+  vector<p3d> res;
+  for (const p3d& p : cube2) {
+    res.push_back(rotate(p, {0,0,1}, angle));
+  }
+  return res;
 }
 
 ld project1(ld angle) {
-	vector<p3d> sphere = get_points1(angle);
-	vector<pt> points;
-	for (const p3d& p : sphere) {
-		p3d projected = pl_inter({0,0,0}, normal, p, p + normal);
-		points.push_back(pt(projected.x, projected.z));
-	}
-	return area(chull(points));
+  vector<p3d> sphere = get_points1(angle);
+  vector<pt> points;
+  for (const p3d& p : sphere) {
+    p3d projected = pl_inter({0,0,0}, normal, p, p + normal);
+    points.push_back(pt(projected.x, projected.z));
+  }
+  return area(chull(points));
 }
 
 ld project2(ld angle) {
-	vector<p3d> sphere = get_points2(angle);
-	vector<pt> points;
-	for (const p3d& p : sphere) {
-		p3d projected = pl_inter({0,0,0}, normal, p, p + normal);
-		points.push_back(pt(projected.x, projected.z));
-	}
-	return area(chull(points));
+  vector<p3d> sphere = get_points2(angle);
+  vector<pt> points;
+  for (const p3d& p : sphere) {
+    p3d projected = pl_inter({0,0,0}, normal, p, p + normal);
+    points.push_back(pt(projected.x, projected.z));
+  }
+  return area(chull(points));
 }
 
 void getans1(ld angle) {
-	vector<p3d> sphere = get_points1(angle);
-	cout << (sphere[0] + sphere[1] + sphere[2] + sphere[4]) / 4 << nl;
-	cout << (sphere[0] + sphere[2] + sphere[3] + sphere[6]) / 4 << nl;
-	cout << (sphere[0] + sphere[1] + sphere[3] + sphere[5]) / 4 << nl;
-	//cerr << "AREA: " << project1(angle) << nl;
+  vector<p3d> sphere = get_points1(angle);
+  cout << (sphere[0] + sphere[1] + sphere[2] + sphere[4]) / 4 << nl;
+  cout << (sphere[0] + sphere[2] + sphere[3] + sphere[6]) / 4 << nl;
+  cout << (sphere[0] + sphere[1] + sphere[3] + sphere[5]) / 4 << nl;
+  //cerr << "AREA: " << project1(angle) << nl;
 }
 
 void getans2(ld angle) {
-	vector<p3d> sphere = get_points2(angle);
-	cout << (sphere[0] + sphere[1] + sphere[2] + sphere[4]) / 4 << nl;
-	cout << (sphere[0] + sphere[2] + sphere[3] + sphere[6]) / 4 << nl;
-	cout << (sphere[0] + sphere[1] + sphere[3] + sphere[5]) / 4 << nl;
-	//cerr << "AREA: " << project2(angle) << nl;
+  vector<p3d> sphere = get_points2(angle);
+  cout << (sphere[0] + sphere[1] + sphere[2] + sphere[4]) / 4 << nl;
+  cout << (sphere[0] + sphere[2] + sphere[3] + sphere[6]) / 4 << nl;
+  cout << (sphere[0] + sphere[1] + sphere[3] + sphere[5]) / 4 << nl;
+  //cerr << "AREA: " << project2(angle) << nl;
 }
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	ld area;
-	cin >> area;
+  ld area;
+  cin >> area;
 
-	if (area > sqrt((ld)2)) {
-		//cerr << "second" << nl;
-		ld left, mid, right;
-		left = 0;
-		right = atan2(1, sqrt((ld)2));
-		while (right - left > EPS) {
-			mid = (left + right) / 2;
-			if (project2(mid) > area) {
-				right = mid;
-			} else {
-				left = mid;
-			}
-		}
-		getans2(mid);
-	}
-	else {
-		//cerr << "first" << nl;
-		ld left, mid, right;
-		left = 0;
-		right = M_PIl/4;
-		while (right - left > EPS) {
-			mid = (left + right) / 2;
-			if (project1(mid) > area) {
-				right = mid;
-			} else {
-				left = mid;
-			}
-		}
-		getans1(mid);
-	}
+  if (area > sqrt((ld)2)) {
+    //cerr << "second" << nl;
+    ld left, mid, right;
+    left = 0;
+    right = atan2(1, sqrt((ld)2));
+    while (right - left > EPS) {
+      mid = (left + right) / 2;
+      if (project2(mid) > area) {
+        right = mid;
+      } else {
+        left = mid;
+      }
+    }
+    getans2(mid);
+  }
+  else {
+    //cerr << "first" << nl;
+    ld left, mid, right;
+    left = 0;
+    right = M_PIl/4;
+    while (right - left > EPS) {
+      mid = (left + right) / 2;
+      if (project1(mid) > area) {
+        right = mid;
+      } else {
+        left = mid;
+      }
+    }
+    getans1(mid);
+  }
 
-	return;
+  return;
 }
 

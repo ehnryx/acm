@@ -17,45 +17,45 @@ int vis[MAXN];
 int col[MAXN];
 
 void dfs(int u) {
-	vis[u] = 1;
-	for(int v:adj[u]) {
-		if (!vis[v]){
-			dfs(v);
-		}
-	}
+  vis[u] = 1;
+  for(int v:adj[u]) {
+    if (!vis[v]){
+      dfs(v);
+    }
+  }
 }
 
 map<int,int> connect;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	cin >> m >> n;
-	for(int i=0;i<m;i++) {
-		int k; cin >> k;
-		for(int j=0;j<k;j++) {
-			int a;
-			cin >> a;
-			if (connect.count(a)) {
-				int b = connect[a];
-				adj[i].push_back(b);
-				adj[b].push_back(i);
-			}
-			else {
-				connect[a] = i;
-			}
-		}
-	}
+  cin >> m >> n;
+  for(int i=0;i<m;i++) {
+    int k; cin >> k;
+    for(int j=0;j<k;j++) {
+      int a;
+      cin >> a;
+      if (connect.count(a)) {
+        int b = connect[a];
+        adj[i].push_back(b);
+        adj[b].push_back(i);
+      }
+      else {
+        connect[a] = i;
+      }
+    }
+  }
 
-	int ans = m;
-	for(int i=0;i<m;i++) {
-		if (!vis[i]) { // true if bipartite
-			dfs(i);
-			ans--;
-		}
-	}
-	cout << ans <<endl;
+  int ans = m;
+  for(int i=0;i<m;i++) {
+    if (!vis[i]) { // true if bipartite
+      dfs(i);
+      ans--;
+    }
+  }
+  cout << ans <<endl;
 
-	return 0;
+  return 0;
 }

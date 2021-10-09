@@ -27,55 +27,55 @@ int a[1<<N], b[1<<N], c[1<<N], cnt[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	For(i,1<<n) {
-		cin >> a[i];
-		b[i] = i;
-		For(j,n) {
-			if (a[i]&1<<j) {
-				cnt[j]++;
-			}
-		}
-	}
+  For(i,1<<n) {
+    cin >> a[i];
+    b[i] = i;
+    For(j,n) {
+      if (a[i]&1<<j) {
+        cnt[j]++;
+      }
+    }
+  }
 
-	For(j,n) {
-		if (cnt[j]%2 == 1) {
-			cout << "Fou" << nl;
-			return 0;
-		}
-	}
+  For(j,n) {
+    if (cnt[j]%2 == 1) {
+      cout << "Fou" << nl;
+      return 0;
+    }
+  }
 
-	while (clock() < 0.97*CLOCKS_PER_SEC) {
-		shuffle(b, b+(1<<n), rng);
-		unordered_set<int> vals;
-		For(i,1<<n) {
-			c[i] = a[i]^b[i];
-			vals.insert(c[i]);
-		}
-		if (vals.size() == 1<<n) {
-			cout << "Shi" << nl;
-			For(i,1<<n) {
-				cout << b[i] << " ";
-			}
-			cout << nl;
-			For(i,1<<n) {
-				cout << c[i] << " ";
-			}
-			cout << nl;
-			return 0;
-		}
-	}
-	cout << "Fou" << nl;
+  while (clock() < 0.97*CLOCKS_PER_SEC) {
+    shuffle(b, b+(1<<n), rng);
+    unordered_set<int> vals;
+    For(i,1<<n) {
+      c[i] = a[i]^b[i];
+      vals.insert(c[i]);
+    }
+    if (vals.size() == 1<<n) {
+      cout << "Shi" << nl;
+      For(i,1<<n) {
+        cout << b[i] << " ";
+      }
+      cout << nl;
+      For(i,1<<n) {
+        cout << c[i] << " ";
+      }
+      cout << nl;
+      return 0;
+    }
+  }
+  cout << "Fou" << nl;
 
-	return 0;
+  return 0;
 }

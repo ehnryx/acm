@@ -33,32 +33,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n], s[4<<20];
-	memset(s,-1,sizeof s);
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		s[a[i]] = a[i];
-	}
-	for(int i=0;i<22;i++) {
-		for(int bm=0;bm<4<<20;bm++) {
-			if(bm&1<<i) {
-				if(s[bm]==-1) {
-					s[bm] = s[bm^1<<i];
-				}
-			}
-		}
-	}
-	int mask = (4<<20)-1;
-	for(int i=0;i<n;i++) {
-		cout<<s[mask^a[i]]<<" ";
-	}
-	cout<<nl;
+  int n;
+  cin>>n;
+  int a[n], s[4<<20];
+  memset(s,-1,sizeof s);
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    s[a[i]] = a[i];
+  }
+  for(int i=0;i<22;i++) {
+    for(int bm=0;bm<4<<20;bm++) {
+      if(bm&1<<i) {
+        if(s[bm]==-1) {
+          s[bm] = s[bm^1<<i];
+        }
+      }
+    }
+  }
+  int mask = (4<<20)-1;
+  for(int i=0;i<n;i++) {
+    cout<<s[mask^a[i]]<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

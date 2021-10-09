@@ -21,45 +21,45 @@ int dp[N][M];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	dp[0][m] = 0;
-	for (int j = 0; j < m; j++) {
-		dp[0][j] = -INF;
-	}
+  dp[0][m] = 0;
+  for (int j = 0; j < m; j++) {
+    dp[0][j] = -INF;
+  }
 
-	for (int i = 1; i <= n; i++) {
-		int a;
-		cin >> a;
+  for (int i = 1; i <= n; i++) {
+    int a;
+    cin >> a;
 
-		for (int j = 0; j <= m; j++) {
-			dp[i][j] = -INF;
-		}
+    for (int j = 0; j <= m; j++) {
+      dp[i][j] = -INF;
+    }
 
-		// do nothing
-		dp[i][0] = max(dp[i][0], dp[i-1][0]);
-		for (int j = 0; j < m; j++) {
-			dp[i][j] = max(dp[i][j], dp[i-1][j+1]);
-		}
+    // do nothing
+    dp[i][0] = max(dp[i][0], dp[i-1][0]);
+    for (int j = 0; j < m; j++) {
+      dp[i][j] = max(dp[i][j], dp[i-1][j+1]);
+    }
 
-		// use
-		dp[i][m-1] = max(dp[i][m-1], dp[i-1][0] + a);
-	}
+    // use
+    dp[i][m-1] = max(dp[i][m-1], dp[i-1][0] + a);
+  }
 
-	int ans = 0;
-	for (int j = 0; j <= m; j++) {
-		ans = max(ans, dp[n][j]);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int j = 0; j <= m; j++) {
+    ans = max(ans, dp[n][j]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

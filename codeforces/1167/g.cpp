@@ -23,59 +23,59 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 inline ld easy(ld x) {
-	return atan2(1,x);
+  return atan2(1,x);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(15);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(15);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, d;
-	cin >> n >> d;
+  int n, d;
+  cin >> n >> d;
 
-	int a[n];
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-	}
+  int a[n];
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+  }
 
-	const int cap = 3500;
+  const int cap = 3500;
 
-	int m;
-	cin >> m;
+  int m;
+  cin >> m;
 
-	for (int i=0; i<m; i++) {
-		int x;
-		cin >> x;
+  for (int i=0; i<m; i++) {
+    int x;
+    cin >> x;
 
-		int* r = lower_bound(a, a+n, x);
-		if (r == a) {
-			cout << easy(*r-x) << nl;
-		} else if (r == a+n) {
-			cout << easy(x-(*(r-1)+1)) << nl;
-		} else {
-			int* l = r-1;
-			ld ans = easy(min(*r-x, x-(*l+1)));
-			for (int j=0; j<cap; j++) {
-				int left = x-(*l+1);
-				int right = *r-x;
-				if (abs(left-right) <= 1) {
-					ans = max(ans, 2 * easy(max(left, right)));
-					break;
-				} else if (left < right) {
-					if (l-- == a) break;
-				} else {
-					if (++r == a+n) break;
-				}
-			}
-			cout << ans << nl;
-		}
-	}
+    int* r = lower_bound(a, a+n, x);
+    if (r == a) {
+      cout << easy(*r-x) << nl;
+    } else if (r == a+n) {
+      cout << easy(x-(*(r-1)+1)) << nl;
+    } else {
+      int* l = r-1;
+      ld ans = easy(min(*r-x, x-(*l+1)));
+      for (int j=0; j<cap; j++) {
+        int left = x-(*l+1);
+        int right = *r-x;
+        if (abs(left-right) <= 1) {
+          ans = max(ans, 2 * easy(max(left, right)));
+          break;
+        } else if (left < right) {
+          if (l-- == a) break;
+        } else {
+          if (++r == a+n) break;
+        }
+      }
+      cout << ans << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

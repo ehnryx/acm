@@ -23,66 +23,66 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int get_num(const string& s, int& i) {
-	int res = 0;
-	while(isdigit(s[i])) {
-		res = res*10 + s[i++]-'0';
-	}
-	return res;
+  int res = 0;
+  while(isdigit(s[i])) {
+    res = res*10 + s[i++]-'0';
+  }
+  return res;
 }
 
 bool is_cycle(const vector<vector<int>>& adj, vector<bool>& vis, int u) {
-	vis[u] = true;
-	bool ok = (adj[u].size()==2);
-	for(int v:adj[u]) {
-		if(!vis[v]) {
-			ok &= is_cycle(adj,vis,v);
-		}
-	}
-	return ok;
+  vis[u] = true;
+  bool ok = (adj[u].size()==2);
+  for(int v:adj[u]) {
+    if(!vis[v]) {
+      ok &= is_cycle(adj,vis,v);
+    }
+  }
+  return ok;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	map<pii,int> idx;
-	int id = 0;
-	vector<vector<int>> adj;
-	for(string s;getline(cin,s);) {
-		vector<int> vals;
-		for(int i=0;i<s.size();i++) {
-			if(s[i]==';') {
-				assert(vals.size()==4);
-				pii a(vals[0],vals[1]);
-				pii b(vals[2],vals[3]);
-				vals.clear();
-				if(!idx.count(a)) {
-					idx[a] = id++;
-					adj.push_back(vector<int>());
-				}
-				if(!idx.count(b)) {
-					idx[b] = id++;
-					adj.push_back(vector<int>());
-				}
-				adj[idx[a]].push_back(idx[b]);
-				adj[idx[b]].push_back(idx[a]);
-			} else if(isdigit(s[i])) {
-				vals.push_back(get_num(s,i));
-			}
-		}
-	}
+  map<pii,int> idx;
+  int id = 0;
+  vector<vector<int>> adj;
+  for(string s;getline(cin,s);) {
+    vector<int> vals;
+    for(int i=0;i<s.size();i++) {
+      if(s[i]==';') {
+        assert(vals.size()==4);
+        pii a(vals[0],vals[1]);
+        pii b(vals[2],vals[3]);
+        vals.clear();
+        if(!idx.count(a)) {
+          idx[a] = id++;
+          adj.push_back(vector<int>());
+        }
+        if(!idx.count(b)) {
+          idx[b] = id++;
+          adj.push_back(vector<int>());
+        }
+        adj[idx[a]].push_back(idx[b]);
+        adj[idx[b]].push_back(idx[a]);
+      } else if(isdigit(s[i])) {
+        vals.push_back(get_num(s,i));
+      }
+    }
+  }
 
-	int fig = 0;
-	int cyc = 0;
-	vector<bool> vis(id);
-	for(int i=0;i<id;i++) {
-		if(!vis[i]) {
-			fig += 1;
-			cyc += is_cycle(adj,vis,i);
-		}
-	}
-	cout<<fig<<" "<<cyc<<nl;
+  int fig = 0;
+  int cyc = 0;
+  vector<bool> vis(id);
+  for(int i=0;i<id;i++) {
+    if(!vis[i]) {
+      fig += 1;
+      cyc += is_cycle(adj,vis,i);
+    }
+  }
+  cout<<fig<<" "<<cyc<<nl;
 
-	return 0;
+  return 0;
 }

@@ -33,108 +33,108 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n+1][n+1];
-	memset(a,-1,sizeof a);
-	a[1][1] = 1;
-	a[n][n] = 0;
+  int n;
+  cin>>n;
+  int a[n+1][n+1];
+  memset(a,-1,sizeof a);
+  a[1][1] = 1;
+  a[n][n] = 0;
 
-	{
-		int u,v;
-		cout<<"? 1 2 2 3" << endl;
-		cin>>u;
-		assert(u!=-1);
-		cout<<"? 2 1 2 3" << endl;
-		cin>>v;
-		assert(v!=-1);
-		if(u==v) {
-			a[1][2]=a[2][1]=1;
-		} else {
-			a[1][2]=1;
-			a[2][1]=0;
-		}
-		if(u) {
-			a[2][3]=a[1][2];
-		} else {
-			a[2][3]=!a[1][2];
-		}
-	}
+  {
+    int u,v;
+    cout<<"? 1 2 2 3" << endl;
+    cin>>u;
+    assert(u!=-1);
+    cout<<"? 2 1 2 3" << endl;
+    cin>>v;
+    assert(v!=-1);
+    if(u==v) {
+      a[1][2]=a[2][1]=1;
+    } else {
+      a[1][2]=1;
+      a[2][1]=0;
+    }
+    if(u) {
+      a[2][3]=a[1][2];
+    } else {
+      a[2][3]=!a[1][2];
+    }
+  }
 
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=n;j++) {
-			if(a[i][j]!=-1) continue;
-			int pi,pj;
-			if(i>2) { pi=i-2; pj=j; }
-			else if(j>2) { pi=i; pj=j-2; }
-			else { pi=i-1; pj=j-1; }
-			cout<<"? " << pi << " " << pj << " " << i << " " << j << endl;
-			int r;
-			cin>>r;
-			assert(r!=-1);
-			if(r) {
-				a[i][j]=a[pi][pj];
-			} else {
-				a[i][j]=!a[pi][pj];
-			}
-		}
-	}
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=n;j++) {
+      if(a[i][j]!=-1) continue;
+      int pi,pj;
+      if(i>2) { pi=i-2; pj=j; }
+      else if(j>2) { pi=i; pj=j-2; }
+      else { pi=i-1; pj=j-1; }
+      cout<<"? " << pi << " " << pj << " " << i << " " << j << endl;
+      int r;
+      cin>>r;
+      assert(r!=-1);
+      if(r) {
+        a[i][j]=a[pi][pj];
+      } else {
+        a[i][j]=!a[pi][pj];
+      }
+    }
+  }
 
-	int ok = -1;
-	int swapped = 0;
-	for(int i=1;i<n;i+=2) {
-		if(a[i][i]==1&&a[i+2][i+2]==0) {
-			redo:
-			if(a[i][i]==a[i+1][i+2] &&
-				(a[i][i+1]==a[i+1][i+1]||a[i][i+1]==a[i][i+2]||a[i+1][i]==a[i+1][i+1])) {
-				cout<<"? " << i << " " << i << " " << i+1 << " " << i+2 << endl;
-				cin>>ok;
-				assert(ok!=-1);
-			} else if(a[i][i]==a[i+2][i+1] &&
-				(a[i][i+1]==a[i+1][i+1]||a[i+1][i]==a[i+2][i]||a[i+1][i]==a[i+1][i+1])) {
-				cout<<"? " << i << " " << i << " " << i+2 << " " << i+1 << endl;
-				cin>>ok;
-				assert(ok!=-1);
-			} else if(a[i+2][i+2]==a[i][i+1] &&
-				(a[i][i+2]==a[i+1][i+2]||a[i+1][i+1]==a[i+2][i+1]||a[i+1][i+1]==a[i+1][i+2])) {
-				cout<<"? " << i << " " << i+1 << " " << i+2 << " " << i+2 << endl;
-				cin>>ok;
-				assert(ok!=-1);
-			} else if(a[i+2][i+2]==a[i+1][i] && 
-				(a[i+2][i]==a[i+2][i+1]||a[i+1][i+1]==a[i+2][i+1]||a[i+1][i+1]==a[i+1][i+2])) {
-				cout<<"? " << i+1 << " " << i << " " << i+2 << " " << i+2 << endl;
-				cin>>ok;
-				assert(ok!=-1);
-			} else {
-				swapped = true;
-				for(int i=1;i<=n;i++) {
-					for(int j=1;j<=n;j++) {
-						if((i+j)%2==1) a[i][j]=!a[i][j];
-					}
-				}
-				cerr<<"redo"<<nl;
-				goto redo;
-			}
-			break;
-		}
-	}
+  int ok = -1;
+  int swapped = 0;
+  for(int i=1;i<n;i+=2) {
+    if(a[i][i]==1&&a[i+2][i+2]==0) {
+      redo:
+      if(a[i][i]==a[i+1][i+2] &&
+        (a[i][i+1]==a[i+1][i+1]||a[i][i+1]==a[i][i+2]||a[i+1][i]==a[i+1][i+1])) {
+        cout<<"? " << i << " " << i << " " << i+1 << " " << i+2 << endl;
+        cin>>ok;
+        assert(ok!=-1);
+      } else if(a[i][i]==a[i+2][i+1] &&
+        (a[i][i+1]==a[i+1][i+1]||a[i+1][i]==a[i+2][i]||a[i+1][i]==a[i+1][i+1])) {
+        cout<<"? " << i << " " << i << " " << i+2 << " " << i+1 << endl;
+        cin>>ok;
+        assert(ok!=-1);
+      } else if(a[i+2][i+2]==a[i][i+1] &&
+        (a[i][i+2]==a[i+1][i+2]||a[i+1][i+1]==a[i+2][i+1]||a[i+1][i+1]==a[i+1][i+2])) {
+        cout<<"? " << i << " " << i+1 << " " << i+2 << " " << i+2 << endl;
+        cin>>ok;
+        assert(ok!=-1);
+      } else if(a[i+2][i+2]==a[i+1][i] && 
+        (a[i+2][i]==a[i+2][i+1]||a[i+1][i+1]==a[i+2][i+1]||a[i+1][i+1]==a[i+1][i+2])) {
+        cout<<"? " << i+1 << " " << i << " " << i+2 << " " << i+2 << endl;
+        cin>>ok;
+        assert(ok!=-1);
+      } else {
+        swapped = true;
+        for(int i=1;i<=n;i++) {
+          for(int j=1;j<=n;j++) {
+            if((i+j)%2==1) a[i][j]=!a[i][j];
+          }
+        }
+        cerr<<"redo"<<nl;
+        goto redo;
+      }
+      break;
+    }
+  }
 
-	cout<<"!"<<endl;
-	for(int i=1;i<=n;i++) {
-		for(int j=1;j<=n;j++) {
-			if((i+j)%2==1) {
-				if(ok) cout<<a[i][j];
-				else cout<<!a[i][j];
-			} else {
-				cout<<a[i][j];
-			}
-		}
-		cout<<endl;
-	}
+  cout<<"!"<<endl;
+  for(int i=1;i<=n;i++) {
+    for(int j=1;j<=n;j++) {
+      if((i+j)%2==1) {
+        if(ok) cout<<a[i][j];
+        else cout<<!a[i][j];
+      } else {
+        cout<<a[i][j];
+      }
+    }
+    cout<<endl;
+  }
 
-	return 0;
+  return 0;
 }

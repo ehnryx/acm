@@ -24,87 +24,87 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		string s;
-		cin >> s;
-		{
-			string t;
-			int last = -1;
-			int cnt = 0;
-			for(int i=0; i<s.size(); i++) {
-				if(s[i] <= '2') {
-					cnt += s[i] - '0';
-				} else {
-					for(int j=last+1; j<i; j++) {
-						t.push_back(s[j]);
-					}
-					if(cnt % 4 != 0) {
-						t.push_back('2');
-					}
-					t.push_back(s[i]);
-					cnt = 0;
-					last = i;
-				}
-			}
-			for(int j=last+1; j<s.size(); j++) {
-				t.push_back(s[j]);
-			}
-			int sum = accumulate(t.begin(), t.end(), 0, [](int c, char v) {
-				return c + v-'0';
-			});
-			if(cnt % 4 != 0 && __builtin_popcount(sum) > 1) {
-				t.push_back('2');
-			}
-			s = move(t);
-		}
-		{
-			string t;
-			int last = -1;
-			int cnt = 0;
-			for(int i=0; i<s.size(); i++) {
-				if(s[i] <= '4') {
-					cnt += s[i] - '0';
-				} else {
-					for(int j=last+1; j<i; j++) {
-						t.push_back(s[j]);
-					}
-					if(cnt % 8 != 0) {
-						t.push_back('4');
-					}
-					t.push_back(s[i]);
-					cnt = 0;
-					last = i;
-				}
-			}
-			for(int j=last+1; j<s.size(); j++) {
-				t.push_back(s[j]);
-			}
-			int sum = accumulate(t.begin(), t.end(), 0, [](int c, char v) {
-				return c + v-'0';
-			});
-			if(cnt % 8 != 0 && __builtin_popcount(sum) > 1) {
-				t.push_back('4');
-			}
-			s = move(t);
-		}
-		int sum = accumulate(s.begin(), s.end(), 0, [](int c, char v) {
-			return c + v-'0';
-		});
-		if(__builtin_popcount(sum) > 1) {
-			assert(sum % 8 == 0);
-			while(__builtin_popcount(sum) > 1) {
-				sum += 8;
-				s.push_back('8');
-			}
-		}
-		assert(__builtin_popcount(sum) == 1);
-		cout << s << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    string s;
+    cin >> s;
+    {
+      string t;
+      int last = -1;
+      int cnt = 0;
+      for(int i=0; i<s.size(); i++) {
+        if(s[i] <= '2') {
+          cnt += s[i] - '0';
+        } else {
+          for(int j=last+1; j<i; j++) {
+            t.push_back(s[j]);
+          }
+          if(cnt % 4 != 0) {
+            t.push_back('2');
+          }
+          t.push_back(s[i]);
+          cnt = 0;
+          last = i;
+        }
+      }
+      for(int j=last+1; j<s.size(); j++) {
+        t.push_back(s[j]);
+      }
+      int sum = accumulate(t.begin(), t.end(), 0, [](int c, char v) {
+        return c + v-'0';
+      });
+      if(cnt % 4 != 0 && __builtin_popcount(sum) > 1) {
+        t.push_back('2');
+      }
+      s = move(t);
+    }
+    {
+      string t;
+      int last = -1;
+      int cnt = 0;
+      for(int i=0; i<s.size(); i++) {
+        if(s[i] <= '4') {
+          cnt += s[i] - '0';
+        } else {
+          for(int j=last+1; j<i; j++) {
+            t.push_back(s[j]);
+          }
+          if(cnt % 8 != 0) {
+            t.push_back('4');
+          }
+          t.push_back(s[i]);
+          cnt = 0;
+          last = i;
+        }
+      }
+      for(int j=last+1; j<s.size(); j++) {
+        t.push_back(s[j]);
+      }
+      int sum = accumulate(t.begin(), t.end(), 0, [](int c, char v) {
+        return c + v-'0';
+      });
+      if(cnt % 8 != 0 && __builtin_popcount(sum) > 1) {
+        t.push_back('4');
+      }
+      s = move(t);
+    }
+    int sum = accumulate(s.begin(), s.end(), 0, [](int c, char v) {
+      return c + v-'0';
+    });
+    if(__builtin_popcount(sum) > 1) {
+      assert(sum % 8 == 0);
+      while(__builtin_popcount(sum) > 1) {
+        sum += 8;
+        s.push_back('8');
+      }
+    }
+    assert(__builtin_popcount(sum) == 1);
+    cout << s << nl;
+  }
 
-	return 0;
+  return 0;
 }

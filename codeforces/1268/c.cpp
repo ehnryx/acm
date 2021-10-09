@@ -40,10 +40,10 @@ namespace SplayTree {
 //%%== Code for upwards propagating property (eg. count, min)
 inline void pull(pn x) { if (x != nil) {
   x->cnt = 1 + x->l->cnt + x->r->cnt;
-	x->acc = x->l->acc + x->val + x->r->acc; } }
+  x->acc = x->l->acc + x->val + x->r->acc; } }
 //%%== Code for lazy propagating property (eg. reverse subtree, add)
 inline void modifyNode(pn x, ll v) { if (x != nil) {
-	x->val += v; x->acc += v * x->cnt; x->lazy += v; } }
+  x->val += v; x->acc += v * x->cnt; x->lazy += v; } }
 inline void push(pn x) {
   modifyNode(x->l, x->lazy); modifyNode(x->r, x->lazy); x->lazy=0;
 }
@@ -105,123 +105,123 @@ pn append(pn l, pn r) { if (splay(l) == nil) return r;
   push(r); x->setc(r,1); pull(x->r); pull(x); return x; } }
 
 struct SegTree {
-	ll st[2*N], z[2*N];
-	SegTree() {
-		memset(st,0,sizeof st);
-		memset(z,0,sizeof z);
-	}
+  ll st[2*N], z[2*N];
+  SegTree() {
+    memset(st,0,sizeof st);
+    memset(z,0,sizeof z);
+  }
 
-	void push(int i) {
-		if(z[i]) {
-			st[2*i] += z[i]/2;
-			st[2*i+1] += z[i]/2;
-			z[2*i] += z[i]/2;
-			z[2*i+1] += z[i]/2;
-			z[i] = 0;
-		}
-	}
+  void push(int i) {
+    if(z[i]) {
+      st[2*i] += z[i]/2;
+      st[2*i+1] += z[i]/2;
+      z[2*i] += z[i]/2;
+      z[2*i+1] += z[i]/2;
+      z[i] = 0;
+    }
+  }
 
-	void pull(int i) {
-		st[i] = st[2*i] + st[2*i+1];
-	}
+  void pull(int i) {
+    st[i] = st[2*i] + st[2*i+1];
+  }
 
-	void insert(int l, int r) {
-		if(l <= r) insert(l,r,1,0,N-1);
-	}
-	void insert(int l, int r, int i, int s, int e) {
-		if(r<s || e<l) return;
-		if(l<=s && e<=r) {
-			st[i] += e-s+1;
-			z[i] += e-s+1;
-			return;
-		}
-		push(i);
-		int m = (s+e)/2;
-		insert(l,r,2*i,s,m);
-		insert(l,r,2*i+1,m+1,e);
-		pull(i);
-	}
+  void insert(int l, int r) {
+    if(l <= r) insert(l,r,1,0,N-1);
+  }
+  void insert(int l, int r, int i, int s, int e) {
+    if(r<s || e<l) return;
+    if(l<=s && e<=r) {
+      st[i] += e-s+1;
+      z[i] += e-s+1;
+      return;
+    }
+    push(i);
+    int m = (s+e)/2;
+    insert(l,r,2*i,s,m);
+    insert(l,r,2*i+1,m+1,e);
+    pull(i);
+  }
 
-	ll query(int l, int r) {
-		if(l <= r) return query(l,r,1,0,N-1);
-		else return 0;
-	}
-	ll query(int l, int r, int i, int s, int e) {
-		if(r<s || e<l) return 0;
-		if(l<=s && e<=r) {
-			return st[i];
-		}
-		push(i);
-		int m = (s+e)/2;
-		return query(l,r,2*i,s,m) + query(l,r,2*i+1,m+1,e);
-	}
+  ll query(int l, int r) {
+    if(l <= r) return query(l,r,1,0,N-1);
+    else return 0;
+  }
+  ll query(int l, int r, int i, int s, int e) {
+    if(r<s || e<l) return 0;
+    if(l<=s && e<=r) {
+      return st[i];
+    }
+    push(i);
+    int m = (s+e)/2;
+    return query(l,r,2*i,s,m) + query(l,r,2*i+1,m+1,e);
+  }
 };
 
 SegTree lval, rval;
 
 int search(int l, int r) {
-	//cerr<<"search on "<<l<<" "<<r<<nl;
-	while(l<r) {
-		int m = (l+r)/2;
-		int lv = lval.query(m, m);
-		int rv = rval.query(m, m);
-		//cerr<<"query "<<m<<" -> "<<lv<<" vs "<<rv<<nl;
-		if(lv == rv) return m;
-		if(lv > rv) {
-			l = m+1;
-		} else {
-			r = m;
-		}
-	}
-	return r;
+  //cerr<<"search on "<<l<<" "<<r<<nl;
+  while(l<r) {
+    int m = (l+r)/2;
+    int lv = lval.query(m, m);
+    int rv = rval.query(m, m);
+    //cerr<<"query "<<m<<" -> "<<lv<<" vs "<<rv<<nl;
+    if(lv == rv) return m;
+    if(lv > rv) {
+      l = m+1;
+    } else {
+      r = m;
+    }
+  }
+  return r;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<pair<int,int>> vals;
-	for(int i=1; i<=n; i++) {
-		int a;
-		cin >> a;
-		vals.push_back(make_pair(a, i));
-	}
-	sort(vals.begin(), vals.end());
+  int n;
+  cin >> n;
+  vector<pair<int,int>> vals;
+  for(int i=1; i<=n; i++) {
+    int a;
+    cin >> a;
+    vals.push_back(make_pair(a, i));
+  }
+  sort(vals.begin(), vals.end());
 
-	ll inv = 0;
-	int lb = INF;
-	int rb = -INF;
-	node* lroot = nil;
-	node* rroot = nil;
-	for(int i=0; i<n; i++) {
-		int pos = vals[i].second;
+  ll inv = 0;
+  int lb = INF;
+  int rb = -INF;
+  node* lroot = nil;
+  node* rroot = nil;
+  for(int i=0; i<n; i++) {
+    int pos = vals[i].second;
 
-		lroot = SplayTree::insert(lroot, new_node(pos, lval.query(pos, pos)));
-		rroot = SplayTree::insert(rroot, new_node(pos, rval.query(pos, pos)));
-		inv += i - SplayTree::idx(lroot);
+    lroot = SplayTree::insert(lroot, new_node(pos, lval.query(pos, pos)));
+    rroot = SplayTree::insert(rroot, new_node(pos, rval.query(pos, pos)));
+    inv += i - SplayTree::idx(lroot);
 
-		lval.insert(1, pos-1);
-		rval.insert(pos+1, n);
-		SplayTree::rUpdate(lroot, nil, lroot, 1);
-		SplayTree::rUpdate(rroot, rroot, nil, 1);
+    lval.insert(1, pos-1);
+    rval.insert(pos+1, n);
+    SplayTree::rUpdate(lroot, nil, lroot, 1);
+    SplayTree::rUpdate(rroot, rroot, nil, 1);
 
-		// left and right
-		lb = min(lb, pos);
-		rb = max(rb, pos);
-		int m = search(1, n);
-		ll left = rval.query(lb, m-1);
-		ll right = lval.query(m, rb);
-		ll lrem = SplayTree::rQuery(rroot, nil, SplayTree::lowerBound(rroot, m));
-		ll rrem = SplayTree::rQuery(lroot, SplayTree::prv(SplayTree::lowerBound(lroot, m)), nil);
-		//cerr<<"query "<<lb<<" "<<m<<" "<<rb<<nl;
-		//cerr<<"got "<<m<<" -> "<<lval.query(m,m)<<" "<<rval.query(m,m)<<nl;
-		//cerr<<"left,right,inv,rem = "<<left<<" "<<right<<" "<<inv<<" "<<lrem<<" "<<rrem<<nl;
-		cout << left + right + inv - lrem - rrem << " ";
-		//cerr<<nl;
-	}
-	cout << nl;
+    // left and right
+    lb = min(lb, pos);
+    rb = max(rb, pos);
+    int m = search(1, n);
+    ll left = rval.query(lb, m-1);
+    ll right = lval.query(m, rb);
+    ll lrem = SplayTree::rQuery(rroot, nil, SplayTree::lowerBound(rroot, m));
+    ll rrem = SplayTree::rQuery(lroot, SplayTree::prv(SplayTree::lowerBound(lroot, m)), nil);
+    //cerr<<"query "<<lb<<" "<<m<<" "<<rb<<nl;
+    //cerr<<"got "<<m<<" -> "<<lval.query(m,m)<<" "<<rval.query(m,m)<<nl;
+    //cerr<<"left,right,inv,rem = "<<left<<" "<<right<<" "<<inv<<" "<<lrem<<" "<<rrem<<nl;
+    cout << left + right + inv - lrem - rrem << " ";
+    //cerr<<nl;
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

@@ -33,40 +33,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int a[n], p[n];
-	for (int i=0; i<n; i++) {
-		cin >> a[i];
-	}
-	sort(a,a+n);
+  int n;
+  cin >> n;
+  int a[n], p[n];
+  for (int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  sort(a,a+n);
 
-	int ans = 0;
-	for (int i=0; i<n; i++) {
-		if (i==0) p[i] = -1;
-		else if (i==n-1) p[i] = 1;
-		else if (a[i]<0) p[i] = -1;
-		else p[i] = 1;
-		ans += p[i]*a[i];
-	}
+  int ans = 0;
+  for (int i=0; i<n; i++) {
+    if (i==0) p[i] = -1;
+    else if (i==n-1) p[i] = 1;
+    else if (a[i]<0) p[i] = -1;
+    else p[i] = 1;
+    ans += p[i]*a[i];
+  }
 
-	cout << ans << nl;
-	for (int i=1; i<n-1; i++) {
-		if (p[i]==1) {
-			cout << a[0] << " " << a[i] << nl;
-			a[0] -= a[i];
-		}
-	}
-	for (int i=0; i<n-1; i++) {
-		if (p[i]==-1) {
-			cout << a[n-1] << " " << a[i] << nl;
-			a[n-1] -= a[i];
-		}
-	}
+  cout << ans << nl;
+  for (int i=1; i<n-1; i++) {
+    if (p[i]==1) {
+      cout << a[0] << " " << a[i] << nl;
+      a[0] -= a[i];
+    }
+  }
+  for (int i=0; i<n-1; i++) {
+    if (p[i]==-1) {
+      cout << a[n-1] << " " << a[i] << nl;
+      a[n-1] -= a[i];
+    }
+  }
 
-	return 0;
+  return 0;
 }

@@ -113,31 +113,31 @@ pol chull(pol p) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	for (cin>>n; n; cin>>n) {
-		int x, y;
-		pol p;
-		for (int i=0; i<n; i++) {
-			cin >> x >> y;
-			p.emplace_back(x,y);
-		}
-		p = chull(p);
-		if (p.size() == 2 && abs(p[0]-p[1]) < EPS) {
-			p.pop_back();
-		}
-		cout << p.size() << nl;
-		for (const pt& it : p) {
-			cout << (int)round(it.real()) << " " << (int)round(it.imag()) << nl;
-		}
-	}
+  int n;
+  for (cin>>n; n; cin>>n) {
+    int x, y;
+    pol p;
+    for (int i=0; i<n; i++) {
+      cin >> x >> y;
+      p.emplace_back(x,y);
+    }
+    p = chull(p);
+    if (p.size() == 2 && abs(p[0]-p[1]) < EPS) {
+      p.pop_back();
+    }
+    cout << p.size() << nl;
+    for (const pt& it : p) {
+      cout << (int)round(it.real()) << " " << (int)round(it.imag()) << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

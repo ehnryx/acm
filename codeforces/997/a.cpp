@@ -18,36 +18,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, x, y;
-	cin >> n >> x >> y;
+  int n, x, y;
+  cin >> n >> x >> y;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	int groups = 0;
-	bool ones = true;
-	for (char c : s) {
-		if (c == '1') {
-			ones = true;
-		} else if (ones) {
-			ones = false;
-			groups++;
-		}
-	}
+  int groups = 0;
+  bool ones = true;
+  for (char c : s) {
+    if (c == '1') {
+      ones = true;
+    } else if (ones) {
+      ones = false;
+      groups++;
+    }
+  }
 
-	if (groups == 0) {
-		cout << 0 << nl;
-	}
-	else if (x < y) {
-		cout << (ll) x*(groups-1) + y << nl;
-	}
-	else {
-		cout << (ll) y*groups << nl;
-	}
+  if (groups == 0) {
+    cout << 0 << nl;
+  }
+  else if (x < y) {
+    cout << (ll) x*(groups-1) + y << nl;
+  }
+  else {
+    cout << (ll) y*groups << nl;
+  }
 
-	return 0;
+  return 0;
 }

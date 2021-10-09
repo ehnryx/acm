@@ -30,38 +30,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
+  int a[n];
 
-	ll sum = 0;
-	ll cnt = 1;
-	ll tot = 0;
-	For(i,n) {
-		cin >> a[i];
-		tot += a[i];
-		if (i==0) sum += a[i];
-		if (i>0 && a[0] >= 2*a[i]) {
-			sum += a[i];
-			cnt++;
-		}
-	}
-	if (2*sum > tot) {
-		cout << cnt << nl;
-		For(i,n) {
-			if (i==0 || a[0]>=2*a[i]) {
-				cout << i+1 << " ";
-			}
-		}
-		cout << nl;
-	} else {
-		cout << 0 << nl;
-	}
+  ll sum = 0;
+  ll cnt = 1;
+  ll tot = 0;
+  For(i,n) {
+    cin >> a[i];
+    tot += a[i];
+    if (i==0) sum += a[i];
+    if (i>0 && a[0] >= 2*a[i]) {
+      sum += a[i];
+      cnt++;
+    }
+  }
+  if (2*sum > tot) {
+    cout << cnt << nl;
+    For(i,n) {
+      if (i==0 || a[0]>=2*a[i]) {
+        cout << i+1 << " ";
+      }
+    }
+    cout << nl;
+  } else {
+    cout << 0 << nl;
+  }
 
-	return 0;
+  return 0;
 }

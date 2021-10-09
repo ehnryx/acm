@@ -23,11 +23,11 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Point {
-	int i, x, t;
-	bool operator < (const Point& o) const {
-		if (x != o.x) return x < o.x;
-		else return t > o.t;
-	}
+  int i, x, t;
+  bool operator < (const Point& o) const {
+    if (x != o.x) return x < o.x;
+    else return t > o.t;
+  }
 };
 
 const int N = 2e5+1;
@@ -37,67 +37,67 @@ int par[N][L];
 int start[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	vector<Point> p;
-	FOR(i,1,n) {
-		cin >> l[i] >> r[i];
-		p.push_back({i,l[i],1});
-		p.push_back({i,r[i],-1});
-	}
-	FOR(i,1,m) {
-		cin >> x[i] >> y[i];
-		p.push_back({i,x[i],0});
-	}
-	sort(p.begin(), p.end());
+  vector<Point> p;
+  FOR(i,1,n) {
+    cin >> l[i] >> r[i];
+    p.push_back({i,l[i],1});
+    p.push_back({i,r[i],-1});
+  }
+  FOR(i,1,m) {
+    cin >> x[i] >> y[i];
+    p.push_back({i,x[i],0});
+  }
+  sort(p.begin(), p.end());
 
-	int best = 0;
-	r[0] = -1;
-	for (const Point& it : p) {
-		if (it.t == 1) {
-			if (r[it.i] > r[best]) {
-				best = it.i;
-			}
-		} else if (it.t == -1) {
-			if (r[best] > it.x) {
-				par[it.i][0] = best;
-			}
-		} else {
-			if (r[best] >= it.x) {
-				start[it.i] = best;
-			}
-		}
-	}
+  int best = 0;
+  r[0] = -1;
+  for (const Point& it : p) {
+    if (it.t == 1) {
+      if (r[it.i] > r[best]) {
+        best = it.i;
+      }
+    } else if (it.t == -1) {
+      if (r[best] > it.x) {
+        par[it.i][0] = best;
+      }
+    } else {
+      if (r[best] >= it.x) {
+        start[it.i] = best;
+      }
+    }
+  }
 
-	FOR(j,1,L-1) {
-		FOR(i,1,n) {
-			par[i][j] = par[par[i][j-1]][j-1];
-		}
-	}
+  FOR(j,1,L-1) {
+    FOR(i,1,n) {
+      par[i][j] = par[par[i][j-1]][j-1];
+    }
+  }
 
-	FOR(i,1,m) {
-		int ans = 1;
-		int u = start[i];
-		if (r[u] < y[i]) {
-			Down(j,L) {
-				if (par[u][j] != 0 && r[par[u][j]] < y[i]) {
-					u = par[u][j];
-					ans += 1<<j;
-				}
-			}
-			if (r[par[u][0]] < y[i]) {
-				ans = -1;
-			} else {
-				ans++;
-			}
-		}
-		cout << ans << nl;
-	}
+  FOR(i,1,m) {
+    int ans = 1;
+    int u = start[i];
+    if (r[u] < y[i]) {
+      Down(j,L) {
+        if (par[u][j] != 0 && r[par[u][j]] < y[i]) {
+          u = par[u][j];
+          ans += 1<<j;
+        }
+      }
+      if (r[par[u][0]] < y[i]) {
+        ans = -1;
+      } else {
+        ans++;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

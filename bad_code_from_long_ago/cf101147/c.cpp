@@ -57,53 +57,53 @@ ll dfs(int u, int t, ll f) {
 }
 
 double sqr(double x) {
-	return x*x;
+  return x*x;
 }
 
 int main() {
-	freopen("wall.in", "r", stdin);
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  freopen("wall.in", "r", stdin);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int source = 100 + 100;
-	int sink = source + 1;
+  int source = 100 + 100;
+  int sink = source + 1;
 
-	int grid[100][100];
+  int grid[100][100];
 
-	int T;
-	cin >> T;
-	while (T--) {
-		memset(grid, 0, sizeof(grid));
-		int n, m, p;
-		double x, y;
-		cin >> n >> m >> p;
-		for (int r = 0; r < p; r++) {
-			cin >> x >> y;
-			int i = x;
-			int j = y - sqrt(sqr(n/2.0) - sqr(x-n/2.0));
-			grid[i][j] = 1;
-		}
+  int T;
+  cin >> T;
+  while (T--) {
+    memset(grid, 0, sizeof(grid));
+    int n, m, p;
+    double x, y;
+    cin >> n >> m >> p;
+    for (int r = 0; r < p; r++) {
+      cin >> x >> y;
+      int i = x;
+      int j = y - sqrt(sqr(n/2.0) - sqr(x-n/2.0));
+      grid[i][j] = 1;
+    }
 
-		FLOW::init();
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (grid[i][j] > 0) {
-					FLOW::add_edge(i, 100+j, 1);
-				}
-			}
-		}
-		for (int i = 0; i < n; i++) {
-			FLOW::add_edge(source, i, 1);
-		}
-		for (int j = 0; j < m; j++) {
-			FLOW::add_edge(100+j, sink, 1);
-		}
+    FLOW::init();
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        if (grid[i][j] > 0) {
+          FLOW::add_edge(i, 100+j, 1);
+        }
+      }
+    }
+    for (int i = 0; i < n; i++) {
+      FLOW::add_edge(source, i, 1);
+    }
+    for (int j = 0; j < m; j++) {
+      FLOW::add_edge(100+j, sink, 1);
+    }
 
-		ll flow = 0;
-		while (FLOW::bfs(source, sink))
-			flow += FLOW::dfs(source, sink, INF);
-		cout << flow << nl;
-	}
+    ll flow = 0;
+    while (FLOW::bfs(source, sink))
+      flow += FLOW::dfs(source, sink, INF);
+    cout << flow << nl;
+  }
 
-	return 0;
+  return 0;
 }

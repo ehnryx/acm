@@ -26,38 +26,38 @@ vector<int> idx[26];
 int cnt[26];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	For(i,26) {
-		idx[i].push_back(0);
-	}
-	For(i,n) {
-		idx[s[i]-'a'].push_back(i+1);
-	}
+  For(i,26) {
+    idx[i].push_back(0);
+  }
+  For(i,n) {
+    idx[s[i]-'a'].push_back(i+1);
+  }
 
-	int m;
-	cin >> m;
-	while (m--) {
-		string t;
-		cin >> t;
-		memset(cnt,0,sizeof cnt);
-		for (char c : t) {
-			cnt[c-'a']++;
-		}
-		int ans = 0;
-		For(i,26) {
-			ans = max(ans, idx[i][cnt[i]]);
-		}
-		cout << ans << nl;
-	}
+  int m;
+  cin >> m;
+  while (m--) {
+    string t;
+    cin >> t;
+    memset(cnt,0,sizeof cnt);
+    for (char c : t) {
+      cnt[c-'a']++;
+    }
+    int ans = 0;
+    For(i,26) {
+      ans = max(ans, idx[i][cnt[i]]);
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

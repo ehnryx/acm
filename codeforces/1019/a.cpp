@@ -20,56 +20,56 @@ set<int> vote[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a, b;
-	for (int i = 0; i < n; i++) {
-		cin >> a >> b;
-		vote[a].insert(b);
-	}
+  int a, b;
+  for (int i = 0; i < n; i++) {
+    cin >> a >> b;
+    vote[a].insert(b);
+  }
 
-	auto solve = [&] (int guess) {
-		int total = vote[1].size();
-		ll res = 0;
+  auto solve = [&] (int guess) {
+    int total = vote[1].size();
+    ll res = 0;
 
-		priority_queue<int, vector<int>, greater<int>> leftover;
-		for (int i = 2; i <= m; i++) {
-			int cnt = vote[i].size();
-			for (int it : vote[i]) {
-				if (cnt < guess) {
-					leftover.push(it);
-				}
-				else {
-					res += it;
-					total++;
-					cnt--;
-				}
-			}
-		}
+    priority_queue<int, vector<int>, greater<int>> leftover;
+    for (int i = 2; i <= m; i++) {
+      int cnt = vote[i].size();
+      for (int it : vote[i]) {
+        if (cnt < guess) {
+          leftover.push(it);
+        }
+        else {
+          res += it;
+          total++;
+          cnt--;
+        }
+      }
+    }
 
-		while (total < guess && !leftover.empty()) {
-			res += leftover.top();
-			leftover.pop();
-			total++;
-		}
+    while (total < guess && !leftover.empty()) {
+      res += leftover.top();
+      leftover.pop();
+      total++;
+    }
 
-		return total < guess ? INFLL : res;
-	};
+    return total < guess ? INFLL : res;
+  };
 
-	ll ans = INFLL;
-	for (int i = 1; i <= n; i++) {
-		ans = min(ans, solve(i));
-	}
-	cout << ans << nl;
+  ll ans = INFLL;
+  for (int i = 1; i <= n; i++) {
+    ans = min(ans, solve(i));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

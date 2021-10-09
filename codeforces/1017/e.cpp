@@ -131,52 +131,52 @@ vector<int> kmp_match(vector<ld>& t, vector<ld>& p) { int n=t.size(),m=p.size();
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int x, y;
-	vector<pt> p, q;
-	for (int i = 0; i < n; i++) {
-		cin >> x >> y;
-		p.push_back(pt(x,y));
-	}
-	for (int i = 0; i < m; i++) {
-		cin >> x >> y;
-		q.push_back(pt(x,y));
-	}
+  int x, y;
+  vector<pt> p, q;
+  for (int i = 0; i < n; i++) {
+    cin >> x >> y;
+    p.push_back(pt(x,y));
+  }
+  for (int i = 0; i < m; i++) {
+    cin >> x >> y;
+    q.push_back(pt(x,y));
+  }
 
-	vector<pt> phull = chull(p);
-	vector<pt> qhull = chull(q);
-	n = phull.size();
-	m = qhull.size();
+  vector<pt> phull = chull(p);
+  vector<pt> qhull = chull(q);
+  n = phull.size();
+  m = qhull.size();
 
-	vector<ld> s, t;
-	for (int i = 1; i <= n; i++) {
-		s.push_back(abs(phull[i==n?0:i]-phull[i-1]));
-		s.push_back(arg((phull[i+1>=n?i+1-n:i+1] - phull[i==n?0:i]) / (phull[i-1] - phull[i==n?0:i])));
-	}
-	for (int i = 1; i <= m; i++) {
-		t.push_back(abs(qhull[i==m?0:i]-qhull[i-1]));
-		t.push_back(arg((qhull[i+1>=m?i+1-m:i+1] - qhull[i==m?0:i]) / (qhull[i-1] - qhull[i==m?0:i])));
-	}
-	for (int i = 0; i < 2*n; i++) {
-		s.push_back(s[i]);
-	}
+  vector<ld> s, t;
+  for (int i = 1; i <= n; i++) {
+    s.push_back(abs(phull[i==n?0:i]-phull[i-1]));
+    s.push_back(arg((phull[i+1>=n?i+1-n:i+1] - phull[i==n?0:i]) / (phull[i-1] - phull[i==n?0:i])));
+  }
+  for (int i = 1; i <= m; i++) {
+    t.push_back(abs(qhull[i==m?0:i]-qhull[i-1]));
+    t.push_back(arg((qhull[i+1>=m?i+1-m:i+1] - qhull[i==m?0:i]) / (qhull[i-1] - qhull[i==m?0:i])));
+  }
+  for (int i = 0; i < 2*n; i++) {
+    s.push_back(s[i]);
+  }
 
-	//cerr << "s: " << n << nl; for (ld i : s) //cerr << i << " ";
-	//cerr << nl;
-	//cerr << "t: " << m << nl; for (ld i : t) //cerr << i << " ";
-	//cerr << nl;
+  //cerr << "s: " << n << nl; for (ld i : s) //cerr << i << " ";
+  //cerr << nl;
+  //cerr << "t: " << m << nl; for (ld i : t) //cerr << i << " ";
+  //cerr << nl;
 
-	cout << (kmp_match(s, t).empty() ? "NO" : "YES") << nl;
+  cout << (kmp_match(s, t).empty() ? "NO" : "YES") << nl;
 
-	return 0;
+  return 0;
 }

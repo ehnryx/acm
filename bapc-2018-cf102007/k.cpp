@@ -28,87 +28,87 @@ map<int,deque<int>> to[N];
 int leaf[N], par[N];
 
 int precmp(int u, int p) {
-	par[u] = p;
-	leaf[u] = (adj[u].size() == 1);
-	for (int v : adj[u]) {
-		if (v!=p) {
-			leaf[u] += precmp(v, u);
-			to[u][leaf[v]].push_back(v);
-		}
-	}
-	return leaf[u];
+  par[u] = p;
+  leaf[u] = (adj[u].size() == 1);
+  for (int v : adj[u]) {
+    if (v!=p) {
+      leaf[u] += precmp(v, u);
+      to[u][leaf[v]].push_back(v);
+    }
+  }
+  return leaf[u];
 }
 
 vector<int> todo;
 
 int get(int u, int r) {
-	if (to[u].empty()) {
-		return u;
-	}
+  if (to[u].empty()) {
+    return u;
+  }
 
-	auto it = prev(to[u].end());
-	int nxt = it->second.back();
-	it->second.pop_back();
-	if (it->second.empty()) {
-		to[u].erase(it);
-	}
+  auto it = prev(to[u].end());
+  int nxt = it->second.back();
+  it->second.pop_back();
+  if (it->second.empty()) {
+    to[u].erase(it);
+  }
 
-	if (u != r) {
-		todo.push_back(u);
-	}
-	return get(nxt, r);
+  if (u != r) {
+    todo.push_back(u);
+  }
+  return get(nxt, r);
 }
 
 void update(int r) {
-	for (int u : todo) {
-		for (const auto& jt : to[u]) {
-			for (int add : jt.second) {
-				to[r][jt.first].push_front(add);
-			}
-		}
-		to[u].clear();
-	}
-	todo.clear();
+  for (int u : todo) {
+    for (const auto& jt : to[u]) {
+      for (int add : jt.second) {
+        to[r][jt.first].push_front(add);
+      }
+    }
+    to[u].clear();
+  }
+  todo.clear();
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, r;
-	cin >> n >> r;
+  int n, r;
+  cin >> n >> r;
 
-	For(i,n-1) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	precmp(r, -1);
+  For(i,n-1) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  precmp(r, -1);
 
-	vector<pii> ans;
-	while (!to[r].empty()) {
-		if (to[r].size() == 1 && to[r].begin()->second.size() == 1) {
-			int u = get(r, r);
-			ans.push_back(pii(u,r));
-		} else {
-			int u = get(r, r);
-			int v = get(r, r);
-			ans.push_back(pii(u,v));
-		}
-		update(r);
-	}
+  vector<pii> ans;
+  while (!to[r].empty()) {
+    if (to[r].size() == 1 && to[r].begin()->second.size() == 1) {
+      int u = get(r, r);
+      ans.push_back(pii(u,r));
+    } else {
+      int u = get(r, r);
+      int v = get(r, r);
+      ans.push_back(pii(u,v));
+    }
+    update(r);
+  }
 
-	cout << ans.size() << nl;
-	for (const pii& it : ans) {
-		cout << it.first << " " << it.second << nl;
-	}
+  cout << ans.size() << nl;
+  for (const pii& it : ans) {
+    cout << it.first << " " << it.second << nl;
+  }
 
-	return 0;
+  return 0;
 }

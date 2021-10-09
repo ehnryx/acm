@@ -77,8 +77,8 @@ struct SegTree {
     }
 
     int query(int x, int y) {
-		ll xpos = x;
-		x = remap[x];
+    ll xpos = x;
+    x = remap[x];
         for (x += n; x > 0; x >>= 1) {
             for (int id : nodes[x]) {
                 if (sqr(instr[id].x - xpos) + sqr(instr[id].y - y) < sqr(instr[id].y)) {

@@ -26,42 +26,42 @@ const int N = 20;
 string g[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int n,m,tt=1;cin>>n>>m&&n;tt++) {
-		swap(n,m);
-		int s,t; s=t=-1;
-		for(int i=0;i<n;i++) {
-			cin>>g[i];
-			for(int j=0;j<m;j++) {
-				if(g[i][j] == '*') {
-					s = i; t = j;
-				}
-			}
-		}
-		int dx,dy;
-		if(s==0) tie(dx,dy) = pii(1,0);
-		else if(s==n-1) tie(dx,dy) = pii(-1,0);
-		else if(t==0) tie(dx,dy) = pii(0,1);
-		else tie(dx,dy) = pii(0,-1);
-		while(g[s][t]!='x') {
-			s+=dx; t+=dy;
-			if(g[s][t]=='/') {
-				swap(dx,dy); dx = -dx; dy = -dy;
-			} else if(g[s][t]=='\\') {
-				swap(dx,dy);
-			}
-		}
-		g[s][t] = '&';
-		cout<<"HOUSE "<<tt<<nl;
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<m;j++) {
-				cout<<g[i][j];
-			}
-			cout<<nl;
-		}
-	}
+  for(int n,m,tt=1;cin>>n>>m&&n;tt++) {
+    swap(n,m);
+    int s,t; s=t=-1;
+    for(int i=0;i<n;i++) {
+      cin>>g[i];
+      for(int j=0;j<m;j++) {
+        if(g[i][j] == '*') {
+          s = i; t = j;
+        }
+      }
+    }
+    int dx,dy;
+    if(s==0) tie(dx,dy) = pii(1,0);
+    else if(s==n-1) tie(dx,dy) = pii(-1,0);
+    else if(t==0) tie(dx,dy) = pii(0,1);
+    else tie(dx,dy) = pii(0,-1);
+    while(g[s][t]!='x') {
+      s+=dx; t+=dy;
+      if(g[s][t]=='/') {
+        swap(dx,dy); dx = -dx; dy = -dy;
+      } else if(g[s][t]=='\\') {
+        swap(dx,dy);
+      }
+    }
+    g[s][t] = '&';
+    cout<<"HOUSE "<<tt<<nl;
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<m;j++) {
+        cout<<g[i][j];
+      }
+      cout<<nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

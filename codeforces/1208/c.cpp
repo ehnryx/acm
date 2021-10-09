@@ -31,38 +31,38 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 vector<vector<int>> g = {
-	{ 8, 9, 1, 13 }, 
-	{ 3, 12, 7, 5 },
-	{ 0, 2, 4, 11 },
-	{ 6, 10, 15, 14 }
+  { 8, 9, 1, 13 }, 
+  { 3, 12, 7, 5 },
+  { 0, 2, 4, 11 },
+  { 6, 10, 15, 14 }
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int ans[n][n];
-	int pre = 0;
-	for(int i=0;i<n;i+=4) {
-		for(int j=0;j<n;j+=4) {
-			for(int ii=0;ii<4;ii++) {
-				for(int jj=0;jj<4;jj++) {
-					ans[i+ii][j+jj] = pre<<4|g[ii][jj];
-				}
-			}
-			pre++;
-		}
-	}
+  int n;
+  cin>>n;
+  int ans[n][n];
+  int pre = 0;
+  for(int i=0;i<n;i+=4) {
+    for(int j=0;j<n;j+=4) {
+      for(int ii=0;ii<4;ii++) {
+        for(int jj=0;jj<4;jj++) {
+          ans[i+ii][j+jj] = pre<<4|g[ii][jj];
+        }
+      }
+      pre++;
+    }
+  }
 
-	for(int i=0;i<n;i++) {
-		for(int j=0;j<n;j++) {
-			cout<<ans[i][j]<<" ";
-		}
-		cout<<nl;
-	}
+  for(int i=0;i<n;i++) {
+    for(int j=0;j<n;j++) {
+      cout<<ans[i][j]<<" ";
+    }
+    cout<<nl;
+  }
 
-	return 0;
+  return 0;
 }

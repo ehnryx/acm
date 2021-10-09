@@ -21,50 +21,50 @@ int colour[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, k, a, b;
-	cin >> n >> m >> k;
+  int n, m, k, a, b;
+  cin >> n >> m >> k;
 
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b;
-		adj[a][b] = true;
-		adj[b][a] = true;
-	}
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b;
+    adj[a][b] = true;
+    adj[b][a] = true;
+  }
 
-	int cur = 0;
-	for (int i = 1; i <= n; i++) {
-		if (!colour[i]) {
-			colour[i] = ++cur;
-		}
-		for (int j = 1; j <= n; j++) {
-			if (!adj[i][j]) colour[j] = colour[i];
-		}
-	}
+  int cur = 0;
+  for (int i = 1; i <= n; i++) {
+    if (!colour[i]) {
+      colour[i] = ++cur;
+    }
+    for (int j = 1; j <= n; j++) {
+      if (!adj[i][j]) colour[j] = colour[i];
+    }
+  }
 
-	bool bad = false;
-	if (cur > k) bad = true;
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= n; j++) {
-			if (adj[i][j] && colour[i] == colour[j]) bad = true;
-			if (!adj[i][j] && colour[i] != colour[j]) bad = true;
-		}
-	}
+  bool bad = false;
+  if (cur > k) bad = true;
+  for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+      if (adj[i][j] && colour[i] == colour[j]) bad = true;
+      if (!adj[i][j] && colour[i] != colour[j]) bad = true;
+    }
+  }
 
-	if (bad) {
-		cout << -1 << nl;
-	} else {
-		for (int i = 1; i <= n; i++) {
-			cout << colour[i] << " ";
-		}
-		cout << nl;
-	}
+  if (bad) {
+    cout << -1 << nl;
+  } else {
+    for (int i = 1; i <= n; i++) {
+      cout << colour[i] << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

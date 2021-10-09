@@ -33,44 +33,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m,t;
-	cin>>n>>m>>t;
-	int a[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
+  int n,m,t;
+  cin>>n>>m>>t;
+  int a[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
 
-	auto check = [&](ll tot) {
-		int res = 0;
-		ll cur = 0;
-		for(int i=0;i<n;i++) {
-			if(cur+a[i]<=tot) {
-				cur += a[i];
-			} else if(a[i]>tot) {
-				return INF;
-			} else {
-				res++;
-				cur = a[i];
-			}
-		}
-		return res+1;
-	};
+  auto check = [&](ll tot) {
+    int res = 0;
+    ll cur = 0;
+    for(int i=0;i<n;i++) {
+      if(cur+a[i]<=tot) {
+        cur += a[i];
+      } else if(a[i]>tot) {
+        return INF;
+      } else {
+        res++;
+        cur = a[i];
+      }
+    }
+    return res+1;
+  };
 
-	ll l = 0;
-	ll r = 2*INF;
-	while(l<r) {
-		ll mid=(l+r)/2;
-		if(check(mid*t)<=m) {
-			r = mid;
-		} else {
-			l = mid+1;
-		}
-	}
-	cout<<l<<nl;
+  ll l = 0;
+  ll r = 2*INF;
+  while(l<r) {
+    ll mid=(l+r)/2;
+    if(check(mid*t)<=m) {
+      r = mid;
+    } else {
+      l = mid+1;
+    }
+  }
+  cout<<l<<nl;
 
-	return 0;
+  return 0;
 }

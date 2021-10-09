@@ -32,44 +32,44 @@ int dp[N][M];
 string res[N][M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-	}
-	for(int i=1;i<=n;i++) {
-		cin>>b[i];
-	}
+  int n;
+  cin>>n;
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+  }
+  for(int i=1;i<=n;i++) {
+    cin>>b[i];
+  }
 
-	dp[0][O] = true;
-	for(int i=1;i<=n;i++) {
-		for(int j=0;j<M;j++) {
-			if(0<=j-a[i] && j-a[i]<M && dp[i-1][j-a[i]]) {
-				dp[i][j] = true;
-				res[i][j] = res[i-1][j-a[i]] + "A";
-			}
-			if(0<=j+b[i] && j+b[i]<M && dp[i-1][j+b[i]]) {
-				if(dp[i][j]) {
-					res[i][j] = min(res[i][j], res[i-1][j+b[i]] + "B");
-				} else {
-					dp[i][j] = true;
-					res[i][j] = res[i-1][j+b[i]] + "B";
-				}
-			}
-		}
-	}
+  dp[0][O] = true;
+  for(int i=1;i<=n;i++) {
+    for(int j=0;j<M;j++) {
+      if(0<=j-a[i] && j-a[i]<M && dp[i-1][j-a[i]]) {
+        dp[i][j] = true;
+        res[i][j] = res[i-1][j-a[i]] + "A";
+      }
+      if(0<=j+b[i] && j+b[i]<M && dp[i-1][j+b[i]]) {
+        if(dp[i][j]) {
+          res[i][j] = min(res[i][j], res[i-1][j+b[i]] + "B");
+        } else {
+          dp[i][j] = true;
+          res[i][j] = res[i-1][j+b[i]] + "B";
+        }
+      }
+    }
+  }
 
-	string ans = "X";
-	for(int i=0;O+i<M;i++) {
-		if(dp[n][O-i]) ans = min(ans, res[n][O-i]);
-		if(dp[n][O+i]) ans = min(ans, res[n][O+i]);
-		if(dp[n][O-i]||dp[n][O+i]) break;
-	}
-	assert(ans!="X");
-	cout<<ans<<nl;
+  string ans = "X";
+  for(int i=0;O+i<M;i++) {
+    if(dp[n][O-i]) ans = min(ans, res[n][O-i]);
+    if(dp[n][O+i]) ans = min(ans, res[n][O+i]);
+    if(dp[n][O-i]||dp[n][O+i]) break;
+  }
+  assert(ans!="X");
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

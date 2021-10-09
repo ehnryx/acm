@@ -33,8 +33,8 @@ int ti[N], bi[N];
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
@@ -104,5 +104,5 @@ int main() {
     cout << ti[i] << " " << mid[i].second << " " << bi[i] << nl;
   }
 
-	return 0;
+  return 0;
 }

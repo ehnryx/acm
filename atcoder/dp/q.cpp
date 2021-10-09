@@ -33,42 +33,42 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int h[n], a[n];
-	For(i,n) {
-		cin >> h[i];
-	}
-	For(i,n) {
-		cin >> a[i];
-	}
+  int h[n], a[n];
+  For(i,n) {
+    cin >> h[i];
+  }
+  For(i,n) {
+    cin >> a[i];
+  }
 
-	map<int,ll> lis;
-	lis[INF] = INFLL;
-	For(i,n) {
-		auto it = lis.upper_bound(h[i]);
-		int len = a[i];
-		while (it->second <= a[i]) {
-			a[i] -= it->second;
-			it = lis.erase(it);
-		}
-		if (a[i] > 0) {
-			it->second -= a[i];
-		}
-		lis[h[i]] = len;
-	}
+  map<int,ll> lis;
+  lis[INF] = INFLL;
+  For(i,n) {
+    auto it = lis.upper_bound(h[i]);
+    int len = a[i];
+    while (it->second <= a[i]) {
+      a[i] -= it->second;
+      it = lis.erase(it);
+    }
+    if (a[i] > 0) {
+      it->second -= a[i];
+    }
+    lis[h[i]] = len;
+  }
 
-	ll ans = 0;
-	for (const pair<int,ll>& it : lis) {
-		if (it.first != INF) ans += it.second;
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  for (const pair<int,ll>& it : lis) {
+    if (it.first != INF) ans += it.second;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }
 

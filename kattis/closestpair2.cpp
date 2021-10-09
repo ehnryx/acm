@@ -42,25 +42,25 @@ pair<pt, pt> closest_pair(vector<pt> v) { // Tested UVa 10245, 11378
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int n; cin>>n && n; ) {
-		vector<pt> p;
-		for (int i=0; i<n; i++) {
-			ld x, y;
-			cin >> x >> y;
-			p.push_back(pt(x,y));
-		}
-		pt s, t;
-		tie(s,t) = closest_pair(p);
-		cout << s.real() << " " << s.imag() << " " << t.real() << " " << t.imag() << nl;
-	}
+  for (int n; cin>>n && n; ) {
+    vector<pt> p;
+    for (int i=0; i<n; i++) {
+      ld x, y;
+      cin >> x >> y;
+      p.push_back(pt(x,y));
+    }
+    pt s, t;
+    tie(s,t) = closest_pair(p);
+    cout << s.real() << " " << s.imag() << " " << t.real() << " " << t.imag() << nl;
+  }
 
-	return 0;
+  return 0;
 }

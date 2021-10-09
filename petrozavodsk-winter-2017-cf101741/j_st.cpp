@@ -22,65 +22,65 @@ unsigned int res[20];
 
 int m;
 void combine(int i) {
-	//cerr << "combine @ " << i << endl;
-	//cerr << "cur: "; for (int j = 0; j < m; j++) //cerr << cur[j] << " "; //cerr << endl;
-	//cerr << "seg: "; for (int j = 0; j < m; j++) //cerr << segt[i][j] << " "; //cerr << endl;
-	memset(res, 0, sizeof res);
-	for (int j = 0; j < m; j++) {
-		res[j] = (res[j] + cur[j] + segt[i][j]) % MOD;
-		for (int k = 0; k < m; k++) {
-			res[(j+k)%m] = (res[(j+k)%m] + (ll) cur[j] * segt[i][k] % MOD) % MOD;
-		}
-	}
-	//cerr << "get: ";
-	for (int j = 0; j < m; j++) {
-		cur[j] = res[j];
-		//cerr << cur[j] << " ";
-	}
-	//cerr << endl;
+  //cerr << "combine @ " << i << endl;
+  //cerr << "cur: "; for (int j = 0; j < m; j++) //cerr << cur[j] << " "; //cerr << endl;
+  //cerr << "seg: "; for (int j = 0; j < m; j++) //cerr << segt[i][j] << " "; //cerr << endl;
+  memset(res, 0, sizeof res);
+  for (int j = 0; j < m; j++) {
+    res[j] = (res[j] + cur[j] + segt[i][j]) % MOD;
+    for (int k = 0; k < m; k++) {
+      res[(j+k)%m] = (res[(j+k)%m] + (ll) cur[j] * segt[i][k] % MOD) % MOD;
+    }
+  }
+  //cerr << "get: ";
+  for (int j = 0; j < m; j++) {
+    cur[j] = res[j];
+    //cerr << cur[j] << " ";
+  }
+  //cerr << endl;
 }
 
 int query(int l, int r) {
-	memset(cur, 0, sizeof cur);
-	for (l += N, r += N; l < r; l >>= 1, r >>= 1) {
-		if (l & 1) combine(l++);
-		if (r & 1) combine(--r);
-	}
-	return (cur[0] + 1) % MOD;
+  memset(cur, 0, sizeof cur);
+  for (l += N, r += N; l < r; l >>= 1, r >>= 1) {
+    if (l & 1) combine(l++);
+    if (r & 1) combine(--r);
+  }
+  return (cur[0] + 1) % MOD;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n >> m;
+  int n;
+  cin >> n >> m;
 
-	int a;
-	for (int i = 0; i < n; i++) {
-		cin >> a;
-		a %= m;
-		segt[N+i][a] = 1;
-	}
+  int a;
+  for (int i = 0; i < n; i++) {
+    cin >> a;
+    a %= m;
+    segt[N+i][a] = 1;
+  }
 
-	for (int i = N-1; i > 0; i--) {
-		for (int j = 0; j < m; j++) {
-			segt[i][j] = (segt[i][j] + segt[i<<1][j] + segt[i<<1|1][j]) % MOD;
-			for (int k = 0; k < m; k++) {
-				segt[i][(j+k)%m] = (segt[i][(j+k)%m] + (ll) segt[i<<1][j] * segt[i<<1|1][k] % MOD) % MOD;
-			}
-		}
-	}
+  for (int i = N-1; i > 0; i--) {
+    for (int j = 0; j < m; j++) {
+      segt[i][j] = (segt[i][j] + segt[i<<1][j] + segt[i<<1|1][j]) % MOD;
+      for (int k = 0; k < m; k++) {
+        segt[i][(j+k)%m] = (segt[i][(j+k)%m] + (ll) segt[i<<1][j] * segt[i<<1|1][k] % MOD) % MOD;
+      }
+    }
+  }
 
-	int queries;
-	cin >> queries;
+  int queries;
+  cin >> queries;
 
-	int left, right;
-	for (int i = 0; i < queries; i++) {
-		cin >> left >> right;
-		cout << query(left-1, right) << nl;
-	}
+  int left, right;
+  for (int i = 0; i < queries; i++) {
+    cin >> left >> right;
+    cout << query(left-1, right) << nl;
+  }
 
-	return 0;
+  return 0;
 }

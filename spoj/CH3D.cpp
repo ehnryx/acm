@@ -74,29 +74,29 @@ namespace Hull3 { // change shift and mask values for >1024 verts
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		vector<p3d> p;
-		for(int i=0; i<n; i++) {
-			ld a, b, c;
-			cin >> a >> b >> c;
-			p.push_back({a, b, c});
-		}
-		Hull3::build(p);
-		ld area = 0;
-		ld volume = 0;
-		for(const auto& f : Hull3::faces) {
-			area += Hull3::area(f);
-			volume += Hull3::volume(f);
-		}
-		cout << area/2 << " " << volume << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<p3d> p;
+    for(int i=0; i<n; i++) {
+      ld a, b, c;
+      cin >> a >> b >> c;
+      p.push_back({a, b, c});
+    }
+    Hull3::build(p);
+    ld area = 0;
+    ld volume = 0;
+    for(const auto& f : Hull3::faces) {
+      area += Hull3::area(f);
+      volume += Hull3::volume(f);
+    }
+    cout << area/2 << " " << volume << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -29,48 +29,48 @@ ld dp[T][N][N];
 int deg[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	for(int i=0;i<m;i++) {
-		int a,b;
-		cin>>a>>b;
-		adj[a][b] = adj[b][a] = true;
-		deg[a]++;
-		deg[b]++;
-	}
-	int x,y;
-	cin>>x>>y;
-	if(x==y) {
-		cout<<0<<nl;
-		return 0;
-	}
+  int n,m;
+  cin>>n>>m;
+  for(int i=0;i<m;i++) {
+    int a,b;
+    cin>>a>>b;
+    adj[a][b] = adj[b][a] = true;
+    deg[a]++;
+    deg[b]++;
+  }
+  int x,y;
+  cin>>x>>y;
+  if(x==y) {
+    cout<<0<<nl;
+    return 0;
+  }
 
-	ld ans = 0;
-	dp[0][x][y] = 1;
-	for(int t=1;t<T;t++) {
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				for(int ii=0;ii<n;ii++) {
-					if(!adj[ii][i]) continue;
-					for(int jj=0;jj<n;jj++) {
-						if(!adj[jj][j]) continue;
-						dp[t][i][j] += dp[t-1][ii][jj]/deg[ii]/deg[jj];
-					}
-				}
-				if(dp[t][i][j]<EPS) dp[t][i][j] = 0;
-			}
-		}
-		for(int i=0;i<n;i++) {
-			ans += dp[t][i][i]*t;
-			dp[t][i][i] = 0;
-		}
-	}
-	if(ans<0.5) cout<<"never meet"<<nl;
-	else cout<<ans<<nl;
+  ld ans = 0;
+  dp[0][x][y] = 1;
+  for(int t=1;t<T;t++) {
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<n;j++) {
+        for(int ii=0;ii<n;ii++) {
+          if(!adj[ii][i]) continue;
+          for(int jj=0;jj<n;jj++) {
+            if(!adj[jj][j]) continue;
+            dp[t][i][j] += dp[t-1][ii][jj]/deg[ii]/deg[jj];
+          }
+        }
+        if(dp[t][i][j]<EPS) dp[t][i][j] = 0;
+      }
+    }
+    for(int i=0;i<n;i++) {
+      ans += dp[t][i][i]*t;
+      dp[t][i][i] = 0;
+    }
+  }
+  if(ans<0.5) cout<<"never meet"<<nl;
+  else cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

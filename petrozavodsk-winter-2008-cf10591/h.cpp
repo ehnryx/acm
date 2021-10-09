@@ -19,40 +19,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 #define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("amplifiers.in", "r", stdin);
-	freopen("amplifiers.out", "w", stdout);
+  freopen("amplifiers.in", "r", stdin);
+  freopen("amplifiers.out", "w", stdout);
 #endif
-	
-	int n;
-	cin >> n;
+  
+  int n;
+  cin >> n;
 
-	if (n % 2 == 0) {
-		cout << "No solution" << nl;
-		return 0;
-	}
+  if (n % 2 == 0) {
+    cout << "No solution" << nl;
+    return 0;
+  }
 
-	vector<int> ans;
-	while (n != 1) {
-		if ((n+1)/2 % 2 == 1) {
-			ans.push_back(1);
-			n = (n+1)/2;
-		}
-		else {
-			ans.push_back(2);
-			n = (n-1)/2;
-		}
-	}
-	reverse(ans.begin(), ans.end());
+  vector<int> ans;
+  while (n != 1) {
+    if ((n+1)/2 % 2 == 1) {
+      ans.push_back(1);
+      n = (n+1)/2;
+    }
+    else {
+      ans.push_back(2);
+      n = (n-1)/2;
+    }
+  }
+  reverse(ans.begin(), ans.end());
 
-	cout << ans.size() << nl;
-	for (int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  cout << ans.size() << nl;
+  for (int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

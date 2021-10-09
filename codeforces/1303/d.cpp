@@ -24,53 +24,53 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const int L = 61;
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		ll n; int m;
-		cin >> n >> m;
-		vector<int> a(m);
-		vector<int> cnt(L);
-		for(int i=0; i<m; i++) {
-			cin >> a[i];
-			cnt[__builtin_ctz(a[i])]++;
-		}
+  int T;
+  cin >> T;
+  while(T--) {
+    ll n; int m;
+    cin >> n >> m;
+    vector<int> a(m);
+    vector<int> cnt(L);
+    for(int i=0; i<m; i++) {
+      cin >> a[i];
+      cnt[__builtin_ctz(a[i])]++;
+    }
 
-		int ans = 0;
-		for(int i=0; i+1<L; i++) {
-			if(n & 1LL<<i) {
-				if(cnt[i]) {
-					cnt[i]--;
-				} else {
-					bool ok = false;
-					for(int j=i; j<L; j++) {
-						if(cnt[j]) {
-							ok = true;
-							cnt[j]--;
-							break;
-						} else {
-							cnt[j]++;
-							ans++;
-						}
-					}
-					if(!ok) {
-						goto sad;
-					}
-				}
-			}
-			cnt[i+1] += cnt[i]/2;
-		}
+    int ans = 0;
+    for(int i=0; i+1<L; i++) {
+      if(n & 1LL<<i) {
+        if(cnt[i]) {
+          cnt[i]--;
+        } else {
+          bool ok = false;
+          for(int j=i; j<L; j++) {
+            if(cnt[j]) {
+              ok = true;
+              cnt[j]--;
+              break;
+            } else {
+              cnt[j]++;
+              ans++;
+            }
+          }
+          if(!ok) {
+            goto sad;
+          }
+        }
+      }
+      cnt[i+1] += cnt[i]/2;
+    }
 
-		cout << ans << nl;
+    cout << ans << nl;
 
-		continue;
+    continue;
 
-		sad:
-		cout << -1 << nl;
-	}
+    sad:
+    cout << -1 << nl;
+  }
 
-	return 0;
+  return 0;
 }

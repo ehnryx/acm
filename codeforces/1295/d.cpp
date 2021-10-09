@@ -27,31 +27,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		ll a, b;
-		cin >> a >> b;
-		b /= __gcd(a, b);
-		ll totient = 1;
-		for(ll i=2; i*i<=b; i++) {
-			if(b % i == 0) {
-				totient *= i-1;
-				b /= i;
-				while(b % i == 0) {
-					totient *= i;
-					b /= i;
-				}
-			}
-		}
-		if(b > 1) {
-			totient *= b-1;
-		}
-		cout << totient << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    ll a, b;
+    cin >> a >> b;
+    b /= __gcd(a, b);
+    ll totient = 1;
+    for(ll i=2; i*i<=b; i++) {
+      if(b % i == 0) {
+        totient *= i-1;
+        b /= i;
+        while(b % i == 0) {
+          totient *= i;
+          b /= i;
+        }
+      }
+    }
+    if(b > 1) {
+      totient *= b-1;
+    }
+    cout << totient << nl;
+  }
 
-	return 0;
+  return 0;
 }

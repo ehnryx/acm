@@ -19,50 +19,50 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string s, t;
-	cin >> s;
-	cin >> t;
+  string s, t;
+  cin >> s;
+  cin >> t;
 
-	vector<int> ans;
+  vector<int> ans;
 
-	auto solve = [&] (int x) {
-		for (int j = x+1; j < n; j++) {
-			if (s[j] == t[x]) {
-				for (int k = j; k > x; k--) {
-					swap(s[k], s[k-1]);
-					ans.push_back(k);
-				}
-				return true;
-			}
-		}
-		return false;
-	};
+  auto solve = [&] (int x) {
+    for (int j = x+1; j < n; j++) {
+      if (s[j] == t[x]) {
+        for (int k = j; k > x; k--) {
+          swap(s[k], s[k-1]);
+          ans.push_back(k);
+        }
+        return true;
+      }
+    }
+    return false;
+  };
 
-	for (int i = 0; i < n; i++) {
-		if (s[i] != t[i]) {
-			if (!solve(i)) {
-				cout << -1 << nl;
-				return 0;
-			}
-		}
-	}
+  for (int i = 0; i < n; i++) {
+    if (s[i] != t[i]) {
+      if (!solve(i)) {
+        cout << -1 << nl;
+        return 0;
+      }
+    }
+  }
 
-	cout << ans.size() << nl;
-	for (int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  cout << ans.size() << nl;
+  for (int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

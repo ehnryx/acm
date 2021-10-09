@@ -25,22 +25,22 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	unordered_set<string> vis;
-	for(int i=0;i<m;i++) {
-		string s;
-		cin>>s;
-		vis.insert(s);
-		if(vis.size()==n) {
-			cout<<i+1<<nl;
-			return 0;
-		}
-	}
-	cout<<"paradox avoided"<<nl;
+  int n,m;
+  cin>>n>>m;
+  unordered_set<string> vis;
+  for(int i=0;i<m;i++) {
+    string s;
+    cin>>s;
+    vis.insert(s);
+    if(vis.size()==n) {
+      cout<<i+1<<nl;
+      return 0;
+    }
+  }
+  cout<<"paradox avoided"<<nl;
 
-	return 0;
+  return 0;
 }

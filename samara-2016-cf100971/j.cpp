@@ -24,68 +24,68 @@ vector<int> adj[N];
 bool vis[N];
 
 bool solve(int s, int t) {
-	int maxd = 0;
-	int edges = 0;
-	int nodes = 0;
-	queue<int> bfs;
-	bfs.push(s);
-	vis[s] = true;
-	while (!bfs.empty()) {
-		int u = bfs.front();
-		bfs.pop();
-		nodes++;
-		maxd = max(maxd, (int)adj[u].size());
-		for (int v : adj[u]) {
-			edges++;
-			if (!vis[v]) {
-				vis[v] = true;
-				bfs.push(v);
-			}
-		}
-	}
-	return vis[t] && (maxd > 2 || edges >= 2*nodes);
+  int maxd = 0;
+  int edges = 0;
+  int nodes = 0;
+  queue<int> bfs;
+  bfs.push(s);
+  vis[s] = true;
+  while (!bfs.empty()) {
+    int u = bfs.front();
+    bfs.pop();
+    nodes++;
+    maxd = max(maxd, (int)adj[u].size());
+    for (int v : adj[u]) {
+      edges++;
+      if (!vis[v]) {
+        vis[v] = true;
+        bfs.push(v);
+      }
+    }
+  }
+  return vis[t] && (maxd > 2 || edges >= 2*nodes);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	for (int i=0; i<n; i++) {
-		cin >> grid[i];
-	}
+  for (int i=0; i<n; i++) {
+    cin >> grid[i];
+  }
 
-	function<int(int,int)> get = [&] (int i, int j) {
-		return i*m + j;
-	};
+  function<int(int,int)> get = [&] (int i, int j) {
+    return i*m + j;
+  };
 
-	int s, t;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<m; j++) {
-			if (grid[i][j] != '#') {
-				for (int d=0; d<4; d++) {
-					int ni = i+di[d];
-					int nj = j+dj[d];
-					if (0<=ni && ni<n && 0<=nj && nj<m && grid[ni][nj] != '#') {
-						adj[get(i,j)].push_back(get(ni,nj));
-					}
-				}
-			}
-			if (grid[i][j] == '1') s = get(i,j);
-			if (grid[i][j] == '2') t = get(i,j);
-		}
-	}
+  int s, t;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<m; j++) {
+      if (grid[i][j] != '#') {
+        for (int d=0; d<4; d++) {
+          int ni = i+di[d];
+          int nj = j+dj[d];
+          if (0<=ni && ni<n && 0<=nj && nj<m && grid[ni][nj] != '#') {
+            adj[get(i,j)].push_back(get(ni,nj));
+          }
+        }
+      }
+      if (grid[i][j] == '1') s = get(i,j);
+      if (grid[i][j] == '2') t = get(i,j);
+    }
+  }
 
-	if (solve(s,t)) cout << "YES" << nl;
-	else cout << "NO" << nl;
+  if (solve(s,t)) cout << "YES" << nl;
+  else cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

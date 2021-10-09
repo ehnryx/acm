@@ -33,36 +33,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const int N = 16;
 int dp[1<<N];
 int solve(int bm) {
-	if (dp[bm] != -1) return dp[bm];
-	dp[bm] = 0;
-	for (int i=0; i<N; i++) {
-		if (!(bm&1<<i)) continue;
-		dp[bm] |= !solve(bm^1<<i);
-		for (int j=0; j<i; j++) {
-			dp[bm] |= !solve(bm^1<<i^1<<j);
-			for (int k=0; k<j; k++) {
-				dp[bm] |= !solve(bm^1<<i^1<<j^1<<k);
-			}
-		}
-	}
-	return dp[bm];
+  if (dp[bm] != -1) return dp[bm];
+  dp[bm] = 0;
+  for (int i=0; i<N; i++) {
+    if (!(bm&1<<i)) continue;
+    dp[bm] |= !solve(bm^1<<i);
+    for (int j=0; j<i; j++) {
+      dp[bm] |= !solve(bm^1<<i^1<<j);
+      for (int k=0; k<j; k++) {
+        dp[bm] |= !solve(bm^1<<i^1<<j^1<<k);
+      }
+    }
+  }
+  return dp[bm];
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(dp, -1, sizeof dp);
-	for (int bm=0; bm<1<<N; bm++) {
-		int val = 0;
-		for (int i=0; i<N; i++) {
-			if (bm&1<<i) {
-				val += i+1;
-			}
-		}
-		cout << bitset<N>(bm) << " -> " << solve(bm) << endl;
-	}
+  memset(dp, -1, sizeof dp);
+  for (int bm=0; bm<1<<N; bm++) {
+    int val = 0;
+    for (int i=0; i<N; i++) {
+      if (bm&1<<i) {
+        val += i+1;
+      }
+    }
+    cout << bitset<N>(bm) << " -> " << solve(bm) << endl;
+  }
 
-	return 0;
+  return 0;
 }

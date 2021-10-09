@@ -35,80 +35,80 @@ const int K = 5;
 list<pii> st[K+1][2*N];
 
 void combine(int k, list<pii>& a, const list<pii>& b) {
-	for(const pii& it:b) {
-		bool found = false;
-		for(pii& jt:a) {
-			if(it.first==jt.first) {
-				found = true;
-				jt.second += it.second;
-			}
-		}
-		if(!found) {
-			a.push_back(it);
-			if(a.size()>=k) {
-				int minv = INF;
-				for(const pii& jt:a) {
-					minv = min(minv, jt.second);
-				}
-				for(auto jt=a.begin();jt!=a.end();) {
-					jt->second -= minv;
-					if(jt->second) jt++;
-					else jt=a.erase(jt);
-				}
-			}
-		}
-	}
+  for(const pii& it:b) {
+    bool found = false;
+    for(pii& jt:a) {
+      if(it.first==jt.first) {
+        found = true;
+        jt.second += it.second;
+      }
+    }
+    if(!found) {
+      a.push_back(it);
+      if(a.size()>=k) {
+        int minv = INF;
+        for(const pii& jt:a) {
+          minv = min(minv, jt.second);
+        }
+        for(auto jt=a.begin();jt!=a.end();) {
+          jt->second -= minv;
+          if(jt->second) jt++;
+          else jt=a.erase(jt);
+        }
+      }
+    }
+  }
 }
 
 void build(int k) {
-	for(int i=N-1;i>0;i--) {
-		st[k][i] = st[k][2*i];
-		combine(k,st[k][i],st[k][2*i+1]);
-	}
+  for(int i=N-1;i>0;i--) {
+    st[k][i] = st[k][2*i];
+    combine(k,st[k][i],st[k][2*i+1]);
+  }
 }
 
 list<pii> solve(int k, int l, int r) {
-	list<pii> res;
-	for(l+=N,r+=N+1;l<r;l/=2,r/=2) {
-		if(l&1) combine(k,res,st[k][l++]);
-		if(r&1) combine(k,res,st[k][--r]);
-	}
-	return res;
+  list<pii> res;
+  for(l+=N,r+=N+1;l<r;l/=2,r/=2) {
+    if(l&1) combine(k,res,st[k][l++]);
+    if(r&1) combine(k,res,st[k][--r]);
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	vector<int> idx[n+1];
-	for(int i=1;i<=n;i++) {
-		int a;
-		cin>>a;
-		idx[a].push_back(i);
-		for(int k=2;k<=K;k++) {
-			st[k][N+i] = { pii(a,1) };
-		}
-	}
-	for(int k=2;k<=K;k++) {
-		build(k);
-	}
+  int n,m;
+  cin>>n>>m;
+  vector<int> idx[n+1];
+  for(int i=1;i<=n;i++) {
+    int a;
+    cin>>a;
+    idx[a].push_back(i);
+    for(int k=2;k<=K;k++) {
+      st[k][N+i] = { pii(a,1) };
+    }
+  }
+  for(int k=2;k<=K;k++) {
+    build(k);
+  }
 
-	for(int i=0;i<m;i++) {
-		int l,r,k;
-		cin>>l>>r>>k;
-		int ans = INF;
-		int lb = (r-l+1)/k;
-		for(const pii& it:solve(k,l,r)) {
-			auto left = lower_bound(idx[it.first].begin(),idx[it.first].end(),l);
-			auto right = upper_bound(idx[it.first].begin(),idx[it.first].end(),r);
-			if(right-left>lb) ans = min(ans,it.first);
-		}
-		if(ans==INF) cout<<-1<<nl;
-		else cout<<ans<<nl;
-	}
+  for(int i=0;i<m;i++) {
+    int l,r,k;
+    cin>>l>>r>>k;
+    int ans = INF;
+    int lb = (r-l+1)/k;
+    for(const pii& it:solve(k,l,r)) {
+      auto left = lower_bound(idx[it.first].begin(),idx[it.first].end(),l);
+      auto right = upper_bound(idx[it.first].begin(),idx[it.first].end(),r);
+      if(right-left>lb) ans = min(ans,it.first);
+    }
+    if(ans==INF) cout<<-1<<nl;
+    else cout<<ans<<nl;
+  }
 
-	return 0;
+  return 0;
 }

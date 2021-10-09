@@ -27,26 +27,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<int> a(n), b(n);
-	for(int i=0; i<n; i++) {
-		cin >> a[i];
-	}
-	for(int i=0; i<n; i++) {
-		cin >> b[i];
-	}
+  int n;
+  cin >> n;
+  vector<int> a(n), b(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  for(int i=0; i<n; i++) {
+    cin >> b[i];
+  }
 
-	ll ans = 0;
-	ordered_set<pair<int,int>> seen;
-	for(int i=0; i<n; i++) {
-		ans += seen.order_of_key(make_pair(a[i] - b[i], -1));
-		seen.insert(make_pair(b[i] - a[i], i));
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  ordered_set<pair<int,int>> seen;
+  for(int i=0; i<n; i++) {
+    ans += seen.order_of_key(make_pair(a[i] - b[i], -1));
+    seen.insert(make_pair(b[i] - a[i], i));
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

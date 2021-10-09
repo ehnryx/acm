@@ -27,18 +27,18 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(4);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(4);
 
-	int n;
-	cin>>n;
-	for(int i=0;i<n;i++) {
-		int b; ld p;
-		cin>>b>>p;
-		ld mint = p/(b+1);
-		ld maxt = p/(b-1);
-		cout<<60/maxt<<" "<<60*b/p<<" "<<60/mint<<nl;
-	}
+  int n;
+  cin>>n;
+  for(int i=0;i<n;i++) {
+    int b; ld p;
+    cin>>b>>p;
+    ld mint = p/(b+1);
+    ld maxt = p/(b-1);
+    cout<<60/maxt<<" "<<60*b/p<<" "<<60/mint<<nl;
+  }
 
-	return 0;
+  return 0;
 }

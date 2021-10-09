@@ -19,30 +19,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	ll s;
+  int n;
+  ll s;
 
-	int a, b;
-	vector<pii> lines;
-	vector<int> curve;
-	for (int i = 0; i < n; i++) {
-		cin >> a >> b;
-		lines.push_back(pii(a,-b));
-		curve.push_back(a);
-	}
+  int a, b;
+  vector<pii> lines;
+  vector<int> curve;
+  for (int i = 0; i < n; i++) {
+    cin >> a >> b;
+    lines.push_back(pii(a,-b));
+    curve.push_back(a);
+  }
 
-	for (const auto& it : lines) {
-		for (const auto& c : curves) {
-		}
-	}
+  for (const auto& it : lines) {
+    for (const auto& c : curves) {
+    }
+  }
 
-	return 0;
+  return 0;
 }

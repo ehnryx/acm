@@ -16,11 +16,11 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Node {
-	int id;
-	ld x;
-	Node() {}
-	Node(int i, ld x): id(i), x(x) {}
-	bool operator < (const Node& n) const { return x > n.x; }
+  int id;
+  ld x;
+  Node() {}
+  Node(int i, ld x): id(i), x(x) {}
+  bool operator < (const Node& n) const { return x > n.x; }
 };
 
 const int N = 300000 + 1;
@@ -32,49 +32,49 @@ ld nsum[N];
 ld ans[N];
 
 void init() {
-	memset(vis, 0, sizeof vis);
-	memset(deg, 0, sizeof deg);
-	memset(nfix, 0, sizeof nfix);
-	fill(nsum, nsum+N, 0);
+  memset(vis, 0, sizeof vis);
+  memset(deg, 0, sizeof deg);
+  memset(nfix, 0, sizeof nfix);
+  fill(nsum, nsum+N, 0);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a, b;
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-		deg[a]++;
-		deg[b]++;
-	}
+  int a, b;
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+    deg[a]++;
+    deg[b]++;
+  }
 
-	priority_queue<Node> nxt;
-	nxt.push(Node(n, 0));
-	while (!nxt.empty()) {
-		Node cur = nxt.top();
-		nxt.pop();
-		if (vis[cur.id]) continue;
-		vis[cur.id] = true;
-		ans[cur.id] = cur.x;
+  priority_queue<Node> nxt;
+  nxt.push(Node(n, 0));
+  while (!nxt.empty()) {
+    Node cur = nxt.top();
+    nxt.pop();
+    if (vis[cur.id]) continue;
+    vis[cur.id] = true;
+    ans[cur.id] = cur.x;
 
-		for (int nb : adj[cur.id]) {
-			if (!vis[nb]) {
-				nfix[nb]++;
-				nsum[nb] += cur.x;
-				nxt.push(Node(nb, nsum[nb]/nfix[nb] + (ld)deg[nb]/nfix[nb]));
-			}
-		}
-	}
+    for (int nb : adj[cur.id]) {
+      if (!vis[nb]) {
+        nfix[nb]++;
+        nsum[nb] += cur.x;
+        nxt.push(Node(nb, nsum[nb]/nfix[nb] + (ld)deg[nb]/nfix[nb]));
+      }
+    }
+  }
 
-	cout << ans[1] << nl;
+  cout << ans[1] << nl;
 
-	return 0;
+  return 0;
 }

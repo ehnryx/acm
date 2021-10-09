@@ -27,25 +27,25 @@ int a[N], b[N];
 ll dp[N][2];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	FOR(i,1,n) {
-		cin >> a[i];
-	}
-	FOR(i,1,n) {
-		cin >> b[i];
-	}
+  FOR(i,1,n) {
+    cin >> a[i];
+  }
+  FOR(i,1,n) {
+    cin >> b[i];
+  }
 
-	FOR(i,1,n) {
-		dp[i][0] = max(dp[i-1][0], dp[i-1][1] + a[i]);
-		dp[i][1] = max(dp[i-1][1], dp[i-1][0] + b[i]);
-	}
-	cout << max(dp[n][0], dp[n][1]) << nl;
+  FOR(i,1,n) {
+    dp[i][0] = max(dp[i-1][0], dp[i-1][1] + a[i]);
+    dp[i][1] = max(dp[i-1][1], dp[i-1][0] + b[i]);
+  }
+  cout << max(dp[n][0], dp[n][1]) << nl;
 
-	return 0;
+  return 0;
 }

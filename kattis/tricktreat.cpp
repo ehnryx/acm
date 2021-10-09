@@ -28,34 +28,34 @@ const int N = 5e4+1;
 ld x[N],y[N];
 
 ld calc(int n, ld v) {
-	ld ans = 0;
-	for(int i=0;i<n;i++) {
-		ans = max(ans, (x[i]-v)*(x[i]-v)+y[i]*y[i]);
-	}
-	return sqrt(ans);
+  ld ans = 0;
+  for(int i=0;i<n;i++) {
+    ans = max(ans, (x[i]-v)*(x[i]-v)+y[i]*y[i]);
+  }
+  return sqrt(ans);
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int n; cin>>n && n; ) {
-		for(int i=0;i<n;i++) {
-			cin>>x[i]>>y[i];
-		}
-		ld l = -2e5;
-		ld r = 2e5;
-		while(r-l>EPS) {
-			ld lm = (2*l+r)/3;
-			ld rm = (l+2*r)/3;
-			if(calc(n,lm) < calc(n,rm)) {
-				r = rm;
-			} else {
-				l = lm;
-			}
-		}
-		cout<<l<<" "<<calc(n,l)<<nl;
-	}
+  for(int n; cin>>n && n; ) {
+    for(int i=0;i<n;i++) {
+      cin>>x[i]>>y[i];
+    }
+    ld l = -2e5;
+    ld r = 2e5;
+    while(r-l>EPS) {
+      ld lm = (2*l+r)/3;
+      ld rm = (l+2*r)/3;
+      if(calc(n,lm) < calc(n,rm)) {
+        r = rm;
+      } else {
+        l = lm;
+      }
+    }
+    cout<<l<<" "<<calc(n,l)<<nl;
+  }
 
-	return 0;
+  return 0;
 }

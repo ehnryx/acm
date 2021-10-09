@@ -88,35 +88,35 @@ struct LinkCutTree { vector<int> l,r,p,pp,val,sum,carry,size,flip; int null;
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	LinkCutTree lct;
-	lct.init(n+1);
-	for (char c; cin >> c && c != 'E'; ) {
-		int a, b;
-		cin >> a >> b;
-		if (c == 'C') {
-			lct.link(a,b);
-		} else if (c == 'D') {
-			lct.cut(a,b);
-		} else {
-			lct.makeroot(a);
-			if (lct.findroot(b) == a) {
-				cout << "YES" << endl;
-			} else {
-				cout << "NO" << endl;
-			}
-		}
-	}
+  LinkCutTree lct;
+  lct.init(n+1);
+  for (char c; cin >> c && c != 'E'; ) {
+    int a, b;
+    cin >> a >> b;
+    if (c == 'C') {
+      lct.link(a,b);
+    } else if (c == 'D') {
+      lct.cut(a,b);
+    } else {
+      lct.makeroot(a);
+      if (lct.findroot(b) == a) {
+        cout << "YES" << endl;
+      } else {
+        cout << "NO" << endl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

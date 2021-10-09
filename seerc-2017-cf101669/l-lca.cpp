@@ -9,25 +9,25 @@ typedef pair<int,int> pii;
 const int INF = 0x3f3f3f3f;
 
 struct SegTree {
-	int n;  int* segt;
-	SegTree(int len) {
-		n = 1 << (32-__builtin_clz(len));
-		segt = new int[2*n];
-		fill(segt, segt+2*n, 0); 
-	}
-	void update(int l, int r, int v) {
-		for (l+=n, r+=n+1; l<r; l/=2, r/=2) {
-			if (l&1) segt[l++] += v;
-			if (r&1) segt[--r] += v;
-		}
-	}
-	int query(int x) {
-		int sum = 0;
-		for (x+=n; x>0; x/=2) {
-			sum += segt[x];
-		}
-		return sum;
-	}
+  int n;  int* segt;
+  SegTree(int len) {
+    n = 1 << (32-__builtin_clz(len));
+    segt = new int[2*n];
+    fill(segt, segt+2*n, 0); 
+  }
+  void update(int l, int r, int v) {
+    for (l+=n, r+=n+1; l<r; l/=2, r/=2) {
+      if (l&1) segt[l++] += v;
+      if (r&1) segt[--r] += v;
+    }
+  }
+  int query(int x) {
+    int sum = 0;
+    for (x+=n; x>0; x/=2) {
+      sum += segt[x];
+    }
+    return sum;
+  }
 };
 
 const int N = 1e5+1;
@@ -51,63 +51,63 @@ namespace HLD {
       segt[ch[a]]->update(0, pos[a], v); a = par[root[ch[a]]]; }
     if (pos[a] != pos[b]) { if (d[a] < d[b]) swap(a,b);
       segt[ch[a]]->update(pos[b]+1, pos[a], v); } return b; } // returns lca
-	int query_node(int a) { return segt[ch[a]]->query(pos[a]); }
+  int query_node(int a) { return segt[ch[a]]->query(pos[a]); }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<pii> edges1, edges2;
-	for (int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-		edges1.push_back({a,b});
-	}
-	HLD::build(1);
+  vector<pii> edges1, edges2;
+  for (int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+    edges1.push_back({a,b});
+  }
+  HLD::build(1);
 
-	for (int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		HLD::insert_path(a,b,1);
-		edges2.push_back({a,b});
-	}
+  for (int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    HLD::insert_path(a,b,1);
+    edges2.push_back({a,b});
+  }
 
-	int one = 0;
-	int two = 0;
-	for (int i=1; i<=n; i++) {
-		int cur = HLD::query_node(i);
-		if (cur == 1) one++;
-		else if (cur == 2) two++;
-	}
-	if (one > 0) {
-		cout << "2 " << one << nl;
-		return 0;
-	}
+  int one = 0;
+  int two = 0;
+  for (int i=1; i<=n; i++) {
+    int cur = HLD::query_node(i);
+    if (cur == 1) one++;
+    else if (cur == 2) two++;
+  }
+  if (one > 0) {
+    cout << "2 " << one << nl;
+    return 0;
+  }
 
-	for (int i=1; i<=n; i++) {
-		adj[i].clear();
-	}
-	for (const pii& it : edges2) {
-		adj[it.first].push_back(it.second);
-		adj[it.second].push_back(it.first);
-	}
-	HLD::build(1);
+  for (int i=1; i<=n; i++) {
+    adj[i].clear();
+  }
+  for (const pii& it : edges2) {
+    adj[it.first].push_back(it.second);
+    adj[it.second].push_back(it.first);
+  }
+  HLD::build(1);
 
-	for (const pii& it : edges1) {
-		HLD::insert_path(it.first,it.second,1);
-	}
+  for (const pii& it : edges1) {
+    HLD::insert_path(it.first,it.second,1);
+  }
 
-	int other = 0;
-	for (int i=1; i<=n; i++) {
-		other += (HLD::query_node(i) == 2);
-	}
-	cout << "3 " << other+two << nl;
+  int other = 0;
+  for (int i=1; i<=n; i++) {
+    other += (HLD::query_node(i) == 2);
+  }
+  cout << "3 " << other+two << nl;
 
-	return 0;
+  return 0;
 }

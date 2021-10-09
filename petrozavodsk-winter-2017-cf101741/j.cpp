@@ -18,33 +18,33 @@ const ld EPS = 1e-10;
 const ld PI = acos(-1.L);
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	complex<ld> unity = exp(complex<ld>(0, 2*PI/m));
-	complex<ld> root[m];
-	root[0] = 1;
-	for (int k = 1; k < m; k++) {
-		root[k] = root[k-1] * unity;
-	}
+  complex<ld> unity = exp(complex<ld>(0, 2*PI/m));
+  complex<ld> root[m];
+  root[0] = 1;
+  for (int k = 1; k < m; k++) {
+    root[k] = root[k-1] * unity;
+  }
 
-	complex<ld> gf[n+1][m];
-	for (int k = 0; k < m; k++) {
-		gf[0][k] = 0;
-	}
+  complex<ld> gf[n+1][m];
+  for (int k = 0; k < m; k++) {
+    gf[0][k] = 0;
+  }
 
-	int v;
-	for (int i = 1; i <= n; i++) {
-		cin >> v;
-		v %= m;
-		for (int k = 0; k < m; k++) {
-			gf[i][k] = gf[0][k] * (1 + root[(k*v)%m]);
-		}
-	}
+  int v;
+  for (int i = 1; i <= n; i++) {
+    cin >> v;
+    v %= m;
+    for (int k = 0; k < m; k++) {
+      gf[i][k] = gf[0][k] * (1 + root[(k*v)%m]);
+    }
+  }
 
-	return 0;
+  return 0;
 }

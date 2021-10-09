@@ -47,62 +47,62 @@ bool seg_x_seg(pt a1, pt a2, pt b1, pt b2) {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	ld x, y;
-	cin >> x >> y;
-	pt t(x,y);
+  ld x, y;
+  cin >> x >> y;
+  pt t(x,y);
 
-	vector<ppt> wall;
-	for (int i=0; i<n; i++) {
-		ld a, b;
-		cin >> a >> b >> x >> y;
-		wall.push_back(ppt(pt(a,b),pt(x,y)));
-	}
+  vector<ppt> wall;
+  for (int i=0; i<n; i++) {
+    ld a, b;
+    cin >> a >> b >> x >> y;
+    wall.push_back(ppt(pt(a,b),pt(x,y)));
+  }
 
-	vector<ppt> pirate;
-	for (int i=0; i<m; i++) {
-		ld a, b;
-		cin >> a >> b >> x >> y;
-		pirate.push_back(ppt(pt(a,b),pt(x,y)));
-	}
+  vector<ppt> pirate;
+  for (int i=0; i<m; i++) {
+    ld a, b;
+    cin >> a >> b >> x >> y;
+    pirate.push_back(ppt(pt(a,b),pt(x,y)));
+  }
 
-	for (int i=0; i<m; i++) {
-		const pt& c = pirate[i].first;
-		const pt& d = pirate[i].second;
-		if (dp(d-c, t-c)/abs(d-c) < -EPS) {
-			goto bad;
-		}
-		if (abs(d-c)+EPS < abs(t-c)) {
-			goto bad;
-		}
-		for (const ppt& it : wall) {
-			if (seg_x_seg(it.first, it.second, c, t)) {
-				goto bad;
-			}
-		}
-		for (int j=0; j<m; j++) {
-			if (j==i) continue;
-			if (seg_x_seg(pirate[j].first, pirate[j].first, c, t)) {
-				goto bad;
-			}
-		}
-		cout << "visible" << nl;
-		continue;
+  for (int i=0; i<m; i++) {
+    const pt& c = pirate[i].first;
+    const pt& d = pirate[i].second;
+    if (dp(d-c, t-c)/abs(d-c) < -EPS) {
+      goto bad;
+    }
+    if (abs(d-c)+EPS < abs(t-c)) {
+      goto bad;
+    }
+    for (const ppt& it : wall) {
+      if (seg_x_seg(it.first, it.second, c, t)) {
+        goto bad;
+      }
+    }
+    for (int j=0; j<m; j++) {
+      if (j==i) continue;
+      if (seg_x_seg(pirate[j].first, pirate[j].first, c, t)) {
+        goto bad;
+      }
+    }
+    cout << "visible" << nl;
+    continue;
 
-		bad:
-		cout << "not visible" << nl;
-		continue;
-	}
+    bad:
+    cout << "not visible" << nl;
+    continue;
+  }
 
-	return 0;
+  return 0;
 }

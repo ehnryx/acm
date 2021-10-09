@@ -100,60 +100,60 @@ bool pt_in_polygon(const pt &p, const pol &v){ if(on_boundary(v,p)) return true;
 ////////////////////////////////////////////////////////////////////////////////
 
 pt reflect(const pt& a, const pt& b, const pt& p) {
-	pt m = line_inter(a,b,p,p+(a-b)*pt(0,1));
-	return m+m-p;
+  pt m = line_inter(a,b,p,p+(a-b)*pt(0,1));
+  return m+m-p;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (ld a,b,c,d,e,f; cin>>a>>b>>c>>d>>e>>f;) {
-		pt A(a,b), B(c,d), C(e,f);
-		C = reflect(A,B,C);
+  for (ld a,b,c,d,e,f; cin>>a>>b>>c>>d>>e>>f;) {
+    pt A(a,b), B(c,d), C(e,f);
+    C = reflect(A,B,C);
 
-		ld hit = 0;
-		if (abs(A.real()) < abs(C.real())-EPS) {
-			hit = (A + (A-C)*abs(A.real())/abs(abs(A.real())-abs(C.real()))).imag();
-		} else if (abs(B.real()) < abs(C.real())-EPS) {
-			hit = (B + (B-C)*abs(B.real())/abs(abs(B.real())-abs(C.real()))).imag();
-		} else {
-			cout << "can't hit the wall" << nl;
-			continue;
-		}
+    ld hit = 0;
+    if (abs(A.real()) < abs(C.real())-EPS) {
+      hit = (A + (A-C)*abs(A.real())/abs(abs(A.real())-abs(C.real()))).imag();
+    } else if (abs(B.real()) < abs(C.real())-EPS) {
+      hit = (B + (B-C)*abs(B.real())/abs(abs(B.real())-abs(C.real()))).imag();
+    } else {
+      cout << "can't hit the wall" << nl;
+      continue;
+    }
 
-		ld l, r, lb, ub;
-		l = -2e20; r = hit;
-		for (int i=0; i<200; i++) {
-			lb = (l+r)/2;
-			(seg_x_seg(A,B,C,pt(0,lb)) ? r : l) = lb;
-		}
-		l = hit; r = 1e20;
-		for (int i=0; i<200; i++) {
-			ub = (l+r)/2;
-			(seg_x_seg(A,B,C,pt(0,ub)) ? l : r) = ub;
-		}
-		if (lb < ub-EPS) {
-			if (lb < -1e20) {
-				cout << "negative-infinity ";
-			} else {
-				cout << lb << " ";
-			}
-			if (ub > 1e20) {
-				cout << "positive-infinity" << nl;
-			} else {
-				cout << ub << nl;
-			}
-		} else {
-			cout << "can't hit the wall" << nl;
-		}
-	}
+    ld l, r, lb, ub;
+    l = -2e20; r = hit;
+    for (int i=0; i<200; i++) {
+      lb = (l+r)/2;
+      (seg_x_seg(A,B,C,pt(0,lb)) ? r : l) = lb;
+    }
+    l = hit; r = 1e20;
+    for (int i=0; i<200; i++) {
+      ub = (l+r)/2;
+      (seg_x_seg(A,B,C,pt(0,ub)) ? l : r) = ub;
+    }
+    if (lb < ub-EPS) {
+      if (lb < -1e20) {
+        cout << "negative-infinity ";
+      } else {
+        cout << lb << " ";
+      }
+      if (ub > 1e20) {
+        cout << "positive-infinity" << nl;
+      } else {
+        cout << ub << nl;
+      }
+    } else {
+      cout << "can't hit the wall" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

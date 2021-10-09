@@ -27,40 +27,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		vector<int> a(n);
-		for(int i=0; i<n; i++) {
-			cin >> a[i];
-		}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+    }
 
-		vector<int> left, right;
-		right.push_back(0);
-		int moves = 0;
-		for(int l=0, r=n-1; l<=r; ) {
-			int lsum = 0;
-			while(l<=r && lsum<=right.back()) {
-				lsum += a[l++];
-			}
-			left.push_back(lsum);
-			moves += !!lsum;
-			int rsum = 0;
-			while(l<=r && rsum<=left.back()) {
-				rsum += a[r--];
-			}
-			right.push_back(rsum);
-			moves += !!rsum;
-		}
-		cout << moves << " ";
-		cout << accumulate(left.begin(), left.end(), 0) << " ";
-		cout << accumulate(right.begin(), right.end(), 0) << nl;
-	}
+    vector<int> left, right;
+    right.push_back(0);
+    int moves = 0;
+    for(int l=0, r=n-1; l<=r; ) {
+      int lsum = 0;
+      while(l<=r && lsum<=right.back()) {
+        lsum += a[l++];
+      }
+      left.push_back(lsum);
+      moves += !!lsum;
+      int rsum = 0;
+      while(l<=r && rsum<=left.back()) {
+        rsum += a[r--];
+      }
+      right.push_back(rsum);
+      moves += !!rsum;
+    }
+    cout << moves << " ";
+    cout << accumulate(left.begin(), left.end(), 0) << " ";
+    cout << accumulate(right.begin(), right.end(), 0) << nl;
+  }
 
-	return 0;
+  return 0;
 }

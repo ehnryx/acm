@@ -12,25 +12,25 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	bool yes = false;
-	int lower, upper;
-	int n, goal, temp;
-	cin >> n >> goal;
-	lower = INF;
-	upper = -1;
-	for (int i = 0; i < n; i++) {
-		cin >> temp;
-		lower = min(lower, temp);
-		upper = max(upper, temp);
-		if (temp == goal)
-			yes = true;
-	}
-	if (yes) cout << 1 << nl;
-	else if (lower < goal && goal < upper) cout << 2 << nl;
-	else cout << -1 << nl;
+  bool yes = false;
+  int lower, upper;
+  int n, goal, temp;
+  cin >> n >> goal;
+  lower = INF;
+  upper = -1;
+  for (int i = 0; i < n; i++) {
+    cin >> temp;
+    lower = min(lower, temp);
+    upper = max(upper, temp);
+    if (temp == goal)
+      yes = true;
+  }
+  if (yes) cout << 1 << nl;
+  else if (lower < goal && goal < upper) cout << 2 << nl;
+  else cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

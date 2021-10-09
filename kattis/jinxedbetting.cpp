@@ -25,44 +25,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	ll a[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
+  int n;
+  cin>>n;
+  ll a[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
 
-	map<ll,int> cnt;
-	for(int i=1;i<n;i++) {
-		cnt[a[i]]++;
-	}
-	cnt[-INFLL/330] = 0;
+  map<ll,int> cnt;
+  for(int i=1;i<n;i++) {
+    cnt[a[i]]++;
+  }
+  cnt[-INFLL/330] = 0;
 
-	ll ans = 0;
-	for(;;) {
-		auto it = prev(cnt.end());
-		auto jt = prev(it);
-		int d = 31 - __builtin_clz(it->second);
-		ll diff = it->first - jt->first;
-		if(it->first + diff*d > a[0]) {
-			ll need = a[0] - it->first + 1;
-			ans += ((need-1)/d) * (d+1);
-			need -= ((need-1)/d) * d;
-			ans += need;
-			assert(need <= d);
-			break;
-		} else {
-			ans += diff*(d+1);
-			a[0] -= diff*(d+1);
-			jt->second += it->second;
-			cnt.erase(it);
-		}
-	}
-	cout<<ans-1<<nl;
+  ll ans = 0;
+  for(;;) {
+    auto it = prev(cnt.end());
+    auto jt = prev(it);
+    int d = 31 - __builtin_clz(it->second);
+    ll diff = it->first - jt->first;
+    if(it->first + diff*d > a[0]) {
+      ll need = a[0] - it->first + 1;
+      ans += ((need-1)/d) * (d+1);
+      need -= ((need-1)/d) * d;
+      ans += need;
+      assert(need <= d);
+      break;
+    } else {
+      ans += diff*(d+1);
+      a[0] -= diff*(d+1);
+      jt->second += it->second;
+      cnt.erase(it);
+    }
+  }
+  cout<<ans-1<<nl;
 
-	return 0;
+  return 0;
 }

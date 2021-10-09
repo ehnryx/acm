@@ -34,41 +34,41 @@ const int N = 450+2;
 int dp[N][N];
 
 int cost(int l, int r) {
-	int n = r-l;
-	return n*(n-1)/2;
+  int n = r-l;
+  return n*(n-1)/2;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, K;
-	cin >> n >> K;
+  int n, K;
+  cin >> n >> K;
 
-	string s;
-	cin >> s;
-	s = "0"+s+"0";
+  string s;
+  cin >> s;
+  s = "0"+s+"0";
 
-	memset(dp, INF, sizeof dp);
-	dp[0][0] = 0;
-	for (int i=1; i<=n+1; i++) {
-		for (int j=0; j<i; j++) {
-			int c = cost(j,i);
-			for (int k=0; k<=n; k++) {
-				if (s[i] == '0') dp[i][k] = min(dp[i][k], dp[j][k] + c);
-				else if (k>0) dp[i][k] = min(dp[i][k], dp[j][k-1] + c);
-			}
-		}
-	}
+  memset(dp, INF, sizeof dp);
+  dp[0][0] = 0;
+  for (int i=1; i<=n+1; i++) {
+    for (int j=0; j<i; j++) {
+      int c = cost(j,i);
+      for (int k=0; k<=n; k++) {
+        if (s[i] == '0') dp[i][k] = min(dp[i][k], dp[j][k] + c);
+        else if (k>0) dp[i][k] = min(dp[i][k], dp[j][k-1] + c);
+      }
+    }
+  }
 
-	for (int r=0; r<=n; r++) {
-		if (dp[n+1][r] <= K) {
-			cout << r << nl;
-			return 0;
-		}
-	}
-	assert(false);
+  for (int r=0; r<=n; r++) {
+    if (dp[n+1][r] <= K) {
+      cout << r << nl;
+      return 0;
+    }
+  }
+  assert(false);
 
-	return 0;
+  return 0;
 }

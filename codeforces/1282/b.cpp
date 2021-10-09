@@ -26,46 +26,46 @@ const int N = 2e5+1;
 int a[N];
 
 int price(int s, int n, int k) {
-	int res = 0;
-	for(int i=1; i<=n; i++) {
-		res += a[s+i*k];
-	}
-	return res;
+  int res = 0;
+  for(int i=1; i<=n; i++) {
+    res += a[s+i*k];
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, p, k;
-		cin >> n >> p >> k;
-		for(int i=1; i<=n; i++) {
-			cin >> a[i];
-		}
-		sort(a+1, a+1+n);
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, p, k;
+    cin >> n >> p >> k;
+    for(int i=1; i<=n; i++) {
+      cin >> a[i];
+    }
+    sort(a+1, a+1+n);
 
-		int ans = 0;
-		for(int i=0, pre=0; i<k; i++) {
-			pre += a[i];
-			if(pre <= p) {
-				int l = 0;
-				int r = (n-i)/k;
-				while(l < r) {
-					int m = (l+r+1)/2;
-					if(price(i,m,k) <= p-pre) {
-						l = m;
-					} else {
-						r = m-1;
-					}
-				}
-				ans = max(ans, i+r*k);
-			}
-		}
-		cout << ans << nl;
-	}
+    int ans = 0;
+    for(int i=0, pre=0; i<k; i++) {
+      pre += a[i];
+      if(pre <= p) {
+        int l = 0;
+        int r = (n-i)/k;
+        while(l < r) {
+          int m = (l+r+1)/2;
+          if(price(i,m,k) <= p-pre) {
+            l = m;
+          } else {
+            r = m-1;
+          }
+        }
+        ans = max(ans, i+r*k);
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

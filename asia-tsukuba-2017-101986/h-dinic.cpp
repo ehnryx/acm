@@ -23,7 +23,7 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace Flow {
-	const int N = 1202;
+  const int N = 1202;
   // data structures and helper functions common to all flow routines
   struct Edge { int v, r; ll f, c, p; };
   vector<Edge> adj[N]; int sz[N]; ll mc;
@@ -57,56 +57,56 @@ int s[N],t[N];
 
 vector<int> at[N];
 int get_max() {
-	for (int i=0; i<n; ++i) {
-		at[s[i]].push_back(t[i]);
-	}
-	int ans = 0;
-	priority_queue<int, vector<int>, greater<int>> pq;
-	for (int i=0; i<N; ++i) {
-		for (auto& x : at[i]) {
-			pq.push(x);
-		}
-		while (!pq.empty() && pq.top() < i) {
-			pq.pop();
-		}
-		if (!pq.empty()) {
-			pq.pop();
-			++ans;
-		}
-	}
-	return ans;
+  for (int i=0; i<n; ++i) {
+    at[s[i]].push_back(t[i]);
+  }
+  int ans = 0;
+  priority_queue<int, vector<int>, greater<int>> pq;
+  for (int i=0; i<N; ++i) {
+    for (auto& x : at[i]) {
+      pq.push(x);
+    }
+    while (!pq.empty() && pq.top() < i) {
+      pq.pop();
+    }
+    if (!pq.empty()) {
+      pq.pop();
+      ++ans;
+    }
+  }
+  return ans;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	cin>>n>>m;
-	for(int i=0;i<n;i++) {
-		cin>>s[i]>>t[i];
-	}
+  cin>>n>>m;
+  for(int i=0;i<n;i++) {
+    cin>>s[i]>>t[i];
+  }
 
-	const int S = n;
-	const int T = n+801;
-	for(int i=0;i<m;i++) {
-		Flow::add_edge(S,i);
-		for(int j=s[i];j<=t[i];j++) {
-			Flow::add_edge(i,n+j);
-		}
-	}
-	for(int i=m;i<n;i++) {
-		Flow::add_edge(i,T);
-		for(int j=s[i];j<=t[i];j++) {
-			Flow::add_edge(n+400+j,i);
-		}
-	}
-	for(int i=1;i<=400;i++) {
-		Flow::add_edge(n+i,n+400+i);
-	}
+  const int S = n;
+  const int T = n+801;
+  for(int i=0;i<m;i++) {
+    Flow::add_edge(S,i);
+    for(int j=s[i];j<=t[i];j++) {
+      Flow::add_edge(i,n+j);
+    }
+  }
+  for(int i=m;i<n;i++) {
+    Flow::add_edge(i,T);
+    for(int j=s[i];j<=t[i];j++) {
+      Flow::add_edge(n+400+j,i);
+    }
+  }
+  for(int i=1;i<=400;i++) {
+    Flow::add_edge(n+i,n+400+i);
+  }
 
-	int ans = Flow::flow(S,T);
-	cout<<get_max()<<" "<<ans<<nl;
+  int ans = Flow::flow(S,T);
+  cout<<get_max()<<" "<<ans<<nl;
 
-	return 0;
+  return 0;
 }

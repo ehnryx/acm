@@ -18,52 +18,52 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, k;
-	cin >> n >> m >> k;
+  int n, m, k;
+  cin >> n >> m >> k;
 
-	unordered_map<int,int> remap;
+  unordered_map<int,int> remap;
 
-	int choice[n+1];
-	for (int i=1; i<=n; i++) {
-		cin >> choice[i];
-	}
+  int choice[n+1];
+  for (int i=1; i<=n; i++) {
+    cin >> choice[i];
+  }
 
-	int p[m];
-	for (int i=0; i<m; i++) {
-		cin >> p[i];
-	}
-	sort(p, p+m);
+  int p[m];
+  for (int i=0; i<m; i++) {
+    cin >> p[i];
+  }
+  sort(p, p+m);
 
-	for (int i=0; i<m; i++) {
-		remap[p[i]] = i;
-	}
+  for (int i=0; i<m; i++) {
+    remap[p[i]] = i;
+  }
 
-	for (int i=1; i<=n; i++) {
-		choice[i] = remap[choice[i]];
-	}
+  for (int i=1; i<=n; i++) {
+    choice[i] = remap[choice[i]];
+  }
 
-	vector<pii> cts;
-	int start = 1;
-	for (int i=2; i<=n; i++) {
-		if (choice[i]-choice[start] != i-start || i-start == k) {
-			cts.push_back(pii(start,i-1));
-			start = i;
-		}
-	}
-	cts.push_back(pii(start,n));
+  vector<pii> cts;
+  int start = 1;
+  for (int i=2; i<=n; i++) {
+    if (choice[i]-choice[start] != i-start || i-start == k) {
+      cts.push_back(pii(start,i-1));
+      start = i;
+    }
+  }
+  cts.push_back(pii(start,n));
 
-	cout << cts.size() << nl;
-	for (const pii& it : cts) {
-		cout << it.second-it.first+1 << " ";
-		for (int i=it.first; i <= it.second; i++) {
-			cout << i << " ";
-		}
-		cout << nl;
-	}
+  cout << cts.size() << nl;
+  for (const pii& it : cts) {
+    cout << it.second-it.first+1 << " ";
+    for (int i=it.first; i <= it.second; i++) {
+      cout << i << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

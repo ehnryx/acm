@@ -31,44 +31,44 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll power(ll b, ll e) {
-	ll r = 1;
-	for(;e;e/=2) {
-		if(e&1) r = r*b%MOD;
-		b=b*b%MOD;
-	}
-	return r;
+  ll r = 1;
+  for(;e;e/=2) {
+    if(e&1) r = r*b%MOD;
+    b=b*b%MOD;
+  }
+  return r;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	const int L = 20;
-	int n;
-	cin>>n;
-	int a[n], sum[1<<L];
-	memset(sum,0,sizeof sum);
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		sum[((1<<L)-1)^a[i]]++;
-	}
+  const int L = 20;
+  int n;
+  cin>>n;
+  int a[n], sum[1<<L];
+  memset(sum,0,sizeof sum);
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    sum[((1<<L)-1)^a[i]]++;
+  }
 
-	for(int i=0;i<L;i++) {
-		for(int bm=0;bm<1<<L;bm++) {
-			if(bm&1<<i) sum[bm] += sum[bm^1<<i];
-		}
-	}
+  for(int i=0;i<L;i++) {
+    for(int bm=0;bm<1<<L;bm++) {
+      if(bm&1<<i) sum[bm] += sum[bm^1<<i];
+    }
+  }
 
-	ll ans = 0;
-	for(int i=0;i<1<<L;i++) {
-		if(__builtin_popcount(i)%2) {
-			ans += MOD-power(2,sum[i]);
-		} else {
-			ans += power(2,sum[i]);
-		}
-	}
-	cout<<ans%MOD<<nl;
+  ll ans = 0;
+  for(int i=0;i<1<<L;i++) {
+    if(__builtin_popcount(i)%2) {
+      ans += MOD-power(2,sum[i]);
+    } else {
+      ans += power(2,sum[i]);
+    }
+  }
+  cout<<ans%MOD<<nl;
 
-	return 0;
+  return 0;
 }

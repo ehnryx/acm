@@ -27,44 +27,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	for(int tt=1; tt<=T; tt++) {
-		cout << "Case " << tt << ": ";
+  int T;
+  cin >> T;
+  for(int tt=1; tt<=T; tt++) {
+    cout << "Case " << tt << ": ";
 
-		string s, t;
-		cin >> s >> t;
-		int n = s.size();
+    string s, t;
+    cin >> s >> t;
+    int n = s.size();
 
-		int ans = 0;
-		int bad, zero, question;
-		bad = zero = question = 0;
-		for(int i=0; i<n; i++) {
-			if(s[i] == '1' && t[i] == '0') {
-				bad++;
-			} else if(s[i] == '0' && t[i] == '1') {
-				zero++;
-			} else if(s[i] == '?' && t[i] == '1') {
-				question++;
-				ans++;
-			} else if(s[i] == '?' && t[i] == '0') {
-				ans++;
-			}
-		}
-		if(bad > zero + question) {
-			cout << -1 << nl;
-			continue;
-		}
+    int ans = 0;
+    int bad, zero, question;
+    bad = zero = question = 0;
+    for(int i=0; i<n; i++) {
+      if(s[i] == '1' && t[i] == '0') {
+        bad++;
+      } else if(s[i] == '0' && t[i] == '1') {
+        zero++;
+      } else if(s[i] == '?' && t[i] == '1') {
+        question++;
+        ans++;
+      } else if(s[i] == '?' && t[i] == '0') {
+        ans++;
+      }
+    }
+    if(bad > zero + question) {
+      cout << -1 << nl;
+      continue;
+    }
 
-		ans += bad;
-		if(bad < zero) {
-			ans += zero - bad;
-		}
-		cout << ans << nl;
-	}
+    ans += bad;
+    if(bad < zero) {
+      ans += zero - bad;
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

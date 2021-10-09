@@ -27,23 +27,23 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int a, b, c, d;
-		cin >> a >> b >> c >> d;
-		int sleep = c-d;
-		if(b >= a) {
-			cout << b << nl;
-		} else if(sleep <= 0) {
-			cout << -1 << nl;
-		} else {
-			cout << b + (ll)c * ((a-b + sleep-1) / sleep) << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    int sleep = c-d;
+    if(b >= a) {
+      cout << b << nl;
+    } else if(sleep <= 0) {
+      cout << -1 << nl;
+    } else {
+      cout << b + (ll)c * ((a-b + sleep-1) / sleep) << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

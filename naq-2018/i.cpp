@@ -21,62 +21,62 @@ vector<int> adj[N];
 set<int> vals[N];
 
 int solve(int cur) {
-	idx[cur] = cur;
-	int res = 0;
-	for (int x : adj[cur]) {
-		res += solve(x);
-		if (vals[idx[cur]].size() < vals[idx[x]].size()) {
-			for (int it : vals[idx[cur]]) {
-				vals[idx[x]].insert(it);
-			}
-			idx[cur] = idx[x];
-		} else {
-			for (int it : vals[idx[x]]) {
-				vals[idx[cur]].insert(it);
-			}
-			idx[x] = idx[cur];
-		}
-	}
+  idx[cur] = cur;
+  int res = 0;
+  for (int x : adj[cur]) {
+    res += solve(x);
+    if (vals[idx[cur]].size() < vals[idx[x]].size()) {
+      for (int it : vals[idx[cur]]) {
+        vals[idx[x]].insert(it);
+      }
+      idx[cur] = idx[x];
+    } else {
+      for (int it : vals[idx[x]]) {
+        vals[idx[cur]].insert(it);
+      }
+      idx[x] = idx[cur];
+    }
+  }
 
-	if (vals[idx[cur]].count(cur)) {
-		res += 1;
-		vals[idx[cur]].clear();
-	}
+  if (vals[idx[cur]].count(cur)) {
+    res += 1;
+    vals[idx[cur]].clear();
+  }
 
-	return res;
+  return res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k, m, a, b;
-	cin >> n >> k >> m;
+  int n, k, m, a, b;
+  cin >> n >> k >> m;
 
-	for (int i=0; i<k; i++) {
-		cin >> a >> b;
-		adj[a].push_back(b);
-		parent[b] = a;
-	}
+  for (int i=0; i<k; i++) {
+    cin >> a >> b;
+    adj[a].push_back(b);
+    parent[b] = a;
+  }
 
-	for (int i=0; i<m; i++) {
-		cin >> a >> b;
-		vals[b].insert(a);
-	}
+  for (int i=0; i<m; i++) {
+    cin >> a >> b;
+    vals[b].insert(a);
+  }
 
-	int ans = 0;
-	for (int i=1; i<=n; i++) {
-		if (!parent[i]) {
-			ans += solve(i);
-		}
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=1; i<=n; i++) {
+    if (!parent[i]) {
+      ans += solve(i);
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -20,69 +20,69 @@ unordered_multiset<int> adj[N];
 int deg[N];
 
 bool dfs(int u, list<int>& ans, int goal = -1) {
-	ans.push_back(u);
-	if (adj[u].empty()) {
-		if (goal == -1) return true;
-		else return (goal == u);
-	}
+  ans.push_back(u);
+  if (adj[u].empty()) {
+    if (goal == -1) return true;
+    else return (goal == u);
+  }
 
-	auto cur = prev(ans.end());
-	int nxt = *adj[u].begin();
-	adj[u].erase(adj[u].begin());
-	if (!dfs(nxt, ans, goal)) {
-		return false;
-	}
+  auto cur = prev(ans.end());
+  int nxt = *adj[u].begin();
+  adj[u].erase(adj[u].begin());
+  if (!dfs(nxt, ans, goal)) {
+    return false;
+  }
 
-	if (!adj[u].empty()) {
-		list<int> loop;
-		int v = *adj[u].begin();
-		adj[u].erase(adj[u].begin());
-		if (!dfs(v, loop, u)) {
-			return false;
-		}
-		ans.insert(next(cur), loop.begin(), loop.end());
-	}
+  if (!adj[u].empty()) {
+    list<int> loop;
+    int v = *adj[u].begin();
+    adj[u].erase(adj[u].begin());
+    if (!dfs(v, loop, u)) {
+      return false;
+    }
+    ans.insert(next(cur), loop.begin(), loop.end());
+  }
 
-	return true;
+  return true;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int n,m; cin>>n>>m && n; ) {
-		for (int i=0; i<n; i++) {
-			adj[i].clear();
-			deg[i] = 0;
-		}
-		for (int i=0; i<m; i++) {
-			int a, b;
-			cin >> a >> b;
-			adj[a].insert(b);
-			deg[a]++;
-			deg[b]--;
-		}
+  for (int n,m; cin>>n>>m && n; ) {
+    for (int i=0; i<n; i++) {
+      adj[i].clear();
+      deg[i] = 0;
+    }
+    for (int i=0; i<m; i++) {
+      int a, b;
+      cin >> a >> b;
+      adj[a].insert(b);
+      deg[a]++;
+      deg[b]--;
+    }
 
-		int s = 0;
-		for (int i=0; i<n; i++) {
-			if (deg[i] == 1) s = i;
-		}
+    int s = 0;
+    for (int i=0; i<n; i++) {
+      if (deg[i] == 1) s = i;
+    }
 
-		list<int> ans;
-		if (!dfs(s, ans) || ans.size() != m+1) {
-			cout << "Impossible" << nl;
-		} else {
-			for (int it : ans) {
-				cout << it << " ";
-			} cout << nl;
-		}
-	}
+    list<int> ans;
+    if (!dfs(s, ans) || ans.size() != m+1) {
+      cout << "Impossible" << nl;
+    } else {
+      for (int it : ans) {
+        cout << it << " ";
+      } cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

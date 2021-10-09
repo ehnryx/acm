@@ -16,32 +16,32 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 bool ispalindrome(const string& s, int i, int j) {
-	for (int k=0; k<j-i+1; k++) {
-		if (s[i+k] != s[j-k]) return false;
-	}
-	return true;
+  for (int k=0; k<j-i+1; k++) {
+    if (s[i+k] != s[j-k]) return false;
+  }
+  return true;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	int ans = 0;
+  int ans = 0;
 
-	int n = s.size();
-	for (int i=0; i<n; i++) {
-		for (int j=i; j<n; j++) {
-			if (!ispalindrome(s, i, j)) {
-				ans = max(ans, j-i+1);
-			}
-		}
-	}
+  int n = s.size();
+  for (int i=0; i<n; i++) {
+    for (int j=i; j<n; j++) {
+      if (!ispalindrome(s, i, j)) {
+        ans = max(ans, j-i+1);
+      }
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

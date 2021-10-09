@@ -57,13 +57,13 @@ struct Int {
 //*/
 
 Int modpow(Int b, int p) {
-	Int res = 1;
-	while (p > 0){ 
-		if (p & 1) res *= b;
-		b *= b;
-		p /= 2;
-	}
-	return res;
+  Int res = 1;
+  while (p > 0){ 
+    if (p & 1) res *= b;
+    b *= b;
+    p /= 2;
+  }
+  return res;
 }
 
 const int N = 501;
@@ -71,34 +71,34 @@ Int dp[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, c;
-	cin >> n >> m >> c;
+  int n, m, c;
+  cin >> n >> m >> c;
 
-	dp[1] = modpow(Int(c), n*n);
-	for (int i = 2; i <= m; i++) {
-		dp[i] = modpow(Int(c), n*n*i);
-		for (int j = 1; j < i; j++) {
-			if (i % j == 0) {
-				dp[i] -= dp[j];
-			}
-		}
-	}
+  dp[1] = modpow(Int(c), n*n);
+  for (int i = 2; i <= m; i++) {
+    dp[i] = modpow(Int(c), n*n*i);
+    for (int j = 1; j < i; j++) {
+      if (i % j == 0) {
+        dp[i] -= dp[j];
+      }
+    }
+  }
 
-	Int ans = 0;
-	for (int i = 1; i <= m; i++) {
-		if (m % i == 0) {
-			ans += dp[i] / Int(i);
-		}
-	}
-	cout << ans << nl;
+  Int ans = 0;
+  for (int i = 1; i <= m; i++) {
+    if (m % i == 0) {
+      ans += dp[i] / Int(i);
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -31,39 +31,39 @@ inline ld lsp_dist(const pt &a, const pt &b, const pt &p) {
     abs(cp(b - a, p - a) / abs(b - a)) : min(abs(a - p), abs(b - p)); }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n;
-		cin>>n;
-		vector<pt> in;
-		for(int i=0;i<n;i++) {
-			int x,y;
-			cin>>x>>y;
-			in.push_back(pt(x,y));
-		}
-		int m;
-		cin>>m;
-		vector<pt> out;
-		for(int i=0;i<m;i++) {
-			int x,y;
-			cin>>x>>y;
-			out.push_back(pt(x,y));
-		}
+  int T;
+  cin>>T;
+  while(T--) {
+    int n;
+    cin>>n;
+    vector<pt> in;
+    for(int i=0;i<n;i++) {
+      int x,y;
+      cin>>x>>y;
+      in.push_back(pt(x,y));
+    }
+    int m;
+    cin>>m;
+    vector<pt> out;
+    for(int i=0;i<m;i++) {
+      int x,y;
+      cin>>x>>y;
+      out.push_back(pt(x,y));
+    }
 
-		ld ans = 1e19;
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<m;j++) {
-				ans = min(ans, lsp_dist(out[j],out[(j+1)%m],in[i]));
-				ans = min(ans, lsp_dist(in[i],in[(i+1)%n],out[j]));
-			}
-		}
-		cout<<ans/2<<nl;
-	}
+    ld ans = 1e19;
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<m;j++) {
+        ans = min(ans, lsp_dist(out[j],out[(j+1)%m],in[i]));
+        ans = min(ans, lsp_dist(in[i],in[(i+1)%n],out[j]));
+      }
+    }
+    cout<<ans/2<<nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -25,22 +25,22 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	set<int> seen;
-	for(int i=0;i<m;i++) {
-		int a;
-		cin>>a;
-		seen.insert(a);
-	}
+  int n,m;
+  cin>>n>>m;
+  set<int> seen;
+  for(int i=0;i<m;i++) {
+    int a;
+    cin>>a;
+    seen.insert(a);
+  }
 
-	for(int i=0;i<n;i++) {
-		if(!seen.count(i)) cout<<i<<nl;
-	}
-	cout<<"Mario got "<<seen.size()<<" of the dangerous obstacles."<<nl;
+  for(int i=0;i<n;i++) {
+    if(!seen.count(i)) cout<<i<<nl;
+  }
+  cout<<"Mario got "<<seen.size()<<" of the dangerous obstacles."<<nl;
 
-	return 0;
+  return 0;
 }

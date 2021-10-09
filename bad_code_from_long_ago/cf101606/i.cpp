@@ -24,29 +24,29 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
+  int a[n];
+  for (int i = 0; i < n; i++) {
+    cin >> a[i];
+  }
 
-	int t;
-	cin >> t;
+  int t;
+  cin >> t;
 
-	int best = INF;
-	int ans = -1;
-	for (int i = 0; i < n; i++) {
-		if (t % a[i] < best) {
-			best = t % a[i];
-			ans = a[i];
-		}
-	}
-	cout << ans << nl;
+  int best = INF;
+  int ans = -1;
+  for (int i = 0; i < n; i++) {
+    if (t % a[i] < best) {
+      best = t % a[i];
+      ans = a[i];
+    }
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

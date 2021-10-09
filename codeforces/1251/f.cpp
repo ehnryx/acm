@@ -23,36 +23,36 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Int {
-	ll x;
-	Int(ll v=0): x(v%MOD) {}
-	ll real() const { return (x+MOD) % MOD; }
-	Int operator + (const Int& o) const { return Int(x+o.x); }
-	Int operator - (const Int& o) const { return Int(x-o.x); }
-	Int operator * (const Int& o) const { return Int(x*o.x); }
-	Int& operator *= (const Int& o) { x = x*o.x % MOD; return *this; }
+  ll x;
+  Int(ll v=0): x(v%MOD) {}
+  ll real() const { return (x+MOD) % MOD; }
+  Int operator + (const Int& o) const { return Int(x+o.x); }
+  Int operator - (const Int& o) const { return Int(x-o.x); }
+  Int operator * (const Int& o) const { return Int(x*o.x); }
+  Int& operator *= (const Int& o) { x = x*o.x % MOD; return *this; }
 };
 
 ll power(ll n, ll e) {
-	ll res = 1;
-	for(;e;e/=2) {
-		if(e&1) res = res*n % MOD;
-		n = n*n % MOD;
-	}
-	return res;
+  ll res = 1;
+  for(;e;e/=2) {
+    if(e&1) res = res*n % MOD;
+    n = n*n % MOD;
+  }
+  return res;
 }
 
 ll inverse(ll n) {
-	return power(n, MOD-2);
+  return power(n, MOD-2);
 }
 
 ll mem_rt[1789], inv_rt[1789];
 ll prim_root(int dir, int m) {
-	auto mem = (dir<0 ? inv_rt : mem_rt);
-	int id = __builtin_clz(m);
-	if(mem[id]) return mem[id];
-	ll root = power(3, (MOD-1)/m);
-	if(dir<0) root = inverse(root);
-	return mem[id] = root;
+  auto mem = (dir<0 ? inv_rt : mem_rt);
+  int id = __builtin_clz(m);
+  if(mem[id]) return mem[id];
+  ll root = power(3, (MOD-1)/m);
+  if(dir<0) root = inverse(root);
+  return mem[id] = root;
 }
 
 // *** Fast Fourier Transform (Iterative) ***
@@ -67,12 +67,12 @@ inline int rev_incr(int a, int n) { int msk = n/2, cnt=0;
 // dir=-1: inverse transform, interpolates point-value form to coefficients
 vector<Int> FFT(vector<Int> v, int dir=1) {
   Int wm,w,u,t; int n = v.size(); vector<Int> V(n);
-	Int invn = inverse(n);
+  Int invn = inverse(n);
   for (int k=0,a=0; k<n; ++k, a=rev_incr(a,n)) {
-		V[a] = (dir>0 ? v[k] : v[k]*invn);
-	}
+    V[a] = (dir>0 ? v[k] : v[k]*invn);
+  }
   for (int m=2; m<=n; m<<=1) {
-		wm = prim_root(dir, m);
+    wm = prim_root(dir, m);
     for (int k=0; k<n; k+=m) {
       w = 1;
       for (int j=0; j<m/2; ++j, w*=wm) {
@@ -103,74 +103,74 @@ int cnt[N];
 ll fact[N], invf[N];
 
 ll ncr(ll n, ll r) {
-	if(r<0 || r>n) return 0;
-	return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
+  if(r<0 || r>n) return 0;
+  return fact[n] * invf[r] % MOD * invf[n-r] % MOD;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	fact[0] = invf[0] = 1;
-	for(int i=1;i<N;i++) {
-		fact[i] = fact[i-1] * i % MOD;
-		invf[i] = inverse(fact[i]);
-	}
+  fact[0] = invf[0] = 1;
+  for(int i=1;i<N;i++) {
+    fact[i] = fact[i-1] * i % MOD;
+    invf[i] = inverse(fact[i]);
+  }
 
-	int n, k;
-	cin >> n >> k;
-	int a[n];
-	for(int i=0;i<n;i++) {
-		cin >> a[i];
-		cnt[a[i]]++;
-	}
+  int n, k;
+  cin >> n >> k;
+  int a[n];
+  for(int i=0;i<n;i++) {
+    cin >> a[i];
+    cnt[a[i]]++;
+  }
 
-	vector<ll> one[k], two[k], res[k];
-	int b[k];
-	for(int i=0;i<k;i++) {
-		cin >> b[i];
-		//cerr<<"do red "<<b[i]<<nl;
-		int onedeg = 0;
-		int twodeg = 0;
-		for(int j=0;j<b[i];j++) {
-			if(cnt[j]==1) onedeg++;
-			else if(cnt[j]>1) twodeg++;
-		}
-		//cerr<<"onedeg: "<<onedeg<<nl;
-		//cerr<<"twodeg: "<<twodeg<<nl;
+  vector<ll> one[k], two[k], res[k];
+  int b[k];
+  for(int i=0;i<k;i++) {
+    cin >> b[i];
+    //cerr<<"do red "<<b[i]<<nl;
+    int onedeg = 0;
+    int twodeg = 0;
+    for(int j=0;j<b[i];j++) {
+      if(cnt[j]==1) onedeg++;
+      else if(cnt[j]>1) twodeg++;
+    }
+    //cerr<<"onedeg: "<<onedeg<<nl;
+    //cerr<<"twodeg: "<<twodeg<<nl;
 
-		one[i].resize(onedeg+1);
-		two[i].resize(2*twodeg+1);
-		ll twopow = 1;
-		for(int j=0;j<=onedeg;j++) {
-			one[i][j] = ncr(onedeg,j) * twopow % MOD;
-			//cerr<<"one "<<j<<" -> "<<one[i][j] << nl;
-			twopow = (twopow * 2) % MOD;
-		}
-		for(int j=0;j<=2*twodeg;j++) {
-			two[i][j] = ncr(2*twodeg,j);
-			//cerr<<"two "<<j<<" -> "<<two[i][j] << nl;
-		}
-		res[i] = convolution(move(one[i]), move(two[i]));
-		//cerr<<nl;
-	}
+    one[i].resize(onedeg+1);
+    two[i].resize(2*twodeg+1);
+    ll twopow = 1;
+    for(int j=0;j<=onedeg;j++) {
+      one[i][j] = ncr(onedeg,j) * twopow % MOD;
+      //cerr<<"one "<<j<<" -> "<<one[i][j] << nl;
+      twopow = (twopow * 2) % MOD;
+    }
+    for(int j=0;j<=2*twodeg;j++) {
+      two[i][j] = ncr(2*twodeg,j);
+      //cerr<<"two "<<j<<" -> "<<two[i][j] << nl;
+    }
+    res[i] = convolution(move(one[i]), move(two[i]));
+    //cerr<<nl;
+  }
 
-	int m;
-	cin >> m;
-	for(int i=0;i<m;i++) {
-		int p;
-		cin >> p;
-		p /= 2;
-		ll ans = 0;
-		for (int j=0;j<k;j++) {
-			if(p > b[j] && p-b[j]-1 < res[j].size()) {
-				//cerr<<"try red size "<<b[j]<<" -> query "<<p-b[j]-1 << nl;
-				ans += res[j][p-b[j]-1];
-				//cerr<<"add "<<res[j][p-b[j]-1] << nl;
-			}
-		}
-		cout << ans % MOD << nl;
-	}
+  int m;
+  cin >> m;
+  for(int i=0;i<m;i++) {
+    int p;
+    cin >> p;
+    p /= 2;
+    ll ans = 0;
+    for (int j=0;j<k;j++) {
+      if(p > b[j] && p-b[j]-1 < res[j].size()) {
+        //cerr<<"try red size "<<b[j]<<" -> query "<<p-b[j]-1 << nl;
+        ans += res[j][p-b[j]-1];
+        //cerr<<"add "<<res[j][p-b[j]-1] << nl;
+      }
+    }
+    cout << ans % MOD << nl;
+  }
 
-	return 0;
+  return 0;
 }

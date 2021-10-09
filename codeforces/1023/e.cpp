@@ -16,73 +16,73 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int dist(const pii& a, const pii& b) {
-	return abs(a.first-b.first) + abs(a.second-b.second);
+  return abs(a.first-b.first) + abs(a.second-b.second);
 }
 
 bool query(pii a, pii b) {
-	cout << "? " << a.first << " " << a.second << " " << b.first << " " << b.second << endl;
-	string in;
-	cin >> in;
-	return in == "YES";
+  cout << "? " << a.first << " " << a.second << " " << b.first << " " << b.second << endl;
+  string in;
+  cin >> in;
+  return in == "YES";
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	pii s(1,1);
-	pii t(n,n);
-	pii cur;
-	vector<pii> path, connect;
+  pii s(1,1);
+  pii t(n,n);
+  pii cur;
+  vector<pii> path, connect;
 
-	path.push_back(s);
-	cur = s;
-	while (dist(cur, s) < n-1) {
-		pii right = pii(cur.first, cur.second+1);
-		pii down = pii(cur.first+1, cur.second);
-		if (query(right, t)) {
-			cur = right;
-		} else {
-			cur = down;
-		}
-		path.push_back(cur);
-	}
+  path.push_back(s);
+  cur = s;
+  while (dist(cur, s) < n-1) {
+    pii right = pii(cur.first, cur.second+1);
+    pii down = pii(cur.first+1, cur.second);
+    if (query(right, t)) {
+      cur = right;
+    } else {
+      cur = down;
+    }
+    path.push_back(cur);
+  }
 
-	connect.push_back(t);
-	cur = t;
-	while (dist(cur, t) < n-2) {
-		pii up = pii(cur.first-1, cur.second);
-		pii left = pii(cur.first, cur.second-1);
-		if (query(up, s)) {
-			cur = up;
-		} else {
-			cur = left;
-		}
-		connect.push_back(cur);
-	}
-	reverse(connect.begin(), connect.end());
-	for (const pii& it : connect) {
-		path.push_back(it);
-	}
+  connect.push_back(t);
+  cur = t;
+  while (dist(cur, t) < n-2) {
+    pii up = pii(cur.first-1, cur.second);
+    pii left = pii(cur.first, cur.second-1);
+    if (query(up, s)) {
+      cur = up;
+    } else {
+      cur = left;
+    }
+    connect.push_back(cur);
+  }
+  reverse(connect.begin(), connect.end());
+  for (const pii& it : connect) {
+    path.push_back(it);
+  }
 
-	cout << "! ";
-	for (int i = 1; i < path.size(); i++) {
-		if (path[i].first == path[i-1].first) {
-			cout << "R";
-		} else {
-			cout << "D";
-		}
-	}
-	cout << endl;
+  cout << "! ";
+  for (int i = 1; i < path.size(); i++) {
+    if (path[i].first == path[i-1].first) {
+      cout << "R";
+    } else {
+      cout << "D";
+    }
+  }
+  cout << endl;
 
-	return 0;
+  return 0;
 }

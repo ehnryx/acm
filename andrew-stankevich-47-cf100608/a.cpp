@@ -18,42 +18,42 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, t, x, y;
+  int n, m, t, x, y;
 
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> x >> y;
-		drones.push_back(Point(x,y));
-	}
+  cin >> n;
+  for (int i = 0; i < n; i++) {
+    cin >> x >> y;
+    drones.push_back(Point(x,y));
+  }
 
-	cin >> m;
-	for (int i = 0; i < m; i++) {
-		cin >> x >> y;
-		points.push_back(Point(x,y,true));
-	}
+  cin >> m;
+  for (int i = 0; i < m; i++) {
+    cin >> x >> y;
+    points.push_back(Point(x,y,true));
+  }
 
-	cin >> t;
-	for (int i = 0; i < t; i++) {
-		cin >> x >> y;
-		points.push_back(Point(x,y,false));
-	}
+  cin >> t;
+  for (int i = 0; i < t; i++) {
+    cin >> x >> y;
+    points.push_back(Point(x,y,false));
+  }
 
-	ll ans = 0;
-	for (int i = 0; i < n; i++) {
-		base = drones[i];
-		sort(points.begin(), points.end(), cmp);
+  ll ans = 0;
+  for (int i = 0; i < n; i++) {
+    base = drones[i];
+    sort(points.begin(), points.end(), cmp);
 
-		int seen = 0;
-		for (const Point& it : points) {
-			if (it.target) {
-				ans += seen * (t-seen);
-			}
-		}
-	}
+    int seen = 0;
+    for (const Point& it : points) {
+      if (it.target) {
+        ans += seen * (t-seen);
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

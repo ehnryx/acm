@@ -31,51 +31,51 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 char rotate(char c) {
-	switch (c) {
-		case 'v': return '<';
-		case '<': return '^';
-		case '^': return '>';
-		case '>': return 'v';
-		default: return c;
-	}
+  switch (c) {
+    case 'v': return '<';
+    case '<': return '^';
+    case '^': return '>';
+    case '>': return 'v';
+    default: return c;
+  }
 }
 
 const int N = 1e3+1;
 char grid[4][N][N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) {
-			cin >> grid[0][i][j];
-			grid[1][j][n-1-i] = rotate(grid[0][i][j]);
-			grid[2][n-1-i][n-1-j] = rotate(grid[1][j][n-1-i]);
-			grid[3][n-1-j][i] = rotate(grid[2][n-1-i][n-1-j]);
-		}
-	}
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<n; j++) {
+      cin >> grid[0][i][j];
+      grid[1][j][n-1-i] = rotate(grid[0][i][j]);
+      grid[2][n-1-i][n-1-j] = rotate(grid[1][j][n-1-i]);
+      grid[3][n-1-j][i] = rotate(grid[2][n-1-i][n-1-j]);
+    }
+  }
 
-	int res = 0;
-	for (char c : s) {
-		if (c == 'R') res++;
-		else res--;
-	}
-	res = (res%4 + 4) % 4;
+  int res = 0;
+  for (char c : s) {
+    if (c == 'R') res++;
+    else res--;
+  }
+  res = (res%4 + 4) % 4;
 
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) {
-			cout << grid[res][i][j];
-		}
-		cout << nl;
-	}
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<n; j++) {
+      cout << grid[res][i][j];
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

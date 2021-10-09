@@ -15,24 +15,24 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int ans = 0;
-	string s;
-	while (getline(cin, s)) {
-		istringstream ss(s);
-		set<string> a;
-		bool good = true;
-		while (ss >> s) {
-			sort(s.begin(), s.end());
-			if (a.count(s))
-				good = false;
-			a.insert(s);
-		}
-		if (good) ans++;
-	}
-	cout << ans << nl;
+  int ans = 0;
+  string s;
+  while (getline(cin, s)) {
+    istringstream ss(s);
+    set<string> a;
+    bool good = true;
+    while (ss >> s) {
+      sort(s.begin(), s.end());
+      if (a.count(s))
+        good = false;
+      a.insert(s);
+    }
+    if (good) ans++;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

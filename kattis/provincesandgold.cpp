@@ -25,18 +25,18 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int g,s,c;
-	cin>>g>>s>>c;
-	int n = g*3+s*2+c;
-	if(n<2) cout<<"Copper"<<nl;
-	else if(n<3) cout<<"Estate or Copper"<<nl;
-	else if(n<5) cout<<"Estate or Silver"<<nl;
-	else if(n<6) cout<<"Duchy or Silver"<<nl;
-	else if(n<8) cout<<"Duchy or Gold"<<nl;
-	else cout<<"Province or Gold"<<nl;
+  int g,s,c;
+  cin>>g>>s>>c;
+  int n = g*3+s*2+c;
+  if(n<2) cout<<"Copper"<<nl;
+  else if(n<3) cout<<"Estate or Copper"<<nl;
+  else if(n<5) cout<<"Estate or Silver"<<nl;
+  else if(n<6) cout<<"Duchy or Silver"<<nl;
+  else if(n<8) cout<<"Duchy or Gold"<<nl;
+  else cout<<"Province or Gold"<<nl;
 
-	return 0;
+  return 0;
 }

@@ -32,119 +32,119 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 const int N = 1<<18;
 //template<int N> struct SegTree {
-	ll segt[2*N], lazy[2*N];
+  ll segt[2*N], lazy[2*N];
 
-	//SegTree() {
-		//memset(segt, 0, sizeof segt);
-		//memset(lazy, 0, sizeof lazy);
-	//}
+  //SegTree() {
+    //memset(segt, 0, sizeof segt);
+    //memset(lazy, 0, sizeof lazy);
+  //}
 
-	void push(int i) {
-		if (lazy[i]) {
-			segt[2*i] += lazy[i];
-			segt[2*i+1] += lazy[i];
-			lazy[2*i] += lazy[i];
-			lazy[2*i+1] += lazy[i];
-			lazy[i] = 0;
-		}
-	}
+  void push(int i) {
+    if (lazy[i]) {
+      segt[2*i] += lazy[i];
+      segt[2*i+1] += lazy[i];
+      lazy[2*i] += lazy[i];
+      lazy[2*i+1] += lazy[i];
+      lazy[i] = 0;
+    }
+  }
 
-	void pull(int i) {
-		segt[i] = min(segt[2*i], segt[2*i+1]);
-	}
+  void pull(int i) {
+    segt[i] = min(segt[2*i], segt[2*i+1]);
+  }
 
-	void setv(int x, ll v, int i=1, int s=0, int e=N-1) {
-		if (s==e) {
-			segt[i] = v;
-			return;
-		}
-		push(i);
-		int m = (s+e)/2;
-		if (x<=m) setv(x, v, 2*i, s, m);
-		else setv(x, v, 2*i+1, m+1, e);
-		pull(i);
-	}
+  void setv(int x, ll v, int i=1, int s=0, int e=N-1) {
+    if (s==e) {
+      segt[i] = v;
+      return;
+    }
+    push(i);
+    int m = (s+e)/2;
+    if (x<=m) setv(x, v, 2*i, s, m);
+    else setv(x, v, 2*i+1, m+1, e);
+    pull(i);
+  }
 
-	void update(int l, int r, ll v, int i=1, int s=0, int e=N-1) {
-		if (r<s || e<l) return;
-		if (l<=s && e<=r) {
-			segt[i] += v;
-			lazy[i] += v;
-			return;
-		}
-		push(i);
-		int m = (s+e)/2;
-		update(l, r, v, 2*i, s, m);
-		update(l, r, v, 2*i+1, m+1, e);
-		pull(i);
-	}
+  void update(int l, int r, ll v, int i=1, int s=0, int e=N-1) {
+    if (r<s || e<l) return;
+    if (l<=s && e<=r) {
+      segt[i] += v;
+      lazy[i] += v;
+      return;
+    }
+    push(i);
+    int m = (s+e)/2;
+    update(l, r, v, 2*i, s, m);
+    update(l, r, v, 2*i+1, m+1, e);
+    pull(i);
+  }
 
-	ll query(int l, int r, int i=1, int s=0, int e=N-1) {
-		if (r<s || e<l) return INFLL;
-		if (l<=s && e<=r) {
-			return segt[i];
-		}
-		push(i);
-		int m = (s+e)/2;
-		return min(query(l,r,2*i,s,m), query(l,r,2*i+1,m+1,e));
-	}
+  ll query(int l, int r, int i=1, int s=0, int e=N-1) {
+    if (r<s || e<l) return INFLL;
+    if (l<=s && e<=r) {
+      return segt[i];
+    }
+    push(i);
+    int m = (s+e)/2;
+    return min(query(l,r,2*i,s,m), query(l,r,2*i+1,m+1,e));
+  }
 
-	void update_range(int l, int r, ll v) {
-		if (l > r) {
-			update(l, N-1, v);
-			update(0, r, v);
-		} else {
-			update(l, r, v);
-		}
-	}
+  void update_range(int l, int r, ll v) {
+    if (l > r) {
+      update(l, N-1, v);
+      update(0, r, v);
+    } else {
+      update(l, r, v);
+    }
+  }
 
-	ll query_range(int l, int r) {
-		if (l > r) {
-			return min(query(l, N-1), query(0, r));
-		} else {
-			return query(l, r);
-		}
-	}
+  ll query_range(int l, int r) {
+    if (l > r) {
+      return min(query(l, N-1), query(0, r));
+    } else {
+      return query(l, r);
+    }
+  }
 //};
 
 //SegTree<(1<<18)> segt;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	//segt.
-	update_range(0, (1<<18)-1, INFLL);
+  //segt.
+  update_range(0, (1<<18)-1, INFLL);
 
-	int n;
-	cin >> n;
-	For(i,n) {
-		int v;
-		cin >> v;
-		//segt.
-		setv(i, v);
-	}
+  int n;
+  cin >> n;
+  For(i,n) {
+    int v;
+    cin >> v;
+    //segt.
+    setv(i, v);
+  }
 
-	int m;
-	cin >> m;
-	string line;
-	getline(cin, line);
-	For(i,m) {
-		getline(cin, line);
-		istringstream in(line);
-		vector<int> q;
-		for (int v; in >> v; ) {
-			q.push_back(v);
-		}
-		if (q.size() == 2) {
-			//cout << segt.query_range(q[0],q[1]) << nl;
-			cout << query_range(q[0],q[1]) << nl;
-		} else {
-			//segt.
-			update_range(q[0],q[1],q[2]);
-		}
-	}
+  int m;
+  cin >> m;
+  string line;
+  getline(cin, line);
+  For(i,m) {
+    getline(cin, line);
+    istringstream in(line);
+    vector<int> q;
+    for (int v; in >> v; ) {
+      q.push_back(v);
+    }
+    if (q.size() == 2) {
+      //cout << segt.query_range(q[0],q[1]) << nl;
+      cout << query_range(q[0],q[1]) << nl;
+    } else {
+      //segt.
+      update_range(q[0],q[1],q[2]);
+    }
+  }
 
-	return 0;
+  return 0;
 }

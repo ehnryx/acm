@@ -27,51 +27,51 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int n, m; cin >> n >> m && n; ) {
-		vector<string> inst(m+1);
-		vector<int> bad(m+1);
-		vector<int> cnt(m+1);
-		vector<vector<int>> to(m+1);
-		for(int i=1; i<=m; i++) {
-			cin >> inst[i];
-			to[i].resize(n);
-			for(int j=0; j<n; j++) {
-				cin >> to[i][j];
-			}
-		}
+  for(int n, m; cin >> n >> m && n; ) {
+    vector<string> inst(m+1);
+    vector<int> bad(m+1);
+    vector<int> cnt(m+1);
+    vector<vector<int>> to(m+1);
+    for(int i=1; i<=m; i++) {
+      cin >> inst[i];
+      to[i].resize(n);
+      for(int j=0; j<n; j++) {
+        cin >> to[i][j];
+      }
+    }
 
-		for(int i=1; i<=m; i++) {
-			set<int> seen;
-			for(int j=0; j<n; j++) {
-				if(seen.count(to[i][j])) {
-					bad[to[i][j]] = true;
-				}
-				if(inst[i] == inst[to[i][j]]) {
-					bad[to[i][j]] = true;
-				}
-				cnt[to[i][j]]++;
-				seen.insert(to[i][j]);
-			}
-		}
+    for(int i=1; i<=m; i++) {
+      set<int> seen;
+      for(int j=0; j<n; j++) {
+        if(seen.count(to[i][j])) {
+          bad[to[i][j]] = true;
+        }
+        if(inst[i] == inst[to[i][j]]) {
+          bad[to[i][j]] = true;
+        }
+        cnt[to[i][j]]++;
+        seen.insert(to[i][j]);
+      }
+    }
 
-		for(int i=1; i<=m; i++) {
-			if(cnt[i] != n) {
-				bad[i] = true;
-			}
-		}
+    for(int i=1; i<=m; i++) {
+      if(cnt[i] != n) {
+        bad[i] = true;
+      }
+    }
 
-		int ans = accumulate(bad.begin(), bad.end(), 0);
-		if(ans == 0) {
-			cout << "NO PROBLEMS FOUND" << nl;
-		} else if(ans == 1) {
-			cout << "1 PROBLEM FOUND" << nl;
-		} else {
-			cout << ans << " PROBLEMS FOUND" << nl;
-		}
-	}
+    int ans = accumulate(bad.begin(), bad.end(), 0);
+    if(ans == 0) {
+      cout << "NO PROBLEMS FOUND" << nl;
+    } else if(ans == 1) {
+      cout << "1 PROBLEM FOUND" << nl;
+    } else {
+      cout << ans << " PROBLEMS FOUND" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

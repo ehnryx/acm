@@ -26,26 +26,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	if (s.size() == 3) {
-		cout << (s[1]+12-s[0]) * (s[2]-'0') << nl;
-	} else if (s.size() == 5) {
-		cout << ((s[2]-'0')*10+s[3]+12-(s[0]-'0')*10-s[1]) * (s[4]-'0') << nl;
-	} else if (s[0] == '1' && s[1] < '2') {
-		cout << (s[2]+12-(s[0]-'0')*10-s[1]) * (s[3]-'0') << nl;
-	} else {
-		cout << ((s[1]-'0')*10+s[2]+12-s[0]) * (s[3]-'0') << nl;
-	}
+  if (s.size() == 3) {
+    cout << (s[1]+12-s[0]) * (s[2]-'0') << nl;
+  } else if (s.size() == 5) {
+    cout << ((s[2]-'0')*10+s[3]+12-(s[0]-'0')*10-s[1]) * (s[4]-'0') << nl;
+  } else if (s[0] == '1' && s[1] < '2') {
+    cout << (s[2]+12-(s[0]-'0')*10-s[1]) * (s[3]-'0') << nl;
+  } else {
+    cout << ((s[1]-'0')*10+s[2]+12-s[0]) * (s[3]-'0') << nl;
+  }
 
-	return 0;
+  return 0;
 }

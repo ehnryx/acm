@@ -12,14 +12,14 @@ const int INF = 0x3f3f3f3f;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 #ifdef ONLINE_JUDGE
-	freopen(problem_name ".in", "r", stdin);
-	freopen(problem_name ".out", "w", stdout);
+  freopen(problem_name ".in", "r", stdin);
+  freopen(problem_name ".out", "w", stdout);
 #endif
 
 
 
-	return 0;
+  return 0;
 }

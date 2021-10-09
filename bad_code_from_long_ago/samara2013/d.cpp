@@ -16,15 +16,15 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 // MODINT
 template<int MOD> struct ModInt {
-	ll x;
-	ModInt(ll n=0) { n %= MOD; if (n < 0) n += MOD; x = n; }
-	int get() const { return (int) x; }
-	ModInt operator + (const ModInt& other) { return ModInt(x + other.x); }
-	ModInt operator - (const ModInt& other) { return ModInt(x + MOD - other.x); }
-	ModInt operator * (const ModInt& other) { return ModInt(x * other.x); } 
-	ModInt& operator += (const ModInt& other) { x = (x + other.x) % MOD; return *this; }
-	ModInt& operator -= (const ModInt& other) { x = (x + MOD - other.x) % MOD; return *this; }
-	ModInt& operator *= (const ModInt& other) { x = (x * other.x) % MOD; return *this; }
+  ll x;
+  ModInt(ll n=0) { n %= MOD; if (n < 0) n += MOD; x = n; }
+  int get() const { return (int) x; }
+  ModInt operator + (const ModInt& other) { return ModInt(x + other.x); }
+  ModInt operator - (const ModInt& other) { return ModInt(x + MOD - other.x); }
+  ModInt operator * (const ModInt& other) { return ModInt(x * other.x); } 
+  ModInt& operator += (const ModInt& other) { x = (x + other.x) % MOD; return *this; }
+  ModInt& operator -= (const ModInt& other) { x = (x + MOD - other.x) % MOD; return *this; }
+  ModInt& operator *= (const ModInt& other) { x = (x * other.x) % MOD; return *this; }
 };
 
 // Find x,y such that ax + by = d = gcd(a,b)
@@ -38,33 +38,33 @@ ll egcd(ll a, ll b, ll& x, ll &y) {
 Int inv[200001];
 Int p2[200001];
 void init() {
-	ll x, y;
-	for (ll i = 1; i <= 200000; i++) {
-		egcd(i, MOD, x, y);
-		inv[i] = Int(x);
-	}
-	Int curr(1);
-	for (ll i = 0; i <= 200000; i++) {
-		p2[i] = Int(curr);
-		curr *= Int(2);
-	}
+  ll x, y;
+  for (ll i = 1; i <= 200000; i++) {
+    egcd(i, MOD, x, y);
+    inv[i] = Int(x);
+  }
+  Int curr(1);
+  for (ll i = 0; i <= 200000; i++) {
+    p2[i] = Int(curr);
+    curr *= Int(2);
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	init();
+  init();
 
-	int n;
-	cin >> n;
-	Int ans(0);
-	Int choose(n);
-	for (ll i = 1; i < n; i++) {
-		ans += choose * (p2[i] - Int(1));
-		choose *= Int(n-i) * inv[i+1];
-	}
-	cout << ans.get() << endl;
+  int n;
+  cin >> n;
+  Int ans(0);
+  Int choose(n);
+  for (ll i = 1; i < n; i++) {
+    ans += choose * (p2[i] - Int(1));
+    choose *= Int(n-i) * inv[i+1];
+  }
+  cout << ans.get() << endl;
 
-	return 0;
+  return 0;
 }

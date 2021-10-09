@@ -40,47 +40,47 @@ int dp[N];
 min_stack<int> ost;
 
 void build(int u, int& id) {
-	id += add[u];
-	order[u] = id;
-	if(add[u]) {
-		dp[u] = min(dp[u], ost.minimum() + order[u]);
-	}
-	ost.push(dp[u] - order[u] + add[u]);
-	for(int i=0; i<M; i++) {
-		if(!adj[u][i]) continue;
-		depth[adj[u][i]] = depth[u] + 1;
-		dp[adj[u][i]] = dp[u] + 1;
-		build(adj[u][i], id);
-	}
-	ost.pop();
+  id += add[u];
+  order[u] = id;
+  if(add[u]) {
+    dp[u] = min(dp[u], ost.minimum() + order[u]);
+  }
+  ost.push(dp[u] - order[u] + add[u]);
+  for(int i=0; i<M; i++) {
+    if(!adj[u][i]) continue;
+    depth[adj[u][i]] = depth[u] + 1;
+    dp[adj[u][i]] = dp[u] + 1;
+    build(adj[u][i], id);
+  }
+  ost.pop();
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<=n; i++) {
-		int p; char c;
-		cin >> p >> c;
-		adj[p][c-'a'] = i;
-	}
+  int n;
+  cin >> n;
+  for(int i=1; i<=n; i++) {
+    int p; char c;
+    cin >> p >> c;
+    adj[p][c-'a'] = i;
+  }
 
-	int m;
-	cin >> m;
-	for(int i=0; i<m; i++) {
-		cin >> ans[i];
-		add[ans[i]] = true;
-	}
+  int m;
+  cin >> m;
+  for(int i=0; i<m; i++) {
+    cin >> ans[i];
+    add[ans[i]] = true;
+  }
 
-	int id = 0;
-	build(0, id);
+  int id = 0;
+  build(0, id);
 
-	for(int i=0; i<m; i++) {
-		cout << dp[ans[i]] << " ";
-	}
-	cout << nl;
+  for(int i=0; i<m; i++) {
+    cout << dp[ans[i]] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

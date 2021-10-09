@@ -42,37 +42,37 @@ struct suff_array {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, a, b;
-	cin >> n >> a >> b;
+  int n, a, b;
+  cin >> n >> a >> b;
 
-	string s;
-	cin >> s;
-	reverse(s.begin(), s.end());
-	suff_array sa(s);
-	const vi& idx = sa.get_sarray();
-	vector<int> id(n);
-	for (int i=0; i<n; i++) {
-		id[idx[i]] = i;
-	}
+  string s;
+  cin >> s;
+  reverse(s.begin(), s.end());
+  suff_array sa(s);
+  const vi& idx = sa.get_sarray();
+  vector<int> id(n);
+  for (int i=0; i<n; i++) {
+    id[idx[i]] = i;
+  }
 
-	int dp[n+1];
-	dp[n] = 0;
-	for (int i=n-1; i>=0; i--) {
-		dp[i] = dp[i+1] + a;
-		for (int j=i+1; j<n; j++) {
-			int d = min(sa.lcp(i,j), j-i);
-			dp[i] = min(dp[i], dp[i+d] + b);
-		}
-	}
-	cout << dp[0] << nl;
+  int dp[n+1];
+  dp[n] = 0;
+  for (int i=n-1; i>=0; i--) {
+    dp[i] = dp[i+1] + a;
+    for (int j=i+1; j<n; j++) {
+      int d = min(sa.lcp(i,j), j-i);
+      dp[i] = min(dp[i], dp[i+d] + b);
+    }
+  }
+  cout << dp[0] << nl;
 
-	return 0;
+  return 0;
 }

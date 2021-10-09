@@ -24,15 +24,15 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 int x[] = { 1, 1, 2, 2, 2, 8 };
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int y[6];
-	for(int i=0; i<6; i++) {
-		cin >> y[i];
-		cout << x[i]-y[i] << " ";
-	}
-	cout << nl;
+  int y[6];
+  for(int i=0; i<6; i++) {
+    cin >> y[i];
+    cout << x[i]-y[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

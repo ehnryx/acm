@@ -33,37 +33,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	char a[5], b[5];
-	for (int i=0; i<5; i++) {
-		char op;
-		cin >> a[i] >> op >> b[i];
-		if (op == '>') swap(a[i], b[i]);
-	}
+  char a[5], b[5];
+  for (int i=0; i<5; i++) {
+    char op;
+    cin >> a[i] >> op >> b[i];
+    if (op == '>') swap(a[i], b[i]);
+  }
 
-	string s = "ABCDE";
-	do {
-		bool bad = false;
-		for (int i=0; i<5; i++) {
-			int ai = s.find(a[i]);
-			int bi = s.find(b[i]);
-			if (ai > bi) {
-				bad = true;
-			}
-		}
-		if (!bad) {
-			for (char c : s) {
-				cout << c;
-			}
-			cout << nl;
-			return 0;
-		}
-	} while (next_permutation(s.begin(), s.end()));
+  string s = "ABCDE";
+  do {
+    bool bad = false;
+    for (int i=0; i<5; i++) {
+      int ai = s.find(a[i]);
+      int bi = s.find(b[i]);
+      if (ai > bi) {
+        bad = true;
+      }
+    }
+    if (!bad) {
+      for (char c : s) {
+        cout << c;
+      }
+      cout << nl;
+      return 0;
+    }
+  } while (next_permutation(s.begin(), s.end()));
 
-	cout << "impossible" << nl;
+  cout << "impossible" << nl;
 
-	return 0;
+  return 0;
 }

@@ -28,131 +28,131 @@ vector<pair<vector<char>,ll>> cur;
 vector<char> init;
 
 ll hashs(const vector<char>& v) {
-	ll ha = 0;
-	for (int j=0; j<length; j++) {
-		ha = ha*MLT%MOD + v[j];
-	}
-	return ha;
+  ll ha = 0;
+  for (int j=0; j<length; j++) {
+    ha = ha*MLT%MOD + v[j];
+  }
+  return ha;
 }
 
 ll hashv(const pair<vector<char>,ll>& v) {
-	return hashs(v.first) ^ v.second<<20;
+  return hashs(v.first) ^ v.second<<20;
 }
 
 ll hashi(const vector<char>& in) {
-	vector<char> v;
-	for (int i=0; i<n; i++) {
-		if (remap[i] == -1) {
-			v.push_back(in[i]);
-		}
-	}
-	ll ha = 0;
-	for (int j=0; j<v.size(); j++) {
-		ha = ha*MLT%MOD + v[j];
-	}
-	return ha;
+  vector<char> v;
+  for (int i=0; i<n; i++) {
+    if (remap[i] == -1) {
+      v.push_back(in[i]);
+    }
+  }
+  ll ha = 0;
+  for (int j=0; j<v.size(); j++) {
+    ha = ha*MLT%MOD + v[j];
+  }
+  return ha;
 }
 
 pair<vector<char>,ll> convert(const vector<char>& v) {
-	vector<char> out;
-	for (int i=0; i<n; i++) {
-		if (remap[i] != -1) {
-			out.push_back(v[i]);
-		}
-	}
-	return make_pair(out, hashi(v));
+  vector<char> out;
+  for (int i=0; i<n; i++) {
+    if (remap[i] != -1) {
+      out.push_back(v[i]);
+    }
+  }
+  return make_pair(out, hashi(v));
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		memset(remap, -1, sizeof remap);
-		cin >> n >> m >> shit;
+  int T;
+  cin >> T;
+  while (T--) {
+    memset(remap, -1, sizeof remap);
+    cin >> n >> m >> shit;
 
-		idx.clear();
-		cmp.clear();
-		vis.clear();
-		cur.clear();
-		init.clear();
+    idx.clear();
+    cmp.clear();
+    vis.clear();
+    cur.clear();
+    init.clear();
 
-		for (int i=0; i<m; i++) {
-			int a, b;
-			cin >> a >> b;
-			--a; --b;
-			cmp.emplace_back(a,b);
-			idx.insert(a);
-			idx.insert(b);
-		}
+    for (int i=0; i<m; i++) {
+      int a, b;
+      cin >> a >> b;
+      --a; --b;
+      cmp.emplace_back(a,b);
+      idx.insert(a);
+      idx.insert(b);
+    }
 
-		length = idx.size();
-		{
-			int inum = 0;
-			for (int it : idx) {
-				remap[it] = inum++;
-			}
-			for (pii& it : cmp) {
-				it.first = remap[it.first];
-				it.second = remap[it.second];
-			}
-		}
+    length = idx.size();
+    {
+      int inum = 0;
+      for (int it : idx) {
+        remap[it] = inum++;
+      }
+      for (pii& it : cmp) {
+        it.first = remap[it.first];
+        it.second = remap[it.second];
+      }
+    }
 
-		for (int i=1; i<=n; i++) {
-			init.push_back(i);
-		}
-		vis.insert(hashv(convert(init)));
-		cur.push_back(convert(init));
+    for (int i=1; i<=n; i++) {
+      init.push_back(i);
+    }
+    vis.insert(hashv(convert(init)));
+    cur.push_back(convert(init));
 
-		for (int i=0; i<n; i++) {
-			for (int j=0; j<i; j++) {
-				{
-					vector<char> it = init;
-					for (int k=j; k<i; k++) {
-						swap(it[k], it[k+1]);
-					}
-					ll ha = hashv(convert(it));
-					if (vis.find(ha) == vis.end()) {
-						vis.insert(ha);
-						cur.push_back(convert(it));
-					}
-				}
-				{
-					vector<char> it = init;
-					for (int k=i; k>j; k--) {
-						swap(it[k], it[k-1]);
-					}
-					ll ha = hashv(convert(it));
-					if (vis.find(ha) == vis.end()) {
-						vis.insert(ha);
-						cur.push_back(convert(it));
-					}
-				}
-			}
-		}
+    for (int i=0; i<n; i++) {
+      for (int j=0; j<i; j++) {
+        {
+          vector<char> it = init;
+          for (int k=j; k<i; k++) {
+            swap(it[k], it[k+1]);
+          }
+          ll ha = hashv(convert(it));
+          if (vis.find(ha) == vis.end()) {
+            vis.insert(ha);
+            cur.push_back(convert(it));
+          }
+        }
+        {
+          vector<char> it = init;
+          for (int k=i; k>j; k--) {
+            swap(it[k], it[k-1]);
+          }
+          ll ha = hashv(convert(it));
+          if (vis.find(ha) == vis.end()) {
+            vis.insert(ha);
+            cur.push_back(convert(it));
+          }
+        }
+      }
+    }
 
-		//cerr << "init: " << cur.size() << nl; for (int i=0; i<cur.size(); i++) {
-			//cerr << i << ": "; for (int j : cur[i]) {
-				//cerr << j << ' '; }
-			//cerr << nl; }
+    //cerr << "init: " << cur.size() << nl; for (int i=0; i<cur.size(); i++) {
+      //cerr << i << ": "; for (int j : cur[i]) {
+        //cerr << j << ' '; }
+      //cerr << nl; }
 
-		for (const pii& it : cmp) {
-			int len = cur.size();
-			for (int j=0; j<len; j++) {
-				swap(cur[j].first[it.first], cur[j].first[it.second]);
-				ll ha = hashv(cur[j]);
-				if (vis.find(ha) == vis.end()) {
-					vis.insert(ha);
-					cur.push_back(cur[j]);
-				}
-				swap(cur[j].first[it.first], cur[j].first[it.second]);
-			}
-		}
+    for (const pii& it : cmp) {
+      int len = cur.size();
+      for (int j=0; j<len; j++) {
+        swap(cur[j].first[it.first], cur[j].first[it.second]);
+        ll ha = hashv(cur[j]);
+        if (vis.find(ha) == vis.end()) {
+          vis.insert(ha);
+          cur.push_back(cur[j]);
+        }
+        swap(cur[j].first[it.first], cur[j].first[it.second]);
+      }
+    }
 
-		cout << cur.size() << nl;
-	}
+    cout << cur.size() << nl;
+  }
 
-	return 0;
+  return 0;
 }

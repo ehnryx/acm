@@ -33,63 +33,63 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const ll N = 1e5;
 
 ll add(ll a, ll b) {
-	if(INFLL-a<b) return INFLL;
-	return a+b;
+  if(INFLL-a<b) return INFLL;
+  return a+b;
 }
 
 ll mul(ll a, ll b) {
-	if(!a||!b) return 0;
-	if(INFLL/a<b) return INFLL;
-	else return a*b;
+  if(!a||!b) return 0;
+  if(INFLL/a<b) return INFLL;
+  else return a*b;
 }
 
 ll sum(ll a, ll b) {
-	return mul(b-a,b-a+1)/2 + mul(a,b-a+1);
+  return mul(b-a,b-a+1)/2 + mul(a,b-a+1);
 }
 
 ll ans;
 ll solve(ll n, ll m, ll ub) {
-	ans = 0;
-	ll res = 0;
-	for(int i=1;i<=min(n,N);i++) {
-		ll j=min(m,ub/i);
-		if(i<j) {
-			ans += j-i;
-			res = add(res,mul(i,sum(i+1,j)));
-		}
-	}
-	for(int i=1;i<=min(m,N);i++) {
-		ll j=min(n,ub/i);
-		if(i<j) {
-			ans += j-i;
-			res = add(res,mul(i,sum(i+1,j)));
-		}
-	}
-	for(int i=1;i<=min(min(m,n),N)&&(ll)i*i<=ub;i++) {
-		ans++;
-		res = add(res,(ll)i*i);
-	}
-	return res;
+  ans = 0;
+  ll res = 0;
+  for(int i=1;i<=min(n,N);i++) {
+    ll j=min(m,ub/i);
+    if(i<j) {
+      ans += j-i;
+      res = add(res,mul(i,sum(i+1,j)));
+    }
+  }
+  for(int i=1;i<=min(m,N);i++) {
+    ll j=min(n,ub/i);
+    if(i<j) {
+      ans += j-i;
+      res = add(res,mul(i,sum(i+1,j)));
+    }
+  }
+  for(int i=1;i<=min(min(m,n),N)&&(ll)i*i<=ub;i++) {
+    ans++;
+    res = add(res,(ll)i*i);
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n,m,k;
-	cin>>n>>m>>k;
-	ll l=0;
-	ll r=1e12;
-	while(l<r) {
-		ll v=(l+r+1)/2;
-		if(solve(n,m,v)<=k) {
-			l=v;
-		} else {
-			r=v-1;
-		}
-	}
-	cout<<ans+(k-solve(n,m,l))/(l+1)<<nl;
+  ll n,m,k;
+  cin>>n>>m>>k;
+  ll l=0;
+  ll r=1e12;
+  while(l<r) {
+    ll v=(l+r+1)/2;
+    if(solve(n,m,v)<=k) {
+      l=v;
+    } else {
+      r=v-1;
+    }
+  }
+  cout<<ans+(k-solve(n,m,l))/(l+1)<<nl;
 
-	return 0;
+  return 0;
 }

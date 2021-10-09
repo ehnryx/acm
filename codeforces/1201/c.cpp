@@ -33,49 +33,49 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
-	int a[n];
-	For(i,n) {
-		cin >> a[i];
-	}
-	sort(a,a+n);
+  int n, k;
+  cin >> n >> k;
+  int a[n];
+  For(i,n) {
+    cin >> a[i];
+  }
+  sort(a,a+n);
 
-	if (n==1) {
-		cout << a[0]+k << nl;
-		return 0;
-	}
+  if (n==1) {
+    cout << a[0]+k << nl;
+    return 0;
+  }
 
-	int cnt = 0;
-	int j = 0;
-	for (int i=n/2; i<n; i++) {
-		if (a[i] == a[n/2]) {
-			cnt++;
-			j = i;
-		}
-	}
+  int cnt = 0;
+  int j = 0;
+  for (int i=n/2; i<n; i++) {
+    if (a[i] == a[n/2]) {
+      cnt++;
+      j = i;
+    }
+  }
 
-	int add = 0;
-	while (j+1 < n) {
-		int diff = a[j+1] - a[j];
-		if ((ll)diff*cnt > k) {
-			break;
-		}
-		k -= diff*cnt;
-		add += diff;
-		j++;
-		cnt++;
-		while (j+1<n && a[j+1] == a[j]) {
-			j++;
-			cnt++;
-		}
-	}
+  int add = 0;
+  while (j+1 < n) {
+    int diff = a[j+1] - a[j];
+    if ((ll)diff*cnt > k) {
+      break;
+    }
+    k -= diff*cnt;
+    add += diff;
+    j++;
+    cnt++;
+    while (j+1<n && a[j+1] == a[j]) {
+      j++;
+      cnt++;
+    }
+  }
 
-	cout << a[n/2] + add + k/cnt << nl;
+  cout << a[n/2] + add + k/cnt << nl;
 
-	return 0;
+  return 0;
 }

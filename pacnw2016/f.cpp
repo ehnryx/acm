@@ -38,46 +38,46 @@ bool two_sat(int n) { get_scc(n);
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, r, m;
-	cin >> n >> r >> m;
+  int n, r, m;
+  cin >> n >> r >> m;
 
-	int x, y;
-	vector<pii> p;
-	for (int i=0; i<m; i++) {
-		cin >> x >> y;
-		p.emplace_back(x,y);
-	}
+  int x, y;
+  vector<pii> p;
+  for (int i=0; i<m; i++) {
+    cin >> x >> y;
+    p.emplace_back(x,y);
+  }
 
-	for (int i=0; i<m; i++) {
-		add_clause(2*i, 2*(m+i)+1);
-		add_clause(2*(m+i), 2*i+1);
-		add_clause(2*i+1, 2*(m+i));
-		add_clause(2*(m+i)+1, 2*i);
-		for (int j=0; j<i; j++) {
-			if (p[i].first == p[j].first && abs(p[i].second-p[j].second) <= 2*r) {
-				add_clause(2*i, 2*j+1);
-				add_clause(2*j, 2*i+1);
-			}
-			if (p[i].second == p[j].second && abs(p[i].first-p[j].first) <= 2*r) {
-				add_clause(2*(m+i), 2*(m+j)+1);
-				add_clause(2*(m+j), 2*(m+i)+1);
-			}
-		}
-	}
+  for (int i=0; i<m; i++) {
+    add_clause(2*i, 2*(m+i)+1);
+    add_clause(2*(m+i), 2*i+1);
+    add_clause(2*i+1, 2*(m+i));
+    add_clause(2*(m+i)+1, 2*i);
+    for (int j=0; j<i; j++) {
+      if (p[i].first == p[j].first && abs(p[i].second-p[j].second) <= 2*r) {
+        add_clause(2*i, 2*j+1);
+        add_clause(2*j, 2*i+1);
+      }
+      if (p[i].second == p[j].second && abs(p[i].first-p[j].first) <= 2*r) {
+        add_clause(2*(m+i), 2*(m+j)+1);
+        add_clause(2*(m+j), 2*(m+i)+1);
+      }
+    }
+  }
 
-	if (two_sat(4*m)) {
-		cout << "YES" << nl;
-	} else {
-		cout << "NO" << nl;
-	}
+  if (two_sat(4*m)) {
+    cout << "YES" << nl;
+  } else {
+    cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

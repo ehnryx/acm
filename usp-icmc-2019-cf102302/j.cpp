@@ -99,68 +99,68 @@ node* append(node* ref, node* other) { if (splay(ref)==null) return other;
 }
 
 struct Node {
-	ll i,d;
-	bool operator < (const Node& o) const {
-		return d>o.d;
-	}
+  ll i,d;
+  bool operator < (const Node& o) const {
+    return d>o.d;
+  }
 };
 
 bool isprime(ll n) {
-	if(n<=1) return false;
-	for(ll i=2;i*i<=n;i++) {
-		if(n%i==0) {
-			return false;
-		}
-	}
-	return true;
+  if(n<=1) return false;
+  for(ll i=2;i*i<=n;i++) {
+    if(n%i==0) {
+      return false;
+    }
+  }
+  return true;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	ll a[n];
-	node* root = SplayTree::insert(null, new node(0,INF,0));
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		root = SplayTree::insert(root,new node(0,a[i],0));
-	}
-	sort(a,a+n);
+  int n;
+  cin>>n;
+  ll a[n];
+  node* root = SplayTree::insert(null, new node(0,INF,0));
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    root = SplayTree::insert(root,new node(0,a[i],0));
+  }
+  sort(a,a+n);
 
-	auto answer = [&](ll k) {
-		cerr<<"ANSWER: "<<k<<nl;
-		ll ans = 0;
-		for(int i=0;i<n;i++) {
-			ans += abs(k-a[i]);
-		}
-		cout<<ans<<nl;
-		return 0;
-	};
+  auto answer = [&](ll k) {
+    cerr<<"ANSWER: "<<k<<nl;
+    ll ans = 0;
+    for(int i=0;i<n;i++) {
+      ans += abs(k-a[i]);
+    }
+    cout<<ans<<nl;
+    return 0;
+  };
 
-	priority_queue<Node> bfs;
-	unordered_set<ll> vis;
-	bfs.push({a[n/2],0});
-	vis.insert(a[n/2]);
-	while(!bfs.empty()) {
-		Node u=bfs.top(); bfs.pop();
-		if(isprime(u.i)) return answer(u.i);
-		if(!vis.count(u.i-1)) {
-			ll left = SplayTree::rank(SplayTree::lower_bound(root,u.i));
-			ll right = n-left;
-			bfs.push({u.i-1,u.d+right-left});
-			vis.insert(u.i-1);
-		}
-		if(!vis.count(u.i+1)) {
-			ll left = SplayTree::rank(SplayTree::lower_bound(root,u.i+1));
-			ll right = n-left;
-			bfs.push({u.i+1,u.d+left-right});
-			vis.insert(u.i+1);
-		}
-	}
-	assert(false);
+  priority_queue<Node> bfs;
+  unordered_set<ll> vis;
+  bfs.push({a[n/2],0});
+  vis.insert(a[n/2]);
+  while(!bfs.empty()) {
+    Node u=bfs.top(); bfs.pop();
+    if(isprime(u.i)) return answer(u.i);
+    if(!vis.count(u.i-1)) {
+      ll left = SplayTree::rank(SplayTree::lower_bound(root,u.i));
+      ll right = n-left;
+      bfs.push({u.i-1,u.d+right-left});
+      vis.insert(u.i-1);
+    }
+    if(!vis.count(u.i+1)) {
+      ll left = SplayTree::rank(SplayTree::lower_bound(root,u.i+1));
+      ll right = n-left;
+      bfs.push({u.i+1,u.d+left-right});
+      vis.insert(u.i+1);
+    }
+  }
+  assert(false);
 
-	return 0;
+  return 0;
 }

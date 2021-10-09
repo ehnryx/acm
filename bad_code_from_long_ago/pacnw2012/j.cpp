@@ -22,28 +22,28 @@ vector<int> bricks(3);
 
 ll dp[N];
 ll solve(ll hgt) {
-	if (hgt > h) return -INFLL;
-	if (hgt == h) return 0;
-	if (dp[hgt] != -1) return dp[hgt];
-	ll ans = 0;
-	for (int i : bricks) {
-		if (hgt + i > h) continue;
-		ld topw = (top + (bot - top) * (1 - (ld) (hgt + i) / h));
-		if (topw < i) continue;
-		ll num = (ll) (topw / i);
-		ans = max(ans, solve(hgt + i) + num*num*i*i*i);
-	}
-	return dp[hgt] = ans;
+  if (hgt > h) return -INFLL;
+  if (hgt == h) return 0;
+  if (dp[hgt] != -1) return dp[hgt];
+  ll ans = 0;
+  for (int i : bricks) {
+    if (hgt + i > h) continue;
+    ld topw = (top + (bot - top) * (1 - (ld) (hgt + i) / h));
+    if (topw < i) continue;
+    ll num = (ll) (topw / i);
+    ans = max(ans, solve(hgt + i) + num*num*i*i*i);
+  }
+  return dp[hgt] = ans;
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	while (cin >> h >> bot >> top >> bricks[0] >> bricks[1] >> bricks[2]) {
-		memset(dp, -1, sizeof dp);
-		cout << solve(0) << endl;
-	}
+  while (cin >> h >> bot >> top >> bricks[0] >> bricks[1] >> bricks[2]) {
+    memset(dp, -1, sizeof dp);
+    cout << solve(0) << endl;
+  }
 
-	return 0;
+  return 0;
 }

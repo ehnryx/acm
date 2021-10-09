@@ -18,43 +18,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 int n;
 unordered_map<int,int> dp;
 int solve(int bm) {
-	if (dp.count(bm)) return dp[bm];
-	int res = __builtin_popcount(bm);
-	for (int i=0; i<n; i++) {
-		if (bm&1<<i) {
-			if (i>=2&&(bm&1<<(i-1))&&!(bm&1<<(i-2))) {
-				res = min(res, solve(bm^7<<(i-2)));
-			}
-			if (i+2<n&&(bm&1<<(i+1))&&!(bm&1<<(i+2))) {
-				res = min(res, solve(bm^7<<i));
-			}
-		}
-	}
-	return dp[bm] = res;
+  if (dp.count(bm)) return dp[bm];
+  int res = __builtin_popcount(bm);
+  for (int i=0; i<n; i++) {
+    if (bm&1<<i) {
+      if (i>=2&&(bm&1<<(i-1))&&!(bm&1<<(i-2))) {
+        res = min(res, solve(bm^7<<(i-2)));
+      }
+      if (i+2<n&&(bm&1<<(i+1))&&!(bm&1<<(i+2))) {
+        res = min(res, solve(bm^7<<i));
+      }
+    }
+  }
+  return dp[bm] = res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		string s;
-		cin >> s;
-		n = s.size();
-		int bm = 0;
-		for (int i=0; i<n; i++) {
-			bm |= (s[i]=='o')<<i;
-		}
-		cout << solve(bm) << nl;
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    string s;
+    cin >> s;
+    n = s.size();
+    int bm = 0;
+    for (int i=0; i<n; i++) {
+      bm |= (s[i]=='o')<<i;
+    }
+    cout << solve(bm) << nl;
+  }
 
-	return 0;
+  return 0;
 }

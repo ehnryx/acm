@@ -27,45 +27,45 @@ const int N = 1e5;
 int x[N],y[N];
 
 ll cp(int x1, int y1, int x2, int y2) {
-	return (ll)x1*y2 - (ll)y1*x2;
+  return (ll)x1*y2 - (ll)y1*x2;
 }
 
 int solve(int n, int a, int b) {
-	int cnt = 0;
-	for(int i=0;i<n;i++) {
-		cnt += (cp(x[a]-x[b],y[a]-y[b], x[a]-x[i],y[a]-y[i]) == 0);
-	}
-	return cnt;
+  int cnt = 0;
+  for(int i=0;i<n;i++) {
+    cnt += (cp(x[a]-x[b],y[a]-y[b], x[a]-x[i],y[a]-y[i]) == 0);
+  }
+  return cnt;
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int p;
-	cin>>p;
-	int need = (n*p+99)/100;
-	for(int i=0;i<n;i++) {
-		cin>>x[i]>>y[i];
-	}
-	if(n==1) {
-		cout<<"possible"<<nl;
-		return 0;
-	}
+  int n;
+  cin>>n;
+  int p;
+  cin>>p;
+  int need = (n*p+99)/100;
+  for(int i=0;i<n;i++) {
+    cin>>x[i]>>y[i];
+  }
+  if(n==1) {
+    cout<<"possible"<<nl;
+    return 0;
+  }
 
-	for(int it=0;it<M;it++) {
-		int a = rng()%n;
-		int b = rng()%n;
-		while(a==b) b = rng()%n;
-		if(solve(n,a,b) >= need) {
-			cout<<"possible"<<nl;
-			return 0;
-		}
-	}
-	cout<<"impossible"<<nl;
-	return 0;
+  for(int it=0;it<M;it++) {
+    int a = rng()%n;
+    int b = rng()%n;
+    while(a==b) b = rng()%n;
+    if(solve(n,a,b) >= need) {
+      cout<<"possible"<<nl;
+      return 0;
+    }
+  }
+  cout<<"impossible"<<nl;
+  return 0;
 
-	return 0;
+  return 0;
 }

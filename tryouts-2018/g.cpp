@@ -120,47 +120,47 @@ template <class T> struct Matrix {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	ll n;
-	cin >> n;
+  ll n;
+  cin >> n;
 
-	Matrix<Int> ans(1<<6,1<<6,1);
-	Matrix<Int> mat(1<<6,1<<6,0);
-	for (int i=0; i<1<<6; i++) {
-		if (!(i&3)||!(i&3<<2)||!(i&3<<4)) continue;
-		if ((i&3)==(i>>2&3)||(i>>2&3)==(i>>4&3)) continue;
-		for (int j=0; j<1<<6; j++) {
-			if (!(j&3)||!(j&3<<2)||!(j&3<<4)) continue;
-			if ((j&3)==(j>>2&3)||(j>>2&3)==(j>>4&3)) continue;
-			if ((i&3)!=(j&3)&&(i>>2&3)!=(j>>2&3)&&(i>>4&3)!=(j>>4&3)) {
-				mat[i][j] = 1;
-			}
-		}
-	}
+  Matrix<Int> ans(1<<6,1<<6,1);
+  Matrix<Int> mat(1<<6,1<<6,0);
+  for (int i=0; i<1<<6; i++) {
+    if (!(i&3)||!(i&3<<2)||!(i&3<<4)) continue;
+    if ((i&3)==(i>>2&3)||(i>>2&3)==(i>>4&3)) continue;
+    for (int j=0; j<1<<6; j++) {
+      if (!(j&3)||!(j&3<<2)||!(j&3<<4)) continue;
+      if ((j&3)==(j>>2&3)||(j>>2&3)==(j>>4&3)) continue;
+      if ((i&3)!=(j&3)&&(i>>2&3)!=(j>>2&3)&&(i>>4&3)!=(j>>4&3)) {
+        mat[i][j] = 1;
+      }
+    }
+  }
 
-	n--;
-	while (n>0) {
-		if (n&1) ans *= mat;
-		mat *= mat;
-		n /= 2;
-	}
+  n--;
+  while (n>0) {
+    if (n&1) ans *= mat;
+    mat *= mat;
+    n /= 2;
+  }
 
-	Int res = 0;
-	for (int i=0; i<1<<6; i++) {
-		if ((i&3)&&(i&3<<2)&&(i&3<<4)&&(i&3)!=(i>>2&3)&&(i>>2&3)!=(i>>4&3)) {
-			for (int j=0; j<1<<6; j++) {
-				res += ans[j][i];
-			}
-		}
-	}
-	cout << res.x << nl;
+  Int res = 0;
+  for (int i=0; i<1<<6; i++) {
+    if ((i&3)&&(i&3<<2)&&(i&3<<4)&&(i&3)!=(i>>2&3)&&(i>>2&3)!=(i>>4&3)) {
+      for (int j=0; j<1<<6; j++) {
+        res += ans[j][i];
+      }
+    }
+  }
+  cout << res.x << nl;
 
-	return 0;
+  return 0;
 }

@@ -16,39 +16,39 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll nc2(int n) {
-	return (ll)n*(n-1)/2;
+  return (ll)n*(n-1)/2;
 }
 
 const int N = 26;
 int cnt[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, k;
-		cin >> n >> k;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, k;
+    cin >> n >> k;
 
-		memset(cnt, 0, sizeof cnt);
-		char c;
-		for (int i=0; i<n; i++) {
-			cin >> c;
-			cnt[c-'a']++;
-		}
+    memset(cnt, 0, sizeof cnt);
+    char c;
+    for (int i=0; i<n; i++) {
+      cin >> c;
+      cnt[c-'a']++;
+    }
 
-		ll ans = 0;
-		for (int j = 'a'; j <= 'z'; j++) {
-			ll cur = 0;
+    ll ans = 0;
+    for (int j = 'a'; j <= 'z'; j++) {
+      ll cur = 0;
 
-			ans = max(ans, cur);
-		}
+      ans = max(ans, cur);
+    }
 
-		cout << ans << nl;
-	}
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

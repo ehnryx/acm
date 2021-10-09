@@ -23,23 +23,23 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int a; vector<int> b;
-	while (cin >> a) {
-		b.pb(a);
-	}
-	int i = 0;
-	int c = 0;
-	while (i >= 0 && i < b.size()) {
-		int next = i + b[i];
-		if (b[i] >= 3) b[i]--;
-		else b[i]++;
-		i = next;
-		c++;
-	}
-	cout << c << nl;
+  int a; vector<int> b;
+  while (cin >> a) {
+    b.pb(a);
+  }
+  int i = 0;
+  int c = 0;
+  while (i >= 0 && i < b.size()) {
+    int next = i + b[i];
+    if (b[i] >= 3) b[i]--;
+    else b[i]++;
+    i = next;
+    c++;
+  }
+  cout << c << nl;
 
-	return 0;
+  return 0;
 }

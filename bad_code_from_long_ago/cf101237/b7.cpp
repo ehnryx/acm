@@ -22,48 +22,48 @@ const ld M_PI = 3.1415926535897932384626;
 const ld EPS = 1e-11;
 
 struct cmp {
-	bool operator () (const pair<int,ld>& a, const pair<int,ld>& b) {
-		if (a.first == b.first) return a.second < b.second-EPS;
-		else return a.first < b.first;
-	}
+  bool operator () (const pair<int,ld>& a, const pair<int,ld>& b) {
+    if (a.first == b.first) return a.second < b.second-EPS;
+    else return a.first < b.first;
+  }
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	map<pair<int,ld>, int, cmp> count;
+  map<pair<int,ld>, int, cmp> count;
 
-	ll ans = 0;
-	int k;
-	cin >> k;
-	int k2 = 2*k;
+  ll ans = 0;
+  int k;
+  cin >> k;
+  int k2 = 2*k;
 
-	ld sins[300];
-	for (int i = 1; i < k2; i++) {
-		sins[i] = sin(M_PI*i/(k2));
-	}
+  ld sins[300];
+  for (int i = 1; i < k2; i++) {
+    sins[i] = sin(M_PI*i/(k2));
+  }
 
-	for (int i = 1; i < k2; i++) {
-		int lim = k2-i;
-		for (int j = 1; j < lim; j++) {
-			int end = k2 - i - j;
-			ld left = 2 * sins[j] / sins[end];
-			for (int e = 1; e < end; e++) {
-				int mid = k2 - i - e;
-				ld first = left * sins[e] / sins[mid];
-				count[pair<int,ld>(mid,first)]++;
-			}
-		}
-	}
+  for (int i = 1; i < k2; i++) {
+    int lim = k2-i;
+    for (int j = 1; j < lim; j++) {
+      int end = k2 - i - j;
+      ld left = 2 * sins[j] / sins[end];
+      for (int e = 1; e < end; e++) {
+        int mid = k2 - i - e;
+        ld first = left * sins[e] / sins[mid];
+        count[pair<int,ld>(mid,first)]++;
+      }
+    }
+  }
 
-	for (const auto& key : count) {
-		int angle = k2 - key.first.first;
-		ld other = 2 - key.first.second;
-		ans += key.second * count[pair<int,ld>(angle,other)];
-	}
+  for (const auto& key : count) {
+    int angle = k2 - key.first.first;
+    ld other = 2 - key.first.second;
+    ans += key.second * count[pair<int,ld>(angle,other)];
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -25,34 +25,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #define FILENAME "hamming"
 #ifdef ONLINE_JUDGE
-	freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		string a, b;
-		cin >> a >> b;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    string a, b;
+    cin >> a >> b;
 
-		int ao, ai, bo, bi;
-		ao = ai = bo = bi = 0;
-		for (char c : a) {
-			if (c == '0') ao++;
-			else ai++;
-		}
-		for (char c : b) {
-			if (c == '0') bo++;
-			else bi++;
-		}
-		cout << min(ao,bi) + min(ai,bo) << nl;
-	}
+    int ao, ai, bo, bi;
+    ao = ai = bo = bi = 0;
+    for (char c : a) {
+      if (c == '0') ao++;
+      else ai++;
+    }
+    for (char c : b) {
+      if (c == '0') bo++;
+      else bi++;
+    }
+    cout << min(ao,bi) + min(ai,bo) << nl;
+  }
 
-	return 0;
+  return 0;
 }

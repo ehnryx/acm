@@ -29,7 +29,7 @@ inline void modifyNode(pn x, ll v) { if (x != nil) {
 inline void setpp(pn x, pn pp) { if(x!=nil) x->pp = pp; }  // LCT
 inline void push(pn x) {
   if (x->rev) { rev(x->l); rev(x->r); x->rev=0; }                  // REV
-	setpp(x->l, x->pp); setpp(x->r, x->pp);  // LCT
+  setpp(x->l, x->pp); setpp(x->r, x->pp);  // LCT
   //modifyNode(x->l, x->lazy); modifyNode(x->r, x->lazy); x->lazy=0; RMQ
 }
 //%%== call pushTo before using node if ancestor may have unpushed lazy
@@ -92,58 +92,58 @@ pn append(pn l, pn r) { if (splay(l) == nil) return r;
   push(r); x->setc(r,1); pull(x->r); pull(x); return x; }
 
 struct LinkCutTree {
-	vector<pn> nds;
-	void init(int n) { nds.resize(n, nil);
-		for(int i=0;i<n;i++) nds[i] = new node(i); }
-	pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
-		x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
-	pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
-		for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
-			if(w->r != nil) { splitAfter(w)->pp = w; }
-			x->p = w; w->r = x; } return x; }
-	void link(int x, int y) { append(access(nds[y]), reroot(nds[x])); }
-	void cut(int x, int y){ reroot(nds[y]); splitBefore(access(nds[x])); }
-	int lca(int x, int y) { return lca(nds[x], nds[y])->key; }
-	pn lca(pn x, pn y) { access(x); access(y); splay(x);
-		return (x->pp == nil ? x : x->pp); }
-	void reroot(int x) { reroot(nds[x]); }
-	pn reroot(pn x) { rev(access(x)); push(x); return x; }
-	int findroot(int x) { return findroot(nds[x])->key; }
-	pn findroot(pn x) { return first(access(x)); }
+  vector<pn> nds;
+  void init(int n) { nds.resize(n, nil);
+    for(int i=0;i<n;i++) nds[i] = new node(i); }
+  pn splitAfter(pn x) { push(x); push(x->r); pn bot = x->r;
+    x->r = x->r->p = nil; pull(bot); pull(x); return bot; }
+  pn access(pn x) { if(splay(x)->r != nil) { splitAfter(x)->pp = x; }
+    for(pn w=x; pull(w), splay(w=x->pp)!=nil; splay(x)) {
+      if(w->r != nil) { splitAfter(w)->pp = w; }
+      x->p = w; w->r = x; } return x; }
+  void link(int x, int y) { append(access(nds[y]), reroot(nds[x])); }
+  void cut(int x, int y){ reroot(nds[y]); splitBefore(access(nds[x])); }
+  int lca(int x, int y) { return lca(nds[x], nds[y])->key; }
+  pn lca(pn x, pn y) { access(x); access(y); splay(x);
+    return (x->pp == nil ? x : x->pp); }
+  void reroot(int x) { reroot(nds[x]); }
+  pn reroot(pn x) { rev(access(x)); push(x); return x; }
+  int findroot(int x) { return findroot(nds[x])->key; }
+  pn findroot(pn x) { return first(access(x)); }
 };
 
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-	SplayTree::LinkCutTree lct;
+  SplayTree::LinkCutTree lct;
 
-	int T;
-	cin >> T;
-	for(int tt=1; tt<=T; tt++) {
-		int n;
-		cin >> n;
-		lct.init(n+1);
-		for(int i=1; i<=n; i++) {
-			int k;
-			cin >> k;
-			for(int j=0; j<k; j++) {
-				int v;
-				cin >> v;
-				lct.link(i,v);
-			}
-		}
-		lct.reroot(1);
+  int T;
+  cin >> T;
+  for(int tt=1; tt<=T; tt++) {
+    int n;
+    cin >> n;
+    lct.init(n+1);
+    for(int i=1; i<=n; i++) {
+      int k;
+      cin >> k;
+      for(int j=0; j<k; j++) {
+        int v;
+        cin >> v;
+        lct.link(i,v);
+      }
+    }
+    lct.reroot(1);
 
-		cout << "Case "<<tt<<":"<<nl;
-		int m;
-		cin>>m;
-		while(m--) {
-			int a, b;
-			cin >> a >> b;
-			cout << lct.lca(a,b) << nl;
-		}
-	}
+    cout << "Case "<<tt<<":"<<nl;
+    int m;
+    cin>>m;
+    while(m--) {
+      int a, b;
+      cin >> a >> b;
+      cout << lct.lca(a,b) << nl;
+    }
+  }
 }

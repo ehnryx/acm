@@ -25,53 +25,53 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	int bcnt = 0;
-	int wcnt = 0;
-	for (char c : s) {
-		bcnt += (c == 'B');
-		wcnt += (c == 'W');
-	}
+  int n;
+  cin >> n;
+  string s;
+  cin >> s;
+  int bcnt = 0;
+  int wcnt = 0;
+  for (char c : s) {
+    bcnt += (c == 'B');
+    wcnt += (c == 'W');
+  }
 
-	if(wcnt % 2 == n % 2) {
-		for (char& c : s) {
-			c = (c == 'B' ? 'W' : 'B');
-		}
-		swap(wcnt, bcnt);
-	}
+  if(wcnt % 2 == n % 2) {
+    for (char& c : s) {
+      c = (c == 'B' ? 'W' : 'B');
+    }
+    swap(wcnt, bcnt);
+  }
 
-	if(bcnt % 2 != n % 2) {
-		cout << -1 << nl;
-		return 0;
-	}
+  if(bcnt % 2 != n % 2) {
+    cout << -1 << nl;
+    return 0;
+  }
 
-	vector<int> ans;
-	for(int i=1; i<n; i++) {
-		if(s[i-1] != 'B') {
-			ans.push_back(i);
-			s[i-1] = (s[i-1] == 'B' ? 'W' : 'B');
-			s[i] = (s[i] == 'B' ? 'W' : 'B');
-		}
-	}
-	for(int i=n-1; i>0; i--) {
-		if(s[i] != 'B') {
-			ans.push_back(i);
-			s[i] = (s[i] == 'B' ? 'W' : 'B');
-			s[i-1] = (s[i-1] == 'B' ? 'W' : 'B');
-		}
-	}
+  vector<int> ans;
+  for(int i=1; i<n; i++) {
+    if(s[i-1] != 'B') {
+      ans.push_back(i);
+      s[i-1] = (s[i-1] == 'B' ? 'W' : 'B');
+      s[i] = (s[i] == 'B' ? 'W' : 'B');
+    }
+  }
+  for(int i=n-1; i>0; i--) {
+    if(s[i] != 'B') {
+      ans.push_back(i);
+      s[i] = (s[i] == 'B' ? 'W' : 'B');
+      s[i-1] = (s[i-1] == 'B' ? 'W' : 'B');
+    }
+  }
 
-	cout << ans.size() << nl;
-	for(int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  cout << ans.size() << nl;
+  for(int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

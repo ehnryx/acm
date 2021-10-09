@@ -65,82 +65,82 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-	static const int M = 26;
-	vector<int> p(M);
-	for(int i=0; i<M; i++) {
-		cin >> p[i];
-		p[i]--;
-	}
+  static const int M = 26;
+  vector<int> p(M);
+  for(int i=0; i<M; i++) {
+    cin >> p[i];
+    p[i]--;
+  }
 
-	string S, T;
-	cin >> S >> T;
-	int n = S.size();
-	int m = T.size();
-	vector<int> s(n), t(m);
-	for(int i=0; i<n; i++) s[i] = S[i] - 'a';
-	for(int i=0; i<m; i++) t[i] = T[i] - 'a';
-	reverse(s.begin(), s.end());
+  string S, T;
+  cin >> S >> T;
+  int n = S.size();
+  int m = T.size();
+  vector<int> s(n), t(m);
+  for(int i=0; i<n; i++) s[i] = S[i] - 'a';
+  for(int i=0; i<m; i++) t[i] = T[i] - 'a';
+  reverse(s.begin(), s.end());
 
-	vector<ll> res(n+m-1);
-	vector<ll> a(n), b(m), c;
-	ll sum = 0;
+  vector<ll> res(n+m-1);
+  vector<ll> a(n), b(m), c;
+  ll sum = 0;
 
-	// (s^2 * p^2) * t^0
-	for(int i=0; i<n; i++) {
-		sum += s[i]*s[i] * p[s[i]]*p[s[i]];
-	}
+  // (s^2 * p^2) * t^0
+  for(int i=0; i<n; i++) {
+    sum += s[i]*s[i] * p[s[i]]*p[s[i]];
+  }
 
-	// -2 * (s^2 * p + s * p^2) * t^1
-	for(int i=0; i<n; i++) {
-		a[i] = s[i]*s[i] * p[s[i]] + s[i] * p[s[i]]*p[s[i]];
-	}
-	for(int i=0; i<m; i++) {
-		b[i] = t[i];
-	}
-	c = conv(a, b);
-	for(int i=0; i<n+m-1; i++) {
+  // -2 * (s^2 * p + s * p^2) * t^1
+  for(int i=0; i<n; i++) {
+    a[i] = s[i]*s[i] * p[s[i]] + s[i] * p[s[i]]*p[s[i]];
+  }
+  for(int i=0; i<m; i++) {
+    b[i] = t[i];
+  }
+  c = conv(a, b);
+  for(int i=0; i<n+m-1; i++) {
     assert(c[i] >= 0 && c[i] < INF);
-		res[i] += -2 * c[i];
-	}
+    res[i] += -2 * c[i];
+  }
 
-	// (4*s*p + s^2 + p^2) * t^2
-	for(int i=0; i<n; i++) {
-		a[i] = 4*s[i]*p[s[i]] + s[i]*s[i] + p[s[i]]*p[s[i]];
-	}
-	for(int i=0; i<m; i++) {
-		b[i] = t[i]*t[i];
-	}
-	c = conv(a, b);
-	for(int i=0; i<n+m-1; i++) {
+  // (4*s*p + s^2 + p^2) * t^2
+  for(int i=0; i<n; i++) {
+    a[i] = 4*s[i]*p[s[i]] + s[i]*s[i] + p[s[i]]*p[s[i]];
+  }
+  for(int i=0; i<m; i++) {
+    b[i] = t[i]*t[i];
+  }
+  c = conv(a, b);
+  for(int i=0; i<n+m-1; i++) {
     assert(c[i] >= 0 && c[i] < INF);
-		res[i] += c[i];
-	}
+    res[i] += c[i];
+  }
 
-	// -2 * (s + p) * t^3
-	for(int i=0; i<n; i++) {
-		a[i] = s[i] + p[s[i]];
-	}
-	for(int i=0; i<m; i++) {
-		b[i] = t[i]*t[i]*t[i];
-	}
-	c = conv(a, b);
-	for(int i=0; i<n+m-1; i++) {
+  // -2 * (s + p) * t^3
+  for(int i=0; i<n; i++) {
+    a[i] = s[i] + p[s[i]];
+  }
+  for(int i=0; i<m; i++) {
+    b[i] = t[i]*t[i]*t[i];
+  }
+  c = conv(a, b);
+  for(int i=0; i<n+m-1; i++) {
     assert(c[i] >= 0 && c[i] < INF);
-		res[i] += -2 * c[i];
-	}
+    res[i] += -2 * c[i];
+  }
 
-	// 1 * t^4
-	vector<ll> pref(m+1);
-	for(int i=0; i<m; i++) {
-		pref[i+1] = pref[i] + t[i]*t[i]*t[i]*t[i];
-	}
+  // 1 * t^4
+  vector<ll> pref(m+1);
+  for(int i=0; i<m; i++) {
+    pref[i+1] = pref[i] + t[i]*t[i]*t[i]*t[i];
+  }
 
-	// output
-	for(int i=n-1; i<m; i++) {
-		ll val = (res[i] + sum + pref[i+1] - pref[i-n+1]) % MOD;
-		cout << !val;
-	}
-	cout << nl;
+  // output
+  for(int i=n-1; i<m; i++) {
+    ll val = (res[i] + sum + pref[i+1] - pref[i-n+1]) % MOD;
+    cout << !val;
+  }
+  cout << nl;
 
   return 0;
 }

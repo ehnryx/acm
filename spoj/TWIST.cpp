@@ -34,18 +34,18 @@ inline void rot(node* x) { node *p = x->p; fix(p), fix(x); bool d = x->dir();
 // splays node x until it is a child of node to
 node* splay(node* x, node* to=null) { if (x==null) return x; while(x->p != to)
   if(x->p->p==to) rot(x); else { x->dir()==x->p->dir() ? rot(x->p) : rot(x);
-	rot(x); } return x; }
+  rot(x); } return x; }
 node* del(node* y) { node* x=splay(y)->r; if (x==null) x=y->l; else {
-	while (fix(x), x->l != null) x = x->l; splay(x,y)->set_cld(y->l,1); }
-	x->p=null; update(x); return x; }
+  while (fix(x), x->l != null) x = x->l; splay(x,y)->set_cld(y->l,1); }
+  x->p=null; update(x); return x; }
 //%%== BST methods (lb, find, insert) (conflicts with other features, see above)
 node* lb(node* c, ll k) { if (c == null) return c; fix(c); // c MUST BE THE ROOT
   if(c->key>=k) { node* l=lb(c->l,k); return l==null?c:l; } return lb(c->r,k); }
 node* lower_bound(node* ref, ll k) { return lb(splay(ref), k); }
 node* find(node* c, ll k) { c=lb(splay(c),k); return c->key!=k?null:splay(c); }
 node* insert(node* c, node* x) { if (splay(c) == null) return x;
-	ll k=x->key; node* p; while(c!=null) { fix(c); p=c; c=(p->key>k?p->l:p->r); }
-	p->set_cld(x,p->key>k); return splay(x); }
+  ll k=x->key; node* p; while(c!=null) { fix(c); p=c; c=(p->key>k?p->l:p->r); }
+  p->set_cld(x,p->key>k); return splay(x); }
 //%%== Utility code (rank, nth order statistic) (requires count maintained)
 int size(node* x) { return splay(x)->cnt; }
 int rank(node* x) { return splay(x)->l->cnt; }
@@ -61,7 +61,7 @@ node* nxt(node* x) { if (splay(x)->r == null) return null; x = x->r;
 //%%== Iterator-based insert, does NOT work with BST code unless key sorted
 node* insertBefore(node* c, node* at, node* x){ // to insert "last", use at=null
   if(at==null){if(splay(c)!=null)rbegin(c)->set_cld(x,0);} else{node* p=prv(at);
-	if(p==null)at->set_cld(x,1); else p->set_cld(x,0);} return splay(x); }
+  if(p==null)at->set_cld(x,1); else p->set_cld(x,0);} return splay(x); }
 //%%== Range query and update operations by iterator, range is EXCLUSIVE!
 node* rGet(node* ref, node* l, node* r) {
   if(l==null) { if(r==null) { return splay(ref); } splay(r); return r->l; }
@@ -70,20 +70,20 @@ ll pQuery(node* x) { splay(x); return x->val; }
 ll rQuery(node* c, node* l, node* r) { return rGet(c, l, r)->acc; }
 void pUpdate(node* x, ll v) { splay(x); x->val += v; update(x); }          //RMQ
 void rUpdate(node* c, node* l, node* r, ll v) {
-	node* u = rGet(c, l, r); modifyNode(u, v); splay(u); }
+  node* u = rGet(c, l, r); modifyNode(u, v); splay(u); }
 //%%== Rope operations: split and merge, null = right end
 node* splitBefore(node* x) { if (splay(x) == null) return null;
-	fix(x); if (x->l != null) fix(x->l); node* ret = x->l; x->l = x->l->p = null;
-	update(ret); update(x); return ret; }
+  fix(x); if (x->l != null) fix(x->l); node* ret = x->l; x->l = x->l->p = null;
+  update(ret); update(x); return ret; }
 void append(node* ref, node* other) { splay(ref); splay(other);
-	if (ref == null || other == null) return; node* x = splay(rbegin(ref));
-	fix(x); fix(other); x->set_cld(other,0); update(x->r); update(x); }
+  if (ref == null || other == null) return; node* x = splay(rbegin(ref));
+  fix(x); fix(other); x->set_cld(other,0); update(x->r); update(x); }
 
 /* END code archive splay tree */
 
 int main() {
     int n, m; scanf("%d %d", &n, &m);
-		node* root = null;
+    node* root = null;
     for (int i = 0; i < n; i++) {
         root = insertBefore(root, null, new (&data[i]) node(i+1, 0, 0));
     }
@@ -91,13 +91,13 @@ int main() {
         int p, q; scanf("%d %d", &p, &q);
         rev(rGet(root, nth(root, p-2), nth(root, q)));
     }
-		vector<int> ans;
+    vector<int> ans;
     for (node* it = rbegin(root); it != null; it = prv(it)) {
-			ans.push_back(it->id);
+      ans.push_back(it->id);
     }
-		reverse(ans.begin(), ans.end());
-		for (int it : ans) {
-			cout << it << " ";
-		}
-		cout << '\n';
+    reverse(ans.begin(), ans.end());
+    for (int it : ans) {
+      cout << it << " ";
+    }
+    cout << '\n';
 }

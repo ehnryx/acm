@@ -59,42 +59,42 @@ struct Int {
 //*/
 
 Int power(Int b, int e) {
-	Int res = 1;
-	while (e) {
-		if (e&1) res *= b;
-		b *= b;
-		e >>= 1;
-	}
-	return res;
+  Int res = 1;
+  while (e) {
+    if (e&1) res *= b;
+    b *= b;
+    e >>= 1;
+  }
+  return res;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m, s, b;
-	cin >> n >> m >> s;
+  int n, m, s, b;
+  cin >> n >> m >> s;
 
-	int p = 0;
-	vector<int> d;
-	for (int i=0; i<m; i++) {
-		cin >> b;
-		d.push_back(b-p);
-		p = b;
-	}
+  int p = 0;
+  vector<int> d;
+  for (int i=0; i<m; i++) {
+    cin >> b;
+    d.push_back(b-p);
+    p = b;
+  }
 
-	Int div2 = Int(2).inv();
-	Int ans = power(s, n-2*b);
-	for (int i: d) {
-		ans *= (power(s, 2*i) + power(s, i)) * div2;
-	}
-	cout << ans << nl;
+  Int div2 = Int(2).inv();
+  Int ans = power(s, n-2*b);
+  for (int i: d) {
+    ans *= (power(s, 2*i) + power(s, i)) * div2;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -86,20 +86,20 @@ template <int MAXV, class T = int> struct Dinic {
 };
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	Dinic<5002,ll> dinic;
-	for(int i=0;i<m;i++) {
-		int a,b,c;
-		cin>>a>>b>>c;
-		dinic.addEdge(a-1,b-1,c,false);
-	}
-	dinic.addEdge(5000,0,INFLL);
-	dinic.addEdge(n-1,5001,INFLL);
-	cout<<dinic.calc()<<nl;
+  int n,m;
+  cin>>n>>m;
+  Dinic<5002,ll> dinic;
+  for(int i=0;i<m;i++) {
+    int a,b,c;
+    cin>>a>>b>>c;
+    dinic.addEdge(a-1,b-1,c,false);
+  }
+  dinic.addEdge(5000,0,INFLL);
+  dinic.addEdge(n-1,5001,INFLL);
+  cout<<dinic.calc()<<nl;
 
-	return 0;
+  return 0;
 }

@@ -33,32 +33,32 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const int N = 1e5+1;
 int root[N];
 int find(int i) {
-	if(root[i] == -1) return i;
-	return root[i] = find(root[i]);
+  if(root[i] == -1) return i;
+  return root[i] = find(root[i]);
 }
 int link(int i, int j) {
-	i=find(i); j=find(j);
-	if(i==j) return false;
-	root[i] = j;
-	return true;
+  i=find(i); j=find(j);
+  if(i==j) return false;
+  root[i] = j;
+  return true;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(root,-1,sizeof root);
+  memset(root,-1,sizeof root);
 
-	int n,m;
-	cin>>n>>m;
-	int ans = 0;
-	for(int i=0;i<m;i++) {
-		int a,b;
-		cin>>a>>b;
-		ans += !link(a,b);
-	}
-	cout<<ans<<nl;
+  int n,m;
+  cin>>n>>m;
+  int ans = 0;
+  for(int i=0;i<m;i++) {
+    int a,b;
+    cin>>a>>b;
+    ans += !link(a,b);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

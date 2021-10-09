@@ -27,49 +27,49 @@ bool good[N];
 ld val[N];
 
 ld inv(ld x) {
-	return 1/x;
+  return 1/x;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	For(i,n) {
-		cin >> good[i];
-	}
+  For(i,n) {
+    cin >> good[i];
+  }
 
-	ld sum = 0;
-	For(i,n) {
-		cin >> val[i];
-		sum += val[i];
-	}
+  ld sum = 0;
+  For(i,n) {
+    cin >> val[i];
+    sum += val[i];
+  }
 
-	For(i,m) {
-		ld d = inv(sum);
-		sum = 0;
-		For(j,n) {
-			if (good[j]) {
-				val[j] = (val[j] + val[j]*d);
-				sum += val[j];
-			} else {
-				val[j] = (val[j] - val[j]*d);
-				sum += val[j];
-			}
-		}
-	}
+  For(i,m) {
+    ld d = inv(sum);
+    sum = 0;
+    For(j,n) {
+      if (good[j]) {
+        val[j] = (val[j] + val[j]*d);
+        sum += val[j];
+      } else {
+        val[j] = (val[j] - val[j]*d);
+        sum += val[j];
+      }
+    }
+  }
 
-	For(i,n) {
-		cout << val[i] << nl;
-	}
+  For(i,n) {
+    cout << val[i] << nl;
+  }
 
-	return 0;
+  return 0;
 }

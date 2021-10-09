@@ -23,36 +23,36 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	char s[1001];
-	cin >> s;
+  char s[1001];
+  cin >> s;
 
-	bitset<1001> fixed;
-	int to = 0;
-	int n = strlen(s);
-	vector<pair<int,int>> ans;
-	for (int c = 'a'; c <= 'z'; c++) {
-		for (int i = 0; i < n; i++) {
-			if (s[i] == c) {
-				while (fixed[to]) {
-					to++;
-				}
-				if (to == i) {
-					fixed[to] = true;
-				} else {
-					ans.push_back(pair<int,int>(i+1, to+1));
-					fixed[to] = true;
-					swap(s[i], s[to]);
-				}
-			}
-		}
-	}
+  bitset<1001> fixed;
+  int to = 0;
+  int n = strlen(s);
+  vector<pair<int,int>> ans;
+  for (int c = 'a'; c <= 'z'; c++) {
+    for (int i = 0; i < n; i++) {
+      if (s[i] == c) {
+        while (fixed[to]) {
+          to++;
+        }
+        if (to == i) {
+          fixed[to] = true;
+        } else {
+          ans.push_back(pair<int,int>(i+1, to+1));
+          fixed[to] = true;
+          swap(s[i], s[to]);
+        }
+      }
+    }
+  }
 
-	for (int i = ans.size()-1; i >= 0; i--) {
-		cout << ans[i].first << " " << ans[i].second << nl;
-	}
+  for (int i = ans.size()-1; i >= 0; i--) {
+    cout << ans[i].first << " " << ans[i].second << nl;
+  }
 
-	return 0;
+  return 0;
 }

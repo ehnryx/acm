@@ -27,22 +27,22 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<pair<int,int>> ans;
-	ans.emplace_back(0, 0);
-	for(int i=1; i<=n+1; i++) {
-		ans.emplace_back(i, i);
-		ans.emplace_back(i-1, i);
-		ans.emplace_back(i, i-1);
-	}
-	cout << ans.size() << nl;
-	for(auto [x, y] : ans) {
-		cout << x << " " << y << nl;
-	}
+  int n;
+  cin >> n;
+  vector<pair<int,int>> ans;
+  ans.emplace_back(0, 0);
+  for(int i=1; i<=n+1; i++) {
+    ans.emplace_back(i, i);
+    ans.emplace_back(i-1, i);
+    ans.emplace_back(i, i-1);
+  }
+  cout << ans.size() << nl;
+  for(auto [x, y] : ans) {
+    cout << x << " " << y << nl;
+  }
 
-	return 0;
+  return 0;
 }

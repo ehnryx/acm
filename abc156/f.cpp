@@ -25,47 +25,47 @@ const int N = 5000 + 1;
 ll d[N], dk[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll k, q;
-	cin >> k >> q;
+  ll k, q;
+  cin >> k >> q;
 
-	for(int i=0; i<k; i++) {
-		cin >> d[i];
-	}
+  for(int i=0; i<k; i++) {
+    cin >> d[i];
+  }
 
-	while(q--) {
-		ll n, x, m;
-		cin >> n >> x >> m;
-		n -= 1;
-		x %= m;
+  while(q--) {
+    ll n, x, m;
+    cin >> n >> x >> m;
+    n -= 1;
+    x %= m;
 
-		ll len = 0;
-		for(int i=0; i<k; i++) {
-			dk[i] = d[i] % m;
-			if(dk[i] == 0) dk[i] = m;
-			len += dk[i];
-		}
+    ll len = 0;
+    for(int i=0; i<k; i++) {
+      dk[i] = d[i] % m;
+      if(dk[i] == 0) dk[i] = m;
+      len += dk[i];
+    }
 
-		ll step = len % m;
-		int bad = 0;
+    ll step = len % m;
+    int bad = 0;
 
-		if(step != 0) {
-			ll slen = step * (n/k);
-			bad += (x + slen) / m;
-		}
+    if(step != 0) {
+      ll slen = step * (n/k);
+      bad += (x + slen) / m;
+    }
 
-		bad += (len / m) * (n / k);
-		x = (x + step * (n/k)) % m;
-		for(int i=(n/k)*k; i<n; i++) {
-			ll nx = (x + dk[i%k]) % m;
-			if(nx <= x) bad++;
-			x = nx;
-		}
+    bad += (len / m) * (n / k);
+    x = (x + step * (n/k)) % m;
+    for(int i=(n/k)*k; i<n; i++) {
+      ll nx = (x + dk[i%k]) % m;
+      if(nx <= x) bad++;
+      x = nx;
+    }
 
-		cout << n-bad << nl;
-	}
+    cout << n-bad << nl;
+  }
 
-	return 0;
+  return 0;
 }

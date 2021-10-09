@@ -43,32 +43,32 @@ pt line_inter(const pt& a, const pt& b, const pt& c, const pt& d) {
 }
 
 struct Line {
-	mutable ld m, b, p;
-	bool operator<(const Line& o) const { return m < o.m; }
-	bool operator<(ld x) const { return p < x; }
+  mutable ld m, b, p;
+  bool operator<(const Line& o) const { return m < o.m; }
+  bool operator<(ld x) const { return p < x; }
   tuple<ld,ld,ld> tup() const { return make_tuple(m, b, p); }
 };
 
 struct LineContainer : multiset<Line, less<>> {
-	const ld inf = (ld)1/(ld)0;
-	ld div(ld a, ld b) { return a / b; }
-	bool isect(iterator x, iterator y) {
-		if (y == end()) { x->p = inf; return false; }
-		if (x->m == y->m) x->p = x->b > y->b ? inf : -inf;
-		else x->p = div(y->b - x->b, x->m - y->m);
-		return x->p >= y->p;
-	}
-	void add(ld m, ld b) {
-		auto z = insert({m, b, 0}), y = z++, x = y;
-		while (isect(y, z)) z = erase(z);
-		if (x != begin() && isect(--x, y)) isect(x, y = erase(y));
-		while ((y = x) != begin() && (--x)->p >= y->p)
-			isect(x, erase(y));
-	}
-	ld query(ld x) {
-		auto l = *lower_bound(x);
-		return l.m * x + l.b;
-	}
+  const ld inf = (ld)1/(ld)0;
+  ld div(ld a, ld b) { return a / b; }
+  bool isect(iterator x, iterator y) {
+    if (y == end()) { x->p = inf; return false; }
+    if (x->m == y->m) x->p = x->b > y->b ? inf : -inf;
+    else x->p = div(y->b - x->b, x->m - y->m);
+    return x->p >= y->p;
+  }
+  void add(ld m, ld b) {
+    auto z = insert({m, b, 0}), y = z++, x = y;
+    while (isect(y, z)) z = erase(z);
+    if (x != begin() && isect(--x, y)) isect(x, y = erase(y));
+    while ((y = x) != begin() && (--x)->p >= y->p)
+      isect(x, erase(y));
+  }
+  ld query(ld x) {
+    auto l = *lower_bound(x);
+    return l.m * x + l.b;
+  }
 };
 
 ld area(vector<pair<pt,pt>> lines) {

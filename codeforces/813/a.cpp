@@ -27,34 +27,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	int sum = 0;
-	for(int i=0; i<n; i++) {
-		int a;
-		cin >> a;
-		sum += a;
-	}
+  int n;
+  cin >> n;
+  int sum = 0;
+  for(int i=0; i<n; i++) {
+    int a;
+    cin >> a;
+    sum += a;
+  }
 
-	int m;
-	cin >> m;
-	for(int i=0; i<m; i++) {
-		int l, r;
-		cin >> l >> r;
-		if(l <= sum && sum <= r) {
-			cout << sum << nl;
-			return 0;
-		}
-		if(sum <= l) {
-			cout << l << nl;
-			return 0;
-		}
-	}
+  int m;
+  cin >> m;
+  for(int i=0; i<m; i++) {
+    int l, r;
+    cin >> l >> r;
+    if(l <= sum && sum <= r) {
+      cout << sum << nl;
+      return 0;
+    }
+    if(sum <= l) {
+      cout << l << nl;
+      return 0;
+    }
+  }
 
-	cout << -1 << nl;
+  cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

@@ -58,40 +58,40 @@ struct HullDynamic : public multiset<Line> {
   ll eval(ll x) {
     auto l = *lower_bound((Line) { x, is_query });
     //return l.m * x + l.b; // for upper hull
-	return -(l.m * x + l.b); // for lower hull
+  return -(l.m * x + l.b); // for lower hull
   }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	ld in;
-	ll n; int p, c;
-	cin >> in >> p >> c;
-	n = in;
+  ld in;
+  ll n; int p, c;
+  cin >> in >> p >> c;
+  n = in;
 
-	HullDynamic hull;
-	hull.insert_line(1,0);
-	ll ans = n;
-	for (int i=0; i<p; i++) {
-		ll t; int x, y;
-		cin >> in >> x >> y;
-		t = in;
-		ll age = hull.eval(t);
-		ll m = (ll)y/x;
-		ll b = age+c - m*t;
-		hull.insert_line(m, b);
-		ans = max(ans, (n-b)/m);
-	}
+  HullDynamic hull;
+  hull.insert_line(1,0);
+  ll ans = n;
+  for (int i=0; i<p; i++) {
+    ll t; int x, y;
+    cin >> in >> x >> y;
+    t = in;
+    ll age = hull.eval(t);
+    ll m = (ll)y/x;
+    ll b = age+c - m*t;
+    hull.insert_line(m, b);
+    ans = max(ans, (n-b)/m);
+  }
 
-	cout << (ld)ans << nl;
+  cout << (ld)ans << nl;
 
-	return 0;
+  return 0;
 }

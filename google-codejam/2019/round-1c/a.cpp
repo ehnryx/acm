@@ -25,21 +25,21 @@ const ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) { os << it << " "; } return os;
+  for (const T& it : v) { os << it << " "; } return os;
 }
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) { os << it << " "; }
-	return os << '}';
+  os << "{ "; for (const T& it : v) { os << it << " "; }
+  return os << '}';
 }
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) { os << it << " "; }
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) { os << it << " "; }
+  return os << '}';
 }
 
 void casesolve();
@@ -52,19 +52,19 @@ void init() {
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	init();
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		casesolve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    casesolve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -75,63 +75,63 @@ void caseinit() {
 }
 
 void casesolve() {
-	caseinit();
+  caseinit();
 
-	int n;
-	cin >> n;
-	string s[n];
-	for(int i=0; i<n; i++) {
-		cin >> s[i];
-		while(s[i].size() < 500) {
-			s[i] += s[i];
-		}
-	}
+  int n;
+  cin >> n;
+  string s[n];
+  for(int i=0; i<n; i++) {
+    cin >> s[i];
+    while(s[i].size() < 500) {
+      s[i] += s[i];
+    }
+  }
 
-	string ans;
-	vector<bool> done(n);
-	for(int j=0; j<500; j++) {
-		bool R, P, S;
-		R = P = S = false;
-		for(int i=0; i<n; i++) {
-			if(done[i]) continue;
-			R |= (s[i][j] == 'R');
-			P |= (s[i][j] == 'P');
-			S |= (s[i][j] == 'S');
-		}
+  string ans;
+  vector<bool> done(n);
+  for(int j=0; j<500; j++) {
+    bool R, P, S;
+    R = P = S = false;
+    for(int i=0; i<n; i++) {
+      if(done[i]) continue;
+      R |= (s[i][j] == 'R');
+      P |= (s[i][j] == 'P');
+      S |= (s[i][j] == 'S');
+    }
 
-		if(!R && !P && !S) {
-			cout << ans << nl;
-			return;
-		}
-		if(R && P && S) {
-			cout << "IMPOSSIBLE" << nl;
-			return;
-		}
+    if(!R && !P && !S) {
+      cout << ans << nl;
+      return;
+    }
+    if(R && P && S) {
+      cout << "IMPOSSIBLE" << nl;
+      return;
+    }
 
-		if(R && P) {
-			ans.push_back('P');
-		} else if(P && S) {
-			ans.push_back('S');
-		} else if(S && R) {
-			ans.push_back('R');
-		} else if(R) {
-			ans.push_back('P');
-		} else if(P) {
-			ans.push_back('S');
-		} else if(S) {
-			ans.push_back('R');
-		}
+    if(R && P) {
+      ans.push_back('P');
+    } else if(P && S) {
+      ans.push_back('S');
+    } else if(S && R) {
+      ans.push_back('R');
+    } else if(R) {
+      ans.push_back('P');
+    } else if(P) {
+      ans.push_back('S');
+    } else if(S) {
+      ans.push_back('R');
+    }
 
-		for(int i=0; i<n; i++) {
-			if(done[i]) continue;
-			if(ans.back() == 'R' && s[i][j] == 'S') done[i] = true;
-			if(ans.back() == 'P' && s[i][j] == 'R') done[i] = true;
-			if(ans.back() == 'S' && s[i][j] == 'P') done[i] = true;
-		}
-	}
+    for(int i=0; i<n; i++) {
+      if(done[i]) continue;
+      if(ans.back() == 'R' && s[i][j] == 'S') done[i] = true;
+      if(ans.back() == 'P' && s[i][j] == 'R') done[i] = true;
+      if(ans.back() == 'S' && s[i][j] == 'P') done[i] = true;
+    }
+  }
 
-	assert(false);
+  assert(false);
 
-	return;
+  return;
 }
 

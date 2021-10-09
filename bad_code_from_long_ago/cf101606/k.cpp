@@ -55,85 +55,85 @@ ll dfs(int u, int t, ll f) {
     } return df; }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	pii c[n];
-	for (int i = 0; i < n; i++) {
-		cin >> c[i].first >> c[i].second;
-	}
+  pii c[n];
+  for (int i = 0; i < n; i++) {
+    cin >> c[i].first >> c[i].second;
+  }
 
-	int k;
-	cin >> k;
-	int a[k];
-	for (int i = 0; i < k; i++) {
-		cin >> a[i];
-	}
+  int k;
+  cin >> k;
+  int a[k];
+  for (int i = 0; i < k; i++) {
+    cin >> a[i];
+  }
 
-	int source = 2*n+k; 
-	int sink = source + 1;
+  int source = 2*n+k; 
+  int sink = source + 1;
 
-	init();
+  init();
 
-	for (int i = 0; i < n; i++) {
-		add_edge(2*i, 2*i+1);
-		if (c[i].first == 0) {
-			add_edge(source, 2*i);
-		}
-		for (int j = 0; j < n; j++) {
-			if (i != j) {
-				if (c[j].first <= c[i].second) {
-					add_edge(2*i+1, 2*j);
-				}
-			}
-		}
-		for (int j = 0; j < k; j++) {
-			if (a[j] <= c[i].second) {
-				add_edge(2*i+1, 2*n+j);
-			}
-		}
-	}
+  for (int i = 0; i < n; i++) {
+    add_edge(2*i, 2*i+1);
+    if (c[i].first == 0) {
+      add_edge(source, 2*i);
+    }
+    for (int j = 0; j < n; j++) {
+      if (i != j) {
+        if (c[j].first <= c[i].second) {
+          add_edge(2*i+1, 2*j);
+        }
+      }
+    }
+    for (int j = 0; j < k; j++) {
+      if (a[j] <= c[i].second) {
+        add_edge(2*i+1, 2*n+j);
+      }
+    }
+  }
 
-	for (int i = 0; i < k; i++) {
-		add_edge(2*n+i, sink);
-	}
+  for (int i = 0; i < k; i++) {
+    add_edge(2*n+i, sink);
+  }
 
-	int flow = 0;
-	while (bfs(source, sink)) {
-		flow += dfs(source, sink, INF);
-	}
+  int flow = 0;
+  while (bfs(source, sink)) {
+    flow += dfs(source, sink, INF);
+  }
 
-	if (flow == k) {
-		vector<int> ans;
-		for (int i = 0; i < k; i++) {
-			ans.clear();
-			int cur = 2*n+i;
-			while (cur != source) {
-				if (cur < 2*n && cur % 2 == 0) {
-					ans.push_back(1 + cur/2);
-				}
-				for (int j = first[cur]; j != -1; j = nxt[j]) {
-					if (flo[j] < 0) {
-						flo[j]++;
-						cur = ep[j^1];
-						break;
-					}
-				}
-			}
+  if (flow == k) {
+    vector<int> ans;
+    for (int i = 0; i < k; i++) {
+      ans.clear();
+      int cur = 2*n+i;
+      while (cur != source) {
+        if (cur < 2*n && cur % 2 == 0) {
+          ans.push_back(1 + cur/2);
+        }
+        for (int j = first[cur]; j != -1; j = nxt[j]) {
+          if (flo[j] < 0) {
+            flo[j]++;
+            cur = ep[j^1];
+            break;
+          }
+        }
+      }
 
-			for (int j = ans.size()-1; j >= 0; j--) {
-				cout << ans[j] << " ";
-			}
-			cout << nl;
-		}
-	}
-	else {
-		cout << "impossible" << nl;
-	}
+      for (int j = ans.size()-1; j >= 0; j--) {
+        cout << ans[j] << " ";
+      }
+      cout << nl;
+    }
+  }
+  else {
+    cout << "impossible" << nl;
+  }
 
 
-	return 0;
+  return 0;
 }

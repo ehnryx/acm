@@ -43,69 +43,69 @@ ll tot[N][N]; // id, == len
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int v[n+1];
-	string s;
-	for (int i=1; i<=n; i++) {
-		cin >> v[i];
-		s.push_back(v[i]);
-	}
-	reverse(s.begin(), s.end());
-	suff_array sa(s);
+  int v[n+1];
+  string s;
+  for (int i=1; i<=n; i++) {
+    cin >> v[i];
+    s.push_back(v[i]);
+  }
+  reverse(s.begin(), s.end());
+  suff_array sa(s);
 
-	set<int> bad;
-	bad.insert(0b0011);
-	bad.insert(0b0101);
-	bad.insert(0b1110);
-	bad.insert(0b1111);
+  set<int> bad;
+  bad.insert(0b0011);
+  bad.insert(0b0101);
+  bad.insert(0b1110);
+  bad.insert(0b1111);
 
-	auto match = [&] (int id, int len, int bm) {
-		if (len > id) return false;
-		for (int i=0; i<len; i++) {
-			if (v[id-i] != (bm>>i&1)) {
-				return false;
-			}
-		}
-		return true;
-	};
+  auto match = [&] (int id, int len, int bm) {
+    if (len > id) return false;
+    for (int i=0; i<len; i++) {
+      if (v[id-i] != (bm>>i&1)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
-	ll ans = 0;
-	tot[0][0] = 1;
-	for (int i=1; i<=n; i++) {
-		int maxv = 0;
-		for (int j=1; j<i; j++) {
-			maxv = max(maxv, sa.lcp(n-i,n-j));
-		}
-		//cerr << i << " -> lcp: " << maxv << nl;
+  ll ans = 0;
+  tot[0][0] = 1;
+  for (int i=1; i<=n; i++) {
+    int maxv = 0;
+    for (int j=1; j<i; j++) {
+      maxv = max(maxv, sa.lcp(n-i,n-j));
+    }
+    //cerr << i << " -> lcp: " << maxv << nl;
 
-		tot[i][0] = 1;
-		for (int j=1; j<=4; j++) {
-			for (int bm=0; bm<1<<j; bm++) {
-				if (j==4 && bad.count(bm)) continue;
-				if (match(i,j,bm)) {
-					for (int len=j; len<=i; len++) {
-						tot[i][len] = (tot[i][len] + tot[i-j][len-j]) % MOD;
-					}
-					break;
-				}
-			}
-		}
+    tot[i][0] = 1;
+    for (int j=1; j<=4; j++) {
+      for (int bm=0; bm<1<<j; bm++) {
+        if (j==4 && bad.count(bm)) continue;
+        if (match(i,j,bm)) {
+          for (int len=j; len<=i; len++) {
+            tot[i][len] = (tot[i][len] + tot[i-j][len-j]) % MOD;
+          }
+          break;
+        }
+      }
+    }
 
-		for (int len=maxv+1; len<=i; len++) {
-			ans = (ans + tot[i][len]) % MOD;
-		}
-		cout << ans << nl;
-	}
+    for (int len=maxv+1; len<=i; len++) {
+      ans = (ans + tot[i][len]) % MOD;
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -18,28 +18,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	vector<int> pts = {0};
-	for (int i=1; i<n; i++) {
-		pts.push_back(rng()%m);
-	}
+  vector<int> pts = {0};
+  for (int i=1; i<n; i++) {
+    pts.push_back(rng()%m);
+  }
 
-	cerr << "points: "; for (int p : pts) cerr << p << " "; cerr << nl;
+  cerr << "points: "; for (int p : pts) cerr << p << " "; cerr << nl;
 
-	cout << 1 << nl;
-	cout << n << nl;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < i; j++) {
-			cout << abs(pts[i]-pts[j]) << " ";
-		}
-	}
-	cout << nl;
+  cout << 1 << nl;
+  cout << n << nl;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+      cout << abs(pts[i]-pts[j]) << " ";
+    }
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

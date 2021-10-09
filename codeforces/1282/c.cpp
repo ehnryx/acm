@@ -26,45 +26,45 @@ const int N = 2e5+2;
 pii t[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m, a, b;
-		cin >> n >> m >> a >> b;
-		int easy = 0;
-		int hard = 0;
-		for(int i=0; i<n; i++) {
-			cin >> t[i].second;
-			if(t[i].second) hard++;
-			else easy++;
-		}
-		for(int i=0; i<n; i++) {
-			cin >> t[i].first;
-		}
-		sort(t, t+n);
-		t[n] = make_pair(m+1, 0);
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m, a, b;
+    cin >> n >> m >> a >> b;
+    int easy = 0;
+    int hard = 0;
+    for(int i=0; i<n; i++) {
+      cin >> t[i].second;
+      if(t[i].second) hard++;
+      else easy++;
+    }
+    for(int i=0; i<n; i++) {
+      cin >> t[i].first;
+    }
+    sort(t, t+n);
+    t[n] = make_pair(m+1, 0);
 
-		ll need = 0;
-		int ans = 0;
-		for(int i=0, j=0; i<=n; i++) {
-			while(j<i) {
-				need += (t[j].second ? b : a);
-				if(t[j].second) hard--;
-				else easy--;
-				j++;
-			}
-			if(need >= t[i].first) continue;
-			int have = t[i].first - need - 1;
-			int adde = min(have/a, easy);
-			have -= adde*a;
-			int addh = min(have/b, hard);
-			ans = max(ans, i + adde + addh);
-		}
-		cout << ans << nl;
-	}
+    ll need = 0;
+    int ans = 0;
+    for(int i=0, j=0; i<=n; i++) {
+      while(j<i) {
+        need += (t[j].second ? b : a);
+        if(t[j].second) hard--;
+        else easy--;
+        j++;
+      }
+      if(need >= t[i].first) continue;
+      int have = t[i].first - need - 1;
+      int adde = min(have/a, easy);
+      have -= adde*a;
+      int addh = min(have/b, hard);
+      ans = max(ans, i + adde + addh);
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

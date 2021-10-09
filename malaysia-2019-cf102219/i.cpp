@@ -33,26 +33,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s[3];
-	for (int i=0; i<3; i++) {
-		cin >> s[i];
-		int j = s[i].find('=');
-		if (j != -1) {
-			j++;
-			while (j < s[i].size() && s[i][j] == '.') {
-				j++;
-			}
-			if (j == s[i].size()) {
-				cout << "You shall pass!!!" << nl;
-			} else {
-				cout << s[i][j] << nl;
-			}
-		}
-	}
+  string s[3];
+  for (int i=0; i<3; i++) {
+    cin >> s[i];
+    int j = s[i].find('=');
+    if (j != -1) {
+      j++;
+      while (j < s[i].size() && s[i][j] == '.') {
+        j++;
+      }
+      if (j == s[i].size()) {
+        cout << "You shall pass!!!" << nl;
+      } else {
+        cout << s[i][j] << nl;
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

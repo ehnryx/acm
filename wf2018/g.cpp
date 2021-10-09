@@ -19,15 +19,15 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 template<class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	os << "[ ";
-	for (const T& it : v) os << it << ' ';
-	return os << ']';
+  os << "[ ";
+  for (const T& it : v) os << it << ' ';
+  return os << ']';
 }
 template<class T>
 ostream& operator << (ostream& os, const unordered_set<T>& v) {
-	os << "{ ";
-	for (const T& it : v) os << it << ' ';
-	return os << '}';
+  os << "{ ";
+  for (const T& it : v) os << it << ' ';
+  return os << '}';
 }
 
 template<class T> struct cplx {
@@ -106,47 +106,47 @@ pol chull(pol p) {
 } // pts returned in ccw order.
 
 struct Tuple { vi v;
-	Tuple() {}
-	Tuple(int a, int b) { v={a,b}; sort(v.begin(), v.end()); }
-	Tuple(int a, int b, int c) { v={a,b,c}; sort(v.begin(),v.end()); }
-	bool operator == (const Tuple& t) const { return v == t.v; }
-	int operator [] (int i) const { return v[i]; }
+  Tuple() {}
+  Tuple(int a, int b) { v={a,b}; sort(v.begin(), v.end()); }
+  Tuple(int a, int b, int c) { v={a,b,c}; sort(v.begin(),v.end()); }
+  bool operator == (const Tuple& t) const { return v == t.v; }
+  int operator [] (int i) const { return v[i]; }
 };
 
 namespace std {
-	template<> struct hash<Tuple> {
-		size_t operator () (const Tuple& t) const {
-			size_t h = 0;
-			for (int i = 0; i < t.v.size(); i++)
-				h ^= hash<int>()(t[i]<<(10*i));
-			return h;
-		}
-	};
-	bool operator == (const pt& a, const pt& b) { return eq(a,b); }
-	template<> struct hash<pt> {
-		size_t operator () (const pt& t) const {
-			return hash<ld>()(1e5*t.x) ^ hash<ld>()(t.y);
-		}
-	};
+  template<> struct hash<Tuple> {
+    size_t operator () (const Tuple& t) const {
+      size_t h = 0;
+      for (int i = 0; i < t.v.size(); i++)
+        h ^= hash<int>()(t[i]<<(10*i));
+      return h;
+    }
+  };
+  bool operator == (const pt& a, const pt& b) { return eq(a,b); }
+  template<> struct hash<pt> {
+    size_t operator () (const pt& t) const {
+      return hash<ld>()(1e5*t.x) ^ hash<ld>()(t.y);
+    }
+  };
 }
 
 // Circumcenter of triangle defined by three points
 // !!! used once on WF2018G
 pt circumcenter(const pt& A, const pt& B, const pt& C) {
-	ld a = norm(B-C), b = norm(C-A), c = norm(A-B);
-	ld fa = a*(b+c-a), fb = b*(c+a-b), fc = c*(a+b-c);
-	return (fa*A + fb*B + fc*C) / (fa+fb+fc);
+  ld a = norm(B-C), b = norm(C-A), c = norm(A-B);
+  ld fa = a*(b+c-a), fb = b*(c+a-b), fc = c*(a+b-c);
+  return (fa*A + fb*B + fc*C) / (fa+fb+fc);
 }
 
 /////////////////
 // UBC code archive
 
 struct p3d{ ld x,y,z; 
-	p3d() {}
-	p3d(ld x, ld y, ld z): x(x), y(y), z(z) {}
-	friend ostream& operator<< (ostream& os, const p3d& p) {
-		return os << "(" << p.x << "," << p.y << "," << p.z << ")"; 
-	} 
+  p3d() {}
+  p3d(ld x, ld y, ld z): x(x), y(y), z(z) {}
+  friend ostream& operator<< (ostream& os, const p3d& p) {
+    return os << "(" << p.x << "," << p.y << "," << p.z << ")"; 
+  } 
 };
 
 ld abs(const p3d &v){ return sqrt(v.x*v.x + v.y*v.y + v.z*v.z); }
@@ -165,107 +165,107 @@ inline p3d pl_inter(const p3d &p, const p3d &n, const p3d &a1, const p3d &a2){
 }
 
 namespace Hull {
-	const int S = 11;
-	const int MSK = (1<<S)-1;
-	struct face{int a, b, c;}; int t, n; vector<pair<p3d,int>> v;
-	ld dist(const face &f, const p3d p) {
-	  return dot(cross(v[f.b].first-v[f.a].first, v[f.c].first-v[f.b].first), p-v[f.a].first); }
-	ld area(const face &f){ return abs(cross(v[f.b].first - v[f.a].first, v[f.c].first - v[f.a].first)); }
-	ld volume(const face &f){ p3d n=cross(v[f.b].first-v[f.a].first, v[f.c].first-v[f.b].first);
-	  return area(f)*dot(n/abs(n), v[f.a].first)/6; }
-	void convex_hull_clean_input() { shuffle(v.begin(), v.end(), rng);
-	  for(int i=n-1; i>=0; i--) v[i].first = v[i].first - v[0].first;
-	  for(int i=1; i<n; i++) if(abs(v[i].first-v[0].first) > EPS) { swap(v[i], v[1]); break; }
-	  for(int i=2; i<n; i++) if(abs(cross(v[1].first-v[0].first, v[i].first-v[0].first)) > EPS) {
-		swap(v[i], v[2]); break; }
-	  for(int i=3; i<n; i++) { p3d n = cross(v[1].first - v[0].first, v[2].first - v[0].first);
-		if(abs(dot(n, v[0].first - v[i].first)) > EPS) { swap(v[i], v[3]); break; } } 
-	}
+  const int S = 11;
+  const int MSK = (1<<S)-1;
+  struct face{int a, b, c;}; int t, n; vector<pair<p3d,int>> v;
+  ld dist(const face &f, const p3d p) {
+    return dot(cross(v[f.b].first-v[f.a].first, v[f.c].first-v[f.b].first), p-v[f.a].first); }
+  ld area(const face &f){ return abs(cross(v[f.b].first - v[f.a].first, v[f.c].first - v[f.a].first)); }
+  ld volume(const face &f){ p3d n=cross(v[f.b].first-v[f.a].first, v[f.c].first-v[f.b].first);
+    return area(f)*dot(n/abs(n), v[f.a].first)/6; }
+  void convex_hull_clean_input() { shuffle(v.begin(), v.end(), rng);
+    for(int i=n-1; i>=0; i--) v[i].first = v[i].first - v[0].first;
+    for(int i=1; i<n; i++) if(abs(v[i].first-v[0].first) > EPS) { swap(v[i], v[1]); break; }
+    for(int i=2; i<n; i++) if(abs(cross(v[1].first-v[0].first, v[i].first-v[0].first)) > EPS) {
+    swap(v[i], v[2]); break; }
+    for(int i=3; i<n; i++) { p3d n = cross(v[1].first - v[0].first, v[2].first - v[0].first);
+    if(abs(dot(n, v[0].first - v[i].first)) > EPS) { swap(v[i], v[3]); break; } } 
+  }
 
-	vector<Tuple> solve(const vector<p3d>& p) { n = p.size();
-	  for (int i = 0; i < n; i++) v.push_back(pair<p3d,int>(p[i], i));
-	  convex_hull_clean_input();
-	  vector<face> f { {0, 1, 2}, {2, 1, 0} };
-	  for(int i=3; i<n; i++){ vector<face> nxt; set<int> edge;
-		for(auto ff : f) // remove the faces
-		  if(dist(ff, v[i].first) > EPS) { // above
-			edge.insert((ff.a << S) | ff.b);
-			edge.insert((ff.b << S) | ff.c);
-			edge.insert((ff.c << S) | ff.a);
-		  } else nxt.push_back(ff); // change shift and mask values for >1024 verts
-		for(auto e : edge) if(!edge.count( ((e & MSK) << S) | (e >> S) ))
-		  nxt.push_back(face{e >> S, e & MSK, i});
-		f = nxt; }
-	  // return faces
-	  vector<Tuple> res;
-	  for (auto ff : f) {
-		  res.push_back(Tuple(v[ff.a].second, v[ff.b].second, v[ff.c].second));
-	  }
-	  return res;
-	}
+  vector<Tuple> solve(const vector<p3d>& p) { n = p.size();
+    for (int i = 0; i < n; i++) v.push_back(pair<p3d,int>(p[i], i));
+    convex_hull_clean_input();
+    vector<face> f { {0, 1, 2}, {2, 1, 0} };
+    for(int i=3; i<n; i++){ vector<face> nxt; set<int> edge;
+    for(auto ff : f) // remove the faces
+      if(dist(ff, v[i].first) > EPS) { // above
+      edge.insert((ff.a << S) | ff.b);
+      edge.insert((ff.b << S) | ff.c);
+      edge.insert((ff.c << S) | ff.a);
+      } else nxt.push_back(ff); // change shift and mask values for >1024 verts
+    for(auto e : edge) if(!edge.count( ((e & MSK) << S) | (e >> S) ))
+      nxt.push_back(face{e >> S, e & MSK, i});
+    f = nxt; }
+    // return faces
+    vector<Tuple> res;
+    for (auto ff : f) {
+      res.push_back(Tuple(v[ff.a].second, v[ff.b].second, v[ff.c].second));
+    }
+    return res;
+  }
 }
 
 vector<Tuple> delaunay(const vector<pt>& p) {
-	vector<p3d> points;
-	for (const pt& it : p) {
-		points.push_back(p3d(it.x, it.y, it.x*it.x+it.y*it.y));
-	}
-	return Hull::solve(points);
+  vector<p3d> points;
+  for (const pt& it : p) {
+    points.push_back(p3d(it.x, it.y, it.x*it.x+it.y*it.y));
+  }
+  return Hull::solve(points);
 }
 
 unordered_set<pt> voronoi(const vector<pt>& p) {
-	int n = p.size();
-	vector<Tuple> triangles = delaunay(p);
-	//cerr << triangles.size() << " triangles" << endl;
-	//cerr << "time: " << (ld)clock()/CLOCKS_PER_SEC << endl;
+  int n = p.size();
+  vector<Tuple> triangles = delaunay(p);
+  //cerr << triangles.size() << " triangles" << endl;
+  //cerr << "time: " << (ld)clock()/CLOCKS_PER_SEC << endl;
 
-	unordered_set<pt> circ;
-	for (const Tuple& tri : triangles) {
-		pt cc = circumcenter(p[tri[0]], p[tri[1]], p[tri[2]]);
-		if (pt_in_polygon(cc, p)) {
-			circ.insert(cc);
-		}
-		for (int i = 0; i < 3; i++) {
-			pt end = (ld)0.5*(p[tri[i]]+p[tri[i+1==3?0:i+1]]);
-			for (int j = 0; j < n; j++) {
-				if (seg_x_seg(end, cc, p[j], p[j+1==n?0:j+1])) {
-					circ.insert(line_inter(end, cc, p[j], p[j+1==n?0:j+1]));
-				}
-			}
-		}
-	}
+  unordered_set<pt> circ;
+  for (const Tuple& tri : triangles) {
+    pt cc = circumcenter(p[tri[0]], p[tri[1]], p[tri[2]]);
+    if (pt_in_polygon(cc, p)) {
+      circ.insert(cc);
+    }
+    for (int i = 0; i < 3; i++) {
+      pt end = (ld)0.5*(p[tri[i]]+p[tri[i+1==3?0:i+1]]);
+      for (int j = 0; j < n; j++) {
+        if (seg_x_seg(end, cc, p[j], p[j+1==n?0:j+1])) {
+          circ.insert(line_inter(end, cc, p[j], p[j+1==n?0:j+1]));
+        }
+      }
+    }
+  }
 
-	return circ;
+  return circ;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a, b;
-	vector<pt> p;
-	for (int i = 0; i < n; i++) {
-		cin >> a >> b;
-		p.push_back(pt(a,b));
-	}
-	unordered_set<pt> vx = voronoi(p);
-	//cerr << vx.size() << " points" << endl;
-	//cerr << "time: " << (ld)clock()/CLOCKS_PER_SEC << endl;
+  int a, b;
+  vector<pt> p;
+  for (int i = 0; i < n; i++) {
+    cin >> a >> b;
+    p.push_back(pt(a,b));
+  }
+  unordered_set<pt> vx = voronoi(p);
+  //cerr << vx.size() << " points" << endl;
+  //cerr << "time: " << (ld)clock()/CLOCKS_PER_SEC << endl;
 
-	ld ans = 0;
-	for (const pt& it : vx) {
-		ld cur = INF;
-		for (const pt& v : p) {
-			cur = min(cur, abs(v-it));
-		}
-		ans = max(cur, ans);
-	}
-	cout << ans << nl;
-	//cerr << "time: " << (ld)clock()/CLOCKS_PER_SEC << endl;
+  ld ans = 0;
+  for (const pt& it : vx) {
+    ld cur = INF;
+    for (const pt& v : p) {
+      cur = min(cur, abs(v-it));
+    }
+    ans = max(cur, ans);
+  }
+  cout << ans << nl;
+  //cerr << "time: " << (ld)clock()/CLOCKS_PER_SEC << endl;
 
-	return 0;
+  return 0;
 }

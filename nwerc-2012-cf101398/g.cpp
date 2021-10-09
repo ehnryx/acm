@@ -27,57 +27,57 @@ int parent[M];
 vector<int> child[M];
 
 void init() {
-	memset(ans, INF, sizeof ans);
-	memset(parent, -1, sizeof parent);
-	fill(child, child+M, vector<int>());
+  memset(ans, INF, sizeof ans);
+  memset(parent, -1, sizeof parent);
+  fill(child, child+M, vector<int>());
 }
 
 int b_id;
 bool input(int cur = 0) {
-	if (cur == 0) {
-		init();
-		b_id = 0;
-	}
-	int n, m, w;
-	if (cin >> n >> m >> w) {
-		int a, b;
-		for (int i = 0; i < m; i++) {
-			cin >> a >> b;
-			edges[cur].push_back(pii(a,b));
-			verts[cur].insert(a);
-			verts[cur].insert(b);
-			b_of[a] = b_of[b] = cur;
-		}
+  if (cur == 0) {
+    init();
+    b_id = 0;
+  }
+  int n, m, w;
+  if (cin >> n >> m >> w) {
+    int a, b;
+    for (int i = 0; i < m; i++) {
+      cin >> a >> b;
+      edges[cur].push_back(pii(a,b));
+      verts[cur].insert(a);
+      verts[cur].insert(b);
+      b_of[a] = b_of[b] = cur;
+    }
 
-		for (int j = 1; j <= w; j++) {
-			cin >> a >> b;
-			conn.push_back(a,b);
-			b_of[b] = ++b_id;
-			child[cur].push_back(b_id);
-			parent[b_id] = cur;
-			input(b_id);
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
+    for (int j = 1; j <= w; j++) {
+      cin >> a >> b;
+      conn.push_back(a,b);
+      b_of[b] = ++b_id;
+      child[cur].push_back(b_id);
+      parent[b_id] = cur;
+      input(b_id);
+    }
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 void solve(int id) {
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, w;
-	while (input()) {
-		for (int i = 0; i <= b_id; i++) {
-			solve(i);
-		}
-	}
+  int n, m, w;
+  while (input()) {
+    for (int i = 0; i <= b_id; i++) {
+      solve(i);
+    }
+  }
 
-	return 0;
+  return 0;
 }

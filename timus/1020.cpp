@@ -40,25 +40,25 @@ pol chull(pol p) {
 const ld PI = acos((ld)-1);
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(2);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(2);
 
-	int n; ld r;
-	cin >> n >> r;
-	vector<pt> p;
-	for(int i=0; i<n; i++) {
-		ld x, y;
-		cin >> x >> y;
-		p.push_back(pt(x,y));
-	}
-	p = chull(p);
-	n = p.size();
+  int n; ld r;
+  cin >> n >> r;
+  vector<pt> p;
+  for(int i=0; i<n; i++) {
+    ld x, y;
+    cin >> x >> y;
+    p.push_back(pt(x,y));
+  }
+  p = chull(p);
+  n = p.size();
 
-	ld ans = 0;
-	for(int j=n-1, i=0; i<n; j=i++) {
-		ans += abs(p[i]-p[j]);
-	}
-	cout << ans + 2*r*PI << nl;
+  ld ans = 0;
+  for(int j=n-1, i=0; i<n; j=i++) {
+    ans += abs(p[i]-p[j]);
+  }
+  cout << ans + 2*r*PI << nl;
 
-	return 0;
+  return 0;
 }

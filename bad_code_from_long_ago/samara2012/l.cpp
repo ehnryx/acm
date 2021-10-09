@@ -15,19 +15,19 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	int n;
-	cin >> n;
-	ll s[n+1];
-	s[0] = 0;
-	for (int i = 1; i <= n; i++) {
-		cin >> s[i];
-	}
-	for (int i = 1; i <= n; i++) {
-		cout << s[i] - s[i-1] << " ";
-	} cout << nl;
+  int n;
+  cin >> n;
+  ll s[n+1];
+  s[0] = 0;
+  for (int i = 1; i <= n; i++) {
+    cin >> s[i];
+  }
+  for (int i = 1; i <= n; i++) {
+    cout << s[i] - s[i-1] << " ";
+  } cout << nl;
 
-	return 0;
+  return 0;
 }

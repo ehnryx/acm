@@ -51,79 +51,79 @@ vector<Complex> ir(N,0), ig(N,0), ib(N,0);
 vector<Complex> rb(N), br(N), rg(N), gr(N), gb(N), bg(N);
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	string s;
-	cin >> s;
+  string s;
+  cin >> s;
 
-	for (int i=0; i<n; i++) {
-		switch (s[i]) {
-			case 'R': r[i] = 1;
-					  ir[n-i] = 1;
-					  break;
-			case 'B': b[i] = 1;
-					  ib[n-i] = 1;
-					  break;
-			default:  g[i] = 1;
-					  ig[n-i] = 1;
-					  break;
-		}
-	}
+  for (int i=0; i<n; i++) {
+    switch (s[i]) {
+      case 'R': r[i] = 1;
+            ir[n-i] = 1;
+            break;
+      case 'B': b[i] = 1;
+            ib[n-i] = 1;
+            break;
+      default:  g[i] = 1;
+            ig[n-i] = 1;
+            break;
+    }
+  }
 
-	r = FFT(r);
-	b = FFT(b);
-	g = FFT(g);
-	ir = FFT(ir);
-	ib = FFT(ib);
-	ig = FFT(ig);
+  r = FFT(r);
+  b = FFT(b);
+  g = FFT(g);
+  ir = FFT(ir);
+  ib = FFT(ib);
+  ig = FFT(ig);
 
-	for (int i=0; i<N; i++) {
-		rb[i] = r[i] * ib[i];
-		br[i] = b[i] * ir[i];
-		rg[i] = r[i] * ig[i];
-		gr[i] = g[i] * ir[i];
-		bg[i] = b[i] * ig[i];
-		gb[i] = g[i] * ib[i];
-	}
+  for (int i=0; i<N; i++) {
+    rb[i] = r[i] * ib[i];
+    br[i] = b[i] * ir[i];
+    rg[i] = r[i] * ig[i];
+    gr[i] = g[i] * ir[i];
+    bg[i] = b[i] * ig[i];
+    gb[i] = g[i] * ib[i];
+  }
 
-	rb = FFT(rb, -1);
-	br = FFT(br, -1);
-	rg = FFT(rg, -1);
-	gr = FFT(gr, -1);
-	bg = FFT(bg, -1);
-	gb = FFT(gb, -1);
+  rb = FFT(rb, -1);
+  br = FFT(br, -1);
+  rg = FFT(rg, -1);
+  gr = FFT(gr, -1);
+  bg = FFT(bg, -1);
+  gb = FFT(gb, -1);
 
-	map<int,int> ans;
-	vector<pii> diff;
+  map<int,int> ans;
+  vector<pii> diff;
 
-	diff.push_back(pii(-1,0));
-	for (int i=1; i<n; i++) {
-		int cnt = 0;
-		cnt += llround(rb[n+i].real()) + llround(rb[2*n-i].real());
-		cnt += llround(br[n+i].real()) + llround(br[2*n-i].real());
-		cnt += llround(rg[n+i].real()) + llround(rg[2*n-i].real());
-		cnt += llround(gr[n+i].real()) + llround(gr[2*n-i].real());
-		cnt += llround(bg[n+i].real()) + llround(bg[2*n-i].real());
-		cnt += llround(gb[n+i].real()) + llround(gb[2*n-i].real());
-		diff.push_back(pii(cnt, (n-i)%n));
-		if (ans.count(cnt)) ans[cnt] = min(ans[cnt], (n-i)%n);
-		else ans[cnt] = (n-i)%n;
-		//cerr << i << ": " << diff[i].first << " " << diff[i].second << nl;
-	}
+  diff.push_back(pii(-1,0));
+  for (int i=1; i<n; i++) {
+    int cnt = 0;
+    cnt += llround(rb[n+i].real()) + llround(rb[2*n-i].real());
+    cnt += llround(br[n+i].real()) + llround(br[2*n-i].real());
+    cnt += llround(rg[n+i].real()) + llround(rg[2*n-i].real());
+    cnt += llround(gr[n+i].real()) + llround(gr[2*n-i].real());
+    cnt += llround(bg[n+i].real()) + llround(bg[2*n-i].real());
+    cnt += llround(gb[n+i].real()) + llround(gb[2*n-i].real());
+    diff.push_back(pii(cnt, (n-i)%n));
+    if (ans.count(cnt)) ans[cnt] = min(ans[cnt], (n-i)%n);
+    else ans[cnt] = (n-i)%n;
+    //cerr << i << ": " << diff[i].first << " " << diff[i].second << nl;
+  }
 
-	auto cmp = [&] (const pii& a, const pii& b) {
-		if (a.first == b.first) return a.second < b.second;
-		else return a.first < b.first;
-	};
-	sort(diff.begin(), diff.end(), cmp);
+  auto cmp = [&] (const pii& a, const pii& b) {
+    if (a.first == b.first) return a.second < b.second;
+    else return a.first < b.first;
+  };
+  sort(diff.begin(), diff.end(), cmp);
 
-	assert(ans.count(diff[k].first));
-	cout << ans[diff[k].first] << nl;
+  assert(ans.count(diff[k].first));
+  cout << ans[diff[k].first] << nl;
 
-	return 0;
+  return 0;
 }

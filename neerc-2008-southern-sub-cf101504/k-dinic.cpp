@@ -54,51 +54,51 @@ namespace Flow {
 int adj[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	int a[m],b[m],c[m];
-	for(int i=0;i<m;i++) {
-		cin>>a[i]>>b[i]>>c[i];
-		--a[i]; --b[i];
-		adj[a[i]][b[i]] = adj[b[i]][a[i]] = i+1;
-	}
+  int n,m;
+  cin>>n>>m;
+  int a[m],b[m],c[m];
+  for(int i=0;i<m;i++) {
+    cin>>a[i]>>b[i]>>c[i];
+    --a[i]; --b[i];
+    adj[a[i]][b[i]] = adj[b[i]][a[i]] = i+1;
+  }
 
-	vector<int> ans;
-	int best = INF;
-	for(int i=0;i<n;i++) {
-		int s = !i;
-		for(int j=0;j<n;j++) {
-			if(j==i || j==s) continue;
-			Flow::init();
-			for(int e=0;e<m;e++) {
-				if(a[e]!=i && b[e]!=i) {
-					Flow::add_edge(a[e],b[e],c[e]);
-				}
-			}
-			int cur = Flow::flow(s,j);
-			if(cur < best) {
-				best = cur;
-				ans.clear();
-				for(int k=0;k<n;k++) {
-					for(const Flow::Edge& e:Flow::adj[k]) {
-						if(Flow::L[k]<INF && Flow::L[e.v]==INF) {
-							ans.push_back(adj[e.v][k]);
-						}
-					}
-				}
-			}
-		}
-	}
+  vector<int> ans;
+  int best = INF;
+  for(int i=0;i<n;i++) {
+    int s = !i;
+    for(int j=0;j<n;j++) {
+      if(j==i || j==s) continue;
+      Flow::init();
+      for(int e=0;e<m;e++) {
+        if(a[e]!=i && b[e]!=i) {
+          Flow::add_edge(a[e],b[e],c[e]);
+        }
+      }
+      int cur = Flow::flow(s,j);
+      if(cur < best) {
+        best = cur;
+        ans.clear();
+        for(int k=0;k<n;k++) {
+          for(const Flow::Edge& e:Flow::adj[k]) {
+            if(Flow::L[k]<INF && Flow::L[e.v]==INF) {
+              ans.push_back(adj[e.v][k]);
+            }
+          }
+        }
+      }
+    }
+  }
 
-	cout<<best<<nl;
-	cout<<ans.size()<<nl;
-	for(int it:ans) {
-		cout<<it<<" ";
-	}
-	cout<<nl;
+  cout<<best<<nl;
+  cout<<ans.size()<<nl;
+  for(int it:ans) {
+    cout<<it<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

@@ -23,84 +23,84 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Segment {
-	int x, a, b;
-	bool operator < (const Segment& o) const {
-		if (x != o.x) return x < o.x;
-		else return abs(a-b) > abs(o.a-o.b);
-	}
+  int x, a, b;
+  bool operator < (const Segment& o) const {
+    if (x != o.x) return x < o.x;
+    else return abs(a-b) > abs(o.a-o.b);
+  }
 };
 
 ll nc2(ll n) {
-	return n*(n-1)/2;
+  return n*(n-1)/2;
 }
 
 const int N = 1e4+7;
 const int OFF = 5000+2;
 int bit[N];
 int query(int x) {
-	int res = 0;
-	for ( ; x>0; x-=x&-x) {
-		res += bit[x];
-	}
-	return res;
+  int res = 0;
+  for ( ; x>0; x-=x&-x) {
+    res += bit[x];
+  }
+  return res;
 }
 int query_range(int l, int r) {
-	return query(OFF+r) - query(OFF+l-1);
+  return query(OFF+r) - query(OFF+l-1);
 }
 void insert(int x, int cnt) {
-	x += OFF;
-	for ( ; x<N; x+=x&-x) {
-		bit[x] += cnt;
-	}
+  x += OFF;
+  for ( ; x<N; x+=x&-x) {
+    bit[x] += cnt;
+  }
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<Segment> h, v;
-	For(i,n) {
-		int x1, y1, x2, y2;
-		cin >> x1 >> y1 >> x2 >> y2;
-		if (x1 == x2) {
-			v.push_back({x1,min(y1,y2),max(y1,y2)});
-		} else {
-			h.push_back({y1,min(x1,x2),max(x1,x2)});
-		}
-	}
+  vector<Segment> h, v;
+  For(i,n) {
+    int x1, y1, x2, y2;
+    cin >> x1 >> y1 >> x2 >> y2;
+    if (x1 == x2) {
+      v.push_back({x1,min(y1,y2),max(y1,y2)});
+    } else {
+      h.push_back({y1,min(x1,x2),max(x1,x2)});
+    }
+  }
 
-	ll ans = 0;
-	for (const Segment& left : v) {
-		memset(bit, 0, sizeof bit);
+  ll ans = 0;
+  for (const Segment& left : v) {
+    memset(bit, 0, sizeof bit);
 
-		vector<Segment> o;
-		for (const Segment& s : h) {
-			if (left.a <= s.x && s.x <= left.b && s.a <= left.x && left.x < s.b) {
-				o.push_back({s.b, s.x, s.x});
-				insert(s.x, 1);
-			}
-		}
-		for (const Segment& s : v) {
-			if (left.x < s.x && max(left.a, s.a) < min(left.b, s.b)) {
-				o.push_back({s.x, max(left.a, s.a), min(left.b, s.b)});
-			}
-		}
-		sort(o.begin(), o.end());
+    vector<Segment> o;
+    for (const Segment& s : h) {
+      if (left.a <= s.x && s.x <= left.b && s.a <= left.x && left.x < s.b) {
+        o.push_back({s.b, s.x, s.x});
+        insert(s.x, 1);
+      }
+    }
+    for (const Segment& s : v) {
+      if (left.x < s.x && max(left.a, s.a) < min(left.b, s.b)) {
+        o.push_back({s.x, max(left.a, s.a), min(left.b, s.b)});
+      }
+    }
+    sort(o.begin(), o.end());
 
-		for (const Segment& s : o) {
-			if (s.a == s.b) {
-				insert(s.a, -1);
-			} else {
-				ans += nc2(query_range(s.a, s.b));
-			}
-		}
-	}
+    for (const Segment& s : o) {
+      if (s.a == s.b) {
+        insert(s.a, -1);
+      } else {
+        ans += nc2(query_range(s.a, s.b));
+      }
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

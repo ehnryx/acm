@@ -21,28 +21,28 @@ ld pref[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	for (int i = 1; i <= k; i++) {
-		dp[i] = 1;
-		pref[i] = pref[i-1] + dp[i];
-	}
+  for (int i = 1; i <= k; i++) {
+    dp[i] = 1;
+    pref[i] = pref[i-1] + dp[i];
+  }
 
-	for (int i = k+1; i <= n; i++) {
-		dp[i] = (pref[i-1] - pref[i-k-1]) / i;
-		pref[i] = pref[i-1] + dp[i];
-	}
+  for (int i = k+1; i <= n; i++) {
+    dp[i] = (pref[i-1] - pref[i-k-1]) / i;
+    pref[i] = pref[i-1] + dp[i];
+  }
 
-	cout << dp[n] << nl;
+  cout << dp[n] << nl;
 
-	return 0;
+  return 0;
 }

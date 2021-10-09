@@ -27,44 +27,44 @@ int a[N], b[N], d[N], g[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	For(i,m) {
-		cin >> a[i] >> b[i];
-		d[a[i]]++;
-		d[b[i]]++;
-	}
+  For(i,m) {
+    cin >> a[i] >> b[i];
+    d[a[i]]++;
+    d[b[i]]++;
+  }
 
-	g[0] = INF;
-	FOR(i,1,n) {
-		g[i] = (d[i]+1)/2;
-	}
+  g[0] = INF;
+  FOR(i,1,n) {
+    g[i] = (d[i]+1)/2;
+  }
 
-	for (int e = m - (n+m+1)/2; e > 0; e--) {
-		int i = rng()%m;
-		while (!(d[a[i]]>g[a[i]] && d[b[i]]>g[b[i]])) {
-			i = rng()%m;
-		}
-		d[a[i]]--;
-		d[b[i]]--;
-		a[i] = b[i] = 0;
-	}
+  for (int e = m - (n+m+1)/2; e > 0; e--) {
+    int i = rng()%m;
+    while (!(d[a[i]]>g[a[i]] && d[b[i]]>g[b[i]])) {
+      i = rng()%m;
+    }
+    d[a[i]]--;
+    d[b[i]]--;
+    a[i] = b[i] = 0;
+  }
 
-	cout << min(m, (n+m+1)/2) << nl;
-	For(i,m) {
-		if (a[i]) {
-			cout << a[i] << " " << b[i] << nl;
-		}
-	}
+  cout << min(m, (n+m+1)/2) << nl;
+  For(i,m) {
+    if (a[i]) {
+      cout << a[i] << " " << b[i] << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

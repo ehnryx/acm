@@ -31,32 +31,32 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int query(int a, int b, int c) {
-	cout<<"? "<<a<<" "<<b<<" "<<c<<endl;
-	int r;
-	cin>>r;
-	assert(r!=-1);
-	return r;
+  cout<<"? "<<a<<" "<<b<<" "<<c<<endl;
+  int r;
+  cin>>r;
+  assert(r!=-1);
+  return r;
 }
 
 void answer(int a) {
-	cout<<"! "<<a<<endl;
+  cout<<"! "<<a<<endl;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int r = 1;
-	int g = 2;
-	for(int i=3;i<=n;i++) {
-		if(query(r,g,i)) {
-			g = i;
-		}
-	}
-	answer(g);
+  int n;
+  cin>>n;
+  int r = 1;
+  int g = 2;
+  for(int i=3;i<=n;i++) {
+    if(query(r,g,i)) {
+      g = i;
+    }
+  }
+  answer(g);
 
-	return 0;
+  return 0;
 }

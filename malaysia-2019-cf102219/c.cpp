@@ -34,21 +34,21 @@ const int N = 1e4+1;
 ll f[N], t[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int d;
-	cin >> d;
-	for (int n, s, ii=1; cin >> n >> s; ii++) {
-		ll ans = -INFLL;
-		for (int i=0; i<n; i++) {
-			cin >> f[i] >> t[i];
-			ans = max(ans, min(f[i], f[i]-(t[i]-s)));
-		}
-		cout << "Case #" << ii << ": ";
-		cout << ans << nl;
-	}
+  int d;
+  cin >> d;
+  for (int n, s, ii=1; cin >> n >> s; ii++) {
+    ll ans = -INFLL;
+    for (int i=0; i<n; i++) {
+      cin >> f[i] >> t[i];
+      ans = max(ans, min(f[i], f[i]-(t[i]-s)));
+    }
+    cout << "Case #" << ii << ": ";
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

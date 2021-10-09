@@ -24,20 +24,20 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s, t;
-	cin >> s >> t;
-	int n = s.size();
-	for(int i=0; i<n; i++) {
-		if(i%2) {
-			s[i] = (s[i] - 'A' + (t[i] - 'A')) % 26 + 'A';
-		} else {
-			s[i] = (s[i] - 'A' + 26 - (t[i] - 'A')) % 26 + 'A';
-		}
-	}
-	cout << s << nl;
+  string s, t;
+  cin >> s >> t;
+  int n = s.size();
+  for(int i=0; i<n; i++) {
+    if(i%2) {
+      s[i] = (s[i] - 'A' + (t[i] - 'A')) % 26 + 'A';
+    } else {
+      s[i] = (s[i] - 'A' + 26 - (t[i] - 'A')) % 26 + 'A';
+    }
+  }
+  cout << s << nl;
 
-	return 0;
+  return 0;
 }

@@ -40,30 +40,30 @@ inline ld lp_dist(const pt &a, const pt &b, const pt &p) {
   return cp(b - a, p - a) / abs(b - a); }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	vector<pt> points;
-	int x, y;
-	int n;
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> x >> y;
-		points.push_back(pt(x,y));
-	}
-	vector<pt> hull = chull(points);
+  vector<pt> points;
+  int x, y;
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; i++) {
+    cin >> x >> y;
+    points.push_back(pt(x,y));
+  }
+  vector<pt> hull = chull(points);
 
-	int m = hull.size();
-	ld ans = INF;
-	for (int i = 0; i < m; i++) {
-		ld temp = 0;
-		for (int j = 0; j < m; j++) {
-			temp = max(temp, lp_dist(hull[i], hull[(i+1)%m], hull[j]));
-		}
-		ans = min(ans, temp);
-	}
-	cout << ans << nl;
+  int m = hull.size();
+  ld ans = INF;
+  for (int i = 0; i < m; i++) {
+    ld temp = 0;
+    for (int j = 0; j < m; j++) {
+      temp = max(temp, lp_dist(hull[i], hull[(i+1)%m], hull[j]));
+    }
+    ans = min(ans, temp);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

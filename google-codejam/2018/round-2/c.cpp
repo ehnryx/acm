@@ -17,22 +17,22 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " ";
-	return os;
+  for (const T& it : v) os << it << " ";
+  return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -41,19 +41,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -99,49 +99,49 @@ int grid[N][N];
 int seen[2*N+1];
 
 void caseinit() {
-	memset(seen,0,sizeof seen);
+  memset(seen,0,sizeof seen);
 }
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	int n;
-	cin >> n;
-	const int source = 2*n;
-	const int sink = source+1;
+  int n;
+  cin >> n;
+  const int source = 2*n;
+  const int sink = source+1;
 
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) {
-			cin >> grid[i][j];
-			seen[grid[i][j]+n] += 1;
-		}
-	}
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<n; j++) {
+      cin >> grid[i][j];
+      seen[grid[i][j]+n] += 1;
+    }
+  }
 
-	int ans = 0;
-	for (int id=-n; id<=n; id++) {
-		if (seen[id+n]) {
-			Dinic::init();
-			for (int i=0; i<n; i++) {
-				Dinic::add_edge(source, i);
-				Dinic::add_edge(n+i, sink);
-			}
-			for (int i=0; i<n; i++) {
-				for (int j=0; j<n; j++) {
-					if (grid[i][j] == id) {
-						Dinic::add_edge(i,n+j);
-					}
-				}
-			}
-			int res = 0;
-			while (Dinic::bfs(source, sink)) {
-				res += Dinic::dfs(source, sink, INF);
-			}
-			ans += seen[id+n] - res;
-		}
-	}
+  int ans = 0;
+  for (int id=-n; id<=n; id++) {
+    if (seen[id+n]) {
+      Dinic::init();
+      for (int i=0; i<n; i++) {
+        Dinic::add_edge(source, i);
+        Dinic::add_edge(n+i, sink);
+      }
+      for (int i=0; i<n; i++) {
+        for (int j=0; j<n; j++) {
+          if (grid[i][j] == id) {
+            Dinic::add_edge(i,n+j);
+          }
+        }
+      }
+      int res = 0;
+      while (Dinic::bfs(source, sink)) {
+        res += Dinic::dfs(source, sink, INF);
+      }
+      ans += seen[id+n] - res;
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return;
+  return;
 }
 

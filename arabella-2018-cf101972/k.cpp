@@ -19,38 +19,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
-		string s, t;
-		cin >> s;
-		cin >> t;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    string s, t;
+    cin >> s;
+    cin >> t;
 
-		vector<char> a, b;
-		for (int i=0; i<n; i++) {
-			if (s[i] != t[i]) {
-				a.push_back(s[i]);
-				b.push_back(t[i]);
-			}
-		}
+    vector<char> a, b;
+    for (int i=0; i<n; i++) {
+      if (s[i] != t[i]) {
+        a.push_back(s[i]);
+        b.push_back(t[i]);
+      }
+    }
 
-		n = a.size();
-		bool ok = true;
-		for (int i=n-1,j=0; j<n; i=j++) {
-			ok &= (a[j] == b[i]);
-		}
-		cout << (ok ? "YES" : "NO") << nl;
-	}
+    n = a.size();
+    bool ok = true;
+    for (int i=n-1,j=0; j<n; i=j++) {
+      ok &= (a[j] == b[i]);
+    }
+    cout << (ok ? "YES" : "NO") << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -73,28 +73,28 @@ const int N = 2e5+1;
 vector<ld> a(N);
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	a[0] = 1;
-	for(int i=0;i<n;i++) {
-		int v;
-		cin>>v;
-		a[v] = 1;
-	}
-	vector<ld> b = convolution(a,a);
-	int m;
-	cin>>m;
-	int ans = 0;
-	for(int i=0;i<m;i++) {
-		int v;
-		cin>>v;
-		if(b[v]>0.5) ans++;
-	}
-	cout<<ans<<nl;
+  int n;
+  cin>>n;
+  a[0] = 1;
+  for(int i=0;i<n;i++) {
+    int v;
+    cin>>v;
+    a[v] = 1;
+  }
+  vector<ld> b = convolution(a,a);
+  int m;
+  cin>>m;
+  int ans = 0;
+  for(int i=0;i<m;i++) {
+    int v;
+    cin>>v;
+    if(b[v]>0.5) ans++;
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

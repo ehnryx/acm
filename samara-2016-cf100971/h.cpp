@@ -46,54 +46,54 @@ node* nth(node* c, int n) { splay(c); while (c!=null) { int l=c->l->cnt;
 }
 
 struct Point {
-	int i, x, t;
-	bool operator < (const Point& o) const {
-		if (x != o.x) return x < o.x;
-		else return t > o.t;
-	}
+  int i, x, t;
+  bool operator < (const Point& o) const {
+    if (x != o.x) return x < o.x;
+    else return t > o.t;
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<Point> p;
-	for (int i=1; i<=n; i++) {
-		int l, r;
-		cin >> l >> r;
-		p.push_back({i,l,1});
-		p.push_back({i,r,-1});
-		p.push_back({i,i,0});
-	}
-	sort(p.begin(), p.end());
+  vector<Point> p;
+  for (int i=1; i<=n; i++) {
+    int l, r;
+    cin >> l >> r;
+    p.push_back({i,l,1});
+    p.push_back({i,r,-1});
+    p.push_back({i,i,0});
+  }
+  sort(p.begin(), p.end());
 
-	node* cur = null;
-	node ptr[n+1];
-	for (const Point& it : p) {
-		if (it.t == 1) {
-			ptr[it.i] = node(it.i);
-			cur = SplayTree::insert(cur, &ptr[it.i]);
-		} else if (it.t == -1) {
-			cur = SplayTree::del(&ptr[it.i]);
-		} else { // it.t == 0
-			node* nth = SplayTree::nth(cur,it.x-1);
-			if (nth == null) {
-				cout << -1 << " ";
-			} else {
-				cout << nth->key << " ";
-			}
-		}
-	}
-	cout << nl;
+  node* cur = null;
+  node ptr[n+1];
+  for (const Point& it : p) {
+    if (it.t == 1) {
+      ptr[it.i] = node(it.i);
+      cur = SplayTree::insert(cur, &ptr[it.i]);
+    } else if (it.t == -1) {
+      cur = SplayTree::del(&ptr[it.i]);
+    } else { // it.t == 0
+      node* nth = SplayTree::nth(cur,it.x-1);
+      if (nth == null) {
+        cout << -1 << " ";
+      } else {
+        cout << nth->key << " ";
+      }
+    }
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

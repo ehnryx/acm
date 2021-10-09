@@ -25,33 +25,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
+  int n,m;
+  cin>>n>>m;
 
-	vector<pii> p;
-	for(int i=0;i<n;i++) {
-		int a,b;
-		cin>>a>>b;
-		p.push_back({a,a+b});
-	}
-	sort(p.begin(),p.end());
+  vector<pii> p;
+  for(int i=0;i<n;i++) {
+    int a,b;
+    cin>>a>>b;
+    p.push_back({a,a+b});
+  }
+  sort(p.begin(),p.end());
 
-	int ans = 0;
-	multiset<int> cur;
-	for(const pii& it:p) {
-		while(!cur.empty() && *cur.begin()<it.first-m) {
-			cur.erase(cur.begin());
-		}
-		if(!cur.empty() && *cur.begin()<=it.first) {
-			cur.erase(cur.begin());
-			ans++;
-		}
-		cur.insert(it.second);
-	}
-	cout<<ans<<nl;
+  int ans = 0;
+  multiset<int> cur;
+  for(const pii& it:p) {
+    while(!cur.empty() && *cur.begin()<it.first-m) {
+      cur.erase(cur.begin());
+    }
+    if(!cur.empty() && *cur.begin()<=it.first) {
+      cur.erase(cur.begin());
+      ans++;
+    }
+    cur.insert(it.second);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

@@ -23,7 +23,7 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace Flow {
-	const int N = 5e3;
+  const int N = 5e3;
   struct Edge { int v, r; ll f, c, p; };
   vector<Edge> adj[N]; int sz[N]; ll mc;
   vector<Edge> mcf_edges; // for mcf on large graphs with negative costs
@@ -51,18 +51,18 @@ namespace Flow {
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	for(int i=0;i<m;i++) {
-		int a,b,c;
-		cin>>a>>b>>c;
-		Flow::add_edge(a-1,b-1,c);
+  int n,m;
+  cin>>n>>m;
+  for(int i=0;i<m;i++) {
+    int a,b,c;
+    cin>>a>>b>>c;
+    Flow::add_edge(a-1,b-1,c);
     Flow::add_edge(b-1,a-1,c);
-	}
-	cout<<Flow::flow(0,n-1,true)<<nl;
+  }
+  cout<<Flow::flow(0,n-1,true)<<nl;
 
-	return 0;
+  return 0;
 }

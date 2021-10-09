@@ -23,11 +23,11 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Node {
-	int id, root, dist;
-	bool operator < (const Node& o) const {
-		if (dist != o.dist) return dist > o.dist;
-		else return id > o.id;
-	}
+  int id, root, dist;
+  bool operator < (const Node& o) const {
+    if (dist != o.dist) return dist > o.dist;
+    else return id > o.id;
+  }
 };
 
 const int N = 1e5+1;
@@ -36,131 +36,131 @@ int c[N], res[N];
 set<int> s[N], con[N];
 
 bool cmp(int a, int b) {
-	return res[a] > res[b];
+  return res[a] > res[b];
 }
 
 void solve() {
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	for (int i=1; i<=n; i++) {
-		adj[i].clear();
-		con[i].clear();
-		s[i].clear();
-		res[i] = 0;
-	}
+  for (int i=1; i<=n; i++) {
+    adj[i].clear();
+    con[i].clear();
+    s[i].clear();
+    res[i] = 0;
+  }
 
-	priority_queue<Node> bfs;
-	vector<int> blue;
-	for (int i=1; i<=n; i++) {
-		cin >> c[i];
-		blue.push_back(i);
-		if (c[i] == 1) {
-			bfs.push({i,0,0});
-		} else if (c[i] == 2) {
-			bfs.push({i,i,0});
-			s[i].insert(i);
-		}
-	}
+  priority_queue<Node> bfs;
+  vector<int> blue;
+  for (int i=1; i<=n; i++) {
+    cin >> c[i];
+    blue.push_back(i);
+    if (c[i] == 1) {
+      bfs.push({i,0,0});
+    } else if (c[i] == 2) {
+      bfs.push({i,i,0});
+      s[i].insert(i);
+    }
+  }
 
-	for (int i=0; i<m; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
+  for (int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
 
-	while (!bfs.empty()) {
-		Node cur = bfs.top();
-		bfs.pop();
-		int u = cur.id;
-		int r = cur.root;
-		if (r) {
-			for (int v : adj[u]) {
-				if (c[v] == 0) {
-					c[v] = 2;
-					s[v].insert(r);
-					bfs.push({v,r,cur.dist+1});
-				} else if (c[v] == 2 && !s[v].count(r) && s[v].size() <= 2) {
-					s[v].insert(r);
-					bfs.push({v,r,cur.dist+1});
-				}
-			}
-		} else {
-			for (int v : adj[u]) {
-				if (c[v] == 0) {
-					c[v] = 1;
-					s[v].insert(s[u].begin(), s[u].end());
-					bfs.push({v,0,cur.dist+1});
-				} else if (c[v] == 2 && s[v].size() <= 2) {
-					s[v].insert(s[u].begin(), s[u].end());
-					if (s[v].size() <= 2) {
-						c[v] = 1;
-						bfs.push({v,0,cur.dist+1});
-					}
-				}
-			}
-		}
-	}
+  while (!bfs.empty()) {
+    Node cur = bfs.top();
+    bfs.pop();
+    int u = cur.id;
+    int r = cur.root;
+    if (r) {
+      for (int v : adj[u]) {
+        if (c[v] == 0) {
+          c[v] = 2;
+          s[v].insert(r);
+          bfs.push({v,r,cur.dist+1});
+        } else if (c[v] == 2 && !s[v].count(r) && s[v].size() <= 2) {
+          s[v].insert(r);
+          bfs.push({v,r,cur.dist+1});
+        }
+      }
+    } else {
+      for (int v : adj[u]) {
+        if (c[v] == 0) {
+          c[v] = 1;
+          s[v].insert(s[u].begin(), s[u].end());
+          bfs.push({v,0,cur.dist+1});
+        } else if (c[v] == 2 && s[v].size() <= 2) {
+          s[v].insert(s[u].begin(), s[u].end());
+          if (s[v].size() <= 2) {
+            c[v] = 1;
+            bfs.push({v,0,cur.dist+1});
+          }
+        }
+      }
+    }
+  }
 
-	map<pii,int> pcnt;
-	int base = 0;
-	for (int i=1; i<=n; i++) {
-		//cerr << i << ": " << c[i] << " -> "; for (int it : s[i]) {
-			//cerr << it << " "; }
-		//cerr << nl;
-		if (c[i] == 1) {
-			assert(s[i].size() <= 2);
-			if (s[i].size() == 2) {
-				int a = *s[i].begin();
-				int b = *s[i].rbegin();
-				con[a].insert(b);
-				con[b].insert(a);
-				pcnt[pii(min(a,b),max(a,b))]++;
-			} else if (s[i].size() == 1) {
-				res[*s[i].begin()]++;
-			} else {
-				assert(s[i].empty());
-				base++;
-			}
-		}
-	}
+  map<pii,int> pcnt;
+  int base = 0;
+  for (int i=1; i<=n; i++) {
+    //cerr << i << ": " << c[i] << " -> "; for (int it : s[i]) {
+      //cerr << it << " "; }
+    //cerr << nl;
+    if (c[i] == 1) {
+      assert(s[i].size() <= 2);
+      if (s[i].size() == 2) {
+        int a = *s[i].begin();
+        int b = *s[i].rbegin();
+        con[a].insert(b);
+        con[b].insert(a);
+        pcnt[pii(min(a,b),max(a,b))]++;
+      } else if (s[i].size() == 1) {
+        res[*s[i].begin()]++;
+      } else {
+        assert(s[i].empty());
+        base++;
+      }
+    }
+  }
 
-	int ans = 0;
-	for (const auto& it : pcnt) {
-		int a, b;
-		tie(a,b) = it.first;
-		ans = max(ans, it.second + res[a] + res[b]);
-	}
-	sort(blue.begin(), blue.end(), cmp);
-	for (int it : blue) {
-		ans = max(ans, res[it]);
-		for (int jt : blue) {
-			if (it != jt && !con[it].count(jt)) {
-				ans = max(ans, res[it] + res[jt]);
-				break;
-			}
-		}
-	}
-	//cerr << ans << " + " << base << " = ";
-	cout << ans + base << nl;
+  int ans = 0;
+  for (const auto& it : pcnt) {
+    int a, b;
+    tie(a,b) = it.first;
+    ans = max(ans, it.second + res[a] + res[b]);
+  }
+  sort(blue.begin(), blue.end(), cmp);
+  for (int it : blue) {
+    ans = max(ans, res[it]);
+    for (int jt : blue) {
+      if (it != jt && !con[it].count(jt)) {
+        ans = max(ans, res[it] + res[jt]);
+        break;
+      }
+    }
+  }
+  //cerr << ans << " + " << base << " = ";
+  cout << ans + base << nl;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #define FILENAME "nodes"
-	cerr << "File IO: " << FILENAME << nl;
+  cerr << "File IO: " << FILENAME << nl;
 #ifdef ONLINE_JUDGE
-	freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		solve();
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

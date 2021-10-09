@@ -25,57 +25,57 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,k;
-	cin>>n>>k;
-	int x[n],y[n];
-	ld d[n];
-	for(int i=0;i<n;i++) {
-		cin>>x[i]>>y[i];
-		d[i] = hypot(x[i],y[i]);
-	}
+  int n,k;
+  cin>>n>>k;
+  int x[n],y[n];
+  ld d[n];
+  for(int i=0;i<n;i++) {
+    cin>>x[i]>>y[i];
+    d[i] = hypot(x[i],y[i]);
+  }
 
-	auto count = [&](ld r) {
-		vector<pair<ld,int>> p;
-		for(int i=0;i<n;i++) {
-			if(d[i]>2*r) continue;
-			ld ang = atan2(y[i],x[i]);
-			ld diff = acos(d[i]/2/r);
-			ld s = ang-diff;
-			ld t = ang+diff;
-			for(int j=0;j<3;j++) {
-				p.push_back(make_pair(s+j*2*M_PI,1));
-				p.push_back(make_pair(t+j*2*M_PI,-1));
-			}
-		}
-		sort(p.begin(),p.end());
+  auto count = [&](ld r) {
+    vector<pair<ld,int>> p;
+    for(int i=0;i<n;i++) {
+      if(d[i]>2*r) continue;
+      ld ang = atan2(y[i],x[i]);
+      ld diff = acos(d[i]/2/r);
+      ld s = ang-diff;
+      ld t = ang+diff;
+      for(int j=0;j<3;j++) {
+        p.push_back(make_pair(s+j*2*M_PI,1));
+        p.push_back(make_pair(t+j*2*M_PI,-1));
+      }
+    }
+    sort(p.begin(),p.end());
 
-		int res = 0;
-		int cur = 0;
-		for(const auto& it:p) {
-			cur += it.second;
-			res = max(res,cur);
-		}
-		return res;
-	};
+    int res = 0;
+    int cur = 0;
+    for(const auto& it:p) {
+      cur += it.second;
+      res = max(res,cur);
+    }
+    return res;
+  };
 
-	const ld BS = 1e-9;
-	const ld BIG = 1e12;
-	ld l = 0;
-	ld r = BIG;
-	while(r-l>BS) {
-		ld m = (l+r)/2;
-		if(count(m)>=k) {
-			r = m;
-		} else {
-			l = m;
-		}
-	}
-	if(r>BIG-1) cout<<-1<<nl;
-	else cout<<(l+r)/2<<nl;
+  const ld BS = 1e-9;
+  const ld BIG = 1e12;
+  ld l = 0;
+  ld r = BIG;
+  while(r-l>BS) {
+    ld m = (l+r)/2;
+    if(count(m)>=k) {
+      r = m;
+    } else {
+      l = m;
+    }
+  }
+  if(r>BIG-1) cout<<-1<<nl;
+  else cout<<(l+r)/2<<nl;
 
-	return 0;
+  return 0;
 }

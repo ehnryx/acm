@@ -18,44 +18,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 const int N = 1e5+1;
 int freq[N];
 void insert(int x, int cnt) {
-	for ( ; x<N; x+=x&-x)
-		freq[x] += cnt;
+  for ( ; x<N; x+=x&-x)
+    freq[x] += cnt;
 }
 int query(int x) {
-	int res = 0;
-	for ( ; x>0; x-=x&-x)
-		res += freq[x];
-	return res;
+  int res = 0;
+  for ( ; x>0; x-=x&-x)
+    res += freq[x];
+  return res;
 }
 int query(int xl, int xr) {
-	return query(xr) - query(xl-1);
+  return query(xr) - query(xl-1);
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		memset(freq, 0, sizeof freq);
+  int T;
+  cin >> T;
+  while (T--) {
+    memset(freq, 0, sizeof freq);
 
-		int n, q;
-		cin >> n >> q;
+    int n, q;
+    cin >> n >> q;
 
-		ll a;
-		for (int i=1; i<=n; i++) {
-			cin >> a;
-			insert(i, __builtin_popcountll(a)-1 + 63-__builtin_clzll(a));
-		}
+    ll a;
+    for (int i=1; i<=n; i++) {
+      cin >> a;
+      insert(i, __builtin_popcountll(a)-1 + 63-__builtin_clzll(a));
+    }
 
-		int l, r;
-		while (q--) {
-			cin >> l >> r;
-			cout << query(l, r) << nl;
-		}
-	}
+    int l, r;
+    while (q--) {
+      cin >> l >> r;
+      cout << query(l, r) << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

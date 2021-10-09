@@ -24,48 +24,48 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	cin >> s;
-	deque<char> res;
-	for(char c : s) {
-		res.push_back(c);
-	}
+  string s;
+  cin >> s;
+  deque<char> res;
+  for(char c : s) {
+    res.push_back(c);
+  }
 
-	int m;
-	cin >> m;
-	bool rev = false;
-	for(int i=0; i<m; i++) {
-		int t;
-		cin >> t;
-		if(t == 1) {
-			rev ^= 1;
-		} else {
-			int f; char c;
-			cin >> f >> c;
-			f = (f-1) ^ rev;
-			if(f == 0) {
-				res.push_front(c);
-			} else {
-				res.push_back(c);
-			}
-		}
-	}
+  int m;
+  cin >> m;
+  bool rev = false;
+  for(int i=0; i<m; i++) {
+    int t;
+    cin >> t;
+    if(t == 1) {
+      rev ^= 1;
+    } else {
+      int f; char c;
+      cin >> f >> c;
+      f = (f-1) ^ rev;
+      if(f == 0) {
+        res.push_front(c);
+      } else {
+        res.push_back(c);
+      }
+    }
+  }
 
-	if(rev) {
-		while(!res.empty()) {
-			cout << res.back();
-			res.pop_back();
-		}
-	} else {
-		while(!res.empty()) {
-			cout << res.front();
-			res.pop_front();
-		}
-	}
-	cout << nl;
+  if(rev) {
+    while(!res.empty()) {
+      cout << res.back();
+      res.pop_back();
+    }
+  } else {
+    while(!res.empty()) {
+      cout << res.front();
+      res.pop_front();
+    }
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

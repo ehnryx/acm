@@ -29,34 +29,34 @@ const int N = 100+1;
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n,w,s;
-		cin>>n>>w>>s;
-		int g = -1;
-		for(int i=0;i<n;i++) {
-			cin>>a[i];
-			if(a[i]==0) {
-				g = i;
-			}
-		}
+  int T;
+  cin>>T;
+  while(T--) {
+    int n,w,s;
+    cin>>n>>w>>s;
+    int g = -1;
+    for(int i=0;i<n;i++) {
+      cin>>a[i];
+      if(a[i]==0) {
+        g = i;
+      }
+    }
 
-		ld left = 0;
-		ld right = 0;
-		for(int i=0;i<n;i++) {
-			if(i<g) {
-				left = max(left, atan2(a[i], (ld)(g-i)*(w+s)));
-			}
-			if(i>g) {
-				right = max(right, atan2(a[i], (ld)(i-g)*(w+s)));
-			}
-		}
-		cout << (PI-left-right)/PI * TOT << nl;
-	}
+    ld left = 0;
+    ld right = 0;
+    for(int i=0;i<n;i++) {
+      if(i<g) {
+        left = max(left, atan2(a[i], (ld)(g-i)*(w+s)));
+      }
+      if(i>g) {
+        right = max(right, atan2(a[i], (ld)(i-g)*(w+s)));
+      }
+    }
+    cout << (PI-left-right)/PI * TOT << nl;
+  }
 
-	return 0;
+  return 0;
 }

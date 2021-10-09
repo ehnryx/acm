@@ -8,12 +8,12 @@ const char nl = '\n';
 #define FILE TODO
 
 int main() {
-	if (fopen(FILE ".in", "r")) {
-		freopen(FILE ".in", "r", stdin);
-		freopen(FILE ".out", "w", stdout);
-	}
+  if (fopen(FILE ".in", "r")) {
+    freopen(FILE ".in", "r", stdin);
+    freopen(FILE ".out", "w", stdout);
+  }
 
-	
+  
 
-	return 0;
+  return 0;
 }

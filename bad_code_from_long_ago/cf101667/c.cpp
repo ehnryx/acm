@@ -36,12 +36,12 @@ int main() {
         }
     }
 
-	for (int i = 0; i < n; i++) {
-		cerr << i << ": ";
-		for (int it : graph[i]) 
-			cerr << it << " ";
-		cerr << endl;
-	}
+  for (int i = 0; i < n; i++) {
+    cerr << i << ": ";
+    for (int it : graph[i]) 
+      cerr << it << " ";
+    cerr << endl;
+  }
     
     queue<int> next;
     int len[n];
@@ -57,7 +57,7 @@ int main() {
     while (!next.empty()) {
         int cur = next.front();
         next.pop();
-		cerr << "visit " << cur << endl;
+    cerr << "visit " << cur << endl;
         ans = max(ans, len[cur]);
         for (int neighbour : graph[cur]) {
             if (len[neighbour] == 0) {

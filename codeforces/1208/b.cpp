@@ -33,37 +33,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-	}
+  int n;
+  cin>>n;
+  int a[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+  }
 
-	int r = n;
-	unordered_set<int> cur;
-	for(;r>0;r--) {
-		if(!cur.count(a[r-1])) {
-			cur.insert(a[r-1]);
-		} else {
-			break;
-		}
-	}
+  int r = n;
+  unordered_set<int> cur;
+  for(;r>0;r--) {
+    if(!cur.count(a[r-1])) {
+      cur.insert(a[r-1]);
+    } else {
+      break;
+    }
+  }
 
-	int ans = r;
-	for(int i=0;i<n;i++) {
-		while(r<n && cur.count(a[i])) {
-			cur.erase(a[r++]);
-		}
-		if(cur.count(a[i])) break;
-		ans = min(ans, r-i-1);
-		cur.insert(a[i]);
-	}
-	cout<<ans<<nl;
+  int ans = r;
+  for(int i=0;i<n;i++) {
+    while(r<n && cur.count(a[i])) {
+      cur.erase(a[r++]);
+    }
+    if(cur.count(a[i])) break;
+    ans = min(ans, r-i-1);
+    cur.insert(a[i]);
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

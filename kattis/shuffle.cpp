@@ -26,29 +26,29 @@ const int N = 1e5+1;
 int a[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int s,n;
-		cin>>s>>n;
-		for(int i=0;i<n;i++) {
-			cin>>a[i];
-		}
+  int T;
+  cin>>T;
+  while(T--) {
+    int s,n;
+    cin>>s>>n;
+    for(int i=0;i<n;i++) {
+      cin>>a[i];
+    }
 
-		unordered_map<int,int> cur;
-		unordered_set<int> bad;
-		for(int i=0;i<n+s;i++) {
-			if(i<n) cur[a[i]]++;
-			if(i-s>=0 && --cur[a[i-s]] == 0) cur.erase(a[i-s]);
-			int len = min(i,n-1) - max(0,i-s+1) + 1;
-			if(cur.size() != len) bad.insert(i%s);
-		}
-		cout<<s-bad.size()<<nl;
-	}
+    unordered_map<int,int> cur;
+    unordered_set<int> bad;
+    for(int i=0;i<n+s;i++) {
+      if(i<n) cur[a[i]]++;
+      if(i-s>=0 && --cur[a[i-s]] == 0) cur.erase(a[i-s]);
+      int len = min(i,n-1) - max(0,i-s+1) + 1;
+      if(cur.size() != len) bad.insert(i%s);
+    }
+    cout<<s-bad.size()<<nl;
+  }
 
-	return 0;
+  return 0;
 }

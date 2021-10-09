@@ -27,90 +27,90 @@ const int M = 2e3 + 1;
 int x[M], y[M];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m, k;
-		cin >> m >> n >> k;
-		for(int i=n-1; i>=0; i--) {
-			for(int j=0; j<m; j++) {
-				cin >> a[i][j];
-			}
-		}
-		for(int i=n-1; i>=0; i--) {
-			for(int j=0; j<m; j++) {
-				cin >> b[i][j];
-			}
-		}
-		for(int i=0; i<k; i++) {
-			cin >> y[i] >> x[i];
-		}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m, k;
+    cin >> m >> n >> k;
+    for(int i=n-1; i>=0; i--) {
+      for(int j=0; j<m; j++) {
+        cin >> a[i][j];
+      }
+    }
+    for(int i=n-1; i>=0; i--) {
+      for(int j=0; j<m; j++) {
+        cin >> b[i][j];
+      }
+    }
+    for(int i=0; i<k; i++) {
+      cin >> y[i] >> x[i];
+    }
 
-		bool A = true;
-		bool B = true;
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<m; j++) {
-				if(a[i][j] == '#') {
-					B = false;
-				}
-				if(b[i][j] == '#') {
-					A = false;
-				}
-			}
-		}
+    bool A = true;
+    bool B = true;
+    for(int i=0; i<n; i++) {
+      for(int j=0; j<m; j++) {
+        if(a[i][j] == '#') {
+          B = false;
+        }
+        if(b[i][j] == '#') {
+          A = false;
+        }
+      }
+    }
 
-		for(int t=0; t<k && !A && !B; ) {
-			while(t<k) {
-				int i = x[t];
-				int j = y[t];
-				//cerr<<"one shoots @ "<<i<<" "<<j<<nl;
-				++t;
-				if(b[i][j] == '#') {
-					b[i][j] = '_';
-				} else {
-					break;
-				}
-			}
-			while(t<k) {
-				int i = x[t];
-				int j = y[t];
-				//cerr<<"two shoots @ "<<i<<" "<<j<<nl;
-				++t;
-				if(a[i][j] == '#') {
-					a[i][j] = '_';
-				} else {
-					break;
-				}
-			}
+    for(int t=0; t<k && !A && !B; ) {
+      while(t<k) {
+        int i = x[t];
+        int j = y[t];
+        //cerr<<"one shoots @ "<<i<<" "<<j<<nl;
+        ++t;
+        if(b[i][j] == '#') {
+          b[i][j] = '_';
+        } else {
+          break;
+        }
+      }
+      while(t<k) {
+        int i = x[t];
+        int j = y[t];
+        //cerr<<"two shoots @ "<<i<<" "<<j<<nl;
+        ++t;
+        if(a[i][j] == '#') {
+          a[i][j] = '_';
+        } else {
+          break;
+        }
+      }
 
-			A = true;
-			B = true;
-			for(int i=0; i<n; i++) {
-				for(int j=0; j<m; j++) {
-					if(a[i][j] == '#') {
-						B = false;
-					}
-					if(b[i][j] == '#') {
-						A = false;
-					}
-				}
-			}
-		}
+      A = true;
+      B = true;
+      for(int i=0; i<n; i++) {
+        for(int j=0; j<m; j++) {
+          if(a[i][j] == '#') {
+            B = false;
+          }
+          if(b[i][j] == '#') {
+            A = false;
+          }
+        }
+      }
+    }
 
-		if(A == B) {
-			cout << "draw" << nl;
-		} else if(A) {
-			cout << "player one wins" << nl;
-		} else if(B) {
-			cout << "player two wins" << nl;
-		} else {
-			assert(false);
-		}
+    if(A == B) {
+      cout << "draw" << nl;
+    } else if(A) {
+      cout << "player one wins" << nl;
+    } else if(B) {
+      cout << "player two wins" << nl;
+    } else {
+      assert(false);
+    }
 
-	}
+  }
 
-	return 0;
+  return 0;
 }

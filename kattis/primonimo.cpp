@@ -195,16 +195,16 @@ template <class T> struct Matrix {
 };
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, a;
-	cin >> n >> m >> MOD;
+  int n, m, a;
+  cin >> n >> m >> MOD;
 
-	Matrix<Int> mat(n*m, n*m);
-	vector<Int> goal;
-	for (int i = 0; i < n; i++) {
+  Matrix<Int> mat(n*m, n*m);
+  vector<Int> goal;
+  for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cin >> a;
             goal.push_back(MOD-a);
@@ -213,26 +213,26 @@ int main() {
             for (int k = 0; k < m; k++)
                 mat[i*m+j][i*m+k] = 1;
         }
-	}
+  }
 
     vector<Int> ans = mat.solve(goal);
     if (ans.empty()) {
         cout << -1 << endl;
         return 0;
-	}
+  }
 
     ll sum = 0;
     for (Int it: ans) {
         sum += it;
-	}
+  }
 
     cout << sum << nl;
     for (int i = 0; i < n*m; i++) {
         while (ans[i].x--) {
             cout << i+1 << " ";
-		}
-	}
+    }
+  }
     cout << nl;
 
-	return 0;
+  return 0;
 }

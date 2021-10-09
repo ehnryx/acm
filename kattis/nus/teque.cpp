@@ -27,26 +27,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	rope<int> v;
-	for(int i=0;i<n;i++) {
-		string s; int x;
-		cin>>s>>x;
-		if(s=="get") {
-			cout<<v[x]<<nl;
-		} else if(s=="push_back") {
-			v.push_back(x);
-		} else if(s=="push_front") {
-			v.push_front(x);
-		} else {
-			int id = (v.size()+1)/2;
-			v.insert(v.mutable_begin()+id, x);
-		}
-	}
+  int n;
+  cin>>n;
+  rope<int> v;
+  for(int i=0;i<n;i++) {
+    string s; int x;
+    cin>>s>>x;
+    if(s=="get") {
+      cout<<v[x]<<nl;
+    } else if(s=="push_back") {
+      v.push_back(x);
+    } else if(s=="push_front") {
+      v.push_front(x);
+    } else {
+      int id = (v.size()+1)/2;
+      v.insert(v.mutable_begin()+id, x);
+    }
+  }
 
-	return 0;
+  return 0;
 }

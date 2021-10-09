@@ -25,26 +25,26 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	int k;
-	cin >> s >> k;
-	string t = s;
-	sort(t.begin(), t.end());
+  string s;
+  int k;
+  cin >> s >> k;
+  string t = s;
+  sort(t.begin(), t.end());
 
-	int n = s.size();
-	for(int i=0; i<n; i++) {
-		if(i<k && i+k>=n) {
-			if (s[i] != t[i]) {
-				cout << "No" << nl;
-				return 0;
-			}
-		}
-	}
+  int n = s.size();
+  for(int i=0; i<n; i++) {
+    if(i<k && i+k>=n) {
+      if (s[i] != t[i]) {
+        cout << "No" << nl;
+        return 0;
+      }
+    }
+  }
 
-	cout << "Yes" << nl;
+  cout << "Yes" << nl;
 
-	return 0;
+  return 0;
 }

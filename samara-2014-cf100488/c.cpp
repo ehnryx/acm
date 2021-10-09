@@ -19,39 +19,39 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int k;
-	cin >> k;
+  int k;
+  cin >> k;
 
-	vector<int> factors;
-	int lim = sqrt(k);
-	for (int i = 1; i <= lim; i++) {
-		if (k % i == 0) {
-			factors.push_back(i);
-			if (i*i != k) factors.push_back(k/i);
-		}
-	}
+  vector<int> factors;
+  int lim = sqrt(k);
+  for (int i = 1; i <= lim; i++) {
+    if (k % i == 0) {
+      factors.push_back(i);
+      if (i*i != k) factors.push_back(k/i);
+    }
+  }
 
-	unordered_set<ll> fsqr;
-	int n = factors.size();
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j <= i; j++) {
-			fsqr.insert((ll)factors[i]*factors[j]);
-		}
-	}
+  unordered_set<ll> fsqr;
+  int n = factors.size();
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j <= i; j++) {
+      fsqr.insert((ll)factors[i]*factors[j]);
+    }
+  }
 
-	ll v = (ll)k*k;
-	cout << fsqr.size() << nl;
-	for (ll f : fsqr) {
-		cout << f+k << " " << v/f+k << nl;
-	}
+  ll v = (ll)k*k;
+  cout << fsqr.size() << nl;
+  for (ll f : fsqr) {
+    cout << f+k << " " << v/f+k << nl;
+  }
 
-	return 0;
+  return 0;
 }

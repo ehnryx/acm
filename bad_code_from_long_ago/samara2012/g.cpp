@@ -15,39 +15,39 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	string s;
-	cin >> s;
-	if (s.size() > 26) {
-		cout << "IMPOSSIBLE" << nl;
-	}
-	else {
-		bitset<26> fixed, seen;
-		char arr[27]; arr[s.size()] = '\0';
-		for (int i = 0; i < s.size(); i++) {
-			if (!seen[s[i]-'a']) {
-				seen[s[i]-'a'] = true;
-				fixed[s[i]-'a'] = true;
-			}
-		}
-		int curr = 0;
-		seen.reset();
-		for (int i = 0; i < s.size(); i++) {
-			if (!seen[s[i]-'a']) {
-				seen[s[i]-'a'] = true;
-				arr[i] = s[i];
-			}
-			else {
-				while (fixed[curr])
-					curr++;
-				arr[i] = curr+'a';
-				curr++;
-			}
-		}
-		cout << arr << nl;
-	}
+  string s;
+  cin >> s;
+  if (s.size() > 26) {
+    cout << "IMPOSSIBLE" << nl;
+  }
+  else {
+    bitset<26> fixed, seen;
+    char arr[27]; arr[s.size()] = '\0';
+    for (int i = 0; i < s.size(); i++) {
+      if (!seen[s[i]-'a']) {
+        seen[s[i]-'a'] = true;
+        fixed[s[i]-'a'] = true;
+      }
+    }
+    int curr = 0;
+    seen.reset();
+    for (int i = 0; i < s.size(); i++) {
+      if (!seen[s[i]-'a']) {
+        seen[s[i]-'a'] = true;
+        arr[i] = s[i];
+      }
+      else {
+        while (fixed[curr])
+          curr++;
+        arr[i] = curr+'a';
+        curr++;
+      }
+    }
+    cout << arr << nl;
+  }
 
-	return 0;
+  return 0;
 }

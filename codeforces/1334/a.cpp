@@ -24,31 +24,31 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n;
-		cin >> n;
-		vector<int> a(n), b(n);
-		bool ok = true;
-		for(int i=0; i<n; i++) {
-			cin >> a[i] >> b[i];
-			ok &= (a[i] >= b[i]);
-			if(i>0) {
-				ok &= (a[i] >= a[i-1]);
-				ok &= (b[i] >= b[i-1]);
-				ok &= (a[i]-a[i-1] >= b[i]-b[i-1]);
-			}
-		}
-		if(ok) {
-			cout << "YES" << nl;
-		} else {
-			cout << "NO" << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    vector<int> a(n), b(n);
+    bool ok = true;
+    for(int i=0; i<n; i++) {
+      cin >> a[i] >> b[i];
+      ok &= (a[i] >= b[i]);
+      if(i>0) {
+        ok &= (a[i] >= a[i-1]);
+        ok &= (b[i] >= b[i-1]);
+        ok &= (a[i]-a[i-1] >= b[i]-b[i-1]);
+      }
+    }
+    if(ok) {
+      cout << "YES" << nl;
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

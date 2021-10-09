@@ -26,30 +26,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
-	vector<char> v = {'a','e','i','o','u'};
-	for (int i=5; i<n; i++) {
-		if (n%i==0 && n/i>=5) {
-			for (int j=0; j<i; j++) {
-				for (int k=0; k<n/i; k++) {
-					cout << v[(j+k)%5];
-				}
-				cerr << nl;
-			}
-			cout << nl;
-			return 0;
-		}
-	}
-	cout << -1 << nl;
+  int n;
+  cin >> n;
+  vector<char> v = {'a','e','i','o','u'};
+  for (int i=5; i<n; i++) {
+    if (n%i==0 && n/i>=5) {
+      for (int j=0; j<i; j++) {
+        for (int k=0; k<n/i; k++) {
+          cout << v[(j+k)%5];
+        }
+        cerr << nl;
+      }
+      cout << nl;
+      return 0;
+    }
+  }
+  cout << -1 << nl;
 
-	return 0;
+  return 0;
 }

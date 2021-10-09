@@ -107,8 +107,8 @@ ll solve(const vector<pt>& v, int h, int l, int r) {
 // read limits carefully
 // characterize valid solutions
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef ONLINE_JUDGE
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
@@ -137,5 +137,5 @@ int main() {
   memset(scary, -1, sizeof scary);
   cout << solve(v, h.size(), 0, (int)h.size()-1) << nl;
 
-	return 0;
+  return 0;
 }

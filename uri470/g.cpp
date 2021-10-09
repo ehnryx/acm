@@ -33,16 +33,16 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	for(int i=1;i<10;i++) {
-		cout<<((n*m)*i+9)/10<<" ";
-	}
-	cout<<nl;
+  int n,m;
+  cin>>n>>m;
+  for(int i=1;i<10;i++) {
+    cout<<((n*m)*i+9)/10<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

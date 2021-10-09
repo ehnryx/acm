@@ -18,36 +18,36 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	int ans[n];
-	int key[256];
-	memset(key, INF, sizeof key);
+  int ans[n];
+  int key[256];
+  memset(key, INF, sizeof key);
 
-	int a;
-	for (int i=0; i<n; i++) {
-		cin >> a;
-		if (key[a] == INF) {
-			int start = max(0, a-k+1);
-			while (key[start] < start) {
-				start++;
-			}
-			for (int j=start; j<=a; j++) {
-				key[j] = start;
-			}
-		}
-		ans[i] = key[a];
-	}
+  int a;
+  for (int i=0; i<n; i++) {
+    cin >> a;
+    if (key[a] == INF) {
+      int start = max(0, a-k+1);
+      while (key[start] < start) {
+        start++;
+      }
+      for (int j=start; j<=a; j++) {
+        key[j] = start;
+      }
+    }
+    ans[i] = key[a];
+  }
 
-	for (int i=0; i<n; i++) {
-		cout << ans[i] << " ";
-	}
-	cout << nl;
+  for (int i=0; i<n; i++) {
+    cout << ans[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

@@ -33,17 +33,17 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n, rs, cs, rt, ct;
-	cin >> n >> rs >> cs >> rt >> ct;
+  ll n, rs, cs, rt, ct;
+  cin >> n >> rs >> cs >> rt >> ct;
 
-	ll lb = abs(rs-rt) + abs(cs-ct);
-	if (lb == 0) lb = 2;
-	ll tot = max((ll)0, n-lb+1);
-	cout << (tot+1)/2 << nl;
+  ll lb = abs(rs-rt) + abs(cs-ct);
+  if (lb == 0) lb = 2;
+  ll tot = max((ll)0, n-lb+1);
+  cout << (tot+1)/2 << nl;
 
-	return 0;
+  return 0;
 }

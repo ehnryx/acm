@@ -32,41 +32,41 @@ const int N = 1789;
 bool p[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	FOR (i,2,N-1) {
-		p[i] = true;
-		FOR(j,2,i-1) {
-			if (i%j == 0) {
-				p[i] = false;
-				break;
-			}
-		}
-	}
+  FOR (i,2,N-1) {
+    p[i] = true;
+    FOR(j,2,i-1) {
+      if (i%j == 0) {
+        p[i] = false;
+        break;
+      }
+    }
+  }
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	vector<pii> ans;
-	FOR(i,1,n) {
-		if (i<n) ans.push_back(pii(i,i+1));
-		else ans.push_back(pii(n,1));
-	}
+  vector<pii> ans;
+  FOR(i,1,n) {
+    if (i<n) ans.push_back(pii(i,i+1));
+    else ans.push_back(pii(n,1));
+  }
 
-	int m = n;
-	while (!p[m]) {
-		m++;
-		ans.push_back(pii(m-n, n-(m-n)));
-	}
-	assert(m < n+n/2);
-	assert(m == ans.size());
+  int m = n;
+  while (!p[m]) {
+    m++;
+    ans.push_back(pii(m-n, n-(m-n)));
+  }
+  assert(m < n+n/2);
+  assert(m == ans.size());
 
-	cout << m << nl;
-	For(i,m) {
-		cout << ans[i].first << " " << ans[i].second << nl;
-	}
+  cout << m << nl;
+  For(i,m) {
+    cout << ans[i].first << " " << ans[i].second << nl;
+  }
 
-	return 0;
+  return 0;
 }

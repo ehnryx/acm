@@ -29,41 +29,41 @@ ld dp[N][N][N];
 char ans[N][N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int s=M+M; s>=0; s--) {
-		for(int it=0; it<T; it++) {
-			for(int i=0; i<M; i++) {
-				int j = s-i;
-				if(j<0 || j>=M) continue;
-				for(int k=M-i; k>=0; k--) {
-					if(i+k == M) {
-						dp[i][j][k] = 1;
-						ans[i][j][k] = 'H';
-					} else {
-						ld hold = 1 - dp[j][i+k][0];
-						ld roll = 1 - dp[j][i][0];
-						for(int r=2; r<=6; r++) {
-							if(i+k+r > M) roll += 1 - dp[j][i][0];
-							else roll += dp[i][j][k+r];
-						}
-						roll /= 6;
-						dp[i][j][k] = max(hold, roll);
-						ans[i][j][k] = (hold > roll ? 'H' : 'C');
-					}
-				}
-			}
-		}
-	}
+  for(int s=M+M; s>=0; s--) {
+    for(int it=0; it<T; it++) {
+      for(int i=0; i<M; i++) {
+        int j = s-i;
+        if(j<0 || j>=M) continue;
+        for(int k=M-i; k>=0; k--) {
+          if(i+k == M) {
+            dp[i][j][k] = 1;
+            ans[i][j][k] = 'H';
+          } else {
+            ld hold = 1 - dp[j][i+k][0];
+            ld roll = 1 - dp[j][i][0];
+            for(int r=2; r<=6; r++) {
+              if(i+k+r > M) roll += 1 - dp[j][i][0];
+              else roll += dp[i][j][k+r];
+            }
+            roll /= 6;
+            dp[i][j][k] = max(hold, roll);
+            ans[i][j][k] = (hold > roll ? 'H' : 'C');
+          }
+        }
+      }
+    }
+  }
 
-	int n;
-	cin >> n;
-	for(int i=0; i<n; i++) {
-		int c, h, x;
-		cin >> c >> h >> x;
-		cout << ans[c][h][x] << nl;
-	}
+  int n;
+  cin >> n;
+  for(int i=0; i<n; i++) {
+    int c, h, x;
+    cin >> c >> h >> x;
+    cout << ans[c][h][x] << nl;
+  }
 
-	return 0;
+  return 0;
 }

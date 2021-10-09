@@ -15,12 +15,12 @@ const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	double N;
-	cin >> N;
-	cout << fixed << setprecision(10) << exp(log(N)/N) << nl;
+  double N;
+  cin >> N;
+  cout << fixed << setprecision(10) << exp(log(N)/N) << nl;
 
-	return 0;
+  return 0;
 }

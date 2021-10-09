@@ -25,25 +25,25 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	string s,t;
-	cin>>s;
-	unordered_set<string> done;
-	done.insert(s);
-	for(int i=1;i<n;i++) {
-		cin>>t;
-		if(t.front()!=s.back() || done.count(t)) {
-			cout<<"Player "<<i%2+1<<" lost"<<nl;
-			return 0;
-		}
-		done.insert(t);
-		s = t;
-	}
-	cout<<"Fair Game"<<nl;
+  int n;
+  cin>>n;
+  string s,t;
+  cin>>s;
+  unordered_set<string> done;
+  done.insert(s);
+  for(int i=1;i<n;i++) {
+    cin>>t;
+    if(t.front()!=s.back() || done.count(t)) {
+      cout<<"Player "<<i%2+1<<" lost"<<nl;
+      return 0;
+    }
+    done.insert(t);
+    s = t;
+  }
+  cout<<"Fair Game"<<nl;
 
-	return 0;
+  return 0;
 }

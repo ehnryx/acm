@@ -22,18 +22,18 @@ mod = 2**16
 ans = 0
 lim = 5*10**6
 for i in range(0, lim):
-	a *= aa
-	a %= div
-	while a % 4 != 0:
-		a *= aa
-		a %= div
-	b *= bb
-	b %= div
-	while b % 8 != 0:
-		b *= bb
-		b %= div
-	if a % mod == b % mod:
-		ans += 1
+  a *= aa
+  a %= div
+  while a % 4 != 0:
+    a *= aa
+    a %= div
+  b *= bb
+  b %= div
+  while b % 8 != 0:
+    b *= bb
+    b %= div
+  if a % mod == b % mod:
+    ans += 1
 
 print ans
 

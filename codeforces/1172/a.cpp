@@ -24,85 +24,85 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n], b[n];
-	For(i,n) {
-		cin >> a[i];
-	}
-	For(i,n) {
-		cin >> b[i];
-	}
+  int a[n], b[n];
+  For(i,n) {
+    cin >> a[i];
+  }
+  For(i,n) {
+    cin >> b[i];
+  }
 
-	int ans = -1;
-	function<bool(int)> valid = [&] (int s) {
-		unordered_multiset<int> cur;
-		deque<int> ch;
-		For(i,n) {
-			cur.insert(a[i]);
-			ch.push_back(b[i]);
-		}
-		For(i,s) {
-			cur.erase(cur.find(0));
-			ch.push_back(0);
-			cur.insert(ch.front());
-			ch.pop_front();
-		}
+  int ans = -1;
+  function<bool(int)> valid = [&] (int s) {
+    unordered_multiset<int> cur;
+    deque<int> ch;
+    For(i,n) {
+      cur.insert(a[i]);
+      ch.push_back(b[i]);
+    }
+    For(i,s) {
+      cur.erase(cur.find(0));
+      ch.push_back(0);
+      cur.insert(ch.front());
+      ch.pop_front();
+    }
 
-		ans = s;
-		while (ch.back() != n) {
-			ans++;
-			int g = ch.back()+1;
-			if (cur.count(g)) {
-				cur.erase(g);
-				ch.push_back(g);
-				cur.insert(ch.front());
-				ch.pop_front();
-			} else {
-				break;
-			}
-		}
+    ans = s;
+    while (ch.back() != n) {
+      ans++;
+      int g = ch.back()+1;
+      if (cur.count(g)) {
+        cur.erase(g);
+        ch.push_back(g);
+        cur.insert(ch.front());
+        ch.pop_front();
+      } else {
+        break;
+      }
+    }
 
-		bool ok = true;
-		int p = 0;
-		For(i,n) {
-			if (ch.front() != p+1) {
-				ok = false;
-				break;
-			}
-			p = ch.front();
-			ch.pop_front();
-		}
-		return ok;
-	};
+    bool ok = true;
+    int p = 0;
+    For(i,n) {
+      if (ch.front() != p+1) {
+        ok = false;
+        break;
+      }
+      p = ch.front();
+      ch.pop_front();
+    }
+    return ok;
+  };
 
-	if (valid(0)) {
-		cout << ans << nl;
-		return 0;
-	}
+  if (valid(0)) {
+    cout << ans << nl;
+    return 0;
+  }
 
-	int l = 0;
-	int r = n;
-	while (l<r) {
-		int m = (l+r)/2;
-		if (valid(m)) {
-			r = m;
-		} else {
-			l = m+1;
-		}
-	}
-	assert(valid(l));
-	assert(ans != -1);
-	cout << ans << nl;
+  int l = 0;
+  int r = n;
+  while (l<r) {
+    int m = (l+r)/2;
+    if (valid(m)) {
+      r = m;
+    } else {
+      l = m+1;
+    }
+  }
+  assert(valid(l));
+  assert(ans != -1);
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -20,11 +20,11 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // Warning: possibly SLOW! because Node is copied when querying
 //
 // USAGE:
-// 	SegmentTree<Node,T> magic(length);
-// 	magic.set(i,v); sets ith value to v, DOES NOT PULL
-// 	magic.build(); pulls leaves up
-// 	magic.query(l,r); range [l,r], combines segments using pull
-// 	magic.update(l,r,v); range [l,r], updates with v
+//   SegmentTree<Node,T> magic(length);
+//   magic.set(i,v); sets ith value to v, DOES NOT PULL
+//   magic.build(); pulls leaves up
+//   magic.query(l,r); range [l,r], combines segments using pull
+//   magic.update(l,r,v); range [l,r], updates with v
 // 
 // The Node class requires the following: (SEE EXAMPLE BELOW)
 // Node();
@@ -91,43 +91,43 @@ struct SegmentTree {
 //*/
 
 struct Node {
-	int x;
-	Node(int v = 0): x(v) {}
-	bool put(int v) { return true; }
-	bool get() { return true; }
-	void update(int v, int len) { x = !x; }
-	void push(Node& left, Node& right, int len) {}
-	Node pull(const Node& left, const Node& right) {
-		return *this = Node(left.x+right.x);
-	}
+  int x;
+  Node(int v = 0): x(v) {}
+  bool put(int v) { return true; }
+  bool get() { return true; }
+  void update(int v, int len) { x = !x; }
+  void push(Node& left, Node& right, int len) {}
+  Node pull(const Node& left, const Node& right) {
+    return *this = Node(left.x+right.x);
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
-	SegmentTree<Node,int> magic(n+1);
-	for (int i=0; i<k; i++) {
-		char t;
-		cin >> t;
-		if (t=='F') {
-			int id;
-			cin >> id;
-			magic.update(id,id,1);
-		} else {
-			int l, r;
-			cin >> l >> r;
-			cout << magic.query(l,r).x << nl;
-		}
-	}
+  int n, k;
+  cin >> n >> k;
+  SegmentTree<Node,int> magic(n+1);
+  for (int i=0; i<k; i++) {
+    char t;
+    cin >> t;
+    if (t=='F') {
+      int id;
+      cin >> id;
+      magic.update(id,id,1);
+    } else {
+      int l, r;
+      cin >> l >> r;
+      cout << magic.query(l,r).x << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

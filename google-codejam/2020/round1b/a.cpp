@@ -25,21 +25,21 @@ const ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) { os << it << " "; } return os;
+  for (const T& it : v) { os << it << " "; } return os;
 }
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) { os << it << " "; }
-	return os << '}';
+  os << "{ "; for (const T& it : v) { os << it << " "; }
+  return os << '}';
 }
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) { os << it << " "; }
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) { os << it << " "; }
+  return os << '}';
 }
 
 void casesolve();
@@ -49,17 +49,17 @@ void casesolve();
 
 
 int main(int argc, char** argv) {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		casesolve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    casesolve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -68,46 +68,46 @@ int main(int argc, char** argv) {
 
 void casesolve() {
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	string ans;
-	while(abs(n)+abs(m) > 1) {
-		if((n+m) % 2 == 0) {
-			cout << "IMPOSSIBLE" << nl;
-			return;
-		}
-		if(abs(n) % 2 == 1) {
-			if(((n+1)/2 + m/2) % 2 != 0) {
-				ans.push_back('W');
-				n = (n+1) / 2;
-				m = m / 2;
-			} else {
-				ans.push_back('E');
-				n = (n-1) / 2;
-				m = m / 2;
-			}
-		} else {
-			if((n/2 + (m+1)/2) % 2 != 0) {
-				ans.push_back('S');
-				n = n / 2;
-				m = (m+1) / 2;
-			} else {
-				ans.push_back('N');
-				n = n / 2;
-				m = (m-1) / 2;
-			}
-		}
-	}
+  string ans;
+  while(abs(n)+abs(m) > 1) {
+    if((n+m) % 2 == 0) {
+      cout << "IMPOSSIBLE" << nl;
+      return;
+    }
+    if(abs(n) % 2 == 1) {
+      if(((n+1)/2 + m/2) % 2 != 0) {
+        ans.push_back('W');
+        n = (n+1) / 2;
+        m = m / 2;
+      } else {
+        ans.push_back('E');
+        n = (n-1) / 2;
+        m = m / 2;
+      }
+    } else {
+      if((n/2 + (m+1)/2) % 2 != 0) {
+        ans.push_back('S');
+        n = n / 2;
+        m = (m+1) / 2;
+      } else {
+        ans.push_back('N');
+        n = n / 2;
+        m = (m-1) / 2;
+      }
+    }
+  }
 
-	if(n) {
-		ans.push_back(n > 0 ? 'E' : 'W');
-	} else {
-		ans.push_back(m > 0 ? 'N' : 'S');
-	}
+  if(n) {
+    ans.push_back(n > 0 ? 'E' : 'W');
+  } else {
+    ans.push_back(m > 0 ? 'N' : 'S');
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return;
+  return;
 }
 

@@ -25,41 +25,41 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 ll cap = 1LL<<32;
 
 ll solve() {
-	ll res = 0;
-	string s;
-	while (cin >> s) {
-		if (s == "for") {
-			ll a;
-			cin >> a;
-			ll b = solve();
-			if (b >= cap) return b;
-			if (a*b >= cap) return a*b;
-			if (res + a*b >= cap) return res+a*b;
-			res += a*b;
-		} else if (s == "end") {
-			return res;
-		} else {
-			res++;
-			if (res >= cap) return res;
-		}
-	}
-	return res;
+  ll res = 0;
+  string s;
+  while (cin >> s) {
+    if (s == "for") {
+      ll a;
+      cin >> a;
+      ll b = solve();
+      if (b >= cap) return b;
+      if (a*b >= cap) return a*b;
+      if (res + a*b >= cap) return res+a*b;
+      res += a*b;
+    } else if (s == "end") {
+      return res;
+    } else {
+      res++;
+      if (res >= cap) return res;
+    }
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ll ans = solve();
-	if (ans >= cap) {
-		cout << "OVERFLOW!!!" << nl;
-	} else {
-		cout << ans << nl;
-	}
+  ll ans = solve();
+  if (ans >= cap) {
+    cout << "OVERFLOW!!!" << nl;
+  } else {
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

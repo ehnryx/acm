@@ -25,28 +25,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		string s;
-		cin >> s;
-		int sum = 0;
-		int zero = 0;
-		int even = 0;
-		for(char c:s) {
-			sum += c-'0';
-			even += ((c-'0') % 2 == 0 && c-'0' > 0);
-			zero += (c == '0');
-		}
-		if(sum%3 == 0 && ((zero>0 && even>0) || zero>=2)) {
-			cout << "red" << nl;
-		} else {
-			cout << "cyan" << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    string s;
+    cin >> s;
+    int sum = 0;
+    int zero = 0;
+    int even = 0;
+    for(char c:s) {
+      sum += c-'0';
+      even += ((c-'0') % 2 == 0 && c-'0' > 0);
+      zero += (c == '0');
+    }
+    if(sum%3 == 0 && ((zero>0 && even>0) || zero>=2)) {
+      cout << "red" << nl;
+    } else {
+      cout << "cyan" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

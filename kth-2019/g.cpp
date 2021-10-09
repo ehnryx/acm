@@ -26,21 +26,21 @@ const int N = 10+2;
 int a[N], b[N];
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	for(int i=0;i<=n;i++) {
-		cin>>a[i];
-	}
+  int n;
+  cin>>n;
+  for(int i=0;i<=n;i++) {
+    cin>>a[i];
+  }
 
-	int m;
-	cin>>m;
-	for(int i=0;i<=m;i++) {
-		cin>>b[i];
-	}
+  int m;
+  cin>>m;
+  for(int i=0;i<=m;i++) {
+    cin>>b[i];
+  }
 
-	return 0;
+  return 0;
 }

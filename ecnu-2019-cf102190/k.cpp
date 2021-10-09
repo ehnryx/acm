@@ -27,113 +27,113 @@ int dp[N][3][2][2][2]; // carry, done, done
 vector<int> ans1, ans2, ans3;
 
 bool solve(const string& s, int n, int c, int d, int e, int f = 0) {
-	if (n<0) return c == 0;
-	if (dp[n][c][d][e][f] != -1) return dp[n][c][d][e][f];
+  if (n<0) return c == 0;
+  if (dp[n][c][d][e][f] != -1) return dp[n][c][d][e][f];
 
-	{
-		int r = s[n]-'0'-c;
-		if (r == 0 && solve(s, n-1, 0, 1, 1, 1)) {
-			return true;
-		}
-	}
+  {
+    int r = s[n]-'0'-c;
+    if (r == 0 && solve(s, n-1, 0, 1, 1, 1)) {
+      return true;
+    }
+  }
 
-	// d && e
-	if (!f) {
-		int r = s[n]-'0'-c;
-		if (1 < 10+r && 10+r < 10 && solve(s, n-1, 1, 1, 1)) {
-			ans1.push_back(10+r);
-			return true;
-		}
-		if (1 < r && solve(s, n-1, 0, 1, 1)) {
-			ans1.push_back(r);
-			return true;
-		}
-	}
+  // d && e
+  if (!f) {
+    int r = s[n]-'0'-c;
+    if (1 < 10+r && 10+r < 10 && solve(s, n-1, 1, 1, 1)) {
+      ans1.push_back(10+r);
+      return true;
+    }
+    if (1 < r && solve(s, n-1, 0, 1, 1)) {
+      ans1.push_back(r);
+      return true;
+    }
+  }
 
-	// e
-	if (!d && !f) {
-		for (int i=2; i<=9; i++) {
-			int r = s[n]-'0'-c-i;
-			if (1 < 20+r && 20+r < 10 && solve(s, n-1, 2, 0, 1)) {
-				ans1.push_back(i);
-				ans2.push_back(20+r);
-				return true;
-			}
-			if (1 < 10+r && 10+r < 10 && solve(s, n-1, 1, 0, 1)) {
-				ans1.push_back(i);
-				ans2.push_back(10+r);
-				return true;
-			}
-			if (1 < r && solve(s, n-1, 0, 0, 1)) {
-				ans1.push_back(i);
-				ans2.push_back(r);
-				return true;
-			}
-		}
-	}
+  // e
+  if (!d && !f) {
+    for (int i=2; i<=9; i++) {
+      int r = s[n]-'0'-c-i;
+      if (1 < 20+r && 20+r < 10 && solve(s, n-1, 2, 0, 1)) {
+        ans1.push_back(i);
+        ans2.push_back(20+r);
+        return true;
+      }
+      if (1 < 10+r && 10+r < 10 && solve(s, n-1, 1, 0, 1)) {
+        ans1.push_back(i);
+        ans2.push_back(10+r);
+        return true;
+      }
+      if (1 < r && solve(s, n-1, 0, 0, 1)) {
+        ans1.push_back(i);
+        ans2.push_back(r);
+        return true;
+      }
+    }
+  }
 
-	if (!d && !e && !f) {
-		for (int i=2; i<=9; i++) {
-			for (int j=2; j<=9; j++) {
-				int r = s[n]-'0'-c-i-j;
-				if (1 < 20+r && 20+r < 10 && solve(s, n-1, 2, 0, 0)) {
-					ans1.push_back(i);
-					ans2.push_back(20+r);
-					ans3.push_back(j);
-					return true;
-				}
-				if (1 < 10+r && 10+r < 10 && solve(s, n-1, 1, 0, 0)) {
-					ans1.push_back(i);
-					ans2.push_back(10+r);
-					ans3.push_back(j);
-					return true;
-				}
-				if (1 < r && solve(s, n-1, 0, 0, 0)) {
-					ans1.push_back(i);
-					ans2.push_back(r);
-					ans3.push_back(j);
-					return true;
-				}
-			}
-		}
-	}
+  if (!d && !e && !f) {
+    for (int i=2; i<=9; i++) {
+      for (int j=2; j<=9; j++) {
+        int r = s[n]-'0'-c-i-j;
+        if (1 < 20+r && 20+r < 10 && solve(s, n-1, 2, 0, 0)) {
+          ans1.push_back(i);
+          ans2.push_back(20+r);
+          ans3.push_back(j);
+          return true;
+        }
+        if (1 < 10+r && 10+r < 10 && solve(s, n-1, 1, 0, 0)) {
+          ans1.push_back(i);
+          ans2.push_back(10+r);
+          ans3.push_back(j);
+          return true;
+        }
+        if (1 < r && solve(s, n-1, 0, 0, 0)) {
+          ans1.push_back(i);
+          ans2.push_back(r);
+          ans3.push_back(j);
+          return true;
+        }
+      }
+    }
+  }
 
-	return dp[n][c][d][e][f] = false;
+  return dp[n][c][d][e][f] = false;
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
+  int T;
+  cin >> T;
 
-	while (T--) {
-		string s;
-		cin >> s;
-		int n = s.size();
-		ans1.clear();
-		ans2.clear();
-		ans3.clear();
-		memset(dp, -1, sizeof dp);
-		assert(solve(s,n-1,0,0,0));
-		if (ans3.empty()) {
-			cout << 2 << nl;
-			for (int it : ans1) { cout << it; } cout << " ";
-			for (int it : ans2) { cout << it; } cout << nl;
-		} else {
-			cout << 3 << nl;
-			for (int it : ans1) { cout << it; } cout << " ";
-			for (int it : ans2) { cout << it; } cout << " ";
-			for (int it : ans3) { cout << it; } cout << nl;
-		}
-	}
+  while (T--) {
+    string s;
+    cin >> s;
+    int n = s.size();
+    ans1.clear();
+    ans2.clear();
+    ans3.clear();
+    memset(dp, -1, sizeof dp);
+    assert(solve(s,n-1,0,0,0));
+    if (ans3.empty()) {
+      cout << 2 << nl;
+      for (int it : ans1) { cout << it; } cout << " ";
+      for (int it : ans2) { cout << it; } cout << nl;
+    } else {
+      cout << 3 << nl;
+      for (int it : ans1) { cout << it; } cout << " ";
+      for (int it : ans2) { cout << it; } cout << " ";
+      for (int it : ans3) { cout << it; } cout << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

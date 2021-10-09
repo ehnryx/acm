@@ -15,19 +15,19 @@ const ld EPS = 1e-9;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	string s;
-	cin >> s;
-	int len = s.size();
-	int half = s.size()/2;
-	ll ans = 0;
-	for (int i = 0; i < len; i++) {
-		if (s[i] == s[(i+half)%len])
-			ans += s[i]-'0';
-	}
-	cout << ans << nl;
+  string s;
+  cin >> s;
+  int len = s.size();
+  int half = s.size()/2;
+  ll ans = 0;
+  for (int i = 0; i < len; i++) {
+    if (s[i] == s[(i+half)%len])
+      ans += s[i]-'0';
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

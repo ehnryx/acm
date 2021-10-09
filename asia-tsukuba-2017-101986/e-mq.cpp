@@ -35,7 +35,7 @@ template <class T> struct min_queue { min_stack<T> in, out;
   T pop() { refill(); return out.pop(); }
   T front() { refill(); return out.top(); }
   bool empty() { return in.empty() && out.empty(); }
-	int size() { return in.size() + out.size(); }
+  int size() { return in.size() + out.size(); }
   T minimum() { return min(in.minimum(), out.minimum()); }
 };
 
@@ -43,31 +43,31 @@ const int N = 5e5+1;
 int dp[N], pre[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,k;
-	cin>>n>>k;
-	string s,t;
-	cin>>s>>t;
+  int n,k;
+  cin>>n>>k;
+  string s,t;
+  cin>>s>>t;
 
-	for(int i=1;i<n;i++) {
-		pre[i] = pre[i-1] + (t[i] != t[i-1]);
-	}
+  for(int i=1;i<n;i++) {
+    pre[i] = pre[i-1] + (t[i] != t[i-1]);
+  }
 
-	min_queue<int> mq;
-	mq.push(0);
-	for(int i=0;i<n;i++) {
-		if(s[i]==t[i]) {
-			dp[i+1] = dp[i];
-		} else {
-			int top = mq.minimum() + pre[i] + 2;
-			dp[i+1] = (top+1)/2;
-		}
-		mq.push(2*dp[i+1] - pre[i+1]);
-		if(mq.size() > k) mq.pop();
-	}
-	cout<<dp[n]<<nl;
+  min_queue<int> mq;
+  mq.push(0);
+  for(int i=0;i<n;i++) {
+    if(s[i]==t[i]) {
+      dp[i+1] = dp[i];
+    } else {
+      int top = mq.minimum() + pre[i] + 2;
+      dp[i+1] = (top+1)/2;
+    }
+    mq.push(2*dp[i+1] - pre[i+1]);
+    if(mq.size() > k) mq.pop();
+  }
+  cout<<dp[n]<<nl;
 
-	return 0;
+  return 0;
 }

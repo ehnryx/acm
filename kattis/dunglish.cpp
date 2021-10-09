@@ -27,50 +27,50 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<string> line;
-	for(int i=0; i<n; i++) {
-		string s;
-		cin >> s;
-		line.push_back(s);
-	}
+  int n;
+  cin >> n;
+  vector<string> line;
+  for(int i=0; i<n; i++) {
+    string s;
+    cin >> s;
+    line.push_back(s);
+  }
 
-	int m;
-	cin >> m;
-	unordered_map<string,int> yes, all;
-	unordered_map<string,string> only;
-	for(int i=0; i<m; i++) {
-		string a, b, c;
-		cin >> a >> b >> c;
-		only[a] = b;
-		if(c == "correct") {
-			yes[a]++;
-		}
-		all[a]++;
-	}
+  int m;
+  cin >> m;
+  unordered_map<string,int> yes, all;
+  unordered_map<string,string> only;
+  for(int i=0; i<m; i++) {
+    string a, b, c;
+    cin >> a >> b >> c;
+    only[a] = b;
+    if(c == "correct") {
+      yes[a]++;
+    }
+    all[a]++;
+  }
 
-	ll correct = 1;
-	ll incorrect = 1;
-	for(string& s : line) {
-		correct *= yes[s];
-		incorrect *= all[s];
-		s = only[s];
-	}
+  ll correct = 1;
+  ll incorrect = 1;
+  for(string& s : line) {
+    correct *= yes[s];
+    incorrect *= all[s];
+    s = only[s];
+  }
 
-	if(incorrect == 1) {
-		for(const string& s : line) {
-			cout << s << " ";
-		}
-		cout << nl;
-		cout << (correct ? "correct" : "incorrect") << nl;
-	} else {
-		cout << correct << " correct" << nl;
-		cout << incorrect - correct << " incorrect" << nl;
-	}
+  if(incorrect == 1) {
+    for(const string& s : line) {
+      cout << s << " ";
+    }
+    cout << nl;
+    cout << (correct ? "correct" : "incorrect") << nl;
+  } else {
+    cout << correct << " correct" << nl;
+    cout << incorrect - correct << " incorrect" << nl;
+  }
 
-	return 0;
+  return 0;
 }

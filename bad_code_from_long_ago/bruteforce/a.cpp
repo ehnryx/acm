@@ -13,12 +13,12 @@ const ll INFLL = 0x7f7f7f7f7f7f7f7f;
 
 The story of input_output_is_too_hard:
 
-	ll a, b;
-	int T;
-	cin >> T;
-	while (T--) {
-		cin >> a >> b;
-		cout << a+b << " " << a-b << " " << a*b << endl;
-	}
+  ll a, b;
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> a >> b;
+    cout << a+b << " " << a-b << " " << a*b << endl;
+  }
 
 The End

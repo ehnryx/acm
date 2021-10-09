@@ -85,55 +85,55 @@ namespace Sieve {
 vector<int> divisors[N];
 
 int count(int s, int n) {
-	int res = 0;
-	for(int i:divisors[s]) {
-		res += Sieve::f[i]*(n/i);
-	}
-	assert(res>=0);
-	return res;
+  int res = 0;
+  for(int i:divisors[s]) {
+    res += Sieve::f[i]*(n/i);
+  }
+  assert(res>=0);
+  return res;
 }
 
 ll power(ll n, ll e) {
-	ll r = 1;
-	for(e+=MOD-1;e;e/=2) {
-		if(e&1) r=r*n%MOD;
-		n=n*n%MOD;
-	}
-	return r;
+  ll r = 1;
+  for(e+=MOD-1;e;e/=2) {
+    if(e&1) r=r*n%MOD;
+    n=n*n%MOD;
+  }
+  return r;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	Sieve::run();
-	for(int i=1;i<N;i++) {
-		for(int j=i;j<N;j+=i) {
-			divisors[j].push_back(i);
-		}
-	}
+  Sieve::run();
+  for(int i=1;i<N;i++) {
+    for(int j=i;j<N;j+=i) {
+      divisors[j].push_back(i);
+    }
+  }
 
-	int n,k;
-	cin>>n>>k;
+  int n,k;
+  cin>>n>>k;
 
-	ll ans = 0;
-	// count pairs (g,s) where s=i+j for i,j in [1,n-1] where g=gcd(i,j)
-	for(int g=1;g<n;g++) {
-		for(int s=2*g;s<2*n;s+=g) {
-			int sum=s/g;
-			// i+j=s --> 1<=i<=n-1, 1<=s-i<=n-1 --> max(1,s-n+1) <= i <= min(n-1,s-1)
-			// then we want x where max(1, sum-(n-1)/g) <= x <= min((n-1)/g, sum-1)
-			int lb = max(1, sum-(n-1)/g);
-			int rb = min((n-1)/g, sum-1);
-			if(lb <= rb) {
-				int cur = count(sum,rb) - count(sum,lb-1);
-				assert(cur>=0);
-				ans += cur * power(k, max(s-n,g)-n) % MOD;
-			}
-		}
-	}
-	cout<<ans%MOD<<nl;
+  ll ans = 0;
+  // count pairs (g,s) where s=i+j for i,j in [1,n-1] where g=gcd(i,j)
+  for(int g=1;g<n;g++) {
+    for(int s=2*g;s<2*n;s+=g) {
+      int sum=s/g;
+      // i+j=s --> 1<=i<=n-1, 1<=s-i<=n-1 --> max(1,s-n+1) <= i <= min(n-1,s-1)
+      // then we want x where max(1, sum-(n-1)/g) <= x <= min((n-1)/g, sum-1)
+      int lb = max(1, sum-(n-1)/g);
+      int rb = min((n-1)/g, sum-1);
+      if(lb <= rb) {
+        int cur = count(sum,rb) - count(sum,lb-1);
+        assert(cur>=0);
+        ans += cur * power(k, max(s-n,g)-n) % MOD;
+      }
+    }
+  }
+  cout<<ans%MOD<<nl;
 
-	return 0;
+  return 0;
 }

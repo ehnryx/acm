@@ -52,8 +52,8 @@ int main() {
   }
 
   ll ans = power(n,k);
-	for (int i=1; i<=n; i++) {
-		ans -= power(bfs(i), k);
+  for (int i=1; i<=n; i++) {
+    ans -= power(bfs(i), k);
   }
   cout << (ans%MOD + MOD) % MOD << nl;
 

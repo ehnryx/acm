@@ -27,69 +27,69 @@ int val[N], ans[N];
 vector<int> adj[N];
 
 void solve(int u, int& v) {
-	ans[u] = v++;
-	for (int x : adj[u]) {
-		solve(x, v);
-	}
+  ans[u] = v++;
+  for (int x : adj[u]) {
+    solve(x, v);
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
+  int T;
+  cin >> T;
+  while (T--) {
 
-		int n;
-		cin >> n;
+    int n;
+    cin >> n;
 
-		for (int i=1; i<=n+1; i++) {
-			adj[i].clear();
-		}
+    for (int i=1; i<=n+1; i++) {
+      adj[i].clear();
+    }
 
-		for (int i=1; i<=n; i++) {
-			cin >> val[i];
-			if (val[i] == -1) val[i] = i+1;
-			adj[val[i]].push_back(i);
-		}
+    for (int i=1; i<=n; i++) {
+      cin >> val[i];
+      if (val[i] == -1) val[i] = i+1;
+      adj[val[i]].push_back(i);
+    }
 
-		solve(n+1, *(new int(-1)));
+    solve(n+1, *(new int(-1)));
 
-		vector<pii> p;
-		for (int i=1; i<=n+1; i++) {
-			ans[i] = n-ans[i];
-			p.push_back(pii(ans[i],i));
-		}
-		sort(p.begin(), p.end(), greater<pii>());
+    vector<pii> p;
+    for (int i=1; i<=n+1; i++) {
+      ans[i] = n-ans[i];
+      p.push_back(pii(ans[i],i));
+    }
+    sort(p.begin(), p.end(), greater<pii>());
 
-		set<int> idx;
-		for (const pii& it : p) {
-			if (!idx.empty()) {
-				if (val[it.second] != *idx.upper_bound(it.second)) {
-					goto bad;
-				}
-			}
-			idx.insert(it.second);
-		}
+    set<int> idx;
+    for (const pii& it : p) {
+      if (!idx.empty()) {
+        if (val[it.second] != *idx.upper_bound(it.second)) {
+          goto bad;
+        }
+      }
+      idx.insert(it.second);
+    }
 
-		for (int i=1; i<=n; i++) {
-			cout << ans[i] << " ";
-		}
-		cout << nl;
-		continue;
+    for (int i=1; i<=n; i++) {
+      cout << ans[i] << " ";
+    }
+    cout << nl;
+    continue;
 
-		bad:
-		cout << -1 << nl;
-		continue;
+    bad:
+    cout << -1 << nl;
+    continue;
 
-	}
+  }
 
-	return 0;
+  return 0;
 }

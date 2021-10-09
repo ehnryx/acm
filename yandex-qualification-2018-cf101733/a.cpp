@@ -19,34 +19,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int N = 10, M = 6, a;
+  int N = 10, M = 6, a;
 
-	unordered_set<int> s;
-	for (int i=0; i<N; i++) {
-		cin >> a;
-		s.insert(a);
-	}
+  unordered_set<int> s;
+  for (int i=0; i<N; i++) {
+    cin >> a;
+    s.insert(a);
+  }
 
-	int n, v;
-	cin >> n;
-	while (n--) {
-		int cnt = 0;
-		for (int i=0; i<M; i++) {
-			cin >> v;
-			if (s.count(v)) {
-				cnt++;
-			}
-		}
-		cout << (cnt<3?"Unl":"L") << "ucky" << nl;
-	}
+  int n, v;
+  cin >> n;
+  while (n--) {
+    int cnt = 0;
+    for (int i=0; i<M; i++) {
+      cin >> v;
+      if (s.count(v)) {
+        cnt++;
+      }
+    }
+    cout << (cnt<3?"Unl":"L") << "ucky" << nl;
+  }
 
-	return 0;
+  return 0;
 }

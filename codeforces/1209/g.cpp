@@ -35,59 +35,59 @@ int cnt[N], last[N];
 
 int root[N];
 int find(int i) {
-	if(root[i] == -1) return i;
-	return root[i] = find(root[i]);
+  if(root[i] == -1) return i;
+  return root[i] = find(root[i]);
 }
 int link(int i, int j) {
-	i=find(i); j=find(j);
-	if(i==j) return false;
-	last[j] = max(last[j],last[i]);
-	root[i] = j;
-	return true;
+  i=find(i); j=find(j);
+  if(i==j) return false;
+  last[j] = max(last[j],last[i]);
+  root[i] = j;
+  return true;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	memset(root,-1,sizeof root);
+  memset(root,-1,sizeof root);
 
-	int n,q;
-	cin>>n>>q;
-	int a[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i];
-		cnt[a[i]]++;
-		last[a[i]] = i;
-	}
+  int n,q;
+  cin>>n>>q;
+  int a[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i];
+    cnt[a[i]]++;
+    last[a[i]] = i;
+  }
 
-	unordered_set<int> cur;
-	set<pii> big;
-	int ans = 0;
-	for(int i=0;i<n;i++) {
-		int v = find(a[i]);
-		cur.insert(v);
-		big.insert({cnt[v],v});
-		if(i==last[v]) {
-			int to = -1;
-			for(pii it:big) {
-				if(cur.count(it.second)) {
-					to = it.second;
-				}
-			}
-			assert(to!=-1);
-			for(auto it=big.begin();it!=big.end()&&next(it)!=big.end();) {
-				if(it->second != to && cur.count(it->second)) {
-					ans += it->first;
-					link(it->second,to);
-				}
-				it = big.erase(it);
-			}
-			cur.erase(v);
-		}
-	}
-	cout<<ans<<nl;
+  unordered_set<int> cur;
+  set<pii> big;
+  int ans = 0;
+  for(int i=0;i<n;i++) {
+    int v = find(a[i]);
+    cur.insert(v);
+    big.insert({cnt[v],v});
+    if(i==last[v]) {
+      int to = -1;
+      for(pii it:big) {
+        if(cur.count(it.second)) {
+          to = it.second;
+        }
+      }
+      assert(to!=-1);
+      for(auto it=big.begin();it!=big.end()&&next(it)!=big.end();) {
+        if(it->second != to && cur.count(it->second)) {
+          ans += it->first;
+          link(it->second,to);
+        }
+        it = big.erase(it);
+      }
+      cur.erase(v);
+    }
+  }
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

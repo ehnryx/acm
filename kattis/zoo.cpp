@@ -27,29 +27,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	string s;
-	getline(cin,s);
-	for(int n,tt=1; n = stoi(s); tt++) {
-		cerr<<n<<nl;
-		map<string,int> cnt;
-		for(int i=0;i<n;i++) {
-			getline(cin,s);
-			reverse(s.begin(),s.end());
-			istringstream in(s);
-			in>>s;
-			reverse(s.begin(),s.end());
-			for(char& c:s) c = tolower(c);
-			cnt[s]++;
-		}
-		cout<<"List "<<tt<<":"<<nl;
-		for(const auto& it:cnt) {
-			cout<<it.first<<" | "<<it.second<<nl;
-		}
-		getline(cin,s);
-	}
+  string s;
+  getline(cin,s);
+  for(int n,tt=1; n = stoi(s); tt++) {
+    cerr<<n<<nl;
+    map<string,int> cnt;
+    for(int i=0;i<n;i++) {
+      getline(cin,s);
+      reverse(s.begin(),s.end());
+      istringstream in(s);
+      in>>s;
+      reverse(s.begin(),s.end());
+      for(char& c:s) c = tolower(c);
+      cnt[s]++;
+    }
+    cout<<"List "<<tt<<":"<<nl;
+    for(const auto& it:cnt) {
+      cout<<it.first<<" | "<<it.second<<nl;
+    }
+    getline(cin,s);
+  }
 
-	return 0;
+  return 0;
 }

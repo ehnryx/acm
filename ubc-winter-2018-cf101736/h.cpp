@@ -33,18 +33,18 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	ld ans = 0;
-	for (int i=1; i<=min(100,n); i++) {
-		ans += (pow(i,2+sqrt(i)) + pow(i,sqrt(i))*sin(i)) / (exp(i)-1);
-	}
-	assert(100-ans>0);
-	cout << 100-ans << nl;
+  int n;
+  cin >> n;
+  ld ans = 0;
+  for (int i=1; i<=min(100,n); i++) {
+    ans += (pow(i,2+sqrt(i)) + pow(i,sqrt(i))*sin(i)) / (exp(i)-1);
+  }
+  assert(100-ans>0);
+  cout << 100-ans << nl;
 
-	return 0;
+  return 0;
 }

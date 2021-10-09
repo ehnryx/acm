@@ -26,54 +26,54 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n][n];
-	unordered_set<int> rows;
-	for (int i=0; i<n; i++) {
-		rows.insert(i);
-		for (int j=0; j<n; j++) {
-			cin >> a[i][j];
-		}
-	}
+  int a[n][n];
+  unordered_set<int> rows;
+  for (int i=0; i<n; i++) {
+    rows.insert(i);
+    for (int j=0; j<n; j++) {
+      cin >> a[i][j];
+    }
+  }
 
-	int ans[n];
-	for (int i=1; i<=n; i++) {
-		int row = -1;
-		for (int j : rows) {
-			int value = 0;
-			for (int k : rows) {
-				if (a[j][k]) {
-					if (!value || value == a[j][k]) {
-						value = a[j][k];
-					} else {
-						value = -1;
-						break;
-					}
-				}
-			}
-			if (value != -1) {
-				row = j;
-				break;
-			}
-		}
-		ans[row] = i;
-		rows.erase(row);
-	}
+  int ans[n];
+  for (int i=1; i<=n; i++) {
+    int row = -1;
+    for (int j : rows) {
+      int value = 0;
+      for (int k : rows) {
+        if (a[j][k]) {
+          if (!value || value == a[j][k]) {
+            value = a[j][k];
+          } else {
+            value = -1;
+            break;
+          }
+        }
+      }
+      if (value != -1) {
+        row = j;
+        break;
+      }
+    }
+    ans[row] = i;
+    rows.erase(row);
+  }
 
-	for (int i=0; i<n; i++) {
-		cout << ans[i] << " ";
-	}
-	cout << nl;
+  for (int i=0; i<n; i++) {
+    cout << ans[i] << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

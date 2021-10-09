@@ -19,34 +19,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	int mod[k];
-	memset(mod, 0, sizeof mod);
-	for (int i=0; i<n; i++) {
-		int v;
-		cin >> v;
-		mod[v%k]++;
-	}
+  int mod[k];
+  memset(mod, 0, sizeof mod);
+  for (int i=0; i<n; i++) {
+    int v;
+    cin >> v;
+    mod[v%k]++;
+  }
 
-	int ans = 0;
-	for (int i=0; i<=k/2; i++) {
-		if (i == (k-i)%k) {
-			ans += mod[i]/2;
-		} else {
-			ans += min(mod[i],mod[(k-i)%k]);
-		}
-	}
-	cout << ans*2 << nl;
+  int ans = 0;
+  for (int i=0; i<=k/2; i++) {
+    if (i == (k-i)%k) {
+      ans += mod[i]/2;
+    } else {
+      ans += min(mod[i],mod[(k-i)%k]);
+    }
+  }
+  cout << ans*2 << nl;
 
-	return 0;
+  return 0;
 }

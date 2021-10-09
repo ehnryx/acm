@@ -24,29 +24,29 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, k;
-		cin >> n >> k;
-		vector<int> a(n);
-		for(int i=0; i<n; i++) {
-			cin >> a[i];
-		}
-		sort(a.begin(), a.end(), greater<int>());
-		ll sum = 0;
-		int ans = 0;
-		for(int i=0; i<n; i++) {
-			sum += a[i];
-			if(sum >= (ll)(i+1)*k) {
-				ans = i+1;
-			}
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    for(int i=0; i<n; i++) {
+      cin >> a[i];
+    }
+    sort(a.begin(), a.end(), greater<int>());
+    ll sum = 0;
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+      sum += a[i];
+      if(sum >= (ll)(i+1)*k) {
+        ans = i+1;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

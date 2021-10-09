@@ -21,30 +21,30 @@ ll cnt[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a;
-	for (int i = 0; i < n; i++) {
-		cin >> a;
-		cnt[a]++;
-	}
+  int a;
+  for (int i = 0; i < n; i++) {
+    cin >> a;
+    cnt[a]++;
+  }
 
-	dp[0] = 0;
-	dp[1] = cnt[1];
-	for (int i = 2; i < N; i++) {
-		dp[i] = max(dp[i-1], dp[i-2] + i*cnt[i]);
-	}
+  dp[0] = 0;
+  dp[1] = cnt[1];
+  for (int i = 2; i < N; i++) {
+    dp[i] = max(dp[i-1], dp[i-2] + i*cnt[i]);
+  }
 
-	cout << dp[N-1] << nl;
+  cout << dp[N-1] << nl;
 
-	return 0;
+  return 0;
 }

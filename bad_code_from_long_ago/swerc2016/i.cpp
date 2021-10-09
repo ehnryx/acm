@@ -6,18 +6,18 @@ using namespace std;
 #define USE_MAGIC_IO
 #ifdef USE_MAGIC_IO
 inline char get(void) {
-	static char buf[100000], *S = buf, *T = buf;
-	if (S == T) {
-		T = (S = buf) + fread(buf, 1, 100000, stdin);
-		if (S == T) return EOF;
-	}
-	return *S++;
+  static char buf[100000], *S = buf, *T = buf;
+  if (S == T) {
+    T = (S = buf) + fread(buf, 1, 100000, stdin);
+    if (S == T) return EOF;
+  }
+  return *S++;
 }
 inline void read(int &x) {
-	static char c; x = 0; int sgn = 0;
-	for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
-	for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
-	if (sgn) x = -x;
+  static char c; x = 0; int sgn = 0;
+  for (c = get(); c < '0' || c > '9'; c = get()) if (c == '-') sgn = 1;
+  for (; c >= '0' && c <= '9'; c = get()) x = x * 10 + c - '0';
+  if (sgn) x = -x;
 }
 #else
 #define get() getchar()
@@ -94,7 +94,7 @@ template <class T> struct Matrix {
     vector<vector<T>> a;
     Matrix(int r, int c) {
         rows = r;
-		cols = c;
+    cols = c;
         a.resize(r, vector<T>(c,0));
     }
     vector<T>& operator [] (unsigned int i) {
@@ -163,101 +163,101 @@ template <class T> struct Matrix {
 };
 
 struct Edge {
-	int a, b;
-	Edge(int x=0, int y=0) {
-		if (x < y) a = x, b = y;
-		else a = y, b = x;
-	}
-	bool operator < (const Edge& other) const {
-		if (a != other.a) return a < other.a;
-		else return b < other.b;
-	}
+  int a, b;
+  Edge(int x=0, int y=0) {
+    if (x < y) a = x, b = y;
+    else a = y, b = x;
+  }
+  bool operator < (const Edge& other) const {
+    if (a != other.a) return a < other.a;
+    else return b < other.b;
+  }
 };
 
 struct Graph {
-	int vertices;
-	vector<vector<pair<int,int>>> g;
-	Graph (int n) {
-		g.resize(n);
-		vertices = n;
-	}
-	void add_edge(int a, int b, int c) {
-		g[a].push_back(pii(b,c));
-		g[b].push_back(pii(a,c));
-	}
-	int dijkstra(int s, int t) {
-		struct Node {
-			int id;
-			int dist;
-			Node(int id=-1, int d=INF):
-				id(id), dist(d) {}
-			bool operator < (const Node& other) const {
-				return dist > other.dist;
-			}
-		};
-		int dist[vertices];
-		memset(dist, INF, sizeof(dist));
-		priority_queue<Node> next;
-		next.push(Node(s, 0));
-		while (!next.empty()) {
-			Node cur = next.top();
-			next.pop();
-			if (cur.id == t) return cur.dist;
-			if (dist[cur.id] == INF) {
-				dist[cur.id] = cur.dist;
-				for (const auto& e : g[cur.id]) {
-					if (dist[e.first] == INF)
-						next.push(Node(e.first, cur.dist + e.second));
-				}
-			}
-		}
-		return -1;
-	}
+  int vertices;
+  vector<vector<pair<int,int>>> g;
+  Graph (int n) {
+    g.resize(n);
+    vertices = n;
+  }
+  void add_edge(int a, int b, int c) {
+    g[a].push_back(pii(b,c));
+    g[b].push_back(pii(a,c));
+  }
+  int dijkstra(int s, int t) {
+    struct Node {
+      int id;
+      int dist;
+      Node(int id=-1, int d=INF):
+        id(id), dist(d) {}
+      bool operator < (const Node& other) const {
+        return dist > other.dist;
+      }
+    };
+    int dist[vertices];
+    memset(dist, INF, sizeof(dist));
+    priority_queue<Node> next;
+    next.push(Node(s, 0));
+    while (!next.empty()) {
+      Node cur = next.top();
+      next.pop();
+      if (cur.id == t) return cur.dist;
+      if (dist[cur.id] == INF) {
+        dist[cur.id] = cur.dist;
+        for (const auto& e : g[cur.id]) {
+          if (dist[e.first] == INF)
+            next.push(Node(e.first, cur.dist + e.second));
+        }
+      }
+    }
+    return -1;
+  }
 };
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	map<Edge,int> idx;
-	vector<Edge> edges;
-	int ecnt = 0;
-	int path[1000];
-	int d, p;
-	int N, A, R, T;
-	//cin >> N >> A >> R >> T;
-	read(N); read(A); read(R); read(T);
-	int rawmat[T][N*N];
-	memset(rawmat, 0, sizeof(rawmat));
-	vector<Int> goal(T, 0);
-	for (int i = 0; i < T; i++) {
-		//cin >> d >> p;
-		read(d); read(p);
-		for (int j = 0; j < p; j++) {
-			//cin >> path[j];
-			read(path[j]);
-			if (j) {
-				Edge e = Edge(min(path[j-1], path[j]), max(path[j-1], path[j]));
-				if (!idx.count(e)) {
-					idx[e] = ecnt++;
-					edges.push_back(e);
-				}
-				assert(idx[e] < N*N);
-				rawmat[i][idx[e]] += 1;
-			}
-		}
-		goal[i] = d;
-	}
-	Matrix<Int> mat(T, ecnt);
-	for (int i = 0; i < T; i++)
-		for (int j = 0; j < ecnt; j++)
-			mat[i][j] = Int(rawmat[i][j]);
-	vector<Int> ans = mat.solve(goal);
-	Graph graph(N+1);
-	for (int i = 0; i < ecnt; i++) {
-		graph.add_edge(edges[i].a, edges[i].b, ans[i]);
-	}
-	cout << graph.dijkstra(A, R) << nl;
+  map<Edge,int> idx;
+  vector<Edge> edges;
+  int ecnt = 0;
+  int path[1000];
+  int d, p;
+  int N, A, R, T;
+  //cin >> N >> A >> R >> T;
+  read(N); read(A); read(R); read(T);
+  int rawmat[T][N*N];
+  memset(rawmat, 0, sizeof(rawmat));
+  vector<Int> goal(T, 0);
+  for (int i = 0; i < T; i++) {
+    //cin >> d >> p;
+    read(d); read(p);
+    for (int j = 0; j < p; j++) {
+      //cin >> path[j];
+      read(path[j]);
+      if (j) {
+        Edge e = Edge(min(path[j-1], path[j]), max(path[j-1], path[j]));
+        if (!idx.count(e)) {
+          idx[e] = ecnt++;
+          edges.push_back(e);
+        }
+        assert(idx[e] < N*N);
+        rawmat[i][idx[e]] += 1;
+      }
+    }
+    goal[i] = d;
+  }
+  Matrix<Int> mat(T, ecnt);
+  for (int i = 0; i < T; i++)
+    for (int j = 0; j < ecnt; j++)
+      mat[i][j] = Int(rawmat[i][j]);
+  vector<Int> ans = mat.solve(goal);
+  Graph graph(N+1);
+  for (int i = 0; i < ecnt; i++) {
+    graph.add_edge(edges[i].a, edges[i].b, ans[i]);
+  }
+  cout << graph.dijkstra(A, R) << nl;
 
-	return 0;
+  return 0;
 }

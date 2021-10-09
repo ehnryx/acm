@@ -73,61 +73,61 @@ const int N = 1e5+1;
 int cnt[N];
 
 struct Node {
-	int colour;
-	Node(int x = 0): colour(x) {}
-	bool get() { return true; }
-	bool put() { return colour != -1; }
-	void update(int v, int len) {
-		cnt[colour] -= len;
-		colour = v;
-		cnt[colour] += len;
-	}
-	void push(Node& left, Node& right, int len) {
-		if (colour != -1) {
-			left.colour = right.colour = colour;
-		}
-	}
-	const Node& pull(const Node& left, const Node& right) {
-		if (left.colour == right.colour) colour = left.colour;
-		else colour = -1;
-		return *this;
-	}
+  int colour;
+  Node(int x = 0): colour(x) {}
+  bool get() { return true; }
+  bool put() { return colour != -1; }
+  void update(int v, int len) {
+    cnt[colour] -= len;
+    colour = v;
+    cnt[colour] += len;
+  }
+  void push(Node& left, Node& right, int len) {
+    if (colour != -1) {
+      left.colour = right.colour = colour;
+    }
+  }
+  const Node& pull(const Node& left, const Node& right) {
+    if (left.colour == right.colour) colour = left.colour;
+    else colour = -1;
+    return *this;
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int l, c, n, p, x, a, b;
-	cin >> l >> c >> n;
+  int l, c, n, p, x, a, b;
+  cin >> l >> c >> n;
 
-	SegmentTree<Node, int> segt(l);
-	cnt[1] = l;
-	for (int i=0; i<l; i++) {
-		segt.set(i, 1);
-	}
-	segt.build();
+  SegmentTree<Node, int> segt(l);
+  cnt[1] = l;
+  for (int i=0; i<l; i++) {
+    segt.set(i, 1);
+  }
+  segt.build();
 
-	for (int i=0; i<n; i++) {
-		cin >> p >> x >> a >> b;
-		ll s = cnt[p];
-		int m1 = (a+s*s) % l;
-		int m2 = (a+(s+b)*(s+b)) % l;
-		if (m1 > m2) swap(m1,m2);
-		segt.update(m1, m2, x);
-	}
+  for (int i=0; i<n; i++) {
+    cin >> p >> x >> a >> b;
+    ll s = cnt[p];
+    int m1 = (a+s*s) % l;
+    int m2 = (a+(s+b)*(s+b)) % l;
+    if (m1 > m2) swap(m1,m2);
+    segt.update(m1, m2, x);
+  }
 
-	int ans = 0;
-	for (int i=1; i<=c; i++) {
-		ans = max(ans, cnt[i]);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=1; i<=c; i++) {
+    ans = max(ans, cnt[i]);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

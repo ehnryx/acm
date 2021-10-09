@@ -25,37 +25,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	for(int n;cin>>n&&n!=-1;) {
-		int adj[n][n],mat[n][n],res[n][n];
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				cin>>adj[i][j];
-			}
-		}
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				mat[i][j] = 0;
-				for(int k=0;k<n;k++) {
-					mat[i][j] += adj[i][k]*adj[k][j];
-				}
-			}
-		}
-		for(int i=0;i<n;i++) {
-			for(int j=0;j<n;j++) {
-				res[i][j] = 0;
-				for(int k=0;k<n;k++) {
-					res[i][j] += adj[i][k]*mat[k][j];
-				}
-			}
-		}
-		for(int i=0;i<n;i++) {
-			if(!res[i][i]) cout<<i<<" ";
-		}
-		cout<<nl;
-	}
+  for(int n;cin>>n&&n!=-1;) {
+    int adj[n][n],mat[n][n],res[n][n];
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<n;j++) {
+        cin>>adj[i][j];
+      }
+    }
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<n;j++) {
+        mat[i][j] = 0;
+        for(int k=0;k<n;k++) {
+          mat[i][j] += adj[i][k]*adj[k][j];
+        }
+      }
+    }
+    for(int i=0;i<n;i++) {
+      for(int j=0;j<n;j++) {
+        res[i][j] = 0;
+        for(int k=0;k<n;k++) {
+          res[i][j] += adj[i][k]*mat[k][j];
+        }
+      }
+    }
+    for(int i=0;i<n;i++) {
+      if(!res[i][i]) cout<<i<<" ";
+    }
+    cout<<nl;
+  }
 
-	return 0;
+  return 0;
 }

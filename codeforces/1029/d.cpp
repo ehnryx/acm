@@ -22,42 +22,42 @@ int modshift[11];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	ll ms = 1;
-	for (int i = 0; i <= 10; i++) {
-		modshift[i] = ms;
-		ms = ms*10 % k;
-	}
+  ll ms = 1;
+  for (int i = 0; i <= 10; i++) {
+    modshift[i] = ms;
+    ms = ms*10 % k;
+  }
 
-	string s;
-	ll ans = 0;
-	for (int i = 0; i < n; i++) {
-		cin >> s;
-		len[i] = s.size();
-		vals[i] = stoi(s) % k;
-		cnt[len[i]][vals[i]] += 1;
-		if ((vals[i] * modshift[len[i]] + vals[i]) % k == 0) {
-			ans--;
-		}
-	}
+  string s;
+  ll ans = 0;
+  for (int i = 0; i < n; i++) {
+    cin >> s;
+    len[i] = s.size();
+    vals[i] = stoi(s) % k;
+    cnt[len[i]][vals[i]] += 1;
+    if ((vals[i] * modshift[len[i]] + vals[i]) % k == 0) {
+      ans--;
+    }
+  }
 
-	for (int i = 0; i < n; i++) {
-		for (int shift = 1; shift <= 10; shift++) {
-			ans += cnt[shift][(k - (vals[i] * modshift[shift] % k)) % k];
-		}
-	}
+  for (int i = 0; i < n; i++) {
+    for (int shift = 1; shift <= 10; shift++) {
+      ans += cnt[shift][(k - (vals[i] * modshift[shift] % k)) % k];
+    }
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

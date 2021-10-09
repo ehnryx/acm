@@ -20,60 +20,60 @@ ll adj[N][N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cin >> adj[i][j];
-		}
-	}
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      cin >> adj[i][j];
+    }
+  }
 
-	auto get_diff = [&] (int v) {
-		ll res = 0;
-		for (int i = 0; i < n; i++) {
-			res += adj[i][v] - adj[v][i];
-		}
-		return res;
-	};
+  auto get_diff = [&] (int v) {
+    ll res = 0;
+    for (int i = 0; i < n; i++) {
+      res += adj[i][v] - adj[v][i];
+    }
+    return res;
+  };
 
-	auto solve = [&] (int v) {
-		int j = 0;
-		for (int i = 0; i < n; i++) {
-			while (j < n && adj[v][i] > 0) {
-				ll change = min(adj[v][i], adj[j][v]);
-				adj[v][i] -= change;
-				adj[j][v] -= change;
-				adj[j][i] += change;
-				if (adj[j][v] == 0) j++;
-			}
-		}
-	};
+  auto solve = [&] (int v) {
+    int j = 0;
+    for (int i = 0; i < n; i++) {
+      while (j < n && adj[v][i] > 0) {
+        ll change = min(adj[v][i], adj[j][v]);
+        adj[v][i] -= change;
+        adj[j][v] -= change;
+        adj[j][i] += change;
+        if (adj[j][v] == 0) j++;
+      }
+    }
+  };
 
-	vector<pii> ppl;
-	for (int i = 0; i < n; i++) {
-		ppl.push_back(pii(get_diff(i), i));
-	}
-	sort(ppl.begin(), ppl.end());
+  vector<pii> ppl;
+  for (int i = 0; i < n; i++) {
+    ppl.push_back(pii(get_diff(i), i));
+  }
+  sort(ppl.begin(), ppl.end());
 
-	for (const pii& it : ppl) {
-		solve(it.second);
-	}
+  for (const pii& it : ppl) {
+    solve(it.second);
+  }
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << adj[i][j] << " ";
-		}
-		cout << nl;
-	}
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      cout << adj[i][j] << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

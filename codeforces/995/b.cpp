@@ -18,34 +18,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[2*n];
-	for (int i=0; i<2*n; i++) {
-		cin >> a[i];
-	}
+  int a[2*n];
+  for (int i=0; i<2*n; i++) {
+    cin >> a[i];
+  }
 
-	int ans = 0;
-	for (int i=0; i<2*n; i+=2) {
-		if (a[i] != a[i+1]) {
-			int j = i+1;
-			while (j < 2*n && a[i] != a[j]) { j++; }
-			for (int k = j; k > i+1; k--) {
-				swap(a[k], a[k-1]);
-				ans++;
-			}
-		}
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=0; i<2*n; i+=2) {
+    if (a[i] != a[i+1]) {
+      int j = i+1;
+      while (j < 2*n && a[i] != a[j]) { j++; }
+      for (int k = j; k > i+1; k--) {
+        swap(a[k], a[k-1]);
+        ans++;
+      }
+    }
+  }
+  cout << ans << nl;
 
-	//cerr << "final: "; for (int i = 0; i < 2*n; i++)
-		//cerr << a[i] << " ";
-	//cerr << nl;
+  //cerr << "final: "; for (int i = 0; i < 2*n; i++)
+    //cerr << a[i] << " ";
+  //cerr << nl;
 
-	return 0;
+  return 0;
 }

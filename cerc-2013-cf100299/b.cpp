@@ -18,42 +18,42 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		string s, t;
-		vector<string> query, line;
-		unordered_set<string> taken;
-		do {
-			getline(cin, s);
-		} while (s.size() == 0); 
-		{
-			istringstream in(s);
-			while (in >> t) {
-				query.push_back(t);
-			}
-		}
+  int T;
+  cin >> T;
+  while (T--) {
+    string s, t;
+    vector<string> query, line;
+    unordered_set<string> taken;
+    do {
+      getline(cin, s);
+    } while (s.size() == 0); 
+    {
+      istringstream in(s);
+      while (in >> t) {
+        query.push_back(t);
+      }
+    }
 
-		while (true) {
-			getline(cin, s);
-			if (s.back() == '?') break;
-			istringstream in(s);
-			line.clear();
-			while (in >> t) {
-				line.push_back(t);
-			}
-			taken.insert(line[2]);
-		}
+    while (true) {
+      getline(cin, s);
+      if (s.back() == '?') break;
+      istringstream in(s);
+      line.clear();
+      while (in >> t) {
+        line.push_back(t);
+      }
+      taken.insert(line[2]);
+    }
 
-		for (const string& it : query) {
-			if (!taken.count(it)) cout << it << " ";
-		}
-		cout << nl;
-	}
+    for (const string& it : query) {
+      if (!taken.count(it)) cout << it << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

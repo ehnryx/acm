@@ -98,137 +98,137 @@ int lca[N][L];
 bool removed[N];
 
 void precmp(int u, int p, int id, int val) {
-	depth[u] = depth[p]+1;
-	lca[u][0] = p;
-	for (int j=1; j<L; j++) {
-		lca[u][j] = lca[lca[u][j-1]][j-1];
-	}
-	prty[u] = val;
-	idx[u] = id++;
-	subsz[u] = 1;
-	for (int v : adj[u]) {
-		if (v != p) {
-			precmp(v, u, id, val^1);
-			subsz[u] += subsz[v];
-			id += subsz[v];
-		}
-	}
+  depth[u] = depth[p]+1;
+  lca[u][0] = p;
+  for (int j=1; j<L; j++) {
+    lca[u][j] = lca[lca[u][j-1]][j-1];
+  }
+  prty[u] = val;
+  idx[u] = id++;
+  subsz[u] = 1;
+  for (int v : adj[u]) {
+    if (v != p) {
+      precmp(v, u, id, val^1);
+      subsz[u] += subsz[v];
+      id += subsz[v];
+    }
+  }
 }
 
 int jump(int u, int len) {
-	for (int i=0; i<L; i++) {
-		if (len&1<<i) {
-			u = lca[u][i];
-		}
-	}
-	return u;
+  for (int i=0; i<L; i++) {
+    if (len&1<<i) {
+      u = lca[u][i];
+    }
+  }
+  return u;
 }
 
 void detach(int u) {
-	//////cerr << "DETACH " << u << endl;
-	node* left = SplayTree::splitBefore(ptr[u]);
-	node* right = SplayTree::lower_bound(ptr[u], idx[u]+subsz[u]);
-	SplayTree::splitBefore(right);
-	SplayTree::append(left, right);
+  //////cerr << "DETACH " << u << endl;
+  node* left = SplayTree::splitBefore(ptr[u]);
+  node* right = SplayTree::lower_bound(ptr[u], idx[u]+subsz[u]);
+  SplayTree::splitBefore(right);
+  SplayTree::append(left, right);
 }
 
 void attach(int u) {
-	//////cerr << "ATTACH " << u << endl;
-	int p = lca[u][0];
-	node* left = SplayTree::begin(ptr[p]);
-	node* right = SplayTree::lower_bound(ptr[p], idx[u]);
-	SplayTree::splitBefore(right);
-	SplayTree::append(left, ptr[u]);
-	SplayTree::append(ptr[u], right);
+  //////cerr << "ATTACH " << u << endl;
+  int p = lca[u][0];
+  node* left = SplayTree::begin(ptr[p]);
+  node* right = SplayTree::lower_bound(ptr[p], idx[u]);
+  SplayTree::splitBefore(right);
+  SplayTree::append(left, ptr[u]);
+  SplayTree::append(ptr[u], right);
 }
 
 int rotate(int u, int v) {
-	//////cerr << "ROTATE" << endl;
-	node* root = SplayTree::begin(ptr[u]);
-	if (removed[root->id]) {
-		int anc = jump(u, depth[u]-depth[root->id]-1);
-		detach(anc);
-		SplayTree::rUpdate(ptr[anc], null, null, prty[u] ? v : -v);
-		int ret = v * SplayTree::size(ptr[anc]);
-		attach(anc);
-		return ret;
-	} else {
-		SplayTree::rUpdate(root, null, null, prty[u] ? v : -v);
-		return v * SplayTree::size(root);
-	}
+  //////cerr << "ROTATE" << endl;
+  node* root = SplayTree::begin(ptr[u]);
+  if (removed[root->id]) {
+    int anc = jump(u, depth[u]-depth[root->id]-1);
+    detach(anc);
+    SplayTree::rUpdate(ptr[anc], null, null, prty[u] ? v : -v);
+    int ret = v * SplayTree::size(ptr[anc]);
+    attach(anc);
+    return ret;
+  } else {
+    SplayTree::rUpdate(root, null, null, prty[u] ? v : -v);
+    return v * SplayTree::size(root);
+  }
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	for (int i=1; i<n; i++) {
-		int a, b;
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	precmp(1, 0, 1, 0);
+  for (int i=1; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  precmp(1, 0, 1, 0);
 
-	ptr[0] = null;
-	for (int i=1; i<=n; i++) {
-		ptr[i] = new (&data[i]) node(i, idx[i], 0);
-		if (i>1) SplayTree::insert(ptr[1], ptr[i]);
-		//cerr << "INITIAL SPLAY TREE: " << endl; for (int j=1; j<=i; j++) {
-			//cerr << j << ": sz " << SplayTree::size(ptr[j]) << "  val " << SplayTree::pQuery(ptr[j]);
-			//cerr << "  -> "; for (node* x=SplayTree::begin(ptr[j]); x!=null; x=SplayTree::nxt(x)) {
-				//cerr << x->id << " "; }
-			//cerr << endl; }
-		//cerr << endl;
-	}
+  ptr[0] = null;
+  for (int i=1; i<=n; i++) {
+    ptr[i] = new (&data[i]) node(i, idx[i], 0);
+    if (i>1) SplayTree::insert(ptr[1], ptr[i]);
+    //cerr << "INITIAL SPLAY TREE: " << endl; for (int j=1; j<=i; j++) {
+      //cerr << j << ": sz " << SplayTree::size(ptr[j]) << "  val " << SplayTree::pQuery(ptr[j]);
+      //cerr << "  -> "; for (node* x=SplayTree::begin(ptr[j]); x!=null; x=SplayTree::nxt(x)) {
+        //cerr << x->id << " "; }
+      //cerr << endl; }
+    //cerr << endl;
+  }
 
-	int q, t;
-	cin >> q;
-	while (q--) {
-		cin >> t;
-		if (t == 1) {
-			int x;
-			cin >> x;
-			//cerr << "QUERY " << t << " " << x << endl;
-			removed[x] = true;
-			detach(x);
-		} else if (t == 2) {
-			int x;
-			cin >> x;
-			//cerr << "QUERY " << t << " " << x << endl;
-			removed[x] = false;
-			attach(x);
-		} else {
-			int x, a;
-			cin >> x >> a;
-			//cerr << "QUERY " << t << " " << x << " " << a << endl;
-			cout << rotate(x, a) << nl;
-		}
-		//cerr << "SPLAY TREE: " << endl; for (int j=1; j<=n; j++) {
-			//cerr << j << ": sz " << SplayTree::size(ptr[j]) << "  val " << SplayTree::pQuery(ptr[j]);
-			//cerr << "  -> "; for (node* x=SplayTree::begin(ptr[j]); x!=null; x=SplayTree::nxt(x)) {
-				//cerr << x->id << " "; }
-			//cerr << endl; }
-		//cerr << endl;
-	}
+  int q, t;
+  cin >> q;
+  while (q--) {
+    cin >> t;
+    if (t == 1) {
+      int x;
+      cin >> x;
+      //cerr << "QUERY " << t << " " << x << endl;
+      removed[x] = true;
+      detach(x);
+    } else if (t == 2) {
+      int x;
+      cin >> x;
+      //cerr << "QUERY " << t << " " << x << endl;
+      removed[x] = false;
+      attach(x);
+    } else {
+      int x, a;
+      cin >> x >> a;
+      //cerr << "QUERY " << t << " " << x << " " << a << endl;
+      cout << rotate(x, a) << nl;
+    }
+    //cerr << "SPLAY TREE: " << endl; for (int j=1; j<=n; j++) {
+      //cerr << j << ": sz " << SplayTree::size(ptr[j]) << "  val " << SplayTree::pQuery(ptr[j]);
+      //cerr << "  -> "; for (node* x=SplayTree::begin(ptr[j]); x!=null; x=SplayTree::nxt(x)) {
+        //cerr << x->id << " "; }
+      //cerr << endl; }
+    //cerr << endl;
+  }
 
-	int ans = 0;
-	for (int i=1; i<=n; i++) {
-		int val = SplayTree::pQuery(ptr[i]);
-		if (!prty[i]) val = -val;
-		////cerr << i << " -> " << val << nl;
-		ans += (val % 360 + 360) % 360;
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=1; i<=n; i++) {
+    int val = SplayTree::pQuery(ptr[i]);
+    if (!prty[i]) val = -val;
+    ////cerr << i << " -> " << val << nl;
+    ans += (val % 360 + 360) % 360;
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

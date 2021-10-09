@@ -24,38 +24,38 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, k;
-		cin >> n >> k;
-		unordered_map<ll,int> cnt;
-		for(int i=0; i<n; i++) {
-			ll a;
-			cin >> a;
-			ll mk = 1;
-			while(mk*k <= a) {
-				mk *= k;
-			}
-			while(a > 0) {
-				if(mk <= a) {
-					cnt[mk]++;
-					a -= mk;
-				} else {
-					mk /= k;
-				}
-			}
-		}
-		bool ok = true;
-		for(auto [_, c] : cnt) {
-			ok &= (c == 1);
-		}
-		if(ok) cout << "YES" << nl;
-		else cout << "NO" << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, k;
+    cin >> n >> k;
+    unordered_map<ll,int> cnt;
+    for(int i=0; i<n; i++) {
+      ll a;
+      cin >> a;
+      ll mk = 1;
+      while(mk*k <= a) {
+        mk *= k;
+      }
+      while(a > 0) {
+        if(mk <= a) {
+          cnt[mk]++;
+          a -= mk;
+        } else {
+          mk /= k;
+        }
+      }
+    }
+    bool ok = true;
+    for(auto [_, c] : cnt) {
+      ok &= (c == 1);
+    }
+    if(ok) cout << "YES" << nl;
+    else cout << "NO" << nl;
+  }
 
-	return 0;
+  return 0;
 }

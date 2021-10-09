@@ -25,21 +25,21 @@ const ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) { os << it << " "; } return os;
+  for (const T& it : v) { os << it << " "; } return os;
 }
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) { os << it << " "; }
-	return os << '}';
+  os << "{ "; for (const T& it : v) { os << it << " "; }
+  return os << '}';
 }
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) { os << it << " "; }
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) { os << it << " "; }
+  return os << '}';
 }
 
 void casesolve();
@@ -49,17 +49,17 @@ void casesolve();
 
 
 int main(int argc, char** argv) {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
-		cout << "Case #" << cc << ": ";
-		casesolve();
-	}
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
+    cout << "Case #" << cc << ": ";
+    casesolve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -163,7 +163,7 @@ void solve_up(int u, int i) {
 
 void casesolve() {
 
-	int n, k;
+  int n, k;
   cin >> n >> k;
 
   for(int i=1; i<=n; i++) {
@@ -202,6 +202,6 @@ void casesolve() {
 
   cout << ans << " " << cnt << nl;
 
-	return;
+  return;
 }
 

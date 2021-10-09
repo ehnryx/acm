@@ -36,56 +36,56 @@ vector<pt> chull(vector<pt> p) {
 } // pts returned in ccw order.
 
 pii to_pii(const pt& v) {
-	return pii(round(v.real()), round(v.imag()));
+  return pii(round(v.real()), round(v.imag()));
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin>>T;
-	while(T--) {
-		int n;
-		cin>>n;
-		vector<pt> p;
-		map<pii,int> idx;
-		for(int i=0;i<n;i++) {
-			int x,y;
-			cin>>x>>y;
-			idx[pii(x,y)] = i;
-			p.push_back(pt(x,y));
-		}
-		vector<pt> hull = chull(p);
+  int T;
+  cin>>T;
+  while(T--) {
+    int n;
+    cin>>n;
+    vector<pt> p;
+    map<pii,int> idx;
+    for(int i=0;i<n;i++) {
+      int x,y;
+      cin>>x>>y;
+      idx[pii(x,y)] = i;
+      p.push_back(pt(x,y));
+    }
+    vector<pt> hull = chull(p);
 
-		set<pii> ignore;
-		int cut = n;
-		for(int i=0;i<n;i++) {
-			if(i>0 && hull[i].imag() < hull[i-1].imag()) {
-				cut = i;
-				break;
-			} else {
-				ignore.insert(to_pii(hull[i]));
-			}
-		}
-		hull.resize(cut);
+    set<pii> ignore;
+    int cut = n;
+    for(int i=0;i<n;i++) {
+      if(i>0 && hull[i].imag() < hull[i-1].imag()) {
+        cut = i;
+        break;
+      } else {
+        ignore.insert(to_pii(hull[i]));
+      }
+    }
+    hull.resize(cut);
 
-		vector<pt> rest;
-		for(const pt& it:p) {
-			if(!ignore.count(to_pii(it))) {
-				rest.push_back(it);
-			}
-		}
-		sort(rest.begin(),rest.end(),cmp_lex_i);
-		reverse(rest.begin(),rest.end());
-		for(const pt& it:rest) {
-			cout<<idx[to_pii(it)]<<" ";
-		}
-		for(const pt& it:hull) {
-			cout<<idx[to_pii(it)]<<" ";
-		}
-		cout<<nl;
-	}
+    vector<pt> rest;
+    for(const pt& it:p) {
+      if(!ignore.count(to_pii(it))) {
+        rest.push_back(it);
+      }
+    }
+    sort(rest.begin(),rest.end(),cmp_lex_i);
+    reverse(rest.begin(),rest.end());
+    for(const pt& it:rest) {
+      cout<<idx[to_pii(it)]<<" ";
+    }
+    for(const pt& it:hull) {
+      cout<<idx[to_pii(it)]<<" ";
+    }
+    cout<<nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -19,40 +19,40 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	set<int> valid[26];
-	int cnt[26];
+  set<int> valid[26];
+  int cnt[26];
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n, m, k;
-		cin >> n >> m >> k;
-		string s, t;
-		cin >> s >> t;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m, k;
+    cin >> n >> m >> k;
+    string s, t;
+    cin >> s >> t;
 
-		fill(valid, valid+26, set<int>());
-		for (int i=k-1; i<n; i++) {
-			valid[s[i]-'a'].insert(s[i-k+1]-'a');
-		}
+    fill(valid, valid+26, set<int>());
+    for (int i=k-1; i<n; i++) {
+      valid[s[i]-'a'].insert(s[i-k+1]-'a');
+    }
 
-		ll ans = 0;
-		memset(cnt, 0, sizeof cnt);
-		for (int i=0; i<m; i++) {
-			cnt[t[i]-'a']++;
-			for (int it : valid[t[i]-'a']) {
-				ans += cnt[it];
-			}
-		}
-		cout << ans << nl;
-	}
+    ll ans = 0;
+    memset(cnt, 0, sizeof cnt);
+    for (int i=0; i<m; i++) {
+      cnt[t[i]-'a']++;
+      for (int it : valid[t[i]-'a']) {
+        ans += cnt[it];
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

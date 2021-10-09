@@ -23,7 +23,7 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	int id,c;
+  int id,c;
 };
 
 const int N = 100+1;
@@ -63,62 +63,62 @@ namespace MinArb { int from[M], to[M]; ll cost[M], nc[M]; int m = 0;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	unordered_map<string,int> remap;
-	remap["English"] = 0;
-	for(int i=1;i<=n;i++) {
-		string s;
-		cin>>s;
-		remap[s] = i;
-	}
+  int n,m;
+  cin>>n>>m;
+  unordered_map<string,int> remap;
+  remap["English"] = 0;
+  for(int i=1;i<=n;i++) {
+    string s;
+    cin>>s;
+    remap[s] = i;
+  }
 
-	for(int i=0;i<m;i++) {
-		string s,t; int w;
-		cin>>s>>t>>w;
-		adj[remap[s]].push_back({remap[t],w});
-		adj[remap[t]].push_back({remap[s],w});
-	}
+  for(int i=0;i<m;i++) {
+    string s,t; int w;
+    cin>>s>>t>>w;
+    adj[remap[s]].push_back({remap[t],w});
+    adj[remap[t]].push_back({remap[s],w});
+  }
 
-	fill(dist,dist+N,INF);
-	queue<int> bfs;
-	bfs.push(0);
-	dist[0] = 0;
-	while(!bfs.empty()) {
-		int u = bfs.front();
-		bfs.pop();
-		for(const Edge& e:adj[u]) {
-			if(dist[e.id]==INF) {
-				dist[e.id] = dist[u] + 1;
-				bfs.push(e.id);
-			}
-		}
-	}
+  fill(dist,dist+N,INF);
+  queue<int> bfs;
+  bfs.push(0);
+  dist[0] = 0;
+  while(!bfs.empty()) {
+    int u = bfs.front();
+    bfs.pop();
+    for(const Edge& e:adj[u]) {
+      if(dist[e.id]==INF) {
+        dist[e.id] = dist[u] + 1;
+        bfs.push(e.id);
+      }
+    }
+  }
 
-	for(int i=0;i<=n;i++) {
-		MinArb::add_edge(i,(i+1)%(n+1),1LL<<51);
-		for(const Edge& e:adj[i]) {
-			if(dist[e.id] == dist[i]+1) {
-				MinArb::add_edge(i,e.id,e.c);
-			}
-		}
-	}
-	MinArb::contract(n);
-	MinArb::expand(0);
+  for(int i=0;i<=n;i++) {
+    MinArb::add_edge(i,(i+1)%(n+1),1LL<<51);
+    for(const Edge& e:adj[i]) {
+      if(dist[e.id] == dist[i]+1) {
+        MinArb::add_edge(i,e.id,e.c);
+      }
+    }
+  }
+  MinArb::contract(n);
+  MinArb::expand(0);
 
-	ll ans = 0;
-	for(int i=1;i<=n;i++) {
-		ans += MinArb::cost[MinArb::in[i]];
-	}
-	if(ans<1LL<<50) {
-		cout<<ans<<nl;
-	} else {
-		cout<<"Impossible"<<nl;
-	}
+  ll ans = 0;
+  for(int i=1;i<=n;i++) {
+    ans += MinArb::cost[MinArb::in[i]];
+  }
+  if(ans<1LL<<50) {
+    cout<<ans<<nl;
+  } else {
+    cout<<"Impossible"<<nl;
+  }
 
-	return 0;
+  return 0;
 }

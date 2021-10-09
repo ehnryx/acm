@@ -33,51 +33,51 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	ll a = 1;
-	ll msk = -1;
-	vector<ll> out;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<i; j++) {
-			if (a<1e11) {
-				out.push_back(a);
-				a <<= 1;
-			} else {
-				a = (a/2 - 1) ^ 1;
-				msk = a;
-				out.push_back(a);
-				a = (a<<1 & msk) ^ 1;
-			}
-		}
-	}
-	shuffle(out.begin(), out.end(), rng);
+  ll a = 1;
+  ll msk = -1;
+  vector<ll> out;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<i; j++) {
+      if (a<1e11) {
+        out.push_back(a);
+        a <<= 1;
+      } else {
+        a = (a/2 - 1) ^ 1;
+        msk = a;
+        out.push_back(a);
+        a = (a<<1 & msk) ^ 1;
+      }
+    }
+  }
+  shuffle(out.begin(), out.end(), rng);
 
-	ll ans[n][n];
-	for (int i=0; i<n; i++) {
-		for (int j=i+1; j<n; j++) {
-			ans[i][j] = out.back();
-			out.pop_back();
-		}
-	}
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<=i; j++) {
-			if (i==j) ans[i][j] = 0;
-			else ans[i][j] = ans[j][i];
-		}
-	}
+  ll ans[n][n];
+  for (int i=0; i<n; i++) {
+    for (int j=i+1; j<n; j++) {
+      ans[i][j] = out.back();
+      out.pop_back();
+    }
+  }
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<=i; j++) {
+      if (i==j) ans[i][j] = 0;
+      else ans[i][j] = ans[j][i];
+    }
+  }
 
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) {
-			cout << ans[i][j] << " ";
-		}
-		cout << nl;
-	}
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<n; j++) {
+      cout << ans[i][j] << " ";
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

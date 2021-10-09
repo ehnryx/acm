@@ -16,33 +16,33 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 ll f(ll n) {
-	ll res = 0;
-	while (n) {
-		res += (n%10)*(n%10);
-		n /= 10;
-	}
-	return res;
+  ll res = 0;
+  while (n) {
+    res += (n%10)*(n%10);
+    n /= 10;
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n;
-	cin >> n;
+  ll n;
+  cin >> n;
 
-	unordered_set<int> vis;
-	while (n != 1) {
-		if (vis.count(n)) {
-			cout << "UNHAPPY" << nl;
-			return 0;
-		}
-		vis.insert(n);
-		n = f(n);
-	}
+  unordered_set<int> vis;
+  while (n != 1) {
+    if (vis.count(n)) {
+      cout << "UNHAPPY" << nl;
+      return 0;
+    }
+    vis.insert(n);
+    n = f(n);
+  }
 
-	cout << "HAPPY" << nl;
+  cout << "HAPPY" << nl;
 
-	return 0;
+  return 0;
 }

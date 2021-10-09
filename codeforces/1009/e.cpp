@@ -57,29 +57,29 @@ struct Int {
 //*/
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int a[n];
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
-	reverse(a, a+n);
+  int a[n];
+  for (int i = 0; i < n; i++) {
+    cin >> a[i];
+  }
+  reverse(a, a+n);
 
-	Int ans = 0;
-	Int cur = 1;
-	Int two = 1;
-	for (int i = 0; i < n; i++) {
-		ans += cur * Int(a[i]);
-		cur = Int(2) * cur + two;
-		two *= 2;
-	}
+  Int ans = 0;
+  Int cur = 1;
+  Int two = 1;
+  for (int i = 0; i < n; i++) {
+    ans += cur * Int(a[i]);
+    cur = Int(2) * cur + two;
+    two *= 2;
+  }
 
-	cout << ans << nl;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

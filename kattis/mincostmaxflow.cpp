@@ -23,7 +23,7 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace Flow {
-	const int N = 250;
+  const int N = 250;
   struct Edge { int v, r; ll f, c, p; };
   vector<Edge> adj[N]; int sz[N]; //ll mc;
   //vector<Edge> mcf_edges; // for mcf on large graphs with negative costs
@@ -65,23 +65,23 @@ namespace Flow {
     for(int i=0; i<n; i++) { pot[i] = min(INF, dist[i]+pot[i]); } return df; }
   ll min_cost_flow(int s, int t, ll& price, int n=N, bool sparse=false) {
     //pot_init(n);
-		ll flow = price = 0;
+    ll flow = price = 0;
     while(ll df=mcf(s, t, price, n, sparse)) { flow += df; } return flow; }
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m,s,t;
-	cin>>n>>m>>s>>t;
-	for(int i=0;i<m;i++) {
-		int a,b,c,d;
-		cin>>a>>b>>c>>d;
-		Flow::add_edge(a,b,c,d);
-	}
-	ll cost, flow = Flow::min_cost_flow(s,t,cost,n,true);
-	cout<<flow<<" "<<cost<<nl;
+  int n,m,s,t;
+  cin>>n>>m>>s>>t;
+  for(int i=0;i<m;i++) {
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    Flow::add_edge(a,b,c,d);
+  }
+  ll cost, flow = Flow::min_cost_flow(s,t,cost,n,true);
+  cout<<flow<<" "<<cost<<nl;
 
-	return 0;
+  return 0;
 }

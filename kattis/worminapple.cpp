@@ -77,38 +77,38 @@ namespace Hull3 { // change shift and mask values for >1024 verts
 }
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<p3d> p;
-	for(int i=0; i<n; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		p.emplace_back(a,b,c);
-	}
-	Hull3::build(p);
+  int n;
+  cin >> n;
+  vector<p3d> p;
+  for(int i=0; i<n; i++) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    p.emplace_back(a,b,c);
+  }
+  Hull3::build(p);
 
-	int m;
-	cin >> m;
-	for(int i=0; i<m; i++) {
-		int x, y, z;
-		cin >> x >> y >> z;
-		p3d v = p3d(x,y,z) - Hull3::base;
-		ld ans = INF;
-		for(const auto& [a, b, c] : Hull3::faces) {
-			const p3d& A = Hull3::v[a];
-			const p3d& B = Hull3::v[b];
-			const p3d& C = Hull3::v[c];
-			p3d perp = cross(B-A, C-A);
-			assert(abs(perp) > EPS);
-			perp = perp / abs(perp);
-			p3d it = pl_inter(A, perp, v, v+perp);
-			ans = min(ans, abs(it-v));
-		}
-		cout << ans << nl;
-	}
+  int m;
+  cin >> m;
+  for(int i=0; i<m; i++) {
+    int x, y, z;
+    cin >> x >> y >> z;
+    p3d v = p3d(x,y,z) - Hull3::base;
+    ld ans = INF;
+    for(const auto& [a, b, c] : Hull3::faces) {
+      const p3d& A = Hull3::v[a];
+      const p3d& B = Hull3::v[b];
+      const p3d& C = Hull3::v[c];
+      p3d perp = cross(B-A, C-A);
+      assert(abs(perp) > EPS);
+      perp = perp / abs(perp);
+      p3d it = pl_inter(A, perp, v, v+perp);
+      ans = min(ans, abs(it-v));
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

@@ -25,37 +25,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int v[n];
-	for(int i=0;i<n;i++) {
-		string s;
-		cin>>s;
-		v[i] = (s=="T" ? 1 : 0);
-	}
+  int n;
+  cin>>n;
+  int v[n];
+  for(int i=0;i<n;i++) {
+    string s;
+    cin>>s;
+    v[i] = (s=="T" ? 1 : 0);
+  }
 
-	stack<int> stk;
-	for(string s;cin>>s;) {
-		if(s=="*") {
-			int a = stk.top(); stk.pop();
-			int b = stk.top(); stk.pop();
-			stk.push(a&b);
-		} else if(s=="+") {
-			int a = stk.top(); stk.pop();
-			int b = stk.top(); stk.pop();
-			stk.push(a|b);
-		} else if(s=="-") {
-			int a = stk.top(); stk.pop();
-			stk.push(!a);
-		} else {
-			stk.push(v[s[0]-'A']);
-		}
-	}
-	cout<<(stk.top() ? "T" : "F")<<nl;
+  stack<int> stk;
+  for(string s;cin>>s;) {
+    if(s=="*") {
+      int a = stk.top(); stk.pop();
+      int b = stk.top(); stk.pop();
+      stk.push(a&b);
+    } else if(s=="+") {
+      int a = stk.top(); stk.pop();
+      int b = stk.top(); stk.pop();
+      stk.push(a|b);
+    } else if(s=="-") {
+      int a = stk.top(); stk.pop();
+      stk.push(!a);
+    } else {
+      stk.push(v[s[0]-'A']);
+    }
+  }
+  cout<<(stk.top() ? "T" : "F")<<nl;
 
-	return 0;
+  return 0;
 }

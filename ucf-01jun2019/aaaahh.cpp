@@ -23,38 +23,38 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Segment {
-	pii s, t;
-	bool conflict(const Segment& o) const {
-		return !(t<=o.s || o.t<=s);
-	}
+  pii s, t;
+  bool conflict(const Segment& o) const {
+    return !(t<=o.s || o.t<=s);
+  }
 };
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int n; scanf("%d",&n) && n; ) {
-		vector<Segment> p;
-		bool bad = false;
-		For(i,n) {
-			int a, b, c, d;
-			scanf("%d:%d-%d:%d", &a, &b, &c, &d);
-			p.push_back({pii(a,b),pii(c,d)});
-			For(j,i && !bad) {
-				if (p[i].conflict(p[j])) {
-					bad = true;
-				}
-			}
-		}
-		if (bad) printf("conflict\n");
-		else printf("no conflict\n");
-	}
+  for (int n; scanf("%d",&n) && n; ) {
+    vector<Segment> p;
+    bool bad = false;
+    For(i,n) {
+      int a, b, c, d;
+      scanf("%d:%d-%d:%d", &a, &b, &c, &d);
+      p.push_back({pii(a,b),pii(c,d)});
+      For(j,i && !bad) {
+        if (p[i].conflict(p[j])) {
+          bad = true;
+        }
+      }
+    }
+    if (bad) printf("conflict\n");
+    else printf("no conflict\n");
+  }
 
-	return 0;
+  return 0;
 }

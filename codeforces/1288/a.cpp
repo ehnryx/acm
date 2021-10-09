@@ -25,27 +25,27 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, d;
-		cin >> n >> d;
-		bool ok = false;
-		for(int x=sqrt(d)-7; x<=sqrt(d)+7; x++) {
-			if(x<0) continue;
-			if(x + (d+x)/(x+1) <= n) {
-				ok = true;
-			}
-		}
-		if(ok) {
-			cout << "YES" << nl;
-		} else {
-			cout << "NO" << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, d;
+    cin >> n >> d;
+    bool ok = false;
+    for(int x=sqrt(d)-7; x<=sqrt(d)+7; x++) {
+      if(x<0) continue;
+      if(x + (d+x)/(x+1) <= n) {
+        ok = true;
+      }
+    }
+    if(ok) {
+      cout << "YES" << nl;
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

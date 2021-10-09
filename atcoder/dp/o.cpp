@@ -33,37 +33,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	int adj[n][n];
-	For(i,n) {
-		For(j,n) {
-			cin >> adj[i][j];
-		}
-	}
+  int adj[n][n];
+  For(i,n) {
+    For(j,n) {
+      cin >> adj[i][j];
+    }
+  }
 
-	ll dp[1<<n];
-	memset(dp, 0, sizeof dp);
-	dp[0] = 1;
-	for (int s=1; s<=n; s++) {
-		for (int bm=1; bm<1<<n; bm++) {
-			if (__builtin_popcount(bm) == s) {
-				for (int j=0; j<n; j++) {
-					if ((bm&1<<j) && adj[s-1][j]) {
-						dp[bm] += dp[bm^1<<j];
-					}
-				}
-				dp[bm] %= MOD;
-			}
-		}
-	}
-	cout << dp[(1<<n)-1] << nl;
+  ll dp[1<<n];
+  memset(dp, 0, sizeof dp);
+  dp[0] = 1;
+  for (int s=1; s<=n; s++) {
+    for (int bm=1; bm<1<<n; bm++) {
+      if (__builtin_popcount(bm) == s) {
+        for (int j=0; j<n; j++) {
+          if ((bm&1<<j) && adj[s-1][j]) {
+            dp[bm] += dp[bm^1<<j];
+          }
+        }
+        dp[bm] %= MOD;
+      }
+    }
+  }
+  cout << dp[(1<<n)-1] << nl;
 
-	return 0;
+  return 0;
 }
 

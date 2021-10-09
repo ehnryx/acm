@@ -23,49 +23,49 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 bool contains(string t, string s) {
-	int i = 0;
-	for (char c : s) {
-		if (i == t.size()) return false;
-		while (i < t.size() && c != t[i]) {
-			i++;
-		}
-		i++;
-	}
-	return i <= t.size();
+  int i = 0;
+  for (char c : s) {
+    if (i == t.size()) return false;
+    while (i < t.size() && c != t[i]) {
+      i++;
+    }
+    i++;
+  }
+  return i <= t.size();
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		string s, t, p;
-		cin >> s >> t >> p;
-		if (contains(t,s)) {
-			unordered_map<char,int> cnt;
-			for (char c : s) {
-				cnt[c]++;
-			}
-			for (char c : p) {
-				cnt[c]++;
-			}
-			bool ok = true;
-			for (char c : t) {
-				cnt[c]--;
-				if (cnt[c] < 0) ok = false;
-			}
-			if (ok) {
-				cout << "YES" << nl;
-			} else {
-				cout << "NO" << nl;
-			}
-		} else {
-			cout << "NO" << nl;
-		}
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    string s, t, p;
+    cin >> s >> t >> p;
+    if (contains(t,s)) {
+      unordered_map<char,int> cnt;
+      for (char c : s) {
+        cnt[c]++;
+      }
+      for (char c : p) {
+        cnt[c]++;
+      }
+      bool ok = true;
+      for (char c : t) {
+        cnt[c]--;
+        if (cnt[c] < 0) ok = false;
+      }
+      if (ok) {
+        cout << "YES" << nl;
+      } else {
+        cout << "NO" << nl;
+      }
+    } else {
+      cout << "NO" << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

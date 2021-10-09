@@ -20,12 +20,12 @@ int survive[MAXN]; void josephus(int n, int m) {
   survive[1] = 0; for(int i = 2; i <= n; ++i) survive[i] = (m+survive[i-1])%i; }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
 
-	int n; cin >> n;
-	josephus(n, 2);
-	cout << survive[n]+1 << nl;
+  int n; cin >> n;
+  josephus(n, 2);
+  cout << survive[n]+1 << nl;
 
-	return 0;
+  return 0;
 }

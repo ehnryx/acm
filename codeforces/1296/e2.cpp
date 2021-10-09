@@ -27,37 +27,37 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	vector<set<int>> cols(26);
-	vector<int> ans;
-	for(char c : s) {
-		set<int> skip;
-		for(int i=c-'a'+1; i<26; i++) {
-			skip.insert(cols[i].begin(), cols[i].end());
-		}
-		int colour = -1;
-		for(int i=1; i<=26; i++) {
-			if(!skip.count(i)) {
-				colour = i;
-				break;
-			}
-		}
-		assert(colour != -1);
-		ans.push_back(colour);
-		cols[c-'a'].insert(colour);
-	}
+  int n;
+  cin >> n;
+  string s;
+  cin >> s;
+  vector<set<int>> cols(26);
+  vector<int> ans;
+  for(char c : s) {
+    set<int> skip;
+    for(int i=c-'a'+1; i<26; i++) {
+      skip.insert(cols[i].begin(), cols[i].end());
+    }
+    int colour = -1;
+    for(int i=1; i<=26; i++) {
+      if(!skip.count(i)) {
+        colour = i;
+        break;
+      }
+    }
+    assert(colour != -1);
+    ans.push_back(colour);
+    cols[c-'a'].insert(colour);
+  }
 
-	cout << *max_element(ans.begin(), ans.end()) << nl;
-	for(int it : ans) {
-		cout << it << " ";
-	}
-	cout << nl;
+  cout << *max_element(ans.begin(), ans.end()) << nl;
+  for(int it : ans) {
+    cout << it << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

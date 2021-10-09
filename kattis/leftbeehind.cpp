@@ -19,22 +19,22 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	for (int x,y;;) {
-		cin >> x >> y;
-		if (x==0&&y==0) break;
-		if (x+y==13) cout << "Never speak again." << nl;
-		else if (x<y) cout << "Left beehind." << nl;
-		else if (x>y) cout << "To the convention." << nl;
-		else cout << "Undecided." << nl;
-	}
+  for (int x,y;;) {
+    cin >> x >> y;
+    if (x==0&&y==0) break;
+    if (x+y==13) cout << "Never speak again." << nl;
+    else if (x<y) cout << "Left beehind." << nl;
+    else if (x>y) cout << "To the convention." << nl;
+    else cout << "Undecided." << nl;
+  }
 
-	return 0;
+  return 0;
 }

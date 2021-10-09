@@ -24,28 +24,28 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int r, n;
-		cin >> r >> n;
-		vector<pt> p;
-		for(int i=0; i<n; i++) {
-			int x, y;
-			cin >> x >> y;
-			p.push_back(pt(x,y));
-		}
-		ld d = 0;
-		for(int i=0; i<n; i++) {
-			int j = (i+1 == n ? 0 : i+1);
-			d += abs(p[i]-p[j]);
-		}
-		if(d < 2*M_PIl*r) cout << "Not possible" << nl;
-		else cout << (d - 2*M_PIl*r) / d << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int r, n;
+    cin >> r >> n;
+    vector<pt> p;
+    for(int i=0; i<n; i++) {
+      int x, y;
+      cin >> x >> y;
+      p.push_back(pt(x,y));
+    }
+    ld d = 0;
+    for(int i=0; i<n; i++) {
+      int j = (i+1 == n ? 0 : i+1);
+      d += abs(p[i]-p[j]);
+    }
+    if(d < 2*M_PIl*r) cout << "Not possible" << nl;
+    else cout << (d - 2*M_PIl*r) / d << nl;
+  }
 
-	return 0;
+  return 0;
 }

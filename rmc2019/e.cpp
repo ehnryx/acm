@@ -27,53 +27,53 @@ int oth[N][4];
 bool vis[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	for(int i=1; i<=n; i++) {
-		for(int j=0; j<4; j++) {
-			cin >> adj[i][j];
-		}
-	}
-	for(int i=1; i<=n; i++) {
-		for(int j=0; j<4; j++) {
-			cin >> oth[i][j];
-		}
-	}
+  int n;
+  cin >> n;
+  for(int i=1; i<=n; i++) {
+    for(int j=0; j<4; j++) {
+      cin >> adj[i][j];
+    }
+  }
+  for(int i=1; i<=n; i++) {
+    for(int j=0; j<4; j++) {
+      cin >> oth[i][j];
+    }
+  }
 
-	queue<pair<int,int>> bfs;
-	vis[1][1] = true;
-	bfs.push(make_pair(1, 1));
-	while(!bfs.empty()) {
-		auto [a, b] = bfs.front();
-		bfs.pop();
-		for(int i=0; i<4; i++) {
-			if(adj[a][i] == 0) continue;
-			int u = adj[a][i];
-			int v = oth[b][i];
-			if(vis[u][v]) continue;
-			vis[u][v] = true;
-			bfs.push(make_pair(u, v));
-		}
-	}
+  queue<pair<int,int>> bfs;
+  vis[1][1] = true;
+  bfs.push(make_pair(1, 1));
+  while(!bfs.empty()) {
+    auto [a, b] = bfs.front();
+    bfs.pop();
+    for(int i=0; i<4; i++) {
+      if(adj[a][i] == 0) continue;
+      int u = adj[a][i];
+      int v = oth[b][i];
+      if(vis[u][v]) continue;
+      vis[u][v] = true;
+      bfs.push(make_pair(u, v));
+    }
+  }
 
-	bool ok = false;
-	bool no = false;
-	for(int i=0; i<=n; i++) {
-		if(vis[n][i]) {
-			ok = true;
-			if(i != n) no = true;
-		}
-	}
-	if(!ok) {
-		cout << "Impossible" << nl;
-	} else if(no) {
-		cout << "No" << nl;
-	} else {
-		cout << "Yes" << nl;
-	}
+  bool ok = false;
+  bool no = false;
+  for(int i=0; i<=n; i++) {
+    if(vis[n][i]) {
+      ok = true;
+      if(i != n) no = true;
+    }
+  }
+  if(!ok) {
+    cout << "Impossible" << nl;
+  } else if(no) {
+    cout << "No" << nl;
+  } else {
+    cout << "Yes" << nl;
+  }
 
-	return 0;
+  return 0;
 }

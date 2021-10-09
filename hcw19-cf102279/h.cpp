@@ -33,44 +33,44 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n], b[n], p[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i]>>b[i];
-		p[i] = i;
-	}
-	sort(p,p+n);
+  int n;
+  cin>>n;
+  int a[n], b[n], p[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i]>>b[i];
+    p[i] = i;
+  }
+  sort(p,p+n);
 
-	char ans[n];
-	for(int t=0;t<2;t++) {
-		do {
-			int v = (t?a[p[0]]:b[p[0]]);
-			ans[0] = (t?'b':'a');
-			bool ok = true;
-			for(int ii=1;ii<n;ii++) {
-				int i = p[ii];
-				if(a[i]!=v&&b[i]!=v) {
-					ok = false;break;
-				}
-				if(a[i]==v) {
-					ans[ii]='a';v=b[i];
-				} else if(b[i]==v) {
-					ans[ii]='b';v=a[i];
-				}
-			}
-			if(ok) {
-				for(int i=0;i<n;i++) {
-					cout<<p[i]+1<<" "<<ans[i]<<nl;
-				}
-				return 0;
-			}
-		} while(next_permutation(p,p+n));
-	}
+  char ans[n];
+  for(int t=0;t<2;t++) {
+    do {
+      int v = (t?a[p[0]]:b[p[0]]);
+      ans[0] = (t?'b':'a');
+      bool ok = true;
+      for(int ii=1;ii<n;ii++) {
+        int i = p[ii];
+        if(a[i]!=v&&b[i]!=v) {
+          ok = false;break;
+        }
+        if(a[i]==v) {
+          ans[ii]='a';v=b[i];
+        } else if(b[i]==v) {
+          ans[ii]='b';v=a[i];
+        }
+      }
+      if(ok) {
+        for(int i=0;i<n;i++) {
+          cout<<p[i]+1<<" "<<ans[i]<<nl;
+        }
+        return 0;
+      }
+    } while(next_permutation(p,p+n));
+  }
 
-	return 0;
+  return 0;
 }

@@ -25,34 +25,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while(T--) {
-		int n, m;
-		cin >> n >> m;
-		int ans = 0;
-		int best = 0;
-		ll sum = 0;
-		pii maxv(0, 0);
-		for(int i=1; i<=n; i++) {
-			int a;
-			cin >> a;
-			sum += a;
-			maxv = max(maxv, make_pair(a, i));
-			if(sum <= m && i > best) {
-				ans = 0;
-				best = i;
-			}
-			if(sum - maxv.first <= m && i-1 > best) {
-				ans = maxv.second;
-				best = i-1;
-			}
-		}
-		cout << ans << nl;
-	}
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    int ans = 0;
+    int best = 0;
+    ll sum = 0;
+    pii maxv(0, 0);
+    for(int i=1; i<=n; i++) {
+      int a;
+      cin >> a;
+      sum += a;
+      maxv = max(maxv, make_pair(a, i));
+      if(sum <= m && i > best) {
+        ans = 0;
+        best = i;
+      }
+      if(sum - maxv.first <= m && i-1 > best) {
+        ans = maxv.second;
+        best = i-1;
+      }
+    }
+    cout << ans << nl;
+  }
 
-	return 0;
+  return 0;
 }

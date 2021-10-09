@@ -26,145 +26,145 @@ const int N = 25e4+1;
 int f[N];
 
 void init() {
-	memset(f,0,sizeof f);
+  memset(f,0,sizeof f);
 }
 void insert(int x, int v) {
-	for(;x<N;x+=x&-x) {
-		f[x] += v;
-	}
+  for(;x<N;x+=x&-x) {
+    f[x] += v;
+  }
 }
 void update(int l, int r) {
-	insert(l, 1);
-	insert(r+1, -1);
+  insert(l, 1);
+  insert(r+1, -1);
 }
 int query(int x) {
-	int res = 0;
-	for(;x>0;x-=x&-x) {
-		res += f[x];
-	}
-	return res;
+  int res = 0;
+  for(;x>0;x-=x&-x) {
+    res += f[x];
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	int a[n+1],b[n+1];
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-	}
-	for(int i=1;i<=n;i++) {
-		cin>>b[i];
-	}
+  int n;
+  cin>>n;
+  int a[n+1],b[n+1];
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+  }
+  for(int i=1;i<=n;i++) {
+    cin>>b[i];
+  }
 
-	ll ans = INFLL;
+  ll ans = INFLL;
 
-	//cerr<<nl<<"LEFT"<<nl;
-	// left
-	{
-		init();
-		ll cur = 0;
-		set<int> left, right;
-		for(int i=1;i<=n;i++) {
-			if(2*a[i] <= n+1) {
-				//cerr<<"ins left "<<i<<nl;
-				left.insert(i);
-			} else {
-				//cerr<<"ins right "<<i<<nl;
-				right.insert(i);
-			}
-		}
-		for(int i=1;i<=n;i++) {
-			int j;
-			if(2*b[i] >= n+1) {
-				j = *left.begin();
-				left.erase(left.begin());
-			} else {
-				j = *right.begin();
-				right.erase(right.begin());
-			}
-			//cerr<<"match "<<i<<" w/ "<<j<<nl;
-			cur += j-i + query(j);
-			update(1, j);
-		}
-		//cerr<<cur<<nl;
-		ans = min(ans, cur);
-	}
+  //cerr<<nl<<"LEFT"<<nl;
+  // left
+  {
+    init();
+    ll cur = 0;
+    set<int> left, right;
+    for(int i=1;i<=n;i++) {
+      if(2*a[i] <= n+1) {
+        //cerr<<"ins left "<<i<<nl;
+        left.insert(i);
+      } else {
+        //cerr<<"ins right "<<i<<nl;
+        right.insert(i);
+      }
+    }
+    for(int i=1;i<=n;i++) {
+      int j;
+      if(2*b[i] >= n+1) {
+        j = *left.begin();
+        left.erase(left.begin());
+      } else {
+        j = *right.begin();
+        right.erase(right.begin());
+      }
+      //cerr<<"match "<<i<<" w/ "<<j<<nl;
+      cur += j-i + query(j);
+      update(1, j);
+    }
+    //cerr<<cur<<nl;
+    ans = min(ans, cur);
+  }
 
-	//cerr<<nl<<"RIGHT"<<nl;
-	// right
-	{
-		init();
-		ll cur = 0;
-		set<int> left, right;
-		for(int i=1;i<=n;i++) {
-			if(2*a[i] >= n+1) {
-				//cerr<<"ins left "<<i<<nl;
-				left.insert(i);
-			} else {
-				//cerr<<"ins right "<<i<<nl;
-				right.insert(i);
-			}
-		}
-		for(int i=1;i<=n;i++) {
-			int j;
-			if(2*b[i] <= n+1) {
-				j = *left.begin();
-				left.erase(left.begin());
-			} else {
-				j = *right.begin();
-				right.erase(right.begin());
-			}
-			//cerr<<"match "<<i<<" w/ "<<j<<nl;
-			cur += j-i + query(j);
-			update(1, j);
-		}
-		//cerr<<cur<<nl;
-		ans = min(ans, cur);
-	}
+  //cerr<<nl<<"RIGHT"<<nl;
+  // right
+  {
+    init();
+    ll cur = 0;
+    set<int> left, right;
+    for(int i=1;i<=n;i++) {
+      if(2*a[i] >= n+1) {
+        //cerr<<"ins left "<<i<<nl;
+        left.insert(i);
+      } else {
+        //cerr<<"ins right "<<i<<nl;
+        right.insert(i);
+      }
+    }
+    for(int i=1;i<=n;i++) {
+      int j;
+      if(2*b[i] <= n+1) {
+        j = *left.begin();
+        left.erase(left.begin());
+      } else {
+        j = *right.begin();
+        right.erase(right.begin());
+      }
+      //cerr<<"match "<<i<<" w/ "<<j<<nl;
+      cur += j-i + query(j);
+      update(1, j);
+    }
+    //cerr<<cur<<nl;
+    ans = min(ans, cur);
+  }
 
-	//cerr<<nl<<"MID"<<nl;
-	// mid
-	{
-		init();
-		ll cur = 0;
-		set<int> left, right;
-		int mid = -1;
-		for(int i=1;i<=n;i++) {
-			if(2*a[i] < n+1) {
-				left.insert(i);
-				//cerr<<"ins left "<<i<<nl;
-			} else if (2*a[i] > n+1) {
-				right.insert(i);
-				//cerr<<"ins right "<<i<<nl;
-			} else {
-				mid = i;
-			}
-		}
-		for(int i=1;i<=n;i++) {
-			int j;
-			if(2*b[i] > n+1) {
-				j = *left.begin();
-				left.erase(left.begin());
-			} else if (2*b[i] < n+1) {
-				j = *right.begin();
-				right.erase(right.begin());
-			} else {
-				//cerr<<"ins mid "<<i<<nl;
-				j = mid;
-			}
-			//cerr<<"match "<<i<<" w/ "<<j<<nl;
-			cur += j-i + query(j);
-			update(1, j);
-		}
-		//cerr<<cur<<nl;
-		ans = min(ans, cur);
-	}
+  //cerr<<nl<<"MID"<<nl;
+  // mid
+  {
+    init();
+    ll cur = 0;
+    set<int> left, right;
+    int mid = -1;
+    for(int i=1;i<=n;i++) {
+      if(2*a[i] < n+1) {
+        left.insert(i);
+        //cerr<<"ins left "<<i<<nl;
+      } else if (2*a[i] > n+1) {
+        right.insert(i);
+        //cerr<<"ins right "<<i<<nl;
+      } else {
+        mid = i;
+      }
+    }
+    for(int i=1;i<=n;i++) {
+      int j;
+      if(2*b[i] > n+1) {
+        j = *left.begin();
+        left.erase(left.begin());
+      } else if (2*b[i] < n+1) {
+        j = *right.begin();
+        right.erase(right.begin());
+      } else {
+        //cerr<<"ins mid "<<i<<nl;
+        j = mid;
+      }
+      //cerr<<"match "<<i<<" w/ "<<j<<nl;
+      cur += j-i + query(j);
+      update(1, j);
+    }
+    //cerr<<cur<<nl;
+    ans = min(ans, cur);
+  }
 
-	cout<<ans<<nl;
+  cout<<ans<<nl;
 
-	return 0;
+  return 0;
 }

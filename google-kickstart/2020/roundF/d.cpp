@@ -26,7 +26,7 @@ constexpr ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ", " << v.second << ')';
+  return os << '(' << v.first << ", " << v.second << ')';
 }
 template <class T>
 ostream& operator << (ostream& os, const vector<T>& v) {
@@ -35,13 +35,13 @@ ostream& operator << (ostream& os, const vector<T>& v) {
 }
 template <class T>
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) { os << it << " , "; }
-	return os << '}';
+  os << "{ "; for (const T& it : v) { os << it << " , "; }
+  return os << '}';
 }
 template <class T, class U>
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) { os << it << " , "; }
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) { os << it << " , "; }
+  return os << '}';
 }
 
 template <class T, class U>
@@ -84,24 +84,24 @@ void initialize();
 ////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
   initialize();
 
-	int T;
-	cin >> T;
-	for (int cc = 1; cc <= T; cc++) {
+  int T;
+  cin >> T;
+  for (int cc = 1; cc <= T; cc++) {
     cerr << "Solving case " << cc << nl;
     auto start = chrono::steady_clock::now();
 
-		cout << "Case #" << cc << ": ";
-		solve_case();
+    cout << "Case #" << cc << ": ";
+    solve_case();
 
     cerr << "Time: " << (chrono::steady_clock::now() - start) / 1.0s << "s" << nl << nl;
-	}
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ ll hsh(const vector<int>& v) {
 
 void solve_case() {
 
-	int n, m, k;
+  int n, m, k;
   cin >> n >> m >> k;
 
   auto vals = read_array<int>(k, 0);
@@ -170,7 +170,7 @@ void solve_case() {
 
   cout << solve({}) << nl;
 
-	return;
+  return;
 }
 
 void initialize() {

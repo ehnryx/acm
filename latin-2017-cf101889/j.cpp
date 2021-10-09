@@ -20,45 +20,45 @@ int memo[N];
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	memset(memo, -1, sizeof memo);
+  memset(memo, -1, sizeof memo);
 
-	string s;
-	cin >> s;
-	int n = s.size();
+  string s;
+  cin >> s;
+  int n = s.size();
 
-	auto solve = [&] (int v) {
-		if (memo[v] != -1) return memo[v];
-		for (int i=0; i<v; i++) {
-			bool ok = true;
-			for (int j=0; j<n; j+=v) {
-				if (s[(i+j)%n] == 'P') {
-					ok = false;
-					break;
-				}
-			}
-			if (ok) {
-				memo[v] = true;
-				return memo[v];
-			}
-		}
-		memo[v] = false;
-		return memo[v];
-	};
+  auto solve = [&] (int v) {
+    if (memo[v] != -1) return memo[v];
+    for (int i=0; i<v; i++) {
+      bool ok = true;
+      for (int j=0; j<n; j+=v) {
+        if (s[(i+j)%n] == 'P') {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) {
+        memo[v] = true;
+        return memo[v];
+      }
+    }
+    memo[v] = false;
+    return memo[v];
+  };
 
-	int ans = 0;
-	for (int i=1; i<n; i++) {
-		int g = __gcd(i,n);
-		ans += solve(g);
-	}
-	cout << ans << nl;
+  int ans = 0;
+  for (int i=1; i<n; i++) {
+    int g = __gcd(i,n);
+    ans += solve(g);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

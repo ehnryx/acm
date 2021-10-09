@@ -43,7 +43,7 @@ void update(node* x) { if (x != null) { x->cnt = 1 + x->l->cnt + x->r->cnt;
   /*x->acc = min(x->l->acc, min(x->val, x->r->acc));*/ } }                 //RMQ
 //%%== Code for downward lazy propagating property (eg. reverse subtree, add)
 void modifyNode(node* x, ll v) { if (x != null) {
-	x->key += v; x->lazy += v; } }
+  x->key += v; x->lazy += v; } }
 void fix(node* x) {
   modifyNode(x->l, x->lazy); modifyNode(x->r, x->lazy); x->lazy=0; }   //RMQ
 //%%== call fixDownTo() before using node if an ancestor may have un-pushed lazy
@@ -96,35 +96,35 @@ node* append(node* ref, node* other) { if (splay(ref)==null) return other;
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin>>n;
-	ll a[n+1];
-	set<int> vals;
-	ll t[n+1];
-	t[0] = 0;
-	node* root = SplayTree::insert(null, new node(1, 0));
-	for(int i=1;i<=n;i++) {
-		cin>>a[i];
-		vals.insert(i);
-		t[i] = t[i-1] + i;
-		SplayTree::insert(root, new node(i+1, t[i]));
-	}
+  int n;
+  cin>>n;
+  ll a[n+1];
+  set<int> vals;
+  ll t[n+1];
+  t[0] = 0;
+  node* root = SplayTree::insert(null, new node(1, 0));
+  for(int i=1;i<=n;i++) {
+    cin>>a[i];
+    vals.insert(i);
+    t[i] = t[i-1] + i;
+    SplayTree::insert(root, new node(i+1, t[i]));
+  }
 
-	int ans[n+1];
-	for(int i=n;i>0;i--) {
-		node* cur = SplayTree::lower_bound(root, a[i]);
-		ans[i] = cur->id;
-		SplayTree::rUpdate(root, cur, null, -ans[i]);
-		root = SplayTree::del(cur);
-	}
-	for(int i=1;i<=n;i++) {
-		cout<<ans[i]<<" ";
-	}
-	cout<<nl;
+  int ans[n+1];
+  for(int i=n;i>0;i--) {
+    node* cur = SplayTree::lower_bound(root, a[i]);
+    ans[i] = cur->id;
+    SplayTree::rUpdate(root, cur, null, -ans[i]);
+    root = SplayTree::del(cur);
+  }
+  for(int i=1;i<=n;i++) {
+    cout<<ans[i]<<" ";
+  }
+  cout<<nl;
 
-	return 0;
+  return 0;
 }

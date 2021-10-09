@@ -22,10 +22,10 @@ const ld EPS = 1e-11;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 struct Edge {
-	ll v, c;
-	bool operator < (const Edge& o) const {
-		return c > o.c;
-	}
+  ll v, c;
+  bool operator < (const Edge& o) const {
+    return c > o.c;
+  }
 };
 
 const int N = 1e5 + 1;
@@ -34,50 +34,50 @@ int deg[N];
 ll fast[N], slow[N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m, s, t;
-	cin >> n >> m >> s >> t;
-	for(int i=0; i<m; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		adj[b].push_back({a, c});
-		deg[a]++;
-	}
+  int n, m, s, t;
+  cin >> n >> m >> s >> t;
+  for(int i=0; i<m; i++) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    adj[b].push_back({a, c});
+    deg[a]++;
+  }
 
-	memset(fast, INF, sizeof fast);
-	priority_queue<Edge> fbfs;
-	queue<int> sbfs;
-	fbfs.push({t, 0});
-	sbfs.push(t);
+  memset(fast, INF, sizeof fast);
+  priority_queue<Edge> fbfs;
+  queue<int> sbfs;
+  fbfs.push({t, 0});
+  sbfs.push(t);
 
-	while(!fbfs.empty() || !sbfs.empty()) {
-		if(!sbfs.empty()) {
-			int u = sbfs.front();
-			sbfs.pop();
-			for(auto [v, c] : adj[u]) {
-				fbfs.push({v, slow[u] + c});
-			}
-		} else {
-			auto [u, d] = fbfs.top();
-			fbfs.pop();
-			if(fast[u] < INFLL) continue;
-			fast[u] = d;
-			for(auto [v, c] : adj[u]) {
-				slow[v] = max(slow[v], fast[u] + c);
-				if(--deg[v] == 0) {
-					sbfs.push(v);
-				}
-			}
-		}
-	}
+  while(!fbfs.empty() || !sbfs.empty()) {
+    if(!sbfs.empty()) {
+      int u = sbfs.front();
+      sbfs.pop();
+      for(auto [v, c] : adj[u]) {
+        fbfs.push({v, slow[u] + c});
+      }
+    } else {
+      auto [u, d] = fbfs.top();
+      fbfs.pop();
+      if(fast[u] < INFLL) continue;
+      fast[u] = d;
+      for(auto [v, c] : adj[u]) {
+        slow[v] = max(slow[v], fast[u] + c);
+        if(--deg[v] == 0) {
+          sbfs.push(v);
+        }
+      }
+    }
+  }
 
-	if(deg[s]) {
-		cout << "infinity" << nl;
-	} else {
-		cout << slow[s] << nl;
-	}
+  if(deg[s]) {
+    cout << "infinity" << nl;
+  } else {
+    cout << slow[s] << nl;
+  }
 
-	return 0;
+  return 0;
 }

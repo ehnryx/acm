@@ -29,73 +29,73 @@ bitset<N> sub[T];
 int ans[T];
 
 void solve() {
-	int t, n;
-	cin >> t >> n;
+  int t, n;
+  cin >> t >> n;
 
-	for (int i=0; i<t; i++) {
-		sub[i].reset();
-		ans[i] = i;
-	}
-	for (int i=0; i<n; i++) {
-		cin >> grid[i];
-		for (int j=0; j<t; j++) {
-			if (grid[i][j] == '0') {
-				sub[j].set(i);
-			}
-		}
-	}
+  for (int i=0; i<t; i++) {
+    sub[i].reset();
+    ans[i] = i;
+  }
+  for (int i=0; i<n; i++) {
+    cin >> grid[i];
+    for (int j=0; j<t; j++) {
+      if (grid[i][j] == '0') {
+        sub[j].set(i);
+      }
+    }
+  }
 
-	for (int i=0; i<t; i++) {
-		int best = -1;
-		int id = INF;
-		cerr << "TIME " << i << nl;
-		for (int j=i; j<t; j++) {
-			int cnt = sub[ans[j]].count();
-			cerr << "check " << sub[ans[j]] << nl;
-			if (cnt > best || (cnt == best && ans[j] < ans[id])) {
-				best = cnt;
-				id = j;
-			}
-		}
-		swap(ans[i], ans[id]);
-		cerr << "get ans -> " << sub[ans[i]] << nl;
-		for (int j=i+1; j<t; j++) {
-			sub[ans[j]] &= ~sub[ans[i]];
-		}
-	}
+  for (int i=0; i<t; i++) {
+    int best = -1;
+    int id = INF;
+    cerr << "TIME " << i << nl;
+    for (int j=i; j<t; j++) {
+      int cnt = sub[ans[j]].count();
+      cerr << "check " << sub[ans[j]] << nl;
+      if (cnt > best || (cnt == best && ans[j] < ans[id])) {
+        best = cnt;
+        id = j;
+      }
+    }
+    swap(ans[i], ans[id]);
+    cerr << "get ans -> " << sub[ans[i]] << nl;
+    for (int j=i+1; j<t; j++) {
+      sub[ans[j]] &= ~sub[ans[i]];
+    }
+  }
 
-	int sum = 0;
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<t; j++) {
-			sum++;
-			if (grid[i][ans[j]] == '0') {
-				break;
-			}
-		}
-	}
+  int sum = 0;
+  for (int i=0; i<n; i++) {
+    for (int j=0; j<t; j++) {
+      sum++;
+      if (grid[i][ans[j]] == '0') {
+        break;
+      }
+    }
+  }
 
-	cout << sum << nl;
-	for (int i=0; i<t; i++) {
-		cout << ans[i]+1 << " ";
-	}
-	cout << nl;
+  cout << sum << nl;
+  for (int i=0; i<t; i++) {
+    cout << ans[i]+1 << " ";
+  }
+  cout << nl;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #define FILENAME "tests"
-	cerr << "File IO: " << FILENAME << nl;
+  cerr << "File IO: " << FILENAME << nl;
 #ifdef ONLINE_JUDGE
-	freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".in", "r", stdin);
 #endif
 
-	int T;
-	cin >> T;
-	while (T--) {
-		solve();
-	}
+  int T;
+  cin >> T;
+  while (T--) {
+    solve();
+  }
 
-	return 0;
+  return 0;
 }

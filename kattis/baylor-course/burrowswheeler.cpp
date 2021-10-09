@@ -41,28 +41,28 @@ struct suff_array {
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	string s;
-	while (getline(cin,s)) {
-		int n = s.size();
-		suff_array sa(s+s);
-		const vector<int>& id = sa.get_sarray();
-		map<int,char> code;
-		for (int i=1; i<=n; i++) {
-			code[id[i]] = s[i-1];
-		}
-		for (const auto& it : code) {
-			cout << it.second;
-		}
-		cout << nl;
-	}
+  string s;
+  while (getline(cin,s)) {
+    int n = s.size();
+    suff_array sa(s+s);
+    const vector<int>& id = sa.get_sarray();
+    map<int,char> code;
+    for (int i=1; i<=n; i++) {
+      code[id[i]] = s[i-1];
+    }
+    for (const auto& it : code) {
+      cout << it.second;
+    }
+    cout << nl;
+  }
 
-	return 0;
+  return 0;
 }

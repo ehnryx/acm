@@ -60,53 +60,53 @@ const int N = 1e6+1;
 Int fact[N];
 Int invf[N];
 void init() {
-	fact[0] = 1;
-	invf[0] = 1;
-	for (int i=1; i<=N; i++) {
-		fact[i] = fact[i-1] * Int(i);
-		invf[i] = fact[i].inv();
-	}
+  fact[0] = 1;
+  invf[0] = 1;
+  for (int i=1; i<=N; i++) {
+    fact[i] = fact[i-1] * Int(i);
+    invf[i] = fact[i].inv();
+  }
 }
 
 Int ncr(int n, int r) {
-	return fact[n] * invf[n-r] * invf[r];
+  return fact[n] * invf[n-r] * invf[r];
 }
 
 Int power(Int b, ll e) {
-	Int res = 1;
-	while (e > 0) {
-		if (e & 1) res *= b;
-		b *= b;
-		e >>= 1;
-	}
-	return res;
+  Int res = 1;
+  while (e > 0) {
+    if (e & 1) res *= b;
+    b *= b;
+    e >>= 1;
+  }
+  return res;
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int n;
-	cin >> n;
+  int n;
+  cin >> n;
 
-	Int row = 0;
-	for (int i=1; i<=n; i++) {
-		Int cur = ncr(n,i) * power(Int(3), (ll)n*(n-i) + i);
-		if (i%2 == 1) row += cur;
-		else row -= cur;
-	}
+  Int row = 0;
+  for (int i=1; i<=n; i++) {
+    Int cur = ncr(n,i) * power(Int(3), (ll)n*(n-i) + i);
+    if (i%2 == 1) row += cur;
+    else row -= cur;
+  }
 
-	Int mid = 0;
-	for (int i=1; i<=n; i++) {
-		Int base = power(Int(3), n-i);
-		Int cur = ncr(n,i) * (power(base-Int(1), n) - power(base, n));
-		if (i%2 == 1) mid += cur;
-		else mid -= cur;
-	}
+  Int mid = 0;
+  for (int i=1; i<=n; i++) {
+    Int base = power(Int(3), n-i);
+    Int cur = ncr(n,i) * (power(base-Int(1), n) - power(base, n));
+    if (i%2 == 1) mid += cur;
+    else mid -= cur;
+  }
 
-	cout << Int(2)*row + Int(3)*mid << nl;
+  cout << Int(2)*row + Int(3)*mid << nl;
 
-	return 0;
+  return 0;
 }

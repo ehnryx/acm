@@ -25,30 +25,30 @@ const ld EPS = 1e-13;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,m;
-	cin>>n>>m;
-	int a[n],s[n];
-	for(int i=0;i<n;i++) {
-		cin>>a[i]>>s[i];
-	}
+  int n,m;
+  cin>>n>>m;
+  int a[n],s[n];
+  for(int i=0;i<n;i++) {
+    cin>>a[i]>>s[i];
+  }
 
-	int dp[m+1];
-	memset(dp,INF,sizeof dp);
-	dp[0] = 0;
-	for(int i=1;i<=m;i++) {
-		for(int j=0;j<n;j++) {
-			int lb = a[j]-s[j];
-			int ub = a[j]+s[j];
-			int inc = max(0, i-ub);
-			dp[i] = min(dp[i], inc + dp[max(0,lb-inc-1)]);
-			inc = max(inc, lb-1);
-			dp[i] = min(dp[i], inc + dp[max(0,lb-inc-1)]);
-		}
-	}
-	cout<<dp[m]<<nl;
+  int dp[m+1];
+  memset(dp,INF,sizeof dp);
+  dp[0] = 0;
+  for(int i=1;i<=m;i++) {
+    for(int j=0;j<n;j++) {
+      int lb = a[j]-s[j];
+      int ub = a[j]+s[j];
+      int inc = max(0, i-ub);
+      dp[i] = min(dp[i], inc + dp[max(0,lb-inc-1)]);
+      inc = max(inc, lb-1);
+      dp[i] = min(dp[i], inc + dp[max(0,lb-inc-1)]);
+    }
+  }
+  cout<<dp[m]<<nl;
 
-	return 0;
+  return 0;
 }

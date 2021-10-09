@@ -26,47 +26,47 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	int a[m];
-	map<int,int> idx;
-	for (int i=0; i<m; i++) {
-		cin >> a[i];
-		idx[a[i]] = i+1;
-	}
+  int a[m];
+  map<int,int> idx;
+  for (int i=0; i<m; i++) {
+    cin >> a[i];
+    idx[a[i]] = i+1;
+  }
 
-	vector<pii> order;
-	for (const pii& it : idx) {
-		order.push_back(pii(it.second, it.first));
-	}
-	for (int i=1; i<=n; i++) {
-		if (!idx.count(i)) {
-			order.push_back(pii(0, i));
-		}
-	}
-	sort(order.begin(), order.end());
+  vector<pii> order;
+  for (const pii& it : idx) {
+    order.push_back(pii(it.second, it.first));
+  }
+  for (int i=1; i<=n; i++) {
+    if (!idx.count(i)) {
+      order.push_back(pii(0, i));
+    }
+  }
+  sort(order.begin(), order.end());
 
-	ll ans = 0;
-	set<int> cur;
-	int pos = 0;
-	for (const pii& it : order) {
-		while (pos < it.first) {
-			cur.insert(a[pos++]);
-		}
-		ans += !cur.count(it.second);
-		if (it.second < n) ans += !cur.count(it.second+1);
-		if (it.second > 1) ans += !cur.count(it.second-1);
-	}
-	cout << ans << nl;
+  ll ans = 0;
+  set<int> cur;
+  int pos = 0;
+  for (const pii& it : order) {
+    while (pos < it.first) {
+      cur.insert(a[pos++]);
+    }
+    ans += !cur.count(it.second);
+    if (it.second < n) ans += !cur.count(it.second+1);
+    if (it.second > 1) ans += !cur.count(it.second-1);
+  }
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

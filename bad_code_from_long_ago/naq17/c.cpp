@@ -19,45 +19,45 @@ int coins[100];
 
 int grd[2000000];
 int greedy(int n, int i) {
-	if (n == 0) return 0;
-	if (n == 1) return 1;
-	if (grd[n] == INF)
-		grd[n] = greedy(n % coins[i], i-1) + (n/coins[i]);
-	return grd[n];
+  if (n == 0) return 0;
+  if (n == 1) return 1;
+  if (grd[n] == INF)
+    grd[n] = greedy(n % coins[i], i-1) + (n/coins[i]);
+  return grd[n];
 }
 
 int dp[2000000];
 void init() {
-	memset(dp, INF, sizeof(dp));
-	memset(grd, INF, sizeof(dp));
+  memset(dp, INF, sizeof(dp));
+  memset(grd, INF, sizeof(dp));
 }
 int optimal(int n) {
-	if (n == 0) return 0;
-	if (n < 0) return INF;
-	if (dp[n] == INF) {
-		for (int i = 0; i < num; i++)
-			dp[n] = min(dp[n], 1 + optimal(n-coins[i]));
-	}
-	return dp[n];
+  if (n == 0) return 0;
+  if (n < 0) return INF;
+  if (dp[n] == INF) {
+    for (int i = 0; i < num; i++)
+      dp[n] = min(dp[n], 1 + optimal(n-coins[i]));
+  }
+  return dp[n];
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	init();
+  init();
 
-	cin >> num;
-	for (int i = 0; i < num; i++) {
-		cin >> coins[i];
-	}
-	for (int i = 1; i < coins[num-1] + coins[num-2]; i++) {
-		if (greedy(i, num-1) != optimal(i)) {
-			cout << "non-canonical" << endl;
-			return 0;
-		}
-	}
-	cout << "canonical" << endl;
+  cin >> num;
+  for (int i = 0; i < num; i++) {
+    cin >> coins[i];
+  }
+  for (int i = 1; i < coins[num-1] + coins[num-2]; i++) {
+    if (greedy(i, num-1) != optimal(i)) {
+      cout << "non-canonical" << endl;
+      return 0;
+    }
+  }
+  cout << "canonical" << endl;
 
-	return 0;
+  return 0;
 }

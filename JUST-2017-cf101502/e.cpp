@@ -18,33 +18,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int T;
-	cin >> T;
-	while (T--) {
-		int n;
-		cin >> n;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
 
-		int bed, kitchen, living;
-		bed = kitchen = living = 0;
+    int bed, kitchen, living;
+    bed = kitchen = living = 0;
 
-		string s;
-		for (int i=0; i<n; i++) {
-			cin >> s;
-			if (s.substr(0,3) == "bed") {
-				bed++;
-			} else if (s.substr(0,6) == "living") {
-				living++;
-			} else {
-				kitchen++;
-			}
-		}
+    string s;
+    for (int i=0; i<n; i++) {
+      cin >> s;
+      if (s.substr(0,3) == "bed") {
+        bed++;
+      } else if (s.substr(0,6) == "living") {
+        living++;
+      } else {
+        kitchen++;
+      }
+    }
 
-		cout << min(bed/2, min(living, kitchen)) << nl;
-	}
+    cout << min(bed/2, min(living, kitchen)) << nl;
+  }
 
-	return 0;
+  return 0;
 }

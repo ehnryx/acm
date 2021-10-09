@@ -1,9 +1,9 @@
 object E extends App {
-	@inline def tokenizeLine = new java.util.StringTokenizer(scala.io.StdIn.readLine);
-	def readInts(n: Int) = {
-		val tl = tokenizeLine; 
-		Array.fill(n)(tl.nextToken.toInt);
-	}
+  @inline def tokenizeLine = new java.util.StringTokenizer(scala.io.StdIn.readLine);
+  def readInts(n: Int) = {
+    val tl = tokenizeLine; 
+    Array.fill(n)(tl.nextToken.toInt);
+  }
     
     val Array(n, r) = readInts(2);
     val returned:Array[Int] = readInts(r);

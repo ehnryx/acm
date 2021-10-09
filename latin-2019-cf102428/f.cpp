@@ -27,26 +27,26 @@ ll dp[N][N];
 ll sum[N][N], ksum[N][N];
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int s, b;
-	cin >> s >> b;
-	for(int i=1; i<=s; i++) {
-		dp[i][0] = 1;
-		for(int j=1; j<=b-s; j++) {
-			//for(int k=1; k<=i; k++) { if(k<=j) dp[i][j] += (i+1-k)*dp[k][j-k]; }
-			if(i<=j) {
-				sum[i][j] = (sum[i-1][j] + dp[i][j-i]) % MOD;
-				ksum[i][j] = (ksum[i-1][j] + i*dp[i][j-i]) % MOD;
-			} else {
-				sum[i][j] = sum[i-1][j];
-				ksum[i][j] = ksum[i-1][j];
-			}
-			dp[i][j] = ((i+1)*sum[i][j] - ksum[i][j]) % MOD;
-		}
-	}
-	cout << (dp[s][b-s] + MOD) % MOD << nl;
+  int s, b;
+  cin >> s >> b;
+  for(int i=1; i<=s; i++) {
+    dp[i][0] = 1;
+    for(int j=1; j<=b-s; j++) {
+      //for(int k=1; k<=i; k++) { if(k<=j) dp[i][j] += (i+1-k)*dp[k][j-k]; }
+      if(i<=j) {
+        sum[i][j] = (sum[i-1][j] + dp[i][j-i]) % MOD;
+        ksum[i][j] = (ksum[i-1][j] + i*dp[i][j-i]) % MOD;
+      } else {
+        sum[i][j] = sum[i-1][j];
+        ksum[i][j] = ksum[i-1][j];
+      }
+      dp[i][j] = ((i+1)*sum[i][j] - ksum[i][j]) % MOD;
+    }
+  }
+  cout << (dp[s][b-s] + MOD) % MOD << nl;
 
-	return 0;
+  return 0;
 }

@@ -18,41 +18,41 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int k;
-	cin >> k;
+  int k;
+  cin >> k;
 
-	map<int,pii> sums;
-	for (int i=1; i<=k; i++) {
-		int n;
-		cin >> n;
+  map<int,pii> sums;
+  for (int i=1; i<=k; i++) {
+    int n;
+    cin >> n;
 
-		vector<int> arr;
-		int sum = 0;
-		for (int j=1; j<=n; j++) {
-			int a;
-			cin >> a;
-			arr.push_back(a);
-			sum += a;
-		}
+    vector<int> arr;
+    int sum = 0;
+    for (int j=1; j<=n; j++) {
+      int a;
+      cin >> a;
+      arr.push_back(a);
+      sum += a;
+    }
 
-		for (int j=1; j<=n; j++) {
-			int it = arr[j-1];
-			if (sums.count(sum-it) && sums[sum-it].first != i) {
-				cout << "YES" << nl;
-				cout << sums[sum-it].first << " " << sums[sum-it].second << nl;
-				cout << i << " " << j << nl;
-				return 0;
-			} else {
-				sums[sum-it] = pii(i,j);
-			}
-		}
-	}
+    for (int j=1; j<=n; j++) {
+      int it = arr[j-1];
+      if (sums.count(sum-it) && sums[sum-it].first != i) {
+        cout << "YES" << nl;
+        cout << sums[sum-it].first << " " << sums[sum-it].second << nl;
+        cout << i << " " << j << nl;
+        return 0;
+      } else {
+        sums[sum-it] = pii(i,j);
+      }
+    }
+  }
 
-	cout << "NO" << nl;
+  cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }

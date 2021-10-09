@@ -24,23 +24,23 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n;
-	cin >> n;
-	vector<pair<int,int>> o;
-	for(int i=2; i<=n; i++) {
-		int a;
-		cin >> a;
-		o.push_back(make_pair(a, i));
-	}
-	sort(o.begin(), o.end());
-	cout << 1 << " ";
-	for(auto [_, i] : o) {
-		cout << i << " ";
-	}
-	cout << nl;
+  int n;
+  cin >> n;
+  vector<pair<int,int>> o;
+  for(int i=2; i<=n; i++) {
+    int a;
+    cin >> a;
+    o.push_back(make_pair(a, i));
+  }
+  sort(o.begin(), o.end());
+  cout << 1 << " ";
+  for(auto [_, i] : o) {
+    cout << i << " ";
+  }
+  cout << nl;
 
-	return 0;
+  return 0;
 }

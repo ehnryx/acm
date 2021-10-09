@@ -18,43 +18,43 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 ld sqr(const ld& x) { return x*x; }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << setprecision(10);
 
-	int w, h, n;
-	cin >> w >> h >> n;
+  int w, h, n;
+  cin >> w >> h >> n;
 
-	ld ans = 0;
+  ld ans = 0;
 
-	if (n%2 == 0) {
-		ld fact = 1;
-		for (int i=1; i<=n/2; i++) {
-			fact *= (ld)(2*i-1) / (2*i);
-		}
-		ans = fact / (sqr(n/2+1)*sqr(n/2+1));
+  if (n%2 == 0) {
+    ld fact = 1;
+    for (int i=1; i<=n/2; i++) {
+      fact *= (ld)(2*i-1) / (2*i);
+    }
+    ans = fact / (sqr(n/2+1)*sqr(n/2+1));
 
-		for (int i=1; i<=n/2; i++) {
-			fact *= (ld)(n/2-i+1)/(n/2+i);
-			ans += 2 * fact / (sqr(n/2-i+1)*sqr(n/2+i+1));
-		}
-	}
+    for (int i=1; i<=n/2; i++) {
+      fact *= (ld)(n/2-i+1)/(n/2+i);
+      ans += 2 * fact / (sqr(n/2-i+1)*sqr(n/2+i+1));
+    }
+  }
 
-	else {
-		ld fact = 1;
-		for (int i=1; i<=n/2; i++) {
-			fact *= (ld)(2*i-1) / (2*i);
-		}
-		fact *= (ld)(n)/(n/2+1) / 2;
+  else {
+    ld fact = 1;
+    for (int i=1; i<=n/2; i++) {
+      fact *= (ld)(2*i-1) / (2*i);
+    }
+    fact *= (ld)(n)/(n/2+1) / 2;
 
-		for (int i=0; i<=n/2; i++) {
-			ans += 2 * fact / (sqr(n/2-i+1)*sqr(n/2+i+2));
-			fact *= (ld)(n/2-i)/(n/2+i+2);
-		}
-	}
+    for (int i=0; i<=n/2; i++) {
+      ans += 2 * fact / (sqr(n/2-i+1)*sqr(n/2+i+2));
+      fact *= (ld)(n/2-i)/(n/2+i+2);
+    }
+  }
 
-	ans *= w*h;
-	cout << ans << nl;
+  ans *= w*h;
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

@@ -27,33 +27,33 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // double-check correctness
 // read limits carefully
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0); cin.tie(0);
+  cout << fixed << setprecision(10);
 
-	unordered_map<string,int> val;
-	for(string s; cin >> s; ) {
-		if(s == "define") {
-			int n;
-			cin >> n;
-			string t;
-			cin >> t;
-			val[t] = n;
-		} else {
-			string a, b, op;
-			cin >> a >> op >> b;
-			if(!val.count(a) || !val.count(b)) {
-				cout << "undefined" << nl;
-			} else {
-				if(op == "<") {
-					cout << (val[a] < val[b] ? "true" : "false") << nl;
-				} else if(op == ">") {
-					cout << (val[a] > val[b] ? "true" : "false") << nl;
-				} else {
-					cout << (val[a] == val[b] ? "true" : "false") << nl;
-				}
-			}
-		}
-	}
+  unordered_map<string,int> val;
+  for(string s; cin >> s; ) {
+    if(s == "define") {
+      int n;
+      cin >> n;
+      string t;
+      cin >> t;
+      val[t] = n;
+    } else {
+      string a, b, op;
+      cin >> a >> op >> b;
+      if(!val.count(a) || !val.count(b)) {
+        cout << "undefined" << nl;
+      } else {
+        if(op == "<") {
+          cout << (val[a] < val[b] ? "true" : "false") << nl;
+        } else if(op == ">") {
+          cout << (val[a] > val[b] ? "true" : "false") << nl;
+        } else {
+          cout << (val[a] == val[b] ? "true" : "false") << nl;
+        }
+      }
+    }
+  }
 
-	return 0;
+  return 0;
 }

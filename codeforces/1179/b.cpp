@@ -25,30 +25,30 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	For(i,n/2) {
-		For(j,m) {
-			cout << i+1 << " " << j+1 << nl;
-			cout << n-i << " " << m-j << nl;
-		}
-	}
+  For(i,n/2) {
+    For(j,m) {
+      cout << i+1 << " " << j+1 << nl;
+      cout << n-i << " " << m-j << nl;
+    }
+  }
 
-	if (n%2) {
-		For(j,m/2) {
-			cout << n/2+1 << " " << j+1 << nl;
-			cout << n/2+1 << " " << m-j << nl;
-		}
+  if (n%2) {
+    For(j,m/2) {
+      cout << n/2+1 << " " << j+1 << nl;
+      cout << n/2+1 << " " << m-j << nl;
+    }
 
-		if (m%2) {
-			cout << n/2+1 << " " << m/2+1 << nl;
-		}
-	}
+    if (m%2) {
+      cout << n/2+1 << " " << m/2+1 << nl;
+    }
+  }
 
-	return 0;
+  return 0;
 }

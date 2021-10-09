@@ -128,39 +128,39 @@ ll mcf_update(int s, int t, ll& price, int n) {
 }
 
 int main() {
-	ios::sync_with_stdio(0); 
-	cin.tie(0); cout.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); cout.tie(0);
 
-	FLOW::init();
-	FLOW::add_edge(0, 2, INF, 0);
-	// then chnge cost[0]
+  FLOW::init();
+  FLOW::add_edge(0, 2, INF, 0);
+  // then chnge cost[0]
 
-	int start, end;
-	int a, b, x;
-	int n, m;
-	cin >> n >> m;
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b;
-		FLOW::add_edge(2*a+1, 2*b, 1, 0);
-		FLOW::add_edge(2*b+1, 2*a, 1, 0);
-	}
-	for (int i = 1; i <= n; i++) {
-		cin >> x;
-		FLOW::add_edge(2*i, 2*i+1, INF, x);
-		if (i == 1) start = x;
-		else if (i == n) end = x;
-	}
+  int start, end;
+  int a, b, x;
+  int n, m;
+  cin >> n >> m;
+  for (int i = 0; i < m; i++) {
+    cin >> a >> b;
+    FLOW::add_edge(2*a+1, 2*b, 1, 0);
+    FLOW::add_edge(2*b+1, 2*a, 1, 0);
+  }
+  for (int i = 1; i <= n; i++) {
+    cin >> x;
+    FLOW::add_edge(2*i, 2*i+1, INF, x);
+    if (i == 1) start = x;
+    else if (i == n) end = x;
+  }
 
-	// binary search
-	int left = 0; right = 10000000;
-	int mid;
-	while (left <= right) {
-		// clear flow
-		memset(FLOW::flo, 0, sizeof(FLOW::flo));
-		mid = (left+right)/2;
-		FLOW::cost[0] = mid;
-		FLOW::
-	}
+  // binary search
+  int left = 0; right = 10000000;
+  int mid;
+  while (left <= right) {
+    // clear flow
+    memset(FLOW::flo, 0, sizeof(FLOW::flo));
+    mid = (left+right)/2;
+    FLOW::cost[0] = mid;
+    FLOW::
+  }
 
-	return 0;
+  return 0;
 }

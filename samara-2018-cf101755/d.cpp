@@ -52,116 +52,116 @@ ll dfs(int u, int t, ll f) {
 }
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	const int source = 0;
-	const int sink = n+1;
-	Dinic::init();
+  const int source = 0;
+  const int sink = n+1;
+  Dinic::init();
 
-	int a;
-	unordered_set<int> src;
-	for (int i = 0; i < k; i++) {
-		cin >> a;
-		src.insert(a);
-		Dinic::add_edge(source, a);
-	}
-	for (int i = 0; i < k; i++) {
-		cin >> a;
-		Dinic::add_edge(a, sink);
-	}
+  int a;
+  unordered_set<int> src;
+  for (int i = 0; i < k; i++) {
+    cin >> a;
+    src.insert(a);
+    Dinic::add_edge(source, a);
+  }
+  for (int i = 0; i < k; i++) {
+    cin >> a;
+    Dinic::add_edge(a, sink);
+  }
 
-	string adj;
-	for (int i = 1; i <= n; i++) {
-		cin >> adj;
-		for (int j = 1; j <= n; j++) {
-			if (adj[j-1] == '1') {
-				Dinic::add_edge(i, j, INF);
-			}
-		}
-	}
+  string adj;
+  for (int i = 1; i <= n; i++) {
+    cin >> adj;
+    for (int j = 1; j <= n; j++) {
+      if (adj[j-1] == '1') {
+        Dinic::add_edge(i, j, INF);
+      }
+    }
+  }
 
-	ll flow = 0;
-	while (Dinic::bfs(source, sink)) {
-		flow += Dinic::dfs(source, sink, INF);
-	}
+  ll flow = 0;
+  while (Dinic::bfs(source, sink)) {
+    flow += Dinic::dfs(source, sink, INF);
+  }
 
-	if (flow < k) {
-		cout << "NO" << nl;
-	}
-	else {
-		cout << "YES" << nl;
+  if (flow < k) {
+    cout << "NO" << nl;
+  }
+  else {
+    cout << "YES" << nl;
 
-		using namespace Dinic;
-		int ans = 0;
-		vector<pii> res[n+1];
-		vector<int> par[n+1];
-		int destination[n+1];
-		int deg[n+1]; memset(deg, 0, sizeof deg);
-		for (int it : src) {
-			int sss = it;
-			destination[sss] = sss;
-			while (it != sink) {
-				int v = sink;
-				for (int e = first[it]; e != -1; e = nxt[e]) {
-					if (flo[e] > 0) {
-						v = ep[e^1];
-						flo[e]--;
-						break;
-					}
-				}
-				if (v != sink) {
-					if (src.count(v)) {
-						deg[sss]++;
-						par[v].push_back(sss);
-					}
-					res[sss].push_back(pii(it, v));
-					destination[sss] = v;
-				}
-				it = v;
-			}
-			ans += res[sss].size();
-			//cerr << sss << " --> " << destination[sss] << endl;
-		}
+    using namespace Dinic;
+    int ans = 0;
+    vector<pii> res[n+1];
+    vector<int> par[n+1];
+    int destination[n+1];
+    int deg[n+1]; memset(deg, 0, sizeof deg);
+    for (int it : src) {
+      int sss = it;
+      destination[sss] = sss;
+      while (it != sink) {
+        int v = sink;
+        for (int e = first[it]; e != -1; e = nxt[e]) {
+          if (flo[e] > 0) {
+            v = ep[e^1];
+            flo[e]--;
+            break;
+          }
+        }
+        if (v != sink) {
+          if (src.count(v)) {
+            deg[sss]++;
+            par[v].push_back(sss);
+          }
+          res[sss].push_back(pii(it, v));
+          destination[sss] = v;
+        }
+        it = v;
+      }
+      ans += res[sss].size();
+      //cerr << sss << " --> " << destination[sss] << endl;
+    }
 
-		queue<int> next;
-		for (int i : src) {
-			if (deg[i] == 0) {
-				next.push(i);
-			}
-		}
+    queue<int> next;
+    for (int i : src) {
+      if (deg[i] == 0) {
+        next.push(i);
+      }
+    }
 
-		cout << ans << nl;
-		unordered_set<int> taken = src;
-		while (!next.empty()) {
-			int cur = next.front();
-			next.pop();
-			stack<pii> stk;
-			for (const pii& it : res[cur]) {
-				if (taken.count(it.second)) {
-					stk.push(it);
-				} else {
-					cout << it.first << " " << it.second << nl;
-				}
-			}
-			while (!stk.empty()) {
-				pii e = stk.top();
-				stk.pop();
-				cout << e.first << " " << e.second << nl;
-			}
+    cout << ans << nl;
+    unordered_set<int> taken = src;
+    while (!next.empty()) {
+      int cur = next.front();
+      next.pop();
+      stack<pii> stk;
+      for (const pii& it : res[cur]) {
+        if (taken.count(it.second)) {
+          stk.push(it);
+        } else {
+          cout << it.first << " " << it.second << nl;
+        }
+      }
+      while (!stk.empty()) {
+        pii e = stk.top();
+        stk.pop();
+        cout << e.first << " " << e.second << nl;
+      }
 
-			for (int i : par[cur]) {
-				deg[i]--;
-				if (deg[i] == 0) next.push(i);
-			}
-			taken.erase(cur);
-			taken.insert(destination[cur]);
-		}
-	}
+      for (int i : par[cur]) {
+        deg[i]--;
+        if (deg[i] == 0) next.push(i);
+      }
+      taken.erase(cur);
+      taken.insert(destination[cur]);
+    }
+  }
 
-	return 0;
+  return 0;
 }

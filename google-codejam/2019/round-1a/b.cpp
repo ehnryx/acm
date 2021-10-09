@@ -17,21 +17,21 @@ const ld EPS = 1e-10;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
-	return os << '(' << v.first << ',' << v.second << ')';
+  return os << '(' << v.first << ',' << v.second << ')';
 }
 template <class T> 
 ostream& operator << (ostream& os, const vector<T>& v) {
-	for (const T& it : v) os << it << " "; return os;
+  for (const T& it : v) os << it << " "; return os;
 }
 template <class T> 
 ostream& operator << (ostream& os, const set<T>& v) {
-	os << "{ "; for (const T& it : v) os << it << " "; 
-	return os << '}';
+  os << "{ "; for (const T& it : v) os << it << " "; 
+  return os << '}';
 }
 template <class T, class U> 
 ostream& operator << (ostream& os, const map<T,U>& v) {
-	os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
-	return os << '}';
+  os << "{ "; for (const pair<T,U>& it : v) os << it << " ";
+  return os << '}';
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -40,19 +40,19 @@ void solve();
 void init() {
 }
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
-	init();
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
+  init();
 
-	int T, N, M;
-	cin >> T >> N >> M;
-	for (int cc = 1; cc <= T; cc++) {
-		//cout << "Case #" << cc << ": ";
-		solve();
-	}
+  int T, N, M;
+  cin >> T >> N >> M;
+  for (int cc = 1; cc <= T; cc++) {
+    //cout << "Case #" << cc << ": ";
+    solve();
+  }
 
-	return 0;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -73,32 +73,32 @@ void caseinit() {
 }
 
 void solve() {
-	caseinit();
+  caseinit();
 
-	ll a = 0;
-	ll m = 1;
-	for (int it : query) {
-		for (int i=0; i<18; i++) {
-			cout << it << " ";
-		}
-		cout << endl;
+  ll a = 0;
+  ll m = 1;
+  for (int it : query) {
+    for (int i=0; i<18; i++) {
+      cout << it << " ";
+    }
+    cout << endl;
 
-		int res = 0;
-		for (int i=0; i<18; i++) {
-			int v;
-			cin >> v;
-			if (v == -1) exit(1);
-			res += v;
-		}
-		assert(chin_rem(a, m, res%it, it, a, m));
-	}
-	//cerr << "MOD: " << m << nl;
-	cout << (a%m+m)%m << endl;
+    int res = 0;
+    for (int i=0; i<18; i++) {
+      int v;
+      cin >> v;
+      if (v == -1) exit(1);
+      res += v;
+    }
+    assert(chin_rem(a, m, res%it, it, a, m));
+  }
+  //cerr << "MOD: " << m << nl;
+  cout << (a%m+m)%m << endl;
 
-	int verdict;
-	cin >> verdict;
-	if (verdict == -1) exit(1);
+  int verdict;
+  cin >> verdict;
+  if (verdict == -1) exit(1);
 
-	return;
+  return;
 }
 

@@ -25,34 +25,34 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	ll n, m, k;
-	cin >> n >> m >> k;
+  ll n, m, k;
+  cin >> n >> m >> k;
 
-	set<ll> cur;
-	For(i,m) {
-		ll v;
-		cin >> v;
-		cur.insert(v-1);
-	}
-	cur.insert(3*n+1);
+  set<ll> cur;
+  For(i,m) {
+    ll v;
+    cin >> v;
+    cur.insert(v-1);
+  }
+  cur.insert(3*n+1);
 
-	ll ans = 0;
-	ll off = 0;
-	while (*cur.begin() != 3*n+1) {
-		ans++;
-		auto s = cur.begin();
-		ll page = ((*s)-off)/k;
-		ll t = *cur.lower_bound((page+1)*k + off);
-		for (auto it = s; *it != t; it = cur.erase(it)) {
-			off++;
-		}
-	}
-	assert(off == m);
-	cout << ans << nl;
+  ll ans = 0;
+  ll off = 0;
+  while (*cur.begin() != 3*n+1) {
+    ans++;
+    auto s = cur.begin();
+    ll page = ((*s)-off)/k;
+    ll t = *cur.lower_bound((page+1)*k + off);
+    for (auto it = s; *it != t; it = cur.erase(it)) {
+      off++;
+    }
+  }
+  assert(off == m);
+  cout << ans << nl;
 
-	return 0;
+  return 0;
 }

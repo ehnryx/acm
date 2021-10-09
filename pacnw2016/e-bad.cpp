@@ -41,116 +41,116 @@ pol chull(pol p) {
 } // pts returned in ccw order.
 ld poly_area(const pol &v) { ld s = 0; int n = v.size();
   for (int i = n-1, j = 0; j < n; i = j++) s += cp(v[i], v[j]);
-	return abs(s);
+  return abs(s);
 }
 
 ld tri_area(const pt& a, const pt& b, const pt& c) {
-	return cp(b-a, c-a);
+  return cp(b-a, c-a);
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, k;
-	cin >> n >> k;
+  int n, k;
+  cin >> n >> k;
 
-	int x, y;
-	vector<pt> in, out;
-	for (int i=0; i<k; i++) {
-		cin >> x >> y;
-		in.emplace_back(x,y);
-		out.emplace_back(x,y);
-	}
-	for (int i=k; i<n; i++) {
-		cin >> x >> y;
-		out.emplace_back(x,y);
-	}
-	in = chull(in);
-	out = chull(out);
-	ld original = poly_area(in);
-	k = in.size();
+  int x, y;
+  vector<pt> in, out;
+  for (int i=0; i<k; i++) {
+    cin >> x >> y;
+    in.emplace_back(x,y);
+    out.emplace_back(x,y);
+  }
+  for (int i=k; i<n; i++) {
+    cin >> x >> y;
+    out.emplace_back(x,y);
+  }
+  in = chull(in);
+  out = chull(out);
+  ld original = poly_area(in);
+  k = in.size();
 
-	////cerr << "done convex hull, w/ area " << original << endl;
+  ////cerr << "done convex hull, w/ area " << original << endl;
 
-	auto get_id = [&] (int i) {
-		if (i<0) return i+k;
-		else if (i<k) return i;
-		else return i-k;
-	};
+  auto get_id = [&] (int i) {
+    if (i<0) return i+k;
+    else if (i<k) return i;
+    else return i-k;
+  };
 
-	vector<ld> parea(2*k, 0);
-	for (int i=1; i<2*k; i++) {
-		parea[i] = parea[i-1] + cp(in[get_id(i-1)], in[get_id(i)]);
-		//cerr << i << ": " << parea[i] << nl;
-	}
+  vector<ld> parea(2*k, 0);
+  for (int i=1; i<2*k; i++) {
+    parea[i] = parea[i-1] + cp(in[get_id(i-1)], in[get_id(i)]);
+    //cerr << i << ": " << parea[i] << nl;
+  }
 
-	auto get_area = [&] (int a, int b) {
-		a = get_id(a);
-		b = get_id(b);
-		ld tri = cp(in[b], in[a]);
-		if (a > b) b += k;
-		return parea[b] - parea[a] + tri;
-	};
+  auto get_area = [&] (int a, int b) {
+    a = get_id(a);
+    b = get_id(b);
+    ld tri = cp(in[b], in[a]);
+    if (a > b) b += k;
+    return parea[b] - parea[a] + tri;
+  };
 
-	////cerr << "done precomputing parea" << endl;
+  ////cerr << "done precomputing parea" << endl;
 
-	int left, right;
-	for (left = 0; left < k; left++) {
-		int i = get_id(left-1);
-		int j = get_id(left+1);
-		if (cp(in[left]-out[0], in[j]-in[left]) > 0
-			&& cp(in[left]-out[0], in[i]-in[left]) >= 0) {
-			break;
-		}
-	}
-	for (right = 0; right < k; right++) {
-		int i = get_id(right-1);
-		int j = get_id(right+1);
-		if (cp(in[right]-out[0], in[j]-in[right]) <= 0
-			&& cp(in[right]-out[0], in[i]-in[right]) < 0) {
-			break;
-		}
-	}
-	assert(left<k && right<k);
+  int left, right;
+  for (left = 0; left < k; left++) {
+    int i = get_id(left-1);
+    int j = get_id(left+1);
+    if (cp(in[left]-out[0], in[j]-in[left]) > 0
+      && cp(in[left]-out[0], in[i]-in[left]) >= 0) {
+      break;
+    }
+  }
+  for (right = 0; right < k; right++) {
+    int i = get_id(right-1);
+    int j = get_id(right+1);
+    if (cp(in[right]-out[0], in[j]-in[right]) <= 0
+      && cp(in[right]-out[0], in[i]-in[right]) < 0) {
+      break;
+    }
+  }
+  assert(left<k && right<k);
 
-	////cerr << "done initializing rotating callipers" << endl;
+  ////cerr << "done initializing rotating callipers" << endl;
 
-	ld ans = 0;
-	for (const pt& p : out) {
-		if (abs(p-in[left]) < EPS) {
-			right = get_id(left-1);
-			left = get_id(left+1);
-		} else {
-			int i, j;
-			i = get_id(left-1);
-			j = get_id(left+1);
-			while (!(cp(in[left]-p, in[j]-in[left]) > 0
-				&& cp(in[left]-p, in[i]-in[left]) >= 0)) {
-				left = get_id(left+1);
-				i = get_id(left-1);
-				j = get_id(left+1);
-			}
-			i = get_id(right-1);
-			j = get_id(right+1);
-			while (!(cp(in[right]-p, in[j]-in[right]) <= 0
-				&& cp(in[right]-p, in[i]-in[right]) < 0)) {
-				right = get_id(right+1);
-				i = get_id(right-1);
-				j = get_id(right+1);
-			}
-		}
-		ans = max(ans, tri_area(p, in[left], in[right]) - get_area(right, left));
-		//cerr << p << " -> " << in[left] << " " << in[right];
-		//cerr << " + " << tri_area(p,in[left],in[right])-get_area(right,left) << nl;
-	}
-	cout << (ans+original)/2 << nl;
+  ld ans = 0;
+  for (const pt& p : out) {
+    if (abs(p-in[left]) < EPS) {
+      right = get_id(left-1);
+      left = get_id(left+1);
+    } else {
+      int i, j;
+      i = get_id(left-1);
+      j = get_id(left+1);
+      while (!(cp(in[left]-p, in[j]-in[left]) > 0
+        && cp(in[left]-p, in[i]-in[left]) >= 0)) {
+        left = get_id(left+1);
+        i = get_id(left-1);
+        j = get_id(left+1);
+      }
+      i = get_id(right-1);
+      j = get_id(right+1);
+      while (!(cp(in[right]-p, in[j]-in[right]) <= 0
+        && cp(in[right]-p, in[i]-in[right]) < 0)) {
+        right = get_id(right+1);
+        i = get_id(right-1);
+        j = get_id(right+1);
+      }
+    }
+    ans = max(ans, tri_area(p, in[left], in[right]) - get_area(right, left));
+    //cerr << p << " -> " << in[left] << " " << in[right];
+    //cerr << " + " << tri_area(p,in[left],in[right])-get_area(right,left) << nl;
+  }
+  cout << (ans+original)/2 << nl;
 
-	return 0;
+  return 0;
 }

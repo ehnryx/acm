@@ -33,41 +33,41 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 
-	int n,k;
-	cin>>n>>k;
-	int phi[n+1];
-	iota(phi,phi+n+1,0);
-	for(int i=1;i<=n;i++) {
-		for(int j=2*i;j<=n;j+=i) {
-			phi[j]-=phi[i];
-		}
-	}
-	sort(phi+3,phi+n+1);
-	ll a = 2;
-	for(int i=0;i<k;i++) {
-		a += phi[i+3];
-	}
+  int n,k;
+  cin>>n>>k;
+  int phi[n+1];
+  iota(phi,phi+n+1,0);
+  for(int i=1;i<=n;i++) {
+    for(int j=2*i;j<=n;j+=i) {
+      phi[j]-=phi[i];
+    }
+  }
+  sort(phi+3,phi+n+1);
+  ll a = 2;
+  for(int i=0;i<k;i++) {
+    a += phi[i+3];
+  }
 
-	iota(phi,phi+n+1,0);
-	for(int i=1;i<=n;i++) {
-		for(int j=2*i;j<=n;j+=i) {
-			phi[j]-=phi[i];
-		}
-	}
-	for(int i=2;i<=n;i+=2) {
-		phi[i]=INF;
-	}
-	sort(phi+3,phi+n+1);
-	ll b = 1;
-	for(int i=0;i<k;i++) {
-		b += phi[i+3];
-	}
+  iota(phi,phi+n+1,0);
+  for(int i=1;i<=n;i++) {
+    for(int j=2*i;j<=n;j+=i) {
+      phi[j]-=phi[i];
+    }
+  }
+  for(int i=2;i<=n;i+=2) {
+    phi[i]=INF;
+  }
+  sort(phi+3,phi+n+1);
+  ll b = 1;
+  for(int i=0;i<k;i++) {
+    b += phi[i+3];
+  }
 
-	cout<<min(a,b)<<nl;
+  cout<<min(a,b)<<nl;
 
-	return 0;
+  return 0;
 }

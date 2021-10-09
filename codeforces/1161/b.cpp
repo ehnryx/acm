@@ -25,61 +25,61 @@ const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 namespace std {
-	template<> struct hash<pii> {
-		size_t operator () (const pii& v) const {
-			return v.first ^ v.second<<11;
-		}
-	};
+  template<> struct hash<pii> {
+    size_t operator () (const pii& v) const {
+      return v.first ^ v.second<<11;
+    }
+  };
 }
 
 //#define FILEIO
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	cout << fixed << setprecision(10);
+  ios::sync_with_stdio(0);
+  cin.tie(0); cout.tie(0);
+  cout << fixed << setprecision(10);
 #ifdef FILEIO
-	freopen("test.in", "r", stdin);
-	freopen("test.out", "w", stdout);
+  freopen("test.in", "r", stdin);
+  freopen("test.out", "w", stdout);
 #endif
 
-	int n, m;
-	cin >> n >> m;
+  int n, m;
+  cin >> n >> m;
 
-	vector<pii> edges;
-	For (i,m) {
-		int a, b;
-		cin >> a >> b;
-		edges.push_back(pii(a%n,b%n));
-	}
+  vector<pii> edges;
+  For (i,m) {
+    int a, b;
+    cin >> a >> b;
+    edges.push_back(pii(a%n,b%n));
+  }
 
-	function<bool(int)> check = [&] (int d) {
-		unordered_set<pii> rot;
-		for (const pii& e : edges) {
-			rot.insert(pii((e.first+d)%n, (e.second+d)%n));
-			rot.insert(pii((e.second+d)%n, (e.first+d)%n));
-		}
-		for (const pii& e : edges) {
-			if (!rot.count(e)) {
-				return false;
-			}
-		}
-		return true;
-	};
+  function<bool(int)> check = [&] (int d) {
+    unordered_set<pii> rot;
+    for (const pii& e : edges) {
+      rot.insert(pii((e.first+d)%n, (e.second+d)%n));
+      rot.insert(pii((e.second+d)%n, (e.first+d)%n));
+    }
+    for (const pii& e : edges) {
+      if (!rot.count(e)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
-	vector<int> div;
-	FOR (i,2,n) {
-		if (n%i == 0) {
-			div.push_back(n/i);
-		}
-	}
+  vector<int> div;
+  FOR (i,2,n) {
+    if (n%i == 0) {
+      div.push_back(n/i);
+    }
+  }
 
-	for (int d : div) {
-		if (check(d)) {
-			cout << "YES" << nl;
-			return 0;
-		}
-	}
-	cout << "NO" << nl;
+  for (int d : div) {
+    if (check(d)) {
+      cout << "YES" << nl;
+      return 0;
+    }
+  }
+  cout << "NO" << nl;
 
-	return 0;
+  return 0;
 }
