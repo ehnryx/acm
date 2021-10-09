@@ -35,7 +35,7 @@ int cc_inter(pt p1, ld r1, pt p2, ld r2, pt &i1, pt &i2) {
   if(dt < -EPS) return 0;
   if(dt < EPS) { i1=i2=c; return 1; }
   dt=sqrt(dt)*0.5/dq; i1=c+(p2-p1)*pt(0,1)*dt; i2=c-(p2-p1)*pt(0,1)*dt;
-  return 2; 
+  return 2;
 }
 
 // Left of the vector (a -> b) will be cut off. Convex polygons tested UVa 10117
@@ -47,7 +47,7 @@ pol cut_polygon(const pol &v, const pt &a, const pt &b) { pol out;
       pt p = line_inter(a, b, v[i], v[j]);
       if(!out.size() || abs(out.back() - p) > EPS) out.push_back(p); } }
   while(out.size() && abs(out[0] - out.back()) < EPS) out.pop_back();
-  return out; 
+  return out;
 }
 
 // TODO we want to store after instead of before, then order of operations is reversed
@@ -55,7 +55,7 @@ struct Transform {
 	pol before;
 	ld sign;
 	pt offset;
-	Transform(const pol& before, ld s = 1, pt o = 0): 
+	Transform(const pol& before, ld s = 1, pt o = 0):
 		before(before), sign(s), offset(o) {}
 	Transform operator + (const pt& p) const {
 		return Transform(before, sign, offset+p);

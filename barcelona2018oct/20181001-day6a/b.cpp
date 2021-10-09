@@ -16,7 +16,7 @@ ld dp(const pt& a, const pt& b) { return real(conj(a)*b); }
 bool eq(const pt& a, const pt& b) { return abs(a-b)<EPS; }
 
 bool on_segment(const pt& a, const pt& b, const pt& p) {
-  return eq(a,p) || eq(b,p) || 
+  return eq(a,p) || eq(b,p) ||
     (abs(cp(b-a,p-a))<EPS && dp(b-a,p-a)>0 && dp(a-b,p-b)>0);
 }
 
