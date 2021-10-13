@@ -2,6 +2,8 @@
 using namespace std;
 #define _USE_MATH_DEFINES
 
+#include "../../lca/data_structure/splay_tree.h"
+
 typedef long long ll;
 typedef long double ld;
 typedef pair<int,int> pii;
@@ -15,7 +17,7 @@ const ll MOD = 1e9+7;
 const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-
+using node = splay_node<ll, void>;
 
 //#define FILEIO
 int main() {
@@ -39,12 +41,11 @@ int main() {
     }
   }
 
-  //unordered_set<ll> fsqr;
-  set<ll> fsqr;
+  splay_tree<node> fsqr;
   int n = factors.size();
   for (int i = 0; i < n; i++) {
     for (int j = 0; j <= i; j++) {
-      fsqr.insert((ll)factors[i]*factors[j]);
+      fsqr.insert_if_none((ll)factors[i]*factors[j]);
     }
   }
 

@@ -2,6 +2,8 @@
 using namespace std;
 #define _USE_MATH_DEFINES
 
+#include "../../lca/data_structure/splay_tree.h"
+
 typedef long long ll;
 typedef long double ld;
 typedef pair<int,int> pii;
@@ -14,6 +16,8 @@ const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const ll MOD = 1e9+7;
 const ld EPS = 1e-10;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+using node = splay_node<pair<int, int>, void>;
 
 //#define FILEIO
 int main() {
@@ -28,7 +32,6 @@ int main() {
   int n;
   cin >> n;
 
-  //int a[n];
   vector<int> a(n);
   vector<pii> vals;
   for (int i = 0; i < n; i++) {
@@ -37,12 +40,12 @@ int main() {
   }
   sort(vals.begin(), vals.end());
 
-  //int colour[n];
   vector<int> colour(n);
-  set<pii> upper, lower;
+  //set<pii> upper, lower;
+  splay_tree<node> upper, lower;
   for (int i = 0; i < n/2; i++) {
     colour[vals[i].second] = 1;
-    lower.insert(vals[i]);
+    lower.insert_if_none(vals[i]);
   }
   for (int i = n/2; i < n; i++) {
     colour[vals[i].second] = 2;
@@ -56,13 +59,13 @@ int main() {
       lower.erase(pii(a[i], i));
     } else {
       maxc++;
-      upper.insert(pii(a[i], i));
+      upper.insert_if_none(pii(a[i], i));
     }
 
     if (maxc > minc+1) {
-      pii it = *prev(lower.end());
+      pii it = *lower.rbegin();
       pii cur = *upper.begin();
-      lower.erase(prev(lower.end()));
+      lower.erase(lower.rbegin());
       upper.erase(upper.begin());
 
       colour[cur.second] = 1;
