@@ -2,6 +2,8 @@
 using namespace std;
 #define _USE_MATH_DEFINES
 
+#include "../../lca/misc/fast_input.h"
+
 //#define FILENAME sadcactus
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -121,6 +123,8 @@ int main() {
   freopen(FILENAME ".in", "r", stdin);
   freopen(FILENAME ".out", "w", stdout);
 #endif
+
+  fast_input cin;
 
   int T;
   cin >> T;

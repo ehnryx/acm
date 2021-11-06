@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+%:include <bits/stdc++.h>
 using namespace std;
 
 //#define FILENAME sadcactus
@@ -27,34 +27,19 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n, m;
-  cin >> n >> m;
-  map<string, int> cnt;
-  for(int i=0; i<n; i++) {
-    string bs;
-    cin >> bs;
-    int on = count(begin(bs), end(bs), '1');
-    if(8 <= on && on <= 15) {
-      cnt[bs] += 1;
+  int t;
+  cin >> t;
+  while (t--) {
+    int n;
+    cin >> n;
+    if (int rem = n % 3; rem == 0) {
+      cout << n/3 << " " << n/3 << nl;
+    } else if (rem == 1) {
+      cout << n/3 + 1 << " " << n/3 << nl;
+    } else {
+      cout << n/3 << " " << n/3 + 1 << nl;
     }
   }
-
-  if(empty(cnt)) {
-    string out(m, '0');
-    fill(begin(out), begin(out) + 8, '1');
-    cout << out << nl;
-    return 0;
-  }
-
-  pair<int, string> ans;
-  for(const auto& [bs, c] : cnt) {
-    if (c >= ans.first) {
-      ans.first = c;
-      ans.second = bs;
-    }
-  }
-
-  cout << ans.second << nl;
 
   return 0;
 }

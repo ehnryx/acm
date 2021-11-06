@@ -3,6 +3,8 @@
 *.ans*
 *.txt*
 
+perf.data
+
 z_*
 .nfs*
 *.sh

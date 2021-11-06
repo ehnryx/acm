@@ -17,3 +17,8 @@ void readchar(char& c) {
   while (isspace(c = get()));
 }
 // END MAGIC IO
+
+//??/
+/*
+the wonder of trigraphs!
+/**/

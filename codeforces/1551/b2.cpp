@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+%:include <bits/stdc++.h>
 using namespace std;
 
 //#define FILENAME sadcactus
@@ -27,34 +27,36 @@ int main() {
   freopen(FILENAME ".out", "w", stdout);
 #endif
 
-  int n, m;
-  cin >> n >> m;
-  map<string, int> cnt;
-  for(int i=0; i<n; i++) {
-    string bs;
-    cin >> bs;
-    int on = count(begin(bs), end(bs), '1');
-    if(8 <= on && on <= 15) {
-      cnt[bs] += 1;
+  int T;
+  cin >> T;
+  while (T--) {
+    int n, m;
+    cin >> n >> m;
+    map<int, vector<int>> frequency;
+    for (int i=0; i<n; i++) {
+      int v;
+      cin >> v;
+      frequency[v].push_back(i);
     }
-  }
-
-  if(empty(cnt)) {
-    string out(m, '0');
-    fill(begin(out), begin(out) + 8, '1');
-    cout << out << nl;
-    return 0;
-  }
-
-  pair<int, string> ans;
-  for(const auto& [bs, c] : cnt) {
-    if (c >= ans.first) {
-      ans.first = c;
-      ans.second = bs;
+    vector<int> colour(n);
+    vector<int> order;
+    int cid = 0;
+    for (const auto& it : frequency) {
+      for(auto idx : views::take(it.second, m)) {
+        colour[idx] = (cid++) + 1;
+        if (cid == m) cid = 0;
+        order.push_back(idx);
+      }
     }
+    while(size(order) % m != 0) {
+      colour[order.back()] = 0;
+      order.pop_back();
+    }
+    for (int c : colour) {
+      cout << c << " ";
+    }
+    cout << nl;
   }
-
-  cout << ans.second << nl;
 
   return 0;
 }

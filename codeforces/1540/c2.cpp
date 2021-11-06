@@ -1,10 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define _USE_MATH_DEFINES
 
 #include "../../../lca/number/mod_int.h"
 #include "../../../lca/data_structure/fenwick_tree.h"
-#include "../../../lca/data_structure/splay_tree.h"
-#include "../../../lca/misc/fast_input.h"
+
+//#define FILENAME sadcactus
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+template <typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 using ll = long long;
 using ld = long double;
@@ -19,11 +26,16 @@ random_device _rd; mt19937 rng(_rd());
 
 using Int = mod_int<MOD>;
 
+// double-check correctness
+// read limits carefully
+// characterize valid solutions
 int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
-
-  fast_input cin;
+#if defined(ONLINE_JUDGE) && defined(FILENAME)
+  freopen(FILENAME ".in", "r", stdin);
+  freopen(FILENAME ".out", "w", stdout);
+#endif
 
   int n;
   cin >> n;
@@ -56,9 +68,9 @@ int main() {
   sort(begin(queries), end(queries), greater<>());
 
   vector<Int> ans(m);
-  splay_tree<splay_node<int, Int>> memo;
+  map<int, Int> memo;
   for(auto [x, qid] : queries) {
-    if (memo.contains(x)) {
+    if (memo.count(x)) {
       ans[qid] = memo[x];
       continue;
     }

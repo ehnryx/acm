@@ -15,7 +15,13 @@ int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int v;
+    cin >> v;
+    cout << (v + 400 - 1) / 400 << nl;
+  }
 
   return 0;
 }

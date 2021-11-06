@@ -19,12 +19,12 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 // * a^-1 (mod m): if (egcd(a,m,x,y) == 1) return (x+m)%m; else ERROR;
 ll egcd(ll a, ll b, ll& x, ll &y) {
   if (!b) {x = 1; y = 0; return a;}//to ensure d>=0: x=sgn(a);y=0;return abs(a);
-  ll d = egcd(b, a%b, y, x); y -= x * (a/b); return d; 
+  ll d = egcd(b, a%b, y, x); y -= x * (a/b); return d;
 }
 // Assuming a != 0, find smallest y >= 0 such that ax + by = c (if possible)
 bool canon_egcd(ll a, ll b, ll c, ll& x, ll& y) {
   ll d = egcd(a, b, x, y), z = abs(a/d); if (c%d) return false;
-  y = (y*(c/d)%z + z)%z, x = (c - b*y)/a; return true; 
+  y = (y*(c/d)%z + z)%z, x = (c - b*y)/a; return true;
 }
 
 //#define FILEIO
@@ -37,20 +37,25 @@ int main() {
   freopen("test.out", "w", stdout);
 #endif
 
-  int a, b;
+  ll a, b;
   cin >> a >> b;
 
-  if (__gcd(a,b) == 1) {
-    ll t, x, y;
-    canon_egcd(a,-b,1,x,y);
-    t = a*x;
-    canon_egcd(b,-a,1,x,y);
-    t = max(t, b*x);
-    cout << t << nl;
+  if (min(a, b) == 1) {
+    cout << (max(a, b) == 1 ? 1 : 2) << nl;
+    return 0; // sad
   }
-  else {
-    cout << (ll)a*b/__gcd(a,b) << nl;
+
+  ll ans = lcm(a, b);
+  if (gcd(a, b) == 1) {
+    ll x, y;
+    assert(canon_egcd(a, -b, 1 + b, x, y));
+    assert(x > 0 && y >= 0);
+    ans = min(ans, a * x);
+    assert(canon_egcd(b, -a, 1 + a, y, x));
+    assert(x >= 0 && y > 0);
+    ans = min(ans, b * y);
   }
+  cout << ans << nl;
 
   return 0;
 }
