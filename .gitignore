@@ -12,5 +12,7 @@ z_*
 *.jar
 to_submit.cpp
 
+sandbox/
+
 META-INF
 .vscode
