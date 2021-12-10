@@ -8,7 +8,9 @@ cookie=???????
 last=""
 while read -r line; do
   echo "$line"
-  last="$line"
+  if [ ! -z "$line" ]; then
+    last="$line"
+  fi
 done
 
 echo -e "\nSubmitting: $last\n"
