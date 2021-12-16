@@ -42,6 +42,20 @@ from itertools import zip_longest, groupby, takewhile
 from heapq import heappush, heappop, heapify, merge
 
 
+T = read_i()
+while T:
+  T -= 1
+
+  n, a, b = read_i(), read_i(), read_i()
+  ans = list(range(1, n+1))
+  if min(ans[n//2:]) == a and max(ans[:n//2]) == b:
+    write_s(' '.join(str(x) for x in reversed(ans)))
+  else:
+    ans[a-1], ans[b-1] = ans[b-1], ans[a-1]
+    if min(ans[n//2:]) == a and max(ans[:n//2]) == b:
+      write_s(' '.join(str(x) for x in reversed(ans)))
+    else:
+      write_i(-1)
 
 
 print_ans()

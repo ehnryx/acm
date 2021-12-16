@@ -42,6 +42,26 @@ from itertools import zip_longest, groupby, takewhile
 from heapq import heappush, heappop, heapify, merge
 
 
+T = read_i()
+while T:
+  T -= 1
+
+  k, x = read_i(), read_i()
+  l = 1
+  r = 2*k - 1
+  while l < r:
+    m = (l + r) // 2
+    if m < k:
+      tot = m*(m+1)//2
+    else:
+      d = 2*k - 1 - m
+      tot = k*k - d*(d+1)//2
+    if tot < x:
+      l = m + 1
+    else:
+      r = m
+
+  write_i(r)
 
 
 print_ans()

@@ -42,6 +42,30 @@ from itertools import zip_longest, groupby, takewhile
 from heapq import heappush, heappop, heapify, merge
 
 
+T = read_i()
+while T:
+  T -= 1
+
+  a, b, x = [read_i() for i in range(3)]
+  ok = False
+  while a != b and a > 0 and b > 0 and not ok:
+    if a == x or b == x:
+      ok = True
+    if a > b:
+      a, b = b, a
+    if b-a < a:
+      a = b-a
+    if a == x or b == x:
+      ok = True
+    r = b % a
+    if x <= b and (x - r) % a == 0:
+      ok = True
+    b = r
+
+  if ok or a == x or b == x:
+    write_s("YES")
+  else:
+    write_s("NO")
 
 
 print_ans()
