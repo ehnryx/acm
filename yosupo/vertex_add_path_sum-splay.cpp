@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../../lca/data_structure/link_cut_tree.h"
+#include "../../lca/tree/link_cut_tree.h"
 
 //#define FILENAME sadcactus
 
