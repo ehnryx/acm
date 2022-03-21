@@ -15,7 +15,11 @@ int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
 
-  
+  int a, b, c, d;
+  cin >> a >> b >> c >> d;
+  pt x(a, b), y(c, d);
+  pt ans = x/y;
+  cout << real(ans) << " " << imag(ans) << nl;
 
   return 0;
 }

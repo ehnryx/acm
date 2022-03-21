@@ -15,17 +15,15 @@ int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
 
-  int T;
-  cin >> T;
-  while(T--) {
-    string s;
-    cin >> s;
-    bool peaked = false;
-    for(int i=1; i<s.size(); i++) {
-      if(s[i] < s[i-1]) peaked = true;
-      if(peaked) s[i] = min(s[i], s[i-1]);
+  for(string s; cin >> s; ) {
+    s.push_back(0);
+    for(int i=0, j=0; i<size(s); i++) {
+      if(s[i] != s[j]) {
+        cout << i - j << s[j];
+        j = i;
+      }
     }
-    cout << s << nl;
+    cout << nl;
   }
 
   return 0;

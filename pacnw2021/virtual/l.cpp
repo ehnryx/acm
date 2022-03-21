@@ -41,7 +41,7 @@ int main() {
       continue;
     }
     ld ratio = (total/2 - left) / cur;
-    pt ans = v[i] * ratio + v[i+1] * (1 - ratio);
+    pt ans = v[i+1] * ratio + v[i] * (1 - ratio);
     cout << ans.real() << " " << ans.imag() << nl;
     return 0;
   }

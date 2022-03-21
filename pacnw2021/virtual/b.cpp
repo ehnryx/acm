@@ -32,15 +32,15 @@ int main() {
   }
 
   vector dp(n+1, vector<int>(26));
-  fill(begin(dp[0]), end(dp[0]), 0);
+  fill(begin(dp[0]), end(dp[0]), -1);
   int length = -1;
   for(int i=1; i<=n && length == -1; i++) {
-    for(int c=0; c<26; c++) {
+    for(int c=0; c<26 && length == -1; c++) {
       if (!have[c]) continue;
-      for(int d=0; d<26; d++) {
-        if (!have[c]) continue;
-        int j = dp[i-1][d];
-        dp[i][c] = max(dp[i][c], nxt[j][c] + 1);
+      for(int d=0; d<26 && length == -1; d++) {
+        if (!have[d]) continue;
+        int j = dp[i-1][d] + 1;
+        dp[i][c] = max(dp[i][c], nxt[j][c]);
         if(dp[i][c] == n) {
           length = i;
           break;
