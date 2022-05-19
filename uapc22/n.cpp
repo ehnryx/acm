@@ -17,14 +17,23 @@ int main() {
 
   int n;
   cin >> n;
-  ll a = 0;
-  ll b = 1;
-  for(int i=1; i<n; i++) {
-    ll c = a + b;
-    a = b;
-    b = c;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
   }
-  cout << a << " " << b << nl;
+  int sum = accumulate(begin(a), end(a), 0);
+  vector<int> ans;
+  for(int i=0; i<n; i++) {
+    ans.push_back(sum - a[i]);
+  }
+  sort(begin(ans), end(ans));
+  ans.resize(unique(begin(ans), end(ans)) - begin(ans));
+
+  cout << ans.size() << nl;
+  for(int v : ans) {
+    cout << v << " ";
+  }
+  cout << nl;
 
   return 0;
 }

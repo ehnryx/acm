@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "io/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,13 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int n, m, k;
+  cin >> n >> m >> k;
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<m; j++) {
+      cost[i][j];
+    }
+  }
 
   return 0;
 }

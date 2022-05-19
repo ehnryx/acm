@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "io/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,10 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  ld r; int a, b;
+  while(cin >> r >> a >> b && a && b) {
+    cout << r*r*M_PIl << " " << 4*r*r*b/a << nl;
+  }
 
   return 0;
 }

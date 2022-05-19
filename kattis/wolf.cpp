@@ -2,7 +2,6 @@
 using namespace std;
 
 //%:include "utility/fast_input.h"
-//%:include "utility/output.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,29 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int n;
+  cin >> n;
+  if(n != 52/2) {
+    cout << (n < 52/2 ? "im" : "") << "possible" << nl;
+    return 0;
+  }
+
+  vector<int> cnt(128), maxv(128);
+  for(int i=0; i<n; i++) {
+    int v; char c;
+    cin >> v >> c;
+    cnt[c]++;
+    maxv[c] = max(maxv[c], v);
+  }
+
+  for(char c : "CDHS"s) {
+    if(maxv[c] > cnt[c]) {
+      cout << "possible" << nl;
+      return 0;
+    }
+  }
+
+  cout << "impossible" << nl;
 
   return 0;
 }

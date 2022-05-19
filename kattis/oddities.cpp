@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+//%:include "io/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,13 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int T;
+  cin >> T;
+  while (T--) {
+    int n;
+    cin >> n;
+    cout << n << " is " << (n % 2 ? "odd" : "even") << nl;
+  }
 
   return 0;
 }

@@ -1,8 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "io/fast_input.h"
+
+%:include "graph/graph_builder.h"
+%:include "graph/min_span_forest.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +23,12 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    auto g = *cin.getv<graph_builder<void, false, 0>>();
+    cout << g.size() - 1 - min_span_forest(g).edges.size() << nl;
+  }
 
   return 0;
 }

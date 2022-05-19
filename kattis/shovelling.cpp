@@ -46,7 +46,7 @@ int main() {
       }
     }
 
-    int ans = numeric_limits<int>::max();
+    tuple<int, int, int, int> ans(numeric_limits<int>::max(), 0, 0, 0);
     vector<breadth_first<decltype(graph)>> bfs;
     for(int i=0; i<nodes; i++) {
       bfs.emplace_back(graph, i, true);
@@ -67,13 +67,38 @@ int main() {
           if(!ok) continue;
           sum += bfs[i].dist[j];
           sum += (g[i/(m+2)][i%(m+2)] == 'o');
-          ans = min(ans, sum);
+          ans = min(ans, tuple(sum, i, j, bm));
         }
       }
     }
 
-    cout << ans << nl;
+    {
+      auto [_, i, j, bm] = ans;
+      for(int k=0; k<4; k++) {
+        for(int v : bfs[bm & 1<<k ? i : j].get_path(loc[k])) {
+          if(g[v/(m+2)][v%(m+2)] == 'o') {
+            g[v/(m+2)][v%(m+2)] = '.';
+          }
+        }
+      }
+      for(int v : bfs[i].get_path(j)) {
+        if(g[v/(m+2)][v%(m+2)] == 'o') {
+          g[v/(m+2)][v%(m+2)] = '.';
+        }
+      }
+    }
+
+    cout << m << " " << n << nl;
+    for(int i=1; i<=n; i++) {
+      for(int j=1; j<=m; j++) {
+        cout << g[i][j];
+      }
+      cout << nl;
+    }
+    cout << nl;
   }
+
+  cout << 0 << " " << 0 << nl;
 
   return 0;
 }

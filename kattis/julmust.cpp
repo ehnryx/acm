@@ -2,7 +2,6 @@
 using namespace std;
 
 //%:include "utility/fast_input.h"
-//%:include "utility/output.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,23 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int r;
+  cin >> r;
+  int l = 1;
+  for(int t=1; ; t++) {
+    int m = (l + r) / 2;
+    cout << m * t << endl;
+    string s;
+    cin >> s;
+    if(s == "less") {
+      r = m - 1;
+    } else if(s == "more") {
+      l = m + 1;
+    } else {
+      return 0;
+    }
+  }
+  assert(false); // kurwa
 
   return 0;
 }

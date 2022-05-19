@@ -1,115 +1,66 @@
-//#pragma GCC optimize("O3")
-//#pragma GCC target("sse4,avx2,abm,fma")
 #include <bits/stdc++.h>
 using namespace std;
-#define _USE_MATH_DEFINES
 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-template <typename T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+%:include "io/fast_input.h"
 
-typedef long long ll;
-typedef long double ld;
-typedef complex<ld> pt;
+using ll = long long;
+using ld = long double;
+using pt = complex<ld>;
 
-const char nl = '\n';
-const ll INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9+7;
-const ld EPS = 1e-13;
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+constexpr char nl = '\n';
+constexpr int MOD = 998244353;
+constexpr ld EPS = 1e-9L;
+random_device _rd; mt19937 rng(_rd());
 
-const int N = 42;
-char a[N][N], b[N][N];
-const int M = 2e3 + 1;
-int x[M], y[M];
+void solve(fast_input<>& cin) {
+  int m, n, k;
+  cin >> m >> n >> k;
+  auto g = cin.read<char>(2, n, m);
+  auto moves = cin.read<pair<int, int>>(k);
+
+  vector<int> cnt(2);
+  for(int t=0; t<2; t++) {
+    for(int i=0; i<n; i++) {
+      for(int j=0; j<m; j++) {
+        cnt[t] += g[t][i][j] == '#';
+      }
+    }
+  }
+
+  int turn = 1;
+  for(auto [b, a] : moves) {
+    a = n-1 - a; // reversed
+    if(g[turn][a][b] == '#') {
+      g[turn][a][b] = '_';
+      cnt[turn]--;
+      if(cnt[turn]) {
+        continue; // hit
+      }
+    }
+    turn ^= 1;
+    if(turn && (cnt[0] == 0 || cnt[1] == 0)) {
+      break;
+    }
+  }
+
+  if((cnt[0] && cnt[1]) || (cnt[0] == cnt[1])) {
+    cout << "draw" << nl;
+  } else {
+    cout << "player " << (cnt[0] ? "one" : "two") << " wins" << nl;
+  }
+}
 
 int main() {
-  ios::sync_with_stdio(0); cin.tie(0);
+  cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
+#ifdef USING_FAST_INPUT
+  fast_input cin;
+#endif
 
   int T;
   cin >> T;
   while(T--) {
-    int n, m, k;
-    cin >> m >> n >> k;
-    for(int i=n-1; i>=0; i--) {
-      for(int j=0; j<m; j++) {
-        cin >> a[i][j];
-      }
-    }
-    for(int i=n-1; i>=0; i--) {
-      for(int j=0; j<m; j++) {
-        cin >> b[i][j];
-      }
-    }
-    for(int i=0; i<k; i++) {
-      cin >> y[i] >> x[i];
-    }
-
-    bool A = true;
-    bool B = true;
-    for(int i=0; i<n; i++) {
-      for(int j=0; j<m; j++) {
-        if(a[i][j] == '#') {
-          B = false;
-        }
-        if(b[i][j] == '#') {
-          A = false;
-        }
-      }
-    }
-
-    for(int t=0; t<k && !A && !B; ) {
-      while(t<k) {
-        int i = x[t];
-        int j = y[t];
-        //cerr<<"one shoots @ "<<i<<" "<<j<<nl;
-        ++t;
-        if(b[i][j] == '#') {
-          b[i][j] = '_';
-        } else {
-          break;
-        }
-      }
-      while(t<k) {
-        int i = x[t];
-        int j = y[t];
-        //cerr<<"two shoots @ "<<i<<" "<<j<<nl;
-        ++t;
-        if(a[i][j] == '#') {
-          a[i][j] = '_';
-        } else {
-          break;
-        }
-      }
-
-      A = true;
-      B = true;
-      for(int i=0; i<n; i++) {
-        for(int j=0; j<m; j++) {
-          if(a[i][j] == '#') {
-            B = false;
-          }
-          if(b[i][j] == '#') {
-            A = false;
-          }
-        }
-      }
-    }
-
-    if(A == B) {
-      cout << "draw" << nl;
-    } else if(A) {
-      cout << "player one wins" << nl;
-    } else if(B) {
-      cout << "player two wins" << nl;
-    } else {
-      assert(false);
-    }
-
+    solve(cin);
   }
 
   return 0;

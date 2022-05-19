@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "io/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,18 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int n, m;
+  cin >> n >> m;
+  auto v = cin.read<int>(n);
+  sort(begin(v), end(v));
+  int ans = 0;
+  for(int it : v) {
+    if(it + 1 <= m) {
+      ans++;
+      m -= it + 1;
+    }
+  }
+  cout << ans << nl;
 
   return 0;
 }

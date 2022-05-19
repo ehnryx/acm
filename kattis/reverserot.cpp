@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "utility/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,21 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  string a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_.";
+
+  int r;
+  string s;
+  while(cin >> r >> s) {
+    vector<int> t;
+    for(char c : s) {
+      t.push_back(((find(begin(a), end(a), c) - begin(a)) + r) % 28);
+    }
+    reverse(begin(t), end(t));
+    for(int c : t) {
+      cout << a[c];
+    }
+    cout << nl;
+  }
 
   return 0;
 }

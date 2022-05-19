@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "io/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,15 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int n;
+  cin >> n;
+  int ans = 0;
+  for(int i=0; i<n; i++) {
+    string v;
+    cin >> v;
+    ans += pow(stoi(v.substr(0, size(v) - 1)), stoi(v.substr(size(v) - 1)));
+  }
+  cout << ans << nl;
 
   return 0;
 }

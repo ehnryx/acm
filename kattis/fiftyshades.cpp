@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+//%:include "io/fast_input.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +20,24 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int n;
+  cin >> n;
+
+  int ans = 0;
+  for(int i=0; i<n; i++) {
+    string s;
+    cin >> s;
+    for(char& c : s) {
+      c = tolower(c);
+    }
+    ans += (s.find("pink") != -1 || s.find("rose") != -1);
+  }
+
+  if(ans) {
+    cout << ans << nl;
+  } else {
+    cout << "I must watch Star Wars with my daughter" << nl;
+  }
 
   return 0;
 }

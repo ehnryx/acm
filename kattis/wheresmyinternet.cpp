@@ -1,8 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "io/fast_input.h"
+
+%:include "graph/graph_builder.h"
+%:include "graph/breadth_first.h"
 
 using ll = long long;
 using ld = long double;
@@ -21,7 +23,18 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  auto g = *cin.getv<graph_builder<void>>();
+  auto d = breadth_first(g, 1).get_dists();
+  bool ok = true;
+  for(int i=1; i<g.size(); i++) {
+    if(d[i] == -1) {
+      ok = false;
+      cout << i << nl;
+    }
+  }
+  if(ok) {
+    cout << "Connected" << nl;
+  }
 
   return 0;
 }

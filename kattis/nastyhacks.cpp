@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
-
 using ll = long long;
 using ld = long double;
 using pt = complex<ld>;
@@ -17,11 +14,20 @@ random_device _rd; mt19937 rng(_rd());
 int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
-#ifdef USING_FAST_INPUT
-  fast_input cin;
-#endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int r, e, c;
+    cin >> r >> e >> c;
+    if(r < e - c) {
+      cout << "advertise" << nl;
+    } else if(r > e - c) {
+      cout << "do not advertise" << nl;
+    } else {
+      cout << "does not matter" << nl;
+    }
+  }
 
   return 0;
 }
