@@ -98,11 +98,49 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
+int correct(int n) {
+  int cnt = 0;
+  for(int x=-n; x<=n; x++) {
+    for(int y=-n; y<=n; y++) {
+      if(round(sqrt(x*x + y*y)) <= n) {
+        cnt++;
+      }
+    }
+  }
+  return cnt;
+}
 
+int wrong(int n) {
+  vector g(2*n+1, vector<bool>(2*n+1));
+  for(int i=0; i<=n; i++) {
+    for(int x=-i; x<=i; x++) {
+      int y = round(sqrt(i*i - x*x));
+      g[n+x][n+y] = true;
+      g[n+x][n-y] = true;
+      g[n+y][n+x] = true;
+      g[n-y][n+x] = true;
+    }
+  }
+  int cnt = 0;
+  for(int i=0; i<=2*n; i++) {
+    for(int j=0; j<=2*n; j++) {
+      cnt += g[i][j];
+      //cerr << g[i][j];
+    }
+    //cerr << nl;
+  }
+  return cnt;
+}
 
 void solve_case() {
 
-  
+  //cerr << nl;
+
+  int n;
+  cin >> n;
+  int c = correct(n);
+  int w = wrong(n);
+  cout << c - w << nl;// " = " << c << " - " << w << nl;
 
   return;
 }

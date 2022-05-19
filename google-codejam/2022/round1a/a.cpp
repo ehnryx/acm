@@ -102,7 +102,22 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  string s;
+  cin >> s;
+  int n = size(s);
+  char last = 0;
+  string t;
+  for(int i=n-1; i>=0; i--) {
+    if(i+1 < n && s[i] != s[i+1]) {
+      last = s[i+1];
+    }
+    t.push_back(s[i]);
+    if(s[i] < last) {
+      t.push_back(s[i]);
+    }
+  }
+  reverse(begin(t), end(t));
+  cout << t << nl;
 
   return;
 }

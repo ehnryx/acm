@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
   cin >> T;
   for (int cc = 1; cc <= T; cc++) {
     auto start = chrono::steady_clock::now();
-    cout << "Case #" << cc << ": ";
+    //cout << "Case #" << cc << ": ";
     solve_case();
     if(argc > 1 && argv[1][0] == 't') {
       cerr << "Time: " << (chrono::steady_clock::now() - start) / 1.0s << "s" << nl << nl;
@@ -98,15 +98,99 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
-
+int mask[20];
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  assert(n == 100);
+
+  int done = 0;
+  for(int t=1; t<1e9; t*=10) {
+    for(int i=1; i<=9; i++) {
+      cout << t*i << " ";
+      done++;
+    }
+  }
+  vector<int> other;
+  for(int i=101; done<n; i++, done++) {
+    cout << i << " ";
+    other.push_back(i);
+  }
+  cout << endl;
+
+  for(int i=0; i<n; i++) {
+    int v;
+    cin >> v;
+    other.push_back(v);
+  }
+  //cerr << "other: " << other << nl;
+
+  ll sum = accumulate(begin(other), end(other), (ll)0);
+  ll have = 0;
+  vector<int> ans;
+  for(int v : other) {
+    if(2 * (have + v) <= sum) {
+      have += v;
+      ans.push_back(v);
+    }
+  }
+  ll rest = sum - have;
+
+  ll diff = rest - have;
+  assert(diff < 2e9);
+  assert(diff % 2);
+
+  for(int t=1e8; t>=1; t/=10) {
+    int num = diff / t;
+    assert(num < 20);
+    int sgn = 1;
+    if(num == 0) {
+      num = 1;
+      sgn = -1;
+    } else if(num % 2 == 0) {
+      num -= 1;
+    }
+    for(int i=1; i<=9; i++) {
+      if(mask[num] & 1<<i) {
+        if(sgn == 1) {
+          ans.push_back(i * t);
+        }
+      } else {
+        if(sgn == -1) {
+          ans.push_back(i * t);
+        }
+      }
+    }
+    diff -= num * t * sgn;
+  }
+
+  for(int v : ans) {
+    cout << v << " ";
+  }
+  cout << endl;
 
   return;
 }
 
 void initialize() {
+  for(int bm=0; bm<1<<10; bm++) {
+    int sum = 0;
+    for(int i=1; i<=9; i++) {
+      if(bm & 1<<i) {
+        sum += i;
+      } else {
+        sum -= i;
+      }
+    }
+    if(0 <= sum && sum < 20) {
+      mask[sum] = bm;
+    }
+  }
+  for(int i=0; i<20; i++) {
+    if(i % 2 == 0) continue;
+    assert(mask[i]);
+  }
 }
 

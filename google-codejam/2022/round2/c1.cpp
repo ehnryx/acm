@@ -98,11 +98,66 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
+ll sqr(ll n) { return n*n; }
+ll dist(pair<int, int> a, pair<int, int> b) {
+  return sqr(a.first - b.first) + sqr(a.second - b.second);
+}
 
+char dp[1 << 21];
+
+char solve(
+    const vector<pair<int, int>>& child,
+    const vector<pair<int, int>>& candy,
+    int bm, vector<pair<int, int>>& ans) {
+  if((bm & 1) == 0) return false;
+  if(__builtin_popcount(bm) == 1) {
+    return bm == 1;
+  }
+  if(dp[bm] != -1) return dp[bm];
+
+  int n = size(child);
+  for(int i=0; i<n; i++) {
+    if(!(bm & 1<<(i+n+1))) continue;
+    ll mindist = numeric_limits<ll>::max();
+    for(int j=0; j<n+1; j++) {
+      if(!(bm & 1<<j)) continue;
+      mindist = min(mindist, dist(child[i], candy[j]));
+    }
+    for(int j=0; j<n+1; j++) {
+      if(!(bm & 1<<j) || dist(child[i], candy[j]) != mindist) continue;
+      if(solve(child, candy, bm ^ (1 << (i + n+1)) ^ (1 << j), ans)) {
+        ans.emplace_back(i+1, j+1);
+        return true;
+      }
+    }
+  }
+
+  return dp[bm] = false;
+}
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  vector<pair<int, int>> child(n), candy(n+1);
+  for(int i=0; i<n; i++) {
+    cin >> child[i].first >> child[i].second;
+  }
+  for(int i=0; i<n+1; i++) {
+    cin >> candy[i].first >> candy[i].second;
+  }
+
+  memset(dp, -1, sizeof(dp[0]) * (1 << (2*n + 1)));
+  vector<pair<int, int>> ans;
+  if(solve(child, candy, (1 << (2*n + 1)) - 1, ans)) {
+    reverse(begin(ans), end(ans));
+    cout << "POSSIBLE" << nl;
+    for(auto [x, y] : ans) {
+      cout << x << " " << y << nl;
+    }
+  } else {
+    cout << "IMPOSSIBLE" << nl;
+  }
 
   return;
 }

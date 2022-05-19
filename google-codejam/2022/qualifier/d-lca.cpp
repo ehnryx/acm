@@ -2,6 +2,8 @@
 using namespace std;
 #define _USE_MATH_DEFINES
 
+#include "../../../lca/tree/rooted_tree_memo.h"
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 namespace {
@@ -98,11 +100,47 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
+struct node {
+  ll sum;
+  int least, val;
+  ll value() const { return sum + least; }
+};
 
+struct treedp final : rooted_tree_memo<node> {
+  using rooted_tree_memo<node>::rooted_tree_memo;
+  void before_children(int u, node& cur) override {
+    cur.sum = 0;
+    cur.least = empty(adj[u]) ? cur.val : numeric_limits<int>::max();
+  }
+  void for_each_child(int u, node& cur, int v, node& child) override {
+    cur.sum += child.value();
+    cur.least = min(cur.least, child.least);
+  }
+  void after_children(int u, node& cur) override {
+    if (empty(adj[u])) return;
+    cur.sum -= cur.least;
+    cur.least = max(cur.least, cur.val);
+  }
+};
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  vector<vector<int>> adj(n+1);
+  vector<node> init(n+1);
+  for(int i=1; i<=n; i++) {
+    int v;
+    cin >> v;
+    init[i].val = v;
+  }
+  for(int i=1; i<=n; i++) {
+    int p;
+    cin >> p;
+    adj[p].push_back(i);
+  }
+
+  cout << treedp(adj, 0, init).solve_and_return().value() << nl;
 
   return;
 }

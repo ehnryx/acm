@@ -1,21 +1,27 @@
+//#pragma GCC optimize("O3")
+//#pragma GCC target("sse4,avx2,abm,fma")
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-namespace {
 using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-}
 
-using ll = long long;
-using ld = long double;
-using pt = complex<ld>;
+typedef long long ll;
+typedef long double ld;
+typedef pair<int,int> pii;
+typedef complex<ld> pt;
+typedef vector<pt> pol;
 random_device _rd; mt19937 rng(_rd());
 
 constexpr char nl = '\n';
+constexpr ll INF = 0x3f3f3f3f;
+constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
+constexpr ll MOD = 1e9+7;
+constexpr ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
@@ -102,7 +108,26 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  vector<int> g(4, numeric_limits<int>::max());
+  for(int t=0; t<3; t++) {
+    for(int i=0; i<4; i++) {
+      int v;
+      cin >> v;
+      g[i] = min(g[i], v);
+    }
+  }
+
+  int left = 1e6;
+  for(int i=0; i<4; i++) {
+    g[i] = min(g[i], left);
+    left -= g[i];
+  }
+
+  if(left) {
+    cout << "IMPOSSIBLE" << nl;
+  } else {
+    cout << g[0] << " " << g[1] << " " << g[2] << " " << g[3] << nl;
+  }
 
   return;
 }

@@ -102,7 +102,42 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  int n, m;
+  cin >> n >> m;
+  if(m < n-1 || m%2 == 1) {
+    cout << "IMPOSSIBLE" << nl;
+    return;
+  }
+
+  int len = 4 * (n/2);
+  int diff = (n*n - 1 - m) / 2;
+  vector<pair<int, int>> take;
+  for(int i=len-1, at=1; i>0; ) {
+    //cerr << "@ " << i << " at " << at << nl;
+    if(i <= diff) {
+      //cerr << "take" << nl;
+      // take
+      diff -= i;
+      int to = (at + 1 + 2*i+1);
+      take.emplace_back(at + 1, to);
+      at = to;
+      i -= 4;
+    } else {
+      //cerr << "skip" << nl;
+      at += 2 * (i/4 + 1);
+      i -= 1;
+    }
+  }
+
+  if(diff) {
+    cout << "IMPOSSIBLE" << nl;
+    return;
+  }
+
+  cout << size(take) << nl;
+  for(auto [a, b] : take) {
+    cout << a << " " << b << nl;
+  }
 
   return;
 }

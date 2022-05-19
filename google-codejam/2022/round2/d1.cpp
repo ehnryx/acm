@@ -98,11 +98,43 @@ int main(int argc, char** argv) {
 
 ////////////////////////////////////////////////////////////////////////
 
+ll solve(vector<pair<int, int>>&& ev, int c) {
+  int n = size(ev);
+  if(n == 0) return 0;
+  sort(begin(ev), end(ev), greater<>());
 
+  static constexpr ll big = numeric_limits<ll>::max();
+  vector dp(n+1, vector<ll>(2*n + 1, big));
+  dp[0][0] = 0;
+  for(int i=0; i<n; i++) {
+    int ci = i + 1;
+    for(int j=-i; j<=i; j++) {
+      if(dp[i][j+i] == big) continue;
+      dp[i+1][j+1 + ci] = min(dp[i+1][j+1 + ci],
+          dp[i][j+i] + (j < 0 ? 0 : 2 * ev[i].first) + (ev[i].second ? 0 : c));
+      dp[i+1][j-1 + ci] = min(dp[i+1][j-1 + ci],
+          dp[i][j+i] + (j > 0 ? 0 : 2 * ev[i].first) + (ev[i].second ? c : 0));
+    }
+  }
+  return *min_element(begin(dp[n]), end(dp[n]));
+}
 
 void solve_case() {
 
-  
+  int n, c;
+  cin >> n >> c;
+  vector<pair<int, int>> l, r;
+  for(int i=0; i<n; i++) {
+    int x, t;
+    cin >> x >> t;
+    if(x < 0) {
+      l.emplace_back(-x, t);
+    } else {
+      r.emplace_back(x, t);
+    }
+  }
+
+  cout << solve(move(l), c) + solve(move(r), c) << nl;
 
   return;
 }

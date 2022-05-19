@@ -1,21 +1,27 @@
+//#pragma GCC optimize("O3")
+//#pragma GCC target("sse4,avx2,abm,fma")
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-namespace {
 using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-}
 
-using ll = long long;
-using ld = long double;
-using pt = complex<ld>;
+typedef long long ll;
+typedef long double ld;
+typedef pair<int,int> pii;
+typedef complex<ld> pt;
+typedef vector<pt> pol;
 random_device _rd; mt19937 rng(_rd());
 
 constexpr char nl = '\n';
+constexpr ll INF = 0x3f3f3f3f;
+constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
+constexpr ll MOD = 1e9+7;
+constexpr ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
@@ -102,7 +108,21 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  vector<int> a(n);
+  for(int i=0; i<n; i++) {
+    cin >> a[i];
+  }
+  sort(begin(a), end(a));
+
+  int at = 0;
+  for(int i=0; i<n; i++) {
+    if(a[i] > at) {
+      at++;
+    }
+  }
+  cout << at << nl;
 
   return;
 }

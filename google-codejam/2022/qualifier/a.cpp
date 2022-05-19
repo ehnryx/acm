@@ -1,21 +1,27 @@
+//#pragma GCC optimize("O3")
+//#pragma GCC target("sse4,avx2,abm,fma")
 #include <bits/stdc++.h>
 using namespace std;
 #define _USE_MATH_DEFINES
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-namespace {
 using namespace __gnu_pbds;
 template <typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-}
 
-using ll = long long;
-using ld = long double;
-using pt = complex<ld>;
+typedef long long ll;
+typedef long double ld;
+typedef pair<int,int> pii;
+typedef complex<ld> pt;
+typedef vector<pt> pol;
 random_device _rd; mt19937 rng(_rd());
 
 constexpr char nl = '\n';
+constexpr ll INF = 0x3f3f3f3f;
+constexpr ll INFLL = 0x3f3f3f3f3f3f3f3f;
+constexpr ll MOD = 1e9+7;
+constexpr ld EPS = 1e-9;
 
 template <class T, class U>
 ostream& operator << (ostream& os, const pair<T,U>& v) {
@@ -102,7 +108,31 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  int n, m;
+  cin >> n >> m;
+  vector g(2*n + 1, string(2*m + 1, '.'));
+  for(int i=0; i<=n; i++) {
+    for(int j=0; j<=m; j++) {
+      if(i || j) {
+        g[2*i][2*j] = '+';
+      }
+      if(i && j) {
+        g[2*i - 1][2*j] = '|';
+        g[2*i][2*j - 1] = '-';
+      }
+      if(!i && j > 1) {
+        g[2*i][2*j - 1] = '-';
+      }
+      if(!j && i > 1) {
+        g[2*i - 1][2*j] = '|';
+      }
+    }
+  }
+
+  cout << nl;
+  for(const string& s : g) {
+    cout << s << nl;
+  }
 
   return;
 }

@@ -102,7 +102,85 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  int n, m;
+  cin >> n >> m;
+  vector h(n+2, vector<int>(m));
+  for(int i=1; i<=n; i++) {
+    for(int j=0; j<m; j++) {
+      cin >> h[i][j]; // height of type j at i
+    }
+  }
+
+  static constexpr int big = numeric_limits<int>::max();
+  vector minh(n+1, vector(n+1, vector<int>(m, big)));
+  vector maxh(n+1, vector(n+1, vector<int>(m, 0)));
+  vector leaf(n+1, vector<int>(n+1));
+  for(int s=1; s<=n; s++) {
+    for(int i=s; i<=n; i++) {
+      for(int t=0; t<m; t++) {
+        minh[s][i][t] = min(minh[s][i-1][t], h[i][t]);
+        maxh[s][i][t] = max(maxh[s][i-1][t], h[i][t]);
+      }
+      leaf[s][i] = true;
+      vector<int> at(m);
+      vector<pair<int, int>> got;
+      for(int ii=s; ii<=i; ii++) {
+        for(int t=m-1; t>=0; t--) {
+          int diff = h[ii][t] - at[t];
+          if(diff < 0) {
+            if(got.back() != pair(t, -diff)) {
+              leaf[s][i] = false;
+              goto quit;
+            }
+            got.pop_back();
+          }
+        }
+        for(int t=0; t<m; t++) {
+          int diff = h[ii][t] - at[t];
+          at[t] = h[ii][t];
+          if(diff > 0) {
+            got.emplace_back(t, diff);
+          }
+        }
+      }
+quit:
+      ;
+    }
+  }
+
+  vector<int> sumh(n+1);
+  int trivial = 0;
+  for(int i=0; i<=n; i++) {
+    for(int j=0; j<m; j++) {
+      sumh[i] += min(h[i][j], h[i+1][j]);
+      trivial += abs(h[i][j] - h[i+1][j]);
+    }
+  }
+
+  vector dp(n+1, vector<int>(n+1, big));
+  for(int d=1; d<=n; d++) {
+    for(int s=1; s+d-1<=n; s++) {
+      int t = s + d - 1;
+      if(leaf[s][t]) {
+        dp[s][t] = 0;
+        continue;
+      }
+      int sumhlr = 0;
+      for(int j=0; j<m; j++) {
+        sumhlr += minh[s][t][j];
+      }
+      //cerr << "solving " << s << " " << t << nl;
+      for(int x=s; x<t; x++) {
+        int cost = sumh[x] - sumhlr;
+        //cerr << "cost @ " << x << " " << " -> " << cost << nl;
+        dp[s][t] = min(dp[s][t], dp[s][x] + dp[x+1][t] + cost);
+      }
+      //cerr << "dp " << s << " " << t << " -> " << dp[s][t] << nl;
+    }
+  }
+
+  //cerr << "ans = " << 2 * dp[1][n] << " + " << trivial << nl;
+  cout << 2 * dp[1][n] + trivial << nl;
 
   return;
 }

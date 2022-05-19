@@ -102,7 +102,41 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  int n;
+  cin >> n;
+  vector<int> val(n+1), par(n+1);
+  vector<vector<int>> adj(n+1);
+  for(int i=1; i<=n; i++) {
+    cin >> val[i];
+  }
+  for(int i=1; i<=n; i++) {
+    cin >> par[i];
+    adj[par[i]].push_back(i);
+  }
+
+  struct Result {
+    ll sum;
+    int least;
+    ll value() const { return sum + least; }
+  };
+
+  function<Result(int)> solve = [&](int u) {
+    if (empty(adj[u])) {
+      return Result{ 0, val[u] };
+    }
+    Result res = Result{ 0, numeric_limits<int>::max() };
+    for(int v : adj[u]) {
+      Result cur = solve(v);
+      res.sum += cur.value();
+      res.least = min(res.least, cur.least);
+    }
+    res.sum -= res.least;
+    res.least = max(res.least, val[u]);
+    return res;
+  };
+
+  Result res = solve(0);
+  cout << res.value() << nl;
 
   return;
 }

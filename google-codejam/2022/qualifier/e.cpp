@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
   cin >> T;
   for (int cc = 1; cc <= T; cc++) {
     auto start = chrono::steady_clock::now();
-    cout << "Case #" << cc << ": ";
+    //cout << "Case #" << cc << ": ";
     solve_case();
     if(argc > 1 && argv[1][0] == 't') {
       cerr << "Time: " << (chrono::steady_clock::now() - start) / 1.0s << "s" << nl << nl;
@@ -102,7 +102,43 @@ int main(int argc, char** argv) {
 
 void solve_case() {
 
-  
+  int n, k;
+  cin >> n >> k;
+
+  int start_id, start_deg;
+  cin >> start_id >> start_deg;
+  // ignore ?
+
+  vector<int> order(n);
+  iota(begin(order), end(order), 1);
+  shuffle(begin(order), end(order), rng);
+
+  ll sum = 0;
+  vector<int> degree(n+1);
+
+  int g = min(n, k/2);
+  for(int i=0; i<g; i++) {
+    int id, deg;
+    cout << "T " << order[i] << endl;
+    cin >> id >> deg;
+    degree[id] = deg;
+    sum += deg;
+    cout << "W" << endl;
+    cin >> id >> deg;
+    degree[id] = deg;
+  }
+
+  ld avg = (ld)sum / g;
+  ld avgsum = 0;
+  for(int i=1; i<=n; i++) {
+    if(degree[i]) {
+      avgsum += degree[i];
+    } else {
+      avgsum += avg;
+    }
+  }
+
+  cout << "E " << llround(avgsum / 2) << endl;
 
   return;
 }
