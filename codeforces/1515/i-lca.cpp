@@ -2,8 +2,8 @@
 using namespace std;
 #define _USE_MATH_DEFINES
 
-#include "../../../lca/data_structure/segment_tree.h"
-#include "../../../lca/data_structure/fenwick_tree.h"
+%:include "data_structure/segment_tree.h"
+%:include "data_structure/fenwick_tree.h"
 
 //#define FILENAME sadcactus
 
@@ -96,10 +96,10 @@ int main() {
   }
 
   // build trees
-  //vector values(L, segment_tree<Sum, ll, false>(n));
-  //vector weights(L, segment_tree<Sum, ll, false>(n));
-  vector values(L, fenwick_tree<ll>(n));
-  vector weights(L, fenwick_tree<ll>(n));
+  vector values(L, segment_tree<Sum, ll>(n));
+  vector weights(L, segment_tree<Sum, ll>(n));
+  //vector values(L, fenwick_tree<ll>(n));
+  //vector weights(L, fenwick_tree<ll>(n));
   vector equal(L, segment_tree<Node, ll>(n));
   for(int i=0; i<n; i++) {
     // (v[i], w[i]) at remap[i]
@@ -108,10 +108,10 @@ int main() {
     ll value = a[i] * v[i];
     for(int j=0; j<L; j++) {
       if(w[i] < 1 << j) {
-        //values[j].update_point(id, value);
-        //weights[j].update_point(id, weight);
-        values[j].update(id, value);
-        weights[j].update(id, weight);
+        values[j].update_point(id, value);
+        weights[j].update_point(id, weight);
+        //values[j].update(id, value);
+        //weights[j].update(id, weight);
         equal[j].update(id, n-1, weight);
       }
       if(1 << j <= w[i] && w[i] < 1 << (j+1)) {
@@ -128,10 +128,10 @@ int main() {
     ll value = cnt * v[i];
     for(int j=0; j<L; j++) {
       if(w[i] < 1 << j) {
-        //values[j].update_point(id, value);
-        //weights[j].update_point(id, weight);
-        values[j].update(id, value);
-        weights[j].update(id, weight);
+        values[j].update_point(id, value);
+        weights[j].update_point(id, weight);
+        //values[j].update(id, value);
+        //weights[j].update(id, weight);
         equal[j].update(id, n-1, weight);
       }
       if(1 << j <= w[i] && w[i] < 1 << (j+1)) {
@@ -150,8 +150,8 @@ int main() {
     if(lvl < 0 || s >= n) return 0;
     if(cap < 1 << lvl) return solve(lvl - 1, cap, s);
     ll prefix = weights[lvl].query(0, s - 1);
-    //int small = weights[lvl].search_left(s, n - 1, cap);
-    int small = weights[lvl].lower_bound(cap + prefix + 1);
+    int small = weights[lvl].search_left(s, n - 1, cap);
+    //int small = weights[lvl].lower_bound(cap + prefix + 1);
     int big = equal[lvl].search_left(s, n - 1, cap + prefix);
     if(small == n && big == n) { // take everything
       return values[lvl].query(s, n - 1);

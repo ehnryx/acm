@@ -21,7 +21,19 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, z;
+    cin >> n >> z;
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+      int a;
+      cin >> a;
+      ans = max(ans, a | z);
+    }
+    cout << ans << nl;
+  }
 
   return 0;
 }

@@ -21,7 +21,13 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  ll n; int b;
+  cin >> n >> b;
+  for(int i=0; i<=b; i++) {
+    n -= 1LL << i;
+  }
+  cerr << " n = " << n << nl;
+  cout << (n > 0 ? "no" : "yes") << nl;
 
   return 0;
 }

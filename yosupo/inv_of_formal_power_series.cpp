@@ -1,12 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/defines.h"
-//%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "utility/fast_input.h"
+%:include "utility/output.h"
+%:include "math/polynomial_mod.h"
+%:include "number/mod_int.h"
 
 using ll = long long;
 using ld = long double;
+using pt = complex<ld>;
 
 constexpr char nl = '\n';
 constexpr int MOD = 998244353;
@@ -21,7 +23,11 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int n;
+  cin >> n;
+  using P = polynomial_mod<MOD, mod_int<MOD>>;
+  auto a = P(cin.read<mod_int<MOD>>(n));
+  cout << a.reciprocal(n).resize(n) << nl;
 
   return 0;
 }

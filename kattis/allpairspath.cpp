@@ -1,71 +1,70 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define _USE_MATH_DEFINES
 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-template <typename T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+%:include "utility/defines.h"
+%:include "utility/fast_input.h"
+%:include "utility/output.h"
+%:include "graph/graph_edges.h"
+%:include "graph/bellman_ford.h"
+%:include "graph/graph.h"
+%:include "graph/breadth_first.h"
 
-typedef long long ll;
-typedef long double ld;
-typedef pair<int,int> pii;
-typedef pair<ll,ll> pll;
-typedef pair<ld,ld> pdd;
-typedef complex<ld> pt;
+using ll = long long;
+using ld = long double;
 
-const char nl = '\n';
-const int INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9+7;
-const ld EPS = 1e-13;
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+constexpr char nl = '\n';
+constexpr int MOD = 998244353;
+constexpr ld EPS = 1e-9L;
+random_device _rd; mt19937 rng(_rd());
 
-const int N = 150;
-int dist[N][N], odist[N][N];
 
 int main() {
-  ios::sync_with_stdio(0); cin.tie(0);
+  cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
+#ifdef USING_FAST_INPUT
+  fast_input cin;
+#endif
 
-  for(int n,m,q;cin>>n>>m>>q&&n;) {
-    memset(dist,INF,sizeof dist);
-    for(int i=0;i<n;i++) dist[i][i] = 0;
-    for(int i=0;i<m;i++) {
-      int a,b,c;
-      cin>>a>>b>>c;
-      dist[a][b] = min(dist[a][b], c);
+  static constexpr int inf = 1e6;
+
+  for(int n, m, q; cin >> n >> m >> q && n; ) {
+    graph_edges<int> g(n);
+    graph_list<void> rev(n);
+    for(int i=0; i<m; i++) {
+      int a, b, c;
+      cin >> a >> b >> c;
+      g.add_arc(a, b, c);
+      rev.add_arc(b, a);
     }
-    for(int k=0;k<n;k++) {
-      for(int i=0;i<n;i++) {
-        for(int j=0;j<n;j++) {
-          if(dist[i][k]==INF || dist[k][j]==INF) continue;
-          dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]);
+
+    vector<vector<int>> dists;
+    vector<vector<bool>> negs;
+    vector<vector<int>> revds;
+    for(int i=0; i<n; i++) {
+      bellman_ford bf(g, i, inf);
+      dists.push_back(bf.get_dists());
+      negs.push_back(bf.get_negatives());
+      revds.push_back(breadth_first(rev, i).get_dists());
+    }
+
+    while(q--) {
+      int s, t;
+      cin >> s >> t;
+      if(dists[s][t] == inf) {
+        cout << "Impossible" << nl;
+      } else {
+        bool neg = false;
+        for(int i=0; !neg && i<n; i++) {
+          neg |= (dists[s][i] != inf && negs[s][i] && rev[t][i] != -1);
+        }
+        if (neg) {
+          cout << "-Infinity" << nl;
+        } else {
+          cout << dists[s][t] << nl;
         }
       }
     }
-    for(int i=0;i<n;i++) {
-      for(int j=0;j<n;j++) {
-        odist[i][j] = dist[i][j];
-      }
-    }
-    for(int k=0;k<n;k++) {
-      for(int i=0;i<n;i++) {
-        for(int j=0;j<n;j++) {
-          if(dist[i][k]==INF || dist[k][j]==INF) continue;
-          dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]);
-        }
-      }
-    }
-    for(int i=0;i<q;i++) {
-      int a,b;
-      cin>>a>>b;
-      if(dist[a][b]==INF) cout<<"Impossible"<<nl;
-      else if(dist[a][b]==odist[a][b]) cout<<dist[a][b]<<nl;
-      else cout<<"-Infinity"<<nl;
-    }
-    cout<<nl;
+    cout << nl;
   }
 
   return 0;

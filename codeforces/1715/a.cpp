@@ -21,7 +21,13 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int T;
+  cin >> T;
+  while(T--) {
+    int n, m;
+    cin >> n >> m;
+    cout << max(n, m) - 1 + 2 * (min(n, m) - 1) + (max(n, m) > 1) << nl;
+  }
 
   return 0;
 }
