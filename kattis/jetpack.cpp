@@ -2,7 +2,8 @@
 using namespace std;
 
 %:include "utility/fast_input.h"
-%:include "graph/graph.h"
+%:include "graph/graph_list.h"
+%:include "graph/graph_vector.h"
 %:include "graph/breadth_first.h"
 
 using ll = long long;
@@ -30,7 +31,7 @@ int main() {
     return i*m + j;
   };
 
-  graph_list<void> g(n*m + 1);
+  GraphList<void> g(n*m + 1);
   const int sink = n*m;
   const int source = get(9, 0);
   for(int i=0; i<n; i++) {
@@ -42,7 +43,7 @@ int main() {
     }
   }
 
-  auto path = breadth_first(g, source).get_path(sink);
+  auto path = breadth_first(g).run(source).get_path(sink);
   assert(size(path) == m + 1);
   vector<pair<int, int>> ans;
   for(int i=1; i+1<path.size(); i++) {

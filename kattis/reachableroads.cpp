@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-%:include "io/fast_input.h"
-
 %:include "graph/graph_builder.h"
 %:include "graph/min_span_forest.h"
+
+%:include "utility/fast_input.h"
 
 using ll = long long;
 using ld = long double;

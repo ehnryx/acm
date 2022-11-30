@@ -1,13 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-%:include "utility/defines.h"
-%:include "utility/fast_input.h"
-%:include "utility/output.h"
-%:include "graph/graph_edges.h"
-%:include "graph/bellman_ford.h"
-%:include "graph/graph.h"
-%:include "graph/breadth_first.h"
+//%:include "utility/fast_input.h"
+//%:include "utility/output.h"
 
 using ll = long long;
 using ld = long double;
@@ -18,6 +13,56 @@ constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
 
+//#define MULTI_TEST
+void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
+  for(int n, m, q; cin >> n >> m >> q && n; ) {
+    static constexpr int big = numeric_limits<int>::max() / 2;
+    static constexpr int small = numeric_limits<int>::min() / 2;
+    vector adj(n, vector<int>(n, big));
+    for(int i=0; i<n; i++) {
+      adj[i][i] = 0;
+    }
+    for(int i=0; i<m; i++) {
+      int a, b, c;
+      cin >> a >> b >> c;
+      adj[a][b] = min(adj[a][b], c);
+    }
+
+    for(int k=0; k<n; k++) {
+      for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+          if(adj[i][k] == big || adj[k][j] == big) continue;
+          adj[i][j] = max(small, min(adj[i][j], adj[i][k] + adj[k][j]));
+        }
+      }
+    }
+
+    auto neg = adj;
+    for(int k=0; k<n; k++) {
+      for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+          if(neg[i][k] == big || adj[k][j] == big) continue;
+          neg[i][j] = max(small, min(neg[i][j], neg[i][k] + neg[k][j]));
+        }
+      }
+    }
+
+    while(q--) {
+      int a, b;
+      cin >> a >> b;
+      if(adj[a][b] == big) {
+        cout << "Impossible" << nl;
+      } else if(adj[a][b] == small || adj[a][b] != neg[a][b]) {
+        cout << "-Infinity" << nl;
+      } else {
+        cout << adj[a][b] << nl;
+      }
+    }
+
+    cout << nl;
+  }
+}
+
 int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
@@ -25,46 +70,12 @@ int main() {
   fast_input cin;
 #endif
 
-  static constexpr int inf = 1e6;
-
-  for(int n, m, q; cin >> n >> m >> q && n; ) {
-    graph_edges<int> g(n);
-    graph_list<void> rev(n);
-    for(int i=0; i<m; i++) {
-      int a, b, c;
-      cin >> a >> b >> c;
-      g.add_arc(a, b, c);
-      rev.add_arc(b, a);
-    }
-
-    vector<vector<int>> dists;
-    vector<vector<bool>> negs;
-    vector<vector<int>> revds;
-    for(int i=0; i<n; i++) {
-      bellman_ford bf(g, i, inf);
-      dists.push_back(bf.get_dists());
-      negs.push_back(bf.get_negatives());
-      revds.push_back(breadth_first(rev, i).get_dists());
-    }
-
-    while(q--) {
-      int s, t;
-      cin >> s >> t;
-      if(dists[s][t] == inf) {
-        cout << "Impossible" << nl;
-      } else {
-        bool neg = false;
-        for(int i=0; !neg && i<n; i++) {
-          neg |= (dists[s][i] != inf && negs[s][i] && rev[t][i] != -1);
-        }
-        if (neg) {
-          cout << "-Infinity" << nl;
-        } else {
-          cout << dists[s][t] << nl;
-        }
-      }
-    }
-    cout << nl;
+  int T = 1;
+#ifdef MULTI_TEST
+  cin >> T;
+#endif
+  for(int testnum=1; testnum<=T; testnum++) {
+    solve_main(testnum, cin);
   }
 
   return 0;

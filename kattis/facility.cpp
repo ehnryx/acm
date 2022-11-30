@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-%:include "io/fast_input.h"
-
 using ll = long long;
 using ld = long double;
 using pt = complex<ld>;
@@ -22,10 +20,29 @@ int main() {
 
   int n, m, k;
   cin >> n >> m >> k;
+  vector cost(n, vector<int>(m));
   for(int i=0; i<n; i++) {
     for(int j=0; j<m; j++) {
-      cost[i][j];
+      cin >> cost[i][j];
+      cost[i][j] = !!cost[i][j];
     }
+  }
+  sort(begin(cost), end(cost));
+  cost.resize(unique(begin(cost), end(cost)) - begin(cost));
+
+  if(accumulate(begin(cost.back()), end(cost.back()), 0) == m) {
+    cost.pop_back();
+  }
+
+  int count = 0;
+  for(const auto& v : cost) {
+    count += m - accumulate(begin(v), end(v), 0);
+  }
+
+  if(count == m && size(cost) <= k) {
+    cout << "yes" << nl;
+  } else {
+    cout << "no" << nl;
   }
 
   return 0;

@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/defines.h"
-//%:include "utility/fast_input.h"
+%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
 %:include "ds/segment_tree.h"

@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//%:include "utility/defines.h"
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
@@ -14,6 +13,11 @@ constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
 
+//#define MULTI_TEST
+void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
+  
+}
+
 int main() {
   cin.tie(0)->sync_with_stdio(0);
   cout << fixed << setprecision(10);
@@ -21,7 +25,13 @@ int main() {
   fast_input cin;
 #endif
 
-  
+  int T = 1;
+#ifdef MULTI_TEST
+  cin >> T;
+#endif
+  for(int testnum=1; testnum<=T; testnum++) {
+    solve_main(testnum, cin);
+  }
 
   return 0;
 }
