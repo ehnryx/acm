@@ -4,8 +4,6 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
-%:include "graph/flow_with_demands.h"
-
 using ll = long long;
 using ld = long double;
 
@@ -17,18 +15,17 @@ random_device _rd; mt19937 rng(_rd());
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n, m;
-  cin >> n >> m;
-
-  flow_with_demands<int> g(n);
-  for(int i=0; i<m; i++) {
-    int a, b;
-    cin >> a >> b;
-    g.add_edge(a, b, 1, m);
+  ll r;
+  cin >> r;
+  tuple<ll, ll, ll> ans(r*r*2, r, r);
+  for(ll i=0; i<=r; i++) {
+    ll x = r*r - i*i;
+    ll s = sqrt(x);
+    if(s*s <= x) s += 1;
+    assert(s*s > x);
+    ans = min(ans, tuple(s*s + i*i, i, s));
   }
-  g.finalize();
-
-  cout << g.min_flowable(0, n-1) << nl;
+  cout << get<1>(ans) << " " << get<2>(ans) << nl;
 }
 
 int main() {
