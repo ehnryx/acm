@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "../../lca/string/suffix_tree.h"
-#include "../../lca/data_structure/splay_tree.h"
+%:include "string/suffix_tree.h"
+%:include "data_structure/splay_tree.h"
 
 //#define FILENAME sadcactus
 
@@ -10,7 +10,7 @@ constexpr char nl = '\n';
 
 splay_tree<splay_node<int, void>> dfs(
     const vector<vector<pair<int, int>>>& put,
-    const suffix_tree<char>& st, int u, vector<int>& ans) {
+    const suffix_tree<basic_string, char>& st, int u, vector<int>& ans) {
   splay_tree<splay_node<int, void>> cur;
   for(auto [_, v] : st.nodes[u]) {
     splay_tree<splay_node<int, void>> child = dfs(put, st, v, ans);
@@ -22,7 +22,7 @@ splay_tree<splay_node<int, void>> dfs(
     }
   }
   if (st.is_leaf(u)) {
-    cur.insert(st.size() - (st.depth(u) + st.length(u)) + 1);
+    cur.insert(st.strlen() - (st.depth(u) + st.length(u)) + 1);
   }
   for (auto [i, it] : put[u]) {
     if (it <= (int)size(cur)) {
