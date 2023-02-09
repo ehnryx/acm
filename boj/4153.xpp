@@ -1,0 +1,9 @@
+for(int a, b, c; cin >> a >> b >> c and a; ) {
+  vector s = {a, b, c};
+  sort(begin(s), end(s));
+  if(s[0]*s[0] + s[1]*s[1] == s[2]*s[2]) {
+    cout << "right" << nl;
+  } else {
+    cout << "wrong" << nl;
+  }
+}

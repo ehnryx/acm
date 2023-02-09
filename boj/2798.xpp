@@ -1,0 +1,18 @@
+int n, m;
+cin >> n >> m;
+vector<int> a(n);
+for(auto& v : a) {
+  cin >> v;
+}
+
+int ans = 0;
+for(int i=0; i<n; i++) {
+  for(int j=0; j<i; j++) {
+    for(int k=0; k<j; k++) {
+      if(int v = a[i] + a[j] + a[k]; v <= m) {
+        ans = max(ans, v);
+      }
+    }
+  }
+}
+cout << ans << nl;

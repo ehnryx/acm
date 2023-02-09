@@ -1,0 +1,6 @@
+#define MULTI_TEST
+int n, m, k;
+cin >> n >> m >> k;
+int r = (k-1) % n + 1;
+int c = (k-1) / n + 1;
+cout << r << setw(2) << setfill('0') << c << nl;
