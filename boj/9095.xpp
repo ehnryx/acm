@@ -1,0 +1,11 @@
+#define MULTI_TEST
+int n;
+cin >> n;
+vector<int> ans(n+1);
+ans[0] = 1;
+for(int i=1; i<=n; i++) {
+  ans[i] = ans[i-1];
+  if(i-2 >= 0) ans[i] += ans[i-2];
+  if(i-3 >= 0) ans[i] += ans[i-3];
+}
+cout << ans[n] << nl;

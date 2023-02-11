@@ -1,0 +1,36 @@
+int n, m;
+cin >> m >> n;
+vector g(n+2, vector(m+2, -1));
+queue<pair<int, int>> bfs;
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    cin >> g[i][j];
+    if(g[i][j] == 1) {
+      bfs.emplace(i, j);
+    }
+  }
+}
+while(not empty(bfs)) {
+  auto [i, j] = bfs.front();
+  bfs.pop();
+  for(auto [di, dj] : {
+      pair(0, 1), pair(1, 0), pair(-1, 0), pair(0, -1) }) {
+    int ni = di + i;
+    int nj = dj + j;
+    if(g[ni][nj] == 0) {
+      g[ni][nj] = g[i][j] + 1;
+      bfs.emplace(ni, nj);
+    }
+  }
+}
+
+int ans = 0;
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    if(g[i][j] == 0) {
+      return void(cout << -1 << nl);
+    }
+    ans = max(ans, g[i][j] - 1);
+  }
+}
+cout << ans << nl;

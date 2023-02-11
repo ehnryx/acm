@@ -1,0 +1,36 @@
+int n;
+cin >> n;
+vector adj(n, pair(-1, -1));
+for(int i=0; i<n; i++) {
+  char a, b, c;
+  cin >> a >> b >> c;
+  if(b != '.') {
+    adj[a - 'A'].first = b - 'A';
+  }
+  if(c != '.') {
+    adj[a - 'A'].second = c - 'A';
+  }
+}
+vector<int> pre, in, post;
+auto solve = [&](auto&& self, int u) -> void {
+  if(u == -1) return;
+  pre.push_back(u);
+  self(self, adj[u].first);
+  in.push_back(u);
+  self(self, adj[u].second);
+  post.push_back(u);
+};
+solve(solve, 0);
+
+for(int v : pre) {
+  cout << char(v + 'A');
+}
+cout << nl;
+for(int v : in) {
+  cout << char(v + 'A');
+}
+cout << nl;
+for(int v : post) {
+  cout << char(v + 'A');
+}
+cout << nl;

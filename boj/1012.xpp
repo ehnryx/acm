@@ -1,0 +1,38 @@
+#define MULTI_TEST
+int n, m, k;
+cin >> n >> m >> k;
+auto get = [m](int i, int j) { return i*m + j; };
+vector dsu(n*m, -1);
+auto find = [&](int a) {
+  static auto find_rec = [&](auto&& self, int i) -> int {
+    if(dsu[i] == -1) return i;
+    return dsu[i] = self(self, dsu[i]);
+  };
+  return find_rec(find_rec, a);
+};
+auto link = [&](int a, int b) {
+  a = find(a);
+  b = find(b);
+  if(a == b) return;
+  dsu[a] = b;
+};
+vector good(n*m, false);
+static_assert(is_same_v<decltype(good), vector<bool>>);
+for(int i=0; i<k; i++) {
+  int a, b;
+  cin >> a >> b;
+  good[get(a, b)] = true;
+  for(auto [da, db] : {
+      pair(0, 1), pair(1, 0), pair(-1, 0), pair(0, -1) }) {
+    if(a+da < 0 or n <= a+da or b+db < 0 or m <= b+db) continue;
+    if(good[get(a+da, b+db)]) {
+      link(get(a, b), get(a+da, b+db));
+    }
+  }
+}
+
+int ans = 0;
+for(int i=0; i<n*m; i++) {
+  ans += (good[i] and find(i) == i);
+}
+cout << ans << nl;

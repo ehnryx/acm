@@ -1,0 +1,40 @@
+int n;
+cin >> n;
+deque<int> a;
+for(int i=0; i<n; i++) {
+  string t;
+  cin >> t;
+  if(t == "push_front") {
+    int x;
+    cin >> x;
+    a.push_front(x);
+  } else if(t == "push_back") {
+    int x;
+    cin >> x;
+    a.push_back(x);
+  } else if(t == "pop_front") {
+    if(empty(a)) {
+      cout << -1 << nl;
+    } else {
+      cout << a.front() << nl;
+      a.pop_front();
+    }
+  } else if(t == "pop_back") {
+    if(empty(a)) {
+      cout << -1 << nl;
+    } else {
+      cout << a.back() << nl;
+      a.pop_back();
+    }
+  } else if(t == "size") {
+    cout << size(a) << nl;
+  } else if(t == "empty") {
+    cout << empty(a) << nl;
+  } else if(t == "front") {
+    cout << (empty(a) ? -1 : a.front()) << nl;
+  } else if(t == "back") {
+    cout << (empty(a) ? -1 : a.back()) << nl;
+  } else {
+    assert(false);
+  }
+}

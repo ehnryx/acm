@@ -1,0 +1,32 @@
+int n;
+cin >> n;
+vector g(n, vector<int>(n));
+for(int i=0; i<n; i++) {
+  for(int j=0; j<n; j++) {
+    cin >> g[i][j];
+  }
+}
+vector<int> cnt(2);
+queue<tuple<int, int, int>> todo;
+todo.emplace(0, 0, n);
+while(not empty(todo)) {
+  auto [si, sj, len] = todo.front();
+  todo.pop();
+  int sum = 0;
+  for(int i=0; i<len; i++) {
+    for(int j=0; j<len; j++) {
+      sum += g[si+i][sj+j];
+    }
+  }
+  if(sum == 0) {
+    cnt[0]++;
+  } else if(sum == len*len) {
+    cnt[1]++;
+  } else {
+    todo.emplace(si, sj, len/2);
+    todo.emplace(si+len/2, sj, len/2);
+    todo.emplace(si, sj+len/2, len/2);
+    todo.emplace(si+len/2, sj+len/2, len/2);
+  }
+}
+cout << cnt[0] << nl << cnt[1] << nl;

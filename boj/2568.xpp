@@ -1,0 +1,19 @@
+int n;
+cin >> n;
+static constexpr int M = 5e5 + 1;
+vector<int> all(M, numeric_limits<int>::max());
+for(int i=0; i<n; i++) {
+  int l, r;
+  cin >> l >> r;
+  all[l] = r;
+}
+auto lis = longest_inc_subseq(all);
+lis.pop_back();
+set good(begin(lis), end(lis));
+cout << n - size(lis) << nl;
+for(int i=0; i<M; i++) {
+  if(all[i] == numeric_limits<int>::max()) continue;
+  if(not good.count(i)) {
+    cout << i << nl;
+  }
+}

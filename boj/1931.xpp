@@ -1,0 +1,27 @@
+int n;
+cin >> n;
+vector<pair<int, int>> ev;
+for(int i=0; i<n; i++) {
+  int s, t;
+  cin >> s >> t;
+  if(s <= t) {
+    ev.emplace_back(t, s);
+  }
+}
+sort(begin(ev), end(ev));
+
+map<int, int> dp;
+for(auto [t, s] : ev) {
+  if(not dp.count(t)) {
+    dp[t] = (empty(dp) ? 0 : dp.rbegin()->second);
+  }
+  auto it = dp.upper_bound(s);
+  int have = (it == begin(dp) ? 0 : prev(it)->second);
+  dp[t] = max(dp[t], have + 1);
+}
+
+int ans = 0;
+for(const auto& it : dp) {
+  ans = max(ans, it.second);
+}
+cout << ans << nl;

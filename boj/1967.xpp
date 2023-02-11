@@ -1,0 +1,24 @@
+int n;
+cin >> n;
+vector<vector<pair<int, int>>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  adj[a].emplace_back(b, c);
+  adj[b].emplace_back(a, c);
+}
+auto dfs = [&](auto&& self, int u, int p) -> pair<int, int> {
+  auto res = pair(u, 0);
+  for(auto [v, c] : adj[u]) {
+    if(v == p) continue;
+    auto [leaf, dist] = self(self, v, u);
+    if(dist + c > res.second) {
+      res = pair(leaf, dist + c);
+    }
+  }
+  return res;
+};
+auto run = [&](int s) {
+  return dfs(dfs, s, 0);
+};
+cout << run(run(1).first).second << nl;

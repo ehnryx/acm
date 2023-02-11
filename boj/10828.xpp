@@ -1,0 +1,27 @@
+int n;
+cin >> n;
+deque<int> a;
+for(int i=0; i<n; i++) {
+  string t;
+  cin >> t;
+  if(t == "push") {
+    int x;
+    cin >> x;
+    a.push_back(x);
+  } else if(t == "pop") {
+    if(empty(a)) {
+      cout << -1 << nl;
+    } else {
+      cout << a.back() << nl;
+      a.pop_back();
+    }
+  } else if(t == "size") {
+    cout << size(a) << nl;
+  } else if(t == "empty") {
+    cout << empty(a) << nl;
+  } else if(t == "top") {
+    cout << (empty(a) ? -1 : a.back()) << nl;
+  } else {
+    assert(false);
+  }
+}

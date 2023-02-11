@@ -1,0 +1,21 @@
+int n, m;
+cin >> n >> m;
+unordered_set<string> have;
+for(int i=0; i<n; i++) {
+  string s;
+  cin >> s;
+  have.insert(s);
+}
+vector<string> ans;
+for(int i=0; i<m; i++) {
+  string s;
+  cin >> s;
+  if(have.find(s) != end(have)) {
+    ans.push_back(move(s));
+  }
+}
+sort(begin(ans), end(ans));
+cout << size(ans) << nl;
+for(const auto& v : ans) {
+  cout << v << nl;
+}

@@ -1,0 +1,17 @@
+int n;
+cin >> n;
+priority_queue<int> have;
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  if(v == 0) {
+    if(empty(have)) {
+      cout << 0 << nl;
+    } else {
+      cout << have.top() << nl;
+      have.pop();
+    }
+  } else {
+    have.push(v);
+  }
+}

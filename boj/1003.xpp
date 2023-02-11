@@ -1,0 +1,14 @@
+#define MULTI_TEST
+static const auto ans = [] {
+  vector<pair<ll, ll>> res(41);
+  res[0] = pair(1, 0);
+  res[1] = pair(0, 1);
+  for(int i=2; i<=40; i++) {
+    res[i].first = res[i-1].first + res[i-2].first;
+    res[i].second = res[i-1].second + res[i-2].second;
+  }
+  return res;
+}();
+int n;
+cin >> n;
+cout << ans[n].first << " " << ans[n].second << nl;

@@ -1,0 +1,21 @@
+int n;
+cin >> n;
+vector<vector<int>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+}
+vector<int> par(n+1);
+auto solve = [&](auto&& self, int u, int p) -> void {
+  par[u] = p;
+  for(int v : adj[u]) {
+    if(v == p) continue;
+    self(self, v, u);
+  }
+};
+solve(solve, 1, 0);
+for(int i=2; i<=n; i++) {
+  cout << par[i] << nl;
+}

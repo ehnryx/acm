@@ -1,0 +1,14 @@
+int n, r, c;
+cin >> n >> r >> c;
+int ans = 0;
+while(--n >= 0) {
+  if(c >= 1<<n) {
+    c -= 1<<n;
+    ans += 1<<(2*n);
+  }
+  if(r >= 1<<n) {
+    r -= 1<<n;
+    ans += 2<<(2*n);
+  }
+}
+cout << ans << nl;

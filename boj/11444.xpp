@@ -1,0 +1,16 @@
+// F_n     = F_{n-1} + F_{n-2}
+// F_{n-1} = F_{n-1} + 0
+square_matrix<mod_int<1'000'000'007>, 2> mat({
+    { 1, 1 },
+    { 1, 0 },
+});
+
+ll n;
+cin >> n;
+auto res = decltype(mat)(1);
+while(n) {
+  if(n & 1) res *= mat;
+  mat *= mat;
+  n /= 2;
+}
+cout << res[1][0] << nl;

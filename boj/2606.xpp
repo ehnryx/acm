@@ -1,0 +1,20 @@
+int n, m;
+cin >> n >> m;
+vector<int> dsu(n+1, -1), sz(n+1, 1);
+auto find = [&](auto&& self, int i) -> int {
+  if(dsu[i] == -1) return i;
+  return dsu[i] = self(self, dsu[i]);
+};
+auto link = [&](int i, int j) {
+  i = find(find, i);
+  j = find(find, j);
+  if(i == j) return;
+  dsu[i] = j;
+  sz[j] += sz[i];
+};
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  link(a, b);
+}
+cout << sz[find(find, 1)] - 1 << nl;

@@ -1,0 +1,12 @@
+int n;
+cin >> n;
+vector<int> a(n);
+for(auto& v : a) {
+  cin >> v;
+}
+auto lis = longest_inc_subseq(a);
+cout << size(lis) << nl;
+for(int v : lis) {
+  cout << a[v] << " ";
+}
+cout << nl;

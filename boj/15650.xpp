@@ -1,0 +1,20 @@
+int n, m;
+cin >> n >> m;
+vector<vector<int>> ans;
+for(int bm=0; bm<1<<n; bm++) {
+  if(__builtin_popcount(bm) != m) continue;
+  vector<int> cur;
+  for(int i=0; i<n; i++) {
+    if(bm & 1<<i) {
+      cur.push_back(i+1);
+    }
+  }
+  ans.push_back(move(cur));
+}
+sort(begin(ans), end(ans));
+for(const auto& v : ans) {
+  for(int it : v) {
+    cout << it << " ";
+  }
+  cout << nl;
+}

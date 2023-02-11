@@ -1,0 +1,28 @@
+#define MULTI_TEST
+int n, m, w;
+cin >> n >> m >> w;
+vector<tuple<int, int, int>> edges;
+for(int i=0; i<m; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  edges.emplace_back(a, b, c);
+  edges.emplace_back(b, a, c);
+}
+for(int i=0; i<w; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  edges.emplace_back(a, b, -c);
+}
+
+vector<ll> d(n+1, 0);
+for(int i=1; i<n; i++) {
+  for(auto [a, b, c] : edges) {
+    d[b] = min(d[b], d[a] + c);
+  }
+}
+for(auto [a, b, c] : edges) {
+  if(d[a] + c < d[b]) {
+    return void(cout << "YES" << nl);
+  }
+}
+cout << "NO" << nl;

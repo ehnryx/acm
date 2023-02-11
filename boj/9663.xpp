@@ -1,0 +1,22 @@
+static constexpr array ans = {
+  1,
+  1,
+  0,
+  0,
+  2,
+  10,
+  4,
+  40,
+  92,
+  352,
+  724,
+  2680,
+  14200,
+  73712,
+  365596,
+  2279184,
+};
+static_assert(size(ans) == 15 + 1);
+int n;
+cin >> n;
+cout << ans[n] << nl;

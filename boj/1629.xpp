@@ -1,0 +1,9 @@
+ll a, b, c;
+cin >> a >> b >> c;
+ll r = 1;
+while(b) {
+  if(b & 1) r = r*a % c;
+  a = a*a % c;
+  b /= 2;
+}
+cout << r << nl;

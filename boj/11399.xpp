@@ -1,0 +1,9 @@
+int n;
+cin >> n;
+vector<int> a(n);
+for(auto& v : a) {
+  cin >> v;
+}
+sort(begin(a), end(a));
+partial_sum(begin(a), end(a), begin(a));
+cout << accumulate(begin(a), end(a), 0) << nl;

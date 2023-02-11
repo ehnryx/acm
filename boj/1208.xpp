@@ -1,0 +1,32 @@
+int n, s;
+cin >> n >> s;
+vector<int> a(n);
+for(auto& v : a) {
+  cin >> v;
+}
+int half = min(n, 20);
+
+unordered_map<int, int> cnt;
+for(int bm=0; bm<1<<(n-half); bm++) {
+  int cur = 0;
+  for(int i=half; i<n; i++) {
+    if(bm & 1<<(i-half)) {
+      cur += a[i];
+    }
+  }
+  cnt[cur]++;
+}
+
+ll ans = 0;
+for(int bm=0; bm<1<<half; bm++) {
+  int cur = 0;
+  for(int i=0; i<half; i++) {
+    if(bm & 1<<i) {
+      cur += a[i];
+    }
+  }
+  if(auto it = cnt.find(s - cur); it != end(cnt)) {
+    ans += it->second;
+  }
+}
+cout << ans - (s == 0) << nl;

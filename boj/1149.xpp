@@ -1,0 +1,13 @@
+int n;
+cin >> n;
+vector<int> cost(3);
+for(int i=1; i<=n; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  cost = {
+    a + min(cost[1], cost[2]),
+    b + min(cost[2], cost[0]),
+    c + min(cost[0], cost[1]),
+  };
+}
+cout << *min_element(begin(cost), end(cost)) << nl;

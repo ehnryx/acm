@@ -1,0 +1,12 @@
+int n;
+cin >> n;
+vector<tuple<int, int, string>> a;
+for(int i=0; i<n; i++) {
+  int v; string s;
+  cin >> v >> s;
+  a.emplace_back(v, i, s);
+}
+sort(begin(a), end(a));
+for(const auto& [v, _, s] : a) {
+  cout << v << " " << s << nl;
+}

@@ -1,0 +1,17 @@
+string s;
+cin >> s;
+string rev(rbegin(s), rend(s));
+suffix_array_lcp_linear sa(s + rev);
+
+int n = size(s);
+vector<int> dp(n+1);
+for(int i=0; i<n; i++) {
+  dp[i+1] = dp[i] + 1;
+  const int ri = 2*n - 1 - i;
+  for(int j=0; j<=i; j++) {
+    if(sa.lcp(j, ri) >= i - j + 1) {
+      dp[i+1] = min(dp[i+1], dp[j] + 1);
+    }
+  }
+}
+cout << dp[n] << nl;

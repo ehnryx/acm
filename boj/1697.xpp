@@ -1,0 +1,24 @@
+int a, b;
+cin >> a >> b;
+const int n = 2 * max(a, b);
+vector<int> dist(n+1, -1);
+queue<int> bfs;
+dist[a] = 0;
+bfs.push(a);
+while(not empty(bfs)) {
+  int u = bfs.front();
+  bfs.pop();
+  if(u > 0 and dist[u-1] == -1) {
+    dist[u-1] = dist[u] + 1;
+    bfs.push(u-1);
+  }
+  if(u+1 <= n and dist[u+1] == -1) {
+    dist[u+1] = dist[u] + 1;
+    bfs.push(u+1);
+  }
+  if(2*u <= n and dist[2*u] == -1) {
+    dist[2*u] = dist[u] + 1;
+    bfs.push(2*u);
+  }
+}
+cout << dist[b] << nl;

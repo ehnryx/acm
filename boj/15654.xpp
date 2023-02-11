@@ -1,0 +1,29 @@
+int n, m;
+cin >> n >> m;
+vector<int> a(n);
+for(auto& v : a) {
+  cin >> v;
+}
+
+vector<vector<int>> ans;
+for(int bm=0; bm<1<<n; bm++) {
+  if(__builtin_popcount(bm) != m) continue;
+  vector<int> cur;
+  for(int i=0; i<n; i++) {
+    if(bm & 1<<i) {
+      cur.push_back(a[i]);
+    }
+  }
+  sort(begin(cur), end(cur));
+  do {
+    ans.push_back(cur);
+  } while(next_permutation(begin(cur), end(cur)));
+}
+sort(begin(ans), end(ans));
+
+for(const auto& v : ans) {
+  for(int it : v) {
+    cout << it << " ";
+  }
+  cout << nl;
+}
