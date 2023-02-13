@@ -1,0 +1,40 @@
+int n, m, k;
+cin >> n >> m >> k;
+vector<int> have(n+1);
+for(int i=0; i<m; i++) {
+  int v;
+  cin >> v;
+  have[v]++;
+}
+vector<pair<int, int>> ev;
+vector<int> val(k);
+for(int i=0; i<k; i++) {
+  cin >> val[i];
+  ev.emplace_back(val[i], i);
+}
+sort(begin(ev), end(ev));
+
+vector<int> ans(k);
+set<int> todo;
+int i = 0;
+for(auto [v, q] : ev) {
+  for(; i <= v and not empty(todo); i++) {
+    if(not have[i]) continue;
+    if(val[*begin(todo)] < i) {
+      ans[*begin(todo)] = i;
+      todo.erase(begin(todo));
+    }
+  }
+  todo.insert(q);
+}
+for(; i <= n and not empty(todo); i++) {
+  if(not have[i]) continue;
+  if(val[*begin(todo)] < i) {
+    ans[*begin(todo)] = i;
+    todo.erase(begin(todo));
+  }
+}
+
+for(int v : ans) {
+  cout << v << nl;
+}

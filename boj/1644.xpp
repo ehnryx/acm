@@ -1,0 +1,26 @@
+static constexpr int M = 4'000'000 + 1;
+vector is_p(M, true);
+is_p[0] = is_p[1] = false;
+for(int i=2; i*i<M; i++) {
+  if(not is_p[i]) continue;
+  for(int j=i*i; j<M; j+=i) {
+    is_p[j] = false;
+  }
+}
+vector<ll> primes = { 0 };
+for(int i=2; i<M; i++) {
+  if(is_p[i]) {
+    primes.push_back(i);
+  }
+}
+partial_sum(begin(primes), end(primes), begin(primes));
+
+int n;
+cin >> n;
+int ans = 0;
+for(int i=0; i<size(primes); i++) {
+  if(primes[i] < n) continue;
+  auto goal = primes[i] - n;
+  ans += (*lower_bound(begin(primes), end(primes), goal) == goal);
+}
+cout << ans << nl;

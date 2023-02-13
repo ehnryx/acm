@@ -1,0 +1,6 @@
+int a, b, x, y;
+cin >> a >> b >> x >> y;
+point A(a, b), B(x, y);
+cin >> a >> b >> x >> y;
+point C(a, b), D(x, y);
+cout << seg_x_seg(A, B, C, D) << nl;

@@ -1,0 +1,22 @@
+int n;
+cin >> n;
+vector adj(n, vector<int>(n));
+for(int i=0; i<n; i++) {
+  for(int j=0; j<n; j++) {
+    cin >> adj[i][j];
+  }
+}
+
+static constexpr auto big = numeric_limits<int>::max();
+vector dp(1<<n, vector<int>(n, big));
+dp[0][0] = 0;
+for(int bm=0; bm<1<<n; bm++) {
+  for(int s=0; s<n; s++) {
+    if(not (bm & 1<<s)) continue;
+    for(int t=0; t<n; t++) {
+      if(t == s or dp[bm ^ 1<<s][t] == big or not adj[s][t]) continue;
+      dp[bm][s] = min(dp[bm][s], dp[bm ^ 1<<s][t] + adj[s][t]);
+    }
+  }
+}
+cout << dp[(1<<n)-1][0] << nl;

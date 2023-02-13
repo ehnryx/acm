@@ -1,0 +1,14 @@
+auto solve = [](ll n) {
+  ll ans = 0;
+  for(int i=60; i>=0; i--) {
+    if(not (n & 1ll<<i)) continue;
+    n ^= 1ll << i;
+    ans += n + 1;
+    ans += (ll)i << (i - 1);
+  }
+  return ans;
+};
+
+ll a, b;
+cin >> a >> b;
+cout << solve(b) - solve(a-1) << nl;

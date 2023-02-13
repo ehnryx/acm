@@ -1,0 +1,34 @@
+int n, m;
+cin >> n >> m;
+vector<vector<int>> adj(n+1);
+vector<int> in(n+1);
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj[a].push_back(b);
+  in[b]++;
+}
+
+set<int> bfs;
+for(int i=1; i<=n; i++) {
+  if(in[i] == 0) {
+    bfs.insert(i);
+  }
+}
+vector<int> ans;
+ans.reserve(n);
+while(not empty(bfs)) {
+  int u = *begin(bfs);
+  bfs.erase(begin(bfs));
+  ans.push_back(u);
+  for(int v : adj[u]) {
+    if(--in[v] == 0) {
+      bfs.insert(v);
+    }
+  }
+}
+
+for(int v : ans) {
+  cout << v << " ";
+}
+cout << nl;

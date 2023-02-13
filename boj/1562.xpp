@@ -1,0 +1,21 @@
+int n;
+cin >> n;
+using Int = mod_int<1'000'000'000>;
+vector dp(n+1, vector(1<<10, vector(10, Int(0))));
+for(int c=1; c<10; c++) {
+  dp[1][1<<c][c] = 1;
+}
+for(int i=2; i<=n; i++) {
+  for(int bm=0; bm<1<<10; bm++) {
+    for(int c=0; c<10; c++) {
+      if(not (bm & 1<<c)) continue;
+      if(c-1 >= 0) {
+        dp[i][bm][c] += dp[i-1][bm][c-1] + dp[i-1][bm^1<<c][c-1];
+      }
+      if(c+1 < 10) {
+        dp[i][bm][c] += dp[i-1][bm][c+1] + dp[i-1][bm^1<<c][c+1];
+      }
+    }
+  }
+}
+cout << accumulate(begin(dp[n][(1<<10)-1]), end(dp[n][(1<<10)-1]), Int(0)) << nl;

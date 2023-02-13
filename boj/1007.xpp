@@ -1,0 +1,29 @@
+#define MULTI_TEST
+int n;
+cin >> n;
+vector<pair<int, int>> p;
+for(int i=0; i<n; i++) {
+  int x, y;
+  cin >> x >> y;
+  p.emplace_back(x, y);
+}
+
+auto ans = numeric_limits<ll>::max();
+for(int bm=0; bm<1<<n; bm++) {
+  if(__builtin_popcount(bm) != n/2) {
+    continue;
+  }
+  int x = 0;
+  int y = 0;
+  for(int i=0; i<n; i++) {
+    if(bm & 1<<i) {
+      x += p[i].first;
+      y += p[i].second;
+    } else {
+      x -= p[i].first;
+      y -= p[i].second;
+    }
+  }
+  ans = min(ans, (ll)x*x + (ll)y*y);
+}
+cout << sqrt(ans) << nl;

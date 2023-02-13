@@ -1,0 +1,29 @@
+int n, m;
+cin >> n >> m;
+vector<pair<int, int>> ev;
+for(int i=0; i<n; i++) {
+  int w, v;
+  cin >> w >> v;
+  ev.emplace_back(w, v);
+}
+static constexpr auto big = numeric_limits<int>::max();
+for(int i=0; i<m; i++) {
+  int w;
+  cin >> w;
+  ev.emplace_back(w, big);
+}
+sort(begin(ev), end(ev));
+
+ll ans = 0;
+priority_queue<int> have;
+for(auto [w, v] : ev) {
+  if(v == big) {
+    if(not empty(have)) {
+      ans += have.top();
+      have.pop();
+    }
+  } else {
+    have.push(v);
+  }
+}
+cout << ans << nl;

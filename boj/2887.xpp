@@ -1,0 +1,30 @@
+int n;
+cin >> n;
+vector<pair<int, int>> x, y, z;
+for(int i=0; i<n; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  x.emplace_back(a, i);
+  y.emplace_back(b, i);
+  z.emplace_back(c, i);
+}
+sort(begin(x), end(x));
+sort(begin(y), end(y));
+sort(begin(z), end(z));
+
+vector<tuple<int, int, int>> edges;
+for(int i=1; i<n; i++) {
+  edges.emplace_back(x[i].first - x[i-1].first, x[i].second, x[i-1].second);
+  edges.emplace_back(y[i].first - y[i-1].first, y[i].second, y[i-1].second);
+  edges.emplace_back(z[i].first - z[i-1].first, z[i].second, z[i-1].second);
+}
+sort(begin(edges), end(edges));
+
+union_find<> dsu(n);
+ll ans = 0;
+for(auto [c, a, b] : edges) {
+  if(dsu.link(a, b)) {
+    ans += c;
+  }
+}
+cout << ans << nl;
