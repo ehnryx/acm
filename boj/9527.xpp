@@ -1,3 +1,4 @@
+__main__:
 auto solve = [](ll n) {
   ll ans = 0;
   for(int i=60; i>=0; i--) {

@@ -1,0 +1,28 @@
+%:include "string/kmp_matching.h"
+__main__:
+string s;
+cin >> s;
+kmp_matching kmp(s);
+vector<vector<int>> adj(size(s) + 1);
+for(int i=0; i<size(s); i++) {
+  adj[kmp.fail[i] + 1].push_back(i + 1);
+}
+
+vector<int> sub(size(s) + 1);
+auto build = [&](auto&& self, int u) -> void {
+  sub[u] = 1;
+  for(int v : adj[u]) {
+    self(self, v);
+    sub[u] += sub[v];
+  }
+};
+build(build, 0);
+
+vector<pair<int, int>> ans;
+for(int u=size(s); u; u=kmp.fail[u-1]+1) {
+  ans.emplace_back(u, sub[u]);
+}
+cout << size(ans) << nl;
+for(auto [a, b] : ans | views::reverse) {
+  cout << a << " " << b << nl;
+}

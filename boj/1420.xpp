@@ -1,0 +1,40 @@
+%:include "graph/dinic.h"
+%:include "utility/nd_array.h"
+__main__:
+int n, m;
+cin >> n >> m;
+nd_array<char, 2> g(n+2, m+2, '#');
+dinic<int> graph(g.size() * 2);
+int source = -1, sink = -1;
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    cin >> g(i, j);
+    if(g(i, j) == 'K') {
+      source = 2 * g.index(i, j) + 1;
+    } else if(g(i, j) == 'H') {
+      sink = 2 * g.index(i, j);
+    } else if(g(i, j) == '.') {
+      graph.add_edge(2 * g.index(i, j), 2 * g.index(i, j) + 1);
+    }
+  }
+}
+assert(source != -1 and sink != -1);
+
+const int big = 420;
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    if(g(i, j) == '#') continue;
+    for(auto [ni, nj] : {
+        pair(i+1, j), pair(i, j+1), pair(i-1, j), pair(i, j-1), }) {
+      if(g(ni, nj) == '#') continue;
+      graph.add_edge(2 * g.index(i, j) + 1, 2 * g.index(ni, nj), big);
+    }
+  }
+}
+
+int flow = graph.flow(source, sink);
+if(flow < big) {
+  cout << flow << nl;
+} else {
+  cout << -1 << nl;
+}

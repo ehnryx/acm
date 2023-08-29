@@ -1,3 +1,4 @@
+__main__:
 int n;
 cin >> n;
 vector<pair<int, int>> ev;

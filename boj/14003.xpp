@@ -1,3 +1,5 @@
+%:include "misc/longest_inc_subseq.h"
+__main__:
 int n;
 cin >> n;
 vector<int> a(n);

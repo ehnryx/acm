@@ -1,0 +1,14 @@
+%:include "string/suffix_array.h"
+__main__:
+string s;
+cin >> s;
+suffix_array sa(s);
+for(int i=1; i<=size(s); i++) {
+  cout << sa[i] + 1 << " ";
+}
+cout << nl;
+cout << "x";
+for(int i=2; i<=size(s); i++) {
+  cout << " " << sa.height[i];
+}
+cout << nl;

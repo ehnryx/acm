@@ -1,0 +1,20 @@
+%:include "tree/lca_binary_jumping.h"
+__main__:
+int n;
+cin >> n;
+vector<vector<int>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+}
+lca_binary_jumping lca(adj, 1);
+
+int m;
+cin >> m;
+while(m--) {
+  int a, b;
+  cin >> a >> b;
+  cout << lca.lca(a, b) << nl;
+}

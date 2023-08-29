@@ -1,0 +1,63 @@
+%:include "utility/nd_array.h"
+__main__:
+int n, m;
+cin >> n >> m;
+vector<int> left, right;
+int base = 0;
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  if(v < 0) {
+    left.push_back(v);
+  } else if(v > 0) {
+    right.push_back(v);
+  } else {
+    base += m;
+  }
+}
+left.push_back(0);
+right.push_back(0);
+sort(begin(left), end(left), greater<>());
+sort(begin(right), end(right));
+
+auto solve = [&](int const lb, int const rb) {
+  nd_array<pair<int, int>, 3> dp(lb + 1, rb + 1, 2, pair(numeric_limits<int>::max(), 0));
+  for(int i=lb; i>=0; i--) {
+    for(int j=rb; j>=0; j--) {
+      for(int d=0; d<2; d++) {
+        if(i == lb and j == rb) {
+          dp(i, j, d) = pair(0, 0);
+          continue;
+        }
+        int const rem = lb + rb - (i + j);
+        int const x = (d == 0 ? left[i] : right[j]);
+        if(i < lb) {
+          int const dist = x - left[i+1];
+          int const loss = rem * dist;
+          auto const& from = dp(i+1, j, 0);
+          dp(i, j, d) = min(dp(i, j, d), pair(loss + from.first, dist + from.second));
+        }
+        if(j < rb) {
+          int const dist = right[j+1] - x;
+          int const loss = rem * dist;
+          auto const& from = dp(i, j+1, 1);
+          dp(i, j, d) = min(dp(i, j, d), pair(loss + from.first, dist + from.second));
+        }
+      }
+    }
+  }
+  return dp(0, 0, 0);
+};
+
+int ans = 0;
+for(int lb=0, rb=size(right)-1; lb<size(left); lb++) {
+  auto [loss, dist] = solve(lb, rb);
+  while(rb > 0 and dist >= m) {
+    tie(loss, dist) = solve(lb, --rb);
+  }
+  if(dist < m) {
+    ans = max(ans, base + (lb + rb) * m - loss);
+  }
+}
+
+cout << ans << nl;

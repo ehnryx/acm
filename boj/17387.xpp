@@ -1,3 +1,5 @@
+%:include "geometry/lines.h"
+__main__:
 int a, b, x, y;
 cin >> a >> b >> x >> y;
 point A(a, b), B(x, y);

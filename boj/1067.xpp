@@ -1,0 +1,19 @@
+%:include "math/fft.h"
+__main__:
+int n;
+cin >> n;
+vector<int> a(2*n), b(n+1);
+for(int i=0; i<n; i++) {
+  cin >> a[i];
+  a[i + n] = a[i];
+}
+for(int i=0; i<n; i++) {
+  cin >> b[n - i];
+}
+
+auto c = fft::convolve(a, b);
+int ans = numeric_limits<int>::min();
+for(int i=0; i<n; i++) {
+  ans = max(ans, c[i + n]);
+}
+cout << ans << nl;

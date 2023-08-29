@@ -1,0 +1,8 @@
+%:include "string/suffix_array.h"
+__main__:
+int n;
+cin >> n;
+string s;
+cin >> s;
+suffix_array sa(s);
+cout << *max_element(begin(sa.height), end(sa.height)) << nl;

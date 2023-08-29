@@ -1,3 +1,5 @@
+%:include "ds/union_find.h"
+__main__:
 int n;
 cin >> n;
 vector<pair<int, int>> x, y, z;

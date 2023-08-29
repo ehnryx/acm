@@ -1,0 +1,17 @@
+%:include "graph/dinic.h"
+__main__:
+int n, m;
+cin >> n >> m;
+dinic<int> graph(2*(n+1));
+const int source = 2*1 + 1;
+const int sink = 2*2;
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  graph.add_edge(2*a + 1, 2*b);
+  graph.add_edge(2*b + 1, 2*a);
+}
+for(int i=1; i<=n; i++) {
+  graph.add_edge(2*i, 2*i + 1);
+}
+cout << graph.flow(source, sink) << nl;

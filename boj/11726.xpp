@@ -1,3 +1,5 @@
+%:include "number/mod_int.h"
+__main__:
 int n;
 cin >> n;
 using Int = mod_int<10'007>;

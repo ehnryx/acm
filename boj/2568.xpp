@@ -1,3 +1,5 @@
+%:include "misc/longest_inc_subseq.h"
+__main__:
 int n;
 cin >> n;
 static constexpr int M = 5e5 + 1;

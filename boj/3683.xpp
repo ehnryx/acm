@@ -1,0 +1,33 @@
+%:include "graph/dinic.h"
+__main__:
+#define MULTI_TEST
+int n, m, k;
+cin >> n >> m >> k;
+vector<tuple<char, char, int, int>> vals;
+for(int i=0; i<k; i++) {
+  char ta, tb;
+  int a, b;
+  cin >> ta >> a >> tb >> b;
+  vals.emplace_back(ta, tb, a, b);
+}
+
+dinic<int> graph(k + 2);
+const int source = graph.size() - 1;
+const int sink = graph.size() - 2;
+for(int i=0; i<k; i++) {
+  auto [ta1, tb1, a1, b1] = vals[i];
+  if(ta1 != 'C') {
+    graph.add_edge(i, sink);
+    continue;
+  }
+  graph.add_edge(source, i);
+  for(int j=0; j<k; j++) {
+    auto [ta2, tb2, a2, b2] = vals[j];
+    if(ta1 == ta2) continue;
+    if(a1 == b2 or a2 == b1) {
+      graph.add_edge(i, j);
+    }
+  }
+}
+
+cout << k - graph.flow(source, sink) << nl;

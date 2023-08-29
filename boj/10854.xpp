@@ -1,0 +1,16 @@
+%:include "math/pollard_rho.h"
+__main__:
+uint64_t n;
+cin >> n;
+ll ans = 1;
+while(n > 1) {
+  auto k = pollard_rho::get_factor<99>(n);
+  while(not miller_rabin::is_prime(k)) k = pollard_rho::get_factor<99>(k);
+  int cnt = 0;
+  while(n % k == 0) {
+    cnt++;
+    n /= k;
+  }
+  ans *= cnt + 1;
+}
+cout << ans << nl;

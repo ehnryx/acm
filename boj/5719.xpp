@@ -1,0 +1,27 @@
+%:include "graph/dijkstra.h"
+__main__:
+for(int n, m; cin >> n >> m and n; ) {
+  int source, sink;
+  cin >> source >> sink;
+  graph_t<int> graph(n+1), rev(n+1);
+  vector<tuple<int, int, int>> edges;
+  for(int i=0; i<m; i++) {
+    int a, b, c;
+    cin >> a >> b >> c;
+    graph.add_arc(a, b, c);
+    rev.add_arc(b, a, c);
+    edges.emplace_back(a, b, c);
+  }
+  auto forwards = dijkstra(graph, -1).run(source);
+  auto backwards = dijkstra(rev, -1).run(sink);
+  const int dist = forwards.dist[sink];
+
+  graph_t<int> smaller(n+1);
+  for(auto [a, b, c] : edges) {
+    if(forwards.dist[a] + c + backwards.dist[b] != dist) {
+      smaller.add_arc(a, b, c);
+    }
+  }
+  int ans = dijkstra(smaller, -1).run(source).dist[sink];
+  cout << ans << nl;
+}

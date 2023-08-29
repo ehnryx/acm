@@ -1,3 +1,4 @@
+__main__:
 int n;
 cin >> n;
 vector<int> dp(n+1);

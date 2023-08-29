@@ -1,0 +1,34 @@
+%:include "graph/min_cost_flow.h"
+__main__:
+int n, m;
+cin >> n >> m;
+min_cost_flow<int, int> graph(n + m + 2);
+const int source = n + m;
+const int sink = source + 1;
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  graph.add_edge(source, i, v, 0);
+}
+for(int i=0; i<m; i++) {
+  int v;
+  cin >> v;
+  graph.add_edge(n + i, sink, v, 0);
+}
+vector caps(m, vector<int>(n));
+for(int i=0; i<m; i++) {
+  for(int j=0; j<n; j++) {
+    cin >> caps[i][j];
+  }
+}
+for(int i=0; i<m; i++) {
+  for(int j=0; j<n; j++) {
+    int v;
+    cin >> v;
+    graph.add_edge(j, n + i, caps[i][j], v);
+  }
+}
+
+auto [flow, cost] = graph.flow(source, sink);
+cout << flow << nl;
+cout << cost << nl;

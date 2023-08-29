@@ -1,0 +1,48 @@
+__main__:
+int n;
+cin >> n;
+const int L = 32 - __builtin_clz(max(1, n-1));
+const int N = 1 << L;
+assert(n <= N and n > N/2);
+vector<vector<int>> st(2 * N);
+for(int i=1; i<=n; i++) {
+  int v;
+  cin >> v;
+  st[i + N].push_back(v);
+}
+
+for(int i=N-1; i>0; i--) {
+  merge(
+      begin(st[2*i]), end(st[2*i]),
+      begin(st[2*i+1]), end(st[2*i+1]),
+      back_inserter(st[i]));
+}
+
+auto query = [&](int l, int r, int k) {
+  int ans = 0;
+  for(l+=N, r+=N+1; l<r; l/=2, r/=2) {
+    if(l&1) {
+      ans += distance(
+          upper_bound(begin(st[l]), end(st[l]), k), end(st[l]));
+      l++;
+    }
+    if(r&1) {
+      --r;
+      ans += distance(
+          upper_bound(begin(st[r]), end(st[r]), k), end(st[r]));
+    }
+  }
+  return ans;
+};
+
+int m;
+cin >> m;
+for(int i=0, ans=0; i<m; i++) {
+  int l, r, k;
+  cin >> l >> r >> k;
+  l ^= ans;
+  r ^= ans;
+  k ^= ans;
+  ans = query(l, r, k);
+  cout << ans << nl;
+}

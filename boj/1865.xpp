@@ -1,3 +1,4 @@
+__main__:
 #define MULTI_TEST
 int n, m, w;
 cin >> n >> m >> w;

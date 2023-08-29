@@ -1,0 +1,67 @@
+__main__:
+int n;
+cin >> n;
+vector<vector<pair<int, int>>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  adj[a].emplace_back(b, c);
+  adj[b].emplace_back(a, c);
+}
+
+static constexpr int L = 17;
+assert(n < 1<<L);
+vector depth(n+1, 0);
+vector anc(n+1, vector(L, 0));
+vector maxe(n+1, vector(L, numeric_limits<int>::min()));
+vector mine(n+1, vector(L, numeric_limits<int>::max()));
+
+auto build = [&](auto&& self, int u, int p) -> void {
+  depth[u] = depth[p] + 1;
+  anc[u][0] = p;
+  for(int j=1; j<L; j++) {
+    anc[u][j] = anc[anc[u][j-1]][j-1];
+    maxe[u][j] = max(maxe[u][j-1], maxe[anc[u][j-1]][j-1]);
+    mine[u][j] = min(mine[u][j-1], mine[anc[u][j-1]][j-1]);
+  }
+  for(auto [v, c] : adj[u]) {
+    if(v == p) continue;
+    maxe[v][0] = mine[v][0] = c;
+    self(self, v, u);
+  }
+};
+build(build, 1, 0);
+
+auto solve = [&](int a, int b) {
+  if(depth[a] < depth[b]) swap(a, b);
+  int lo = numeric_limits<int>::max();
+  int hi = numeric_limits<int>::min();
+  for(int j=L-1; j>=0; j--) {
+    if(depth[anc[a][j]] < depth[b]) continue;
+    lo = min(lo, mine[a][j]);
+    hi = max(hi, maxe[a][j]);
+    a = anc[a][j];
+  }
+  if(a == b) {
+    return pair(lo, hi);
+  }
+  for(int j=L-1; j>=0; j--) {
+    if(anc[a][j] == anc[b][j]) continue;
+    lo = min({lo, mine[a][j], mine[b][j]});
+    hi = max({hi, maxe[a][j], maxe[b][j]});
+    a = anc[a][j];
+    b = anc[b][j];
+  }
+  lo = min({lo, mine[a][0], mine[b][0]});
+  hi = max({hi, maxe[a][0], maxe[b][0]});
+  return pair(lo, hi);
+};
+
+int m;
+cin >> m;
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  auto [lo, hi] = solve(a, b);
+  cout << lo << " " << hi << nl;
+}

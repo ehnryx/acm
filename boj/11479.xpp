@@ -1,0 +1,10 @@
+%:include "string/suffix_array.h"
+__main__:
+string s;
+cin >> s;
+suffix_array sa(s);
+ll ans = 0;
+for(int i=1; i<=size(s); i++) {
+  ans += (size(s) - sa[i]) - sa.height[i];
+}
+cout << ans << nl;

@@ -1,3 +1,4 @@
+__main__:
 int a, b;
 cin >> a >> b;
 const int n = 2 * max(a, b);

@@ -1,3 +1,6 @@
+%:include "number/mod_int.h"
+%:include "number/square_matrix.h"
+__main__:
 static constexpr int n = 8;
 static constexpr auto edges = {
   pair(0, 1), pair(0, 2), pair(1, 2),

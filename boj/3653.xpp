@@ -1,0 +1,19 @@
+%:include "ds/splay_tree.h"
+__main__:
+#define MULTI_TEST
+int n, m;
+cin >> n >> m;
+using rope = splay_tree_default<void, int>;
+rope st;
+vector<rope::node_t*> nodes(n+1);
+for(int i=1; i<=n; i++) {
+  nodes[i] = st.push_back(i);
+}
+for(int i=0; i<m; i++) {
+  int v;
+  cin >> v;
+  cout << st.rank(nodes[v]) << " ";
+  st.erase(nodes[v]);
+  nodes[v] = st.push_front(v);
+}
+cout << nl;

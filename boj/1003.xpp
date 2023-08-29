@@ -1,4 +1,5 @@
 #define MULTI_TEST
+__main__:
 static const auto ans = [] {
   vector<pair<ll, ll>> res(41);
   res[0] = pair(1, 0);

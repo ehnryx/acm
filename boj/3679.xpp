@@ -1,0 +1,40 @@
+%:include "geometry/point.h"
+using pt = point<int>;
+__main__:
+#define MULTI_TEST
+int n;
+cin >> n;
+vector<pair<pt, int>> p;
+for(int i=0; i<n; i++) {
+  pt v;
+  cin >> v;
+  p.emplace_back(v, i);
+}
+auto order = [](const auto& a, const auto& b) {
+  return pt::by_x()(a.first, b.first);
+};
+sort(begin(p), end(p), order);
+
+vector<pair<pt, int>> stk, rem;
+for(const auto& [v, i] : p) {
+  while(size(stk) >= 2 and
+      cross(stk.back().first - v, stk[size(stk) - 2].first - v) < 0) {
+    rem.push_back(stk.back());
+    stk.pop_back();
+  }
+  stk.emplace_back(v, i);
+}
+sort(begin(rem), end(rem), order);
+
+vector<int> ans;
+for(const auto& [_, i] : rem) {
+  ans.push_back(i);
+}
+for(const auto& [_, i] : stk | views::reverse) {
+  ans.push_back(i);
+}
+
+for(int i : ans) {
+  cout << i << " ";
+}
+cout << nl;

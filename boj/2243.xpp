@@ -1,0 +1,36 @@
+%:include "ds/splay_tree.h"
+%:include "ds/splay_tree_nodes.h"
+__main__:
+int n;
+cin >> n;
+using node = splay_tree_nodes::range_sum<int, int>;
+splay_tree<node> st;
+for(int i=0; i<n; i++) {
+  int t;
+  cin >> t;
+  if(t == 1) {
+    int v;
+    cin >> v;
+    auto u = st.root;
+    for(;;) {
+      if(u->left->sum >= v) {
+        u = u->left;
+      } else if(u->left->sum + u->value >= v) {
+        break;
+      } else {
+        v -= u->left->sum + u->value;
+        u = u->right;
+      }
+    }
+    cout << u->key << nl;
+    if(u->value == 1) {
+      st.erase(u);
+    } else {
+      st[u->key] -= 1;
+    }
+  } else {
+    int v, c;
+    cin >> v >> c;
+    st[v] += c;
+  }
+}

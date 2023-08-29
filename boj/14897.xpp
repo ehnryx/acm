@@ -1,0 +1,44 @@
+%:include "ds/fenwick_tree.h"
+__main__:
+int n;
+cin >> n;
+vector<int> a(n+1);
+unordered_map<int, int> remap;
+for(int i=1, rid=0; i<=n; i++) {
+  cin >> a[i];
+  if(remap.find(a[i]) == end(remap)) {
+    remap[a[i]] = rid++;
+  }
+  a[i] = remap[a[i]];
+}
+int m;
+cin >> m;
+struct item {
+  int l, r, i;
+  bool operator<(const item& o) const { return r < o.r; }
+};
+vector<item> ev;
+for(int i=0; i<m; i++) {
+  int l, r;
+  cin >> l >> r;
+  ev.emplace_back(l, r, i);
+}
+sort(begin(ev), end(ev));
+vector<int> ans(m);
+
+fenwick_tree<int> st(n+1);
+int at = 0;
+vector<int> last(*max_element(begin(a), end(a)) + 1);
+for(auto [l, r, i] : ev) {
+  while(at < r) {
+    ++at;
+    st.update(last[a[at]], -1);
+    st.update(at, 1);
+    last[a[at]] = at;
+  }
+  ans[i] = st.query(l, r);
+}
+
+for(auto v : ans) {
+  cout << v << nl;
+}

@@ -1,0 +1,28 @@
+%:include "tree/range_query_tree.h"
+%:include "ds/segment_tree.h"
+%:include "ds/segment_tree_nodes_sum.h"
+__main__:
+int n, root;
+cin >> n >> root;
+vector<vector<int>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+}
+using node = segment_tree_nodes::point_add_range_sum<int>;
+range_query_tree<segment_tree<node>> tree(move(adj), root);
+
+int m;
+cin >> m;
+while(m--) {
+  int t, u;
+  cin >> t >> u;
+  if(t == 1) {
+    tree.update_point(u, 1);
+  } else {
+    int cnt = tree.query_subtree(u);
+    cout << (ll)(tree.depth[u] + 1) * cnt << nl;
+  }
+}

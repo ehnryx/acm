@@ -1,4 +1,5 @@
 #define MULTI_TEST
+__main__:
 int n, m, k;
 cin >> n >> m >> k;
 auto get = [m](int i, int j) { return i*m + j; };

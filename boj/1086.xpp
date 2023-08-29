@@ -1,0 +1,45 @@
+%:include "utility/nd_array.h"
+__main__:
+int n;
+cin >> n;
+vector<string> s(n);
+for(int i=0; i<n; i++) {
+  cin >> s[i];
+}
+int mod;
+cin >> mod;
+
+vector<int> val(n), mul(n);
+for(int i=0; i<n; i++) {
+  mul[i] = 1;
+  for(char c : s[i]) {
+    val[i] = (val[i] * 10 + c - '0') % mod;
+    mul[i] = (mul[i] * 10) % mod;
+  }
+}
+
+nd_array<ll, 2> dp(1<<n, mod);
+dp(0, 0) = 1;
+for(int bm=1; bm<1<<n; bm++) {
+  int base = 1;
+  for(int i=0; i<n; i++) {
+    if(not (bm & 1<<i)) {
+      base = (base * mul[i]) % mod;
+    }
+  }
+  for(int i=0; i<n; i++) {
+    if(not (bm & 1<<i)) continue;
+    int add = val[i] * base % mod;
+    for(int j=0; j<mod; j++) {
+      dp(bm, j) += dp(bm ^ 1<<i, j>=add ? j-add : j-add + mod);
+    }
+  }
+}
+
+ll total = 0;
+for(int i=0; i<mod; i++) {
+  total += dp((1<<n) - 1, i);
+}
+ll good = dp((1<<n) - 1, 0);
+ll g = gcd(total, good);
+cout << good/g << "/" << total/g << nl;

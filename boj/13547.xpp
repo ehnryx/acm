@@ -1,0 +1,50 @@
+__main__:
+int n;
+cin >> n;
+vector<int> a(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+}
+int m;
+cin >> m;
+vector<tuple<int, int, int>> ev;
+for(int i=0; i<m; i++) {
+  int l, r;
+  cin >> l >> r;
+  ev.emplace_back(l, r, i);
+}
+vector<int> ans(m);
+
+static constexpr int S = 320;
+int total = 0;
+vector<int> cnt(*max_element(begin(a), end(a)) + 1);
+
+sort(begin(ev), end(ev), [](const auto& x, const auto& y) {
+    int ga = get<0>(x) / S;
+    int gb = get<0>(y) / S;
+    if(ga != gb) return ga < gb;
+    return (ga % 2 ? get<1>(x) < get<1>(y) : get<1>(y) < get<1>(x)); });
+
+auto update = [&](int i, int v) {
+  total -= (cnt[a[i]] > 0);
+  cnt[a[i]] += v;
+  total += (cnt[a[i]] > 0);
+};
+
+auto query = [&] {
+  return total;
+};
+
+int x = 1;
+int y = 0;
+for(auto [l, r, i] : ev) {
+  while(y < r) update(++y, 1);
+  while(x > l) update(--x, 1);
+  while(y > r) update(y--, -1);
+  while(x < l) update(x++, -1);
+  ans[i] = query();
+}
+
+for(int i=0; i<m; i++) {
+  cout << ans[i] << nl;
+}

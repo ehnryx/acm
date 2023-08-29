@@ -1,3 +1,4 @@
+__main__:
 int n, r, c;
 cin >> n >> r >> c;
 int ans = 0;

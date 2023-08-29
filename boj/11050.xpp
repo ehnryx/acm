@@ -1,3 +1,4 @@
+__main__:
 int n, r;
 cin >> n >> r;
 vector ncr(n+1, vector<int>(n+1));

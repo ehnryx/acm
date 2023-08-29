@@ -1,0 +1,26 @@
+%:include "ds/monotone_hull.h"
+%:include "utility/fast_input.h"
+__main__:
+// f(i) = max_{j < i} f(j) + value(j, i)
+// value is exclusive-inclusive
+// value(l, r) = a * (S_r - S_l)^2 + b * (S_r - S_l) + c
+//  = a*S_r*S_r - 2*a*S_r*S_l + a*S_l*S_l + b*S_r - b*S_l + c
+// f(i) = a*S_i*S_i + b*S_i + c +
+//        max_{j < i} (f(j) + a*S_j*S_j - b*S_j) + (-2*a*S_j) * S_i
+monotone_hull_max<ll> hull;  // the slopes are already sorted
+
+int n;
+cin >> n;
+int a, b, c;
+cin >> a >> b >> c;
+ll ans = 0;
+hull.insert(0, 0);
+int sum = 0;
+for(int i=1; i<=n; i++) {
+  int v;
+  cin >> v;
+  sum += v;
+  ans = (ll)a*sum*sum + (ll)b*sum + c + hull.query(sum);
+  hull.insert(-2*a*sum, ans + (ll)a*sum*sum - b*sum);
+}
+cout << llround(ans) << nl;

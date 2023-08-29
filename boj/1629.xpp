@@ -1,3 +1,4 @@
+__main__:
 ll a, b, c;
 cin >> a >> b >> c;
 ll r = 1;

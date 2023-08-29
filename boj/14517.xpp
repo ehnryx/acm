@@ -1,0 +1,18 @@
+%:include "number/mod_int.h"
+%:include "utility/nd_array.h"
+__main__:
+string s;
+cin >> s;
+int n = size(s);
+using Int = mod_int<10'007>;
+nd_array<Int, 2> dp(n, n, -1);
+auto solve = [&](auto&& self, int l, int r) -> Int {
+  if(l > r) return 0;
+  auto& ans = dp(l, r);
+  if(ans != -1) return ans;
+  ans = 0;
+  if(s[l] == s[r]) ans += self(self, l+1, r-1) + 1;
+  ans += self(self, l+1, r) + self(self, l, r-1) - self(self, l+1, r-1);
+  return ans;
+};
+cout << solve(solve, 0, n-1) << nl;

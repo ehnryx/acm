@@ -1,0 +1,35 @@
+%:include "ds/union_find.h"
+
+struct food {
+  int cnt = 1;
+  void merge(const food& o, int h, ll& ans) {
+    cnt += o.cnt;
+    ans = max(ans, cnt * (ll)h);
+  }
+  static void swap_args(...) {}
+};
+__main__:
+for(int n; cin >> n and n; ) {
+  vector<pair<int, int>> ev;
+  for(int i=1; i<=n; i++) {
+    int v;
+    cin >> v;
+    ev.emplace_back(v, i);
+  }
+  sort(begin(ev), end(ev), greater<>());
+
+  vector<bool> exists(n+2);
+  union_find<food> dsu(n+2);
+  ll ans = 0;
+  for(auto [v, i] : ev) {
+    exists[i] = true;
+    ans = max(ans, (ll)v);
+    if(exists[i-1]) {
+      dsu.link(i, i-1, v, ans);
+    }
+    if(exists[i+1]) {
+      dsu.link(i, i+1, v, ans);
+    }
+  }
+  cout << ans << nl;
+}

@@ -1,3 +1,4 @@
+__main__:
 static constexpr int M = 4'000'000 + 1;
 vector is_p(M, true);
 is_p[0] = is_p[1] = false;

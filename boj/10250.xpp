@@ -1,4 +1,5 @@
 #define MULTI_TEST
+__main__:
 int n, m, k;
 cin >> n >> m >> k;
 int r = (k-1) % n + 1;

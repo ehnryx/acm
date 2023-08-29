@@ -1,0 +1,76 @@
+%:include "misc/mo_solver.h"
+__main__:
+int n, m;
+cin >> n >> m;
+vector<int> a(n+1);
+vector<int> nxt(n+1), prv(n+1);
+vector<int> last(m+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+  prv[i] = last[a[i]];
+  last[a[i]] = i;
+}
+fill(begin(last), end(last), n+1);
+for(int i=n; i>=1; i--) {
+  nxt[i] = last[a[i]];
+  last[a[i]] = i;
+}
+
+int q;
+cin >> q;
+mo_solver<int> mo(1, n);
+for(int i=0; i<q; i++) {
+  int l, r;
+  cin >> l >> r;
+  mo.add_event(l, r, i);
+}
+vector<int> ans(q);
+
+vector<int> first(m+1, n+1);
+fill(begin(last), end(last), 0);
+
+vector<int> rcnt(n);
+vector<int> block_rcnt(n / mo.block_size + 1);
+
+auto update_cnt = [&](int i, int v) {
+  if(first[i] <= last[i]) {
+    rcnt[last[i] - first[i]] += v;
+    block_rcnt[(last[i] - first[i]) / mo.block_size] += v;
+  }
+};
+
+auto update = [&](int i, int v, int) {
+  update_cnt(a[i], -1);
+  if(v > 0) {
+    first[a[i]] = min(first[a[i]], i);
+    last[a[i]] = max(last[a[i]], i);
+  } else {
+    if(first[a[i]] == i) first[a[i]] = nxt[first[a[i]]];
+    if(last[a[i]] == i) last[a[i]] = prv[last[a[i]]];
+  }
+  update_cnt(a[i], +1);
+};
+
+auto query_max = [&] {
+  for(int i=size(block_rcnt)-1; i>=0; i--) {
+    if(block_rcnt[i]) {
+      for(int j = min(n-1, (i+1)*mo.block_size - 1); j >= i*mo.block_size; j--) {
+        if(rcnt[j]) {
+          return j;
+        }
+      }
+    }
+  }
+  assert(false);
+  return 0;
+};
+
+auto query = [&](int idx) {
+  ans[idx] = query_max();
+};
+
+mo.solve(update, query);
+
+for(auto v : ans) {
+  cout << v << nl;
+}

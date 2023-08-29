@@ -1,0 +1,31 @@
+%:include "string/aho_corasick.h"
+%:include "string/to_int.h"
+struct food : to_int::lower {
+  static constexpr int size = 27;
+};
+__main__:
+for(int n; cin >> n; ) {
+  static constexpr char $ = 'z' + 1;
+  aho_corasick<char, food> ac;
+  ac.add(string(1, $));
+  for(int i=0; i<n; i++) {
+    string s;
+    cin >> s;
+    s.push_back($);
+    ac.add(s);
+  }
+
+  auto solve = [&](auto&& self, int u, int cost) -> ll {
+    const int children = food::size - count(begin(ac[u].child), end(ac[u].child), -1);
+    ll res = 0;
+    for(int i=0; i<26; i++) {
+      if(ac[u].child[i] == -1) continue;
+      res += self(self, ac[u].child[i], cost + (children > 1));
+    }
+    if(ac[u].child[26] != -1) {
+      res += cost;
+    }
+    return res;
+  };
+  cout << setprecision(2) << solve(solve, ac.root, 0) / (ld)n << nl;
+}

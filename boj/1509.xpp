@@ -1,3 +1,5 @@
+%:include "string/suffix_array_lcp_linear.h"
+__main__:
 string s;
 cin >> s;
 string rev(rbegin(s), rend(s));

@@ -1,0 +1,40 @@
+__main__:
+int n;
+cin >> n;
+
+vector<int> remap(n+1);
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  remap[v] = i;
+}
+
+struct pt {
+  int x, y;
+};
+vector<pt> p(n);
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  p[remap[v]].x = i;
+}
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  p[remap[v]].y = i;
+}
+
+map<int, int> pareto;
+int ans = n;
+for(auto [x, y] : p) {
+  auto it = pareto.lower_bound(x);
+  if(it != begin(pareto) and prev(it)->second < y) {
+    ans--;
+    continue;
+  }
+  it = next(pareto.emplace(x, y).first);
+  while(it != end(pareto) and it->second > y) {
+    it = pareto.erase(it);
+  }
+}
+cout << ans << nl;

@@ -1,0 +1,32 @@
+%:include "geometry/convex_hull.h"
+%:include "utility/fast_input.h"
+__main__:
+#define MULTI_TEST
+using pt = point<int>;
+static_assert(is_same_v<ll, decltype(cross(declval<pt>(), declval<pt>()))>);
+static_assert(is_same_v<ll, decltype(norm(declval<pt>()))>);
+
+int n;
+cin >> n;
+vector<pt> p(n);
+for(int i=0; i<n; i++) {
+  cin >> p[i];
+}
+auto hull = convex_hull(p);
+n = size(hull);
+if(n == 2) {
+  return void(cout << hull.front() << " " << hull.back() << nl);
+}
+
+tuple<ll, int, int> ans(-1, -1, -1);
+for(int pi=n-1, i=0, j=0; i<n; pi=i++) {
+  for(int nj = j+1<n ? j+1 : 0;
+      cross(hull[i] - hull[pi], hull[nj] - hull[j]) > 0; ) {
+    j = nj;
+    nj = j+1<n ? j+1 : 0;
+  }
+  ans = max(ans, tuple(norm(hull[i] - hull[j]), i, j));
+  ans = max(ans, tuple(norm(hull[pi] - hull[j]), pi, j));
+}
+
+cout << hull[get<1>(ans)] << " " << hull[get<2>(ans)] << nl;

@@ -1,0 +1,47 @@
+%:include "ds/union_find.h"
+
+struct data_t {
+  vector<ll>& ans;
+  vector<int> vals;
+  data_t(vector<ll>& a): ans(a) {}
+  void merge(data_t& o, ll diff) {
+    for(int v : o.vals) {
+      vals.push_back(v);
+      ans[v] += diff;
+    }
+    o.vals.clear();
+  }
+  static void swap_args(ll& diff) {
+    diff = -diff;
+  }
+};
+__main__:
+for(int n, m; cin >> n >> m && n; ) {
+  vector<ll> ans(n+1);
+  union_find<data_t> dsu(vector<data_t>(n+1, ans));
+  for(int j=1; j<=n; j++) {
+    dsu.get(j).vals.push_back(j);
+  }
+  while(m--) {
+    char t;
+    cin >> t;
+    if(t == '!') {
+      int a, b, c;
+      cin >> a >> b >> c;
+      // b - a = c
+      // b' - a' + (b - b') - (a - a') = c
+      // b' - a' = c + (a - a') - (b - b')
+      ll da = ans[a] - ans[dsu[a]];
+      ll db = ans[b] - ans[dsu[b]];
+      dsu.link(b, a, c + da - db);
+    } else {
+      int a, b;
+      cin >> a >> b;
+      if(dsu[a] == dsu[b]) {
+        cout << ans[b] - ans[a] << nl;
+      } else {
+        cout << "UNKNOWN" << nl;
+      }
+    }
+  }
+}

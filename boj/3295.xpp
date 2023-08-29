@@ -1,0 +1,18 @@
+%:include "graph/dinic.h"
+__main__:
+#define MULTI_TEST
+int n, m;
+cin >> n >> m;
+dinic<int> graph(2*n + 2);
+const int source = graph.size() - 1;
+const int sink = graph.size() - 2;
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  graph.add_edge(a, n + b);
+}
+for(int i=0; i<n; i++) {
+  graph.add_edge(source, i);
+  graph.add_edge(n + i, sink);
+}
+cout << graph.flow(source, sink) << nl;

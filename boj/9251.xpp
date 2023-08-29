@@ -1,3 +1,5 @@
+%:include "misc/lcs_bitstring.h"
+__main__:
 string s, t;
 cin >> s >> t;
 cout << lcs_bitstring(vector(begin(s), end(s)), vector(begin(t), end(t))) << nl;

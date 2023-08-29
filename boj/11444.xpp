@@ -1,3 +1,6 @@
+%:include "number/square_matrix.h"
+%:include "number/mod_int.h"
+__main__:
 // F_n     = F_{n-1} + F_{n-2}
 // F_{n-1} = F_{n-1} + 0
 square_matrix<mod_int<1'000'000'007>, 2> mat({

@@ -1,0 +1,18 @@
+__main__:
+ll n;
+cin >> n;
+ll ans = 1;
+for(int i=2; (ll)i*i<=n; i++) {
+  if(n % i == 0) {
+    n /= i;
+    ans *= i - 1;
+    while(n % i == 0) {
+      n /= i;
+      ans *= i;
+    }
+  }
+}
+if(n > 1) {
+  ans *= n - 1;
+}
+cout << ans << nl;

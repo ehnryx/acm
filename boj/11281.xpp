@@ -1,0 +1,19 @@
+%:include "graph/two_sat.h"
+__main__:
+int n, m;
+cin >> n >> m;
+two_sat sat(n+1);
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  sat.or_clause(abs(a), a > 0, abs(b), b > 0);
+}
+if(sat.solve()) {
+  cout << 1 << nl;
+  for(int i=1; i<=n; i++) {
+    cout << sat[i] << " ";
+  }
+  cout << nl;
+} else {
+  cout << 0 << nl;
+}

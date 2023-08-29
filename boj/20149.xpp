@@ -1,0 +1,27 @@
+%:include "geometry/lines.h"
+__main__:
+ll a, b, x, y;
+cin >> a >> b >> x >> y;
+point A(a, b), B(x, y);
+cin >> a >> b >> x >> y;
+point C(a, b), D(x, y);
+
+if(not seg_x_seg(A, B, C, D)) {
+  return void(cout << 0 << nl);
+}
+
+cout << 1 << nl;
+
+if(parallel(A, B, C, D)) {
+  if(A == D) swap(C, D);
+  if(A != C) swap(A, B);
+  if(A == D) swap(C, D);
+  if(A == C and dot(B - A, D - C) < 0) {
+    cout << A << nl;
+  }
+  return;
+}
+
+using pt = point<ld>;
+auto it = line_inter(pt(A), pt(B), pt(C), pt(D));
+cout << setprecision(12) << it << nl;

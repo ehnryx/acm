@@ -1,0 +1,39 @@
+%:include "tree/range_query_tree.h"
+%:include "ds/segment_tree.h"
+%:include "ds/segment_tree_nodes_min.h"
+__main__:
+int n;
+cin >> n;
+vector<tuple<int, int, int>> edges;
+vector<vector<int>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+  edges.emplace_back(a, b, c);
+}
+using node = segment_tree_nodes::point_assign_range_min<int, greater<>>;
+range_query_tree<segment_tree<node>> tree(adj, 1);
+
+vector<int> remap(n+1);
+for(int i=1; i<n; i++) {
+  auto [a, b, c] = edges[i-1];
+  if(a == tree.parent[b]) swap(a, b);
+  remap[i] = a;
+  tree.update_point(a, c);
+}
+
+int m;
+cin >> m;
+for(int i=0; i<m; i++) {
+  int t, u, v;
+  cin >> t >> u >> v;
+  if(t == 1) {
+    tree.update_point(remap[u], v);
+  } else {
+    auto ans = tree.query_path(u, v, false,
+        0, [](int a, int b) { return max(a, b); });
+    cout << ans << nl;
+  }
+}

@@ -1,0 +1,21 @@
+%:include "ds/monotone_hull.h"
+__main__:
+int n;
+cin >> n;
+vector<int> a(n);
+for(int i=0; i<n; i++) {
+  cin >> a[i];
+}
+vector<int> b(n);
+for(int i=0; i<n; i++) {
+  cin >> b[i];
+}
+
+vector<ll> dp(n);
+monotone_hull_min<ll> hull;
+hull.insert(b[0], 0);
+for(int i=1; i<n; i++) {
+  dp[i] = hull.query(a[i]);
+  hull.insert(b[i], dp[i]);
+}
+cout << dp[n-1] << nl;

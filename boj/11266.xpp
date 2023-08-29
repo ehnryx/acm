@@ -1,0 +1,22 @@
+%:include "graph/biconnected_components.h"
+__main__:
+int n, m;
+cin >> n >> m;
+graph_t adj(n+1);
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj.add_edge(a, b);
+}
+biconnected_components bcc(adj);
+vector<int> ans;
+for(int i=1; i<=n; i++) {
+  if(bcc.is_cut_vertex(i)) {
+    ans.push_back(i);
+  }
+}
+cout << size(ans) << nl;
+for(int i : ans) {
+  cout << i << " ";
+}
+cout << nl;

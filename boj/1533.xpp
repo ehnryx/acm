@@ -1,0 +1,27 @@
+%:include "number/square_matrix.h"
+%:include "number/mod_int.h"
+using Int = mod_int<1'000'003>;
+static constexpr int N = 10;
+static constexpr int R = 5;
+using Matrix = square_matrix<Int, N * R>;
+__main__:
+int n, s, e, t;
+cin >> n >> s >> e >> t;
+
+Matrix mat;
+for(int i=0; i<n; i++) {
+  for(int j=0; j<n; j++) {
+    char v;
+    cin >> v;
+    if(int d = v - '0'; d) {
+      mat[j][N*(d-1) + i] = Int(1);
+    }
+  }
+}
+for(int i=1; i<R; i++) {
+  for(int j=0; j<n; j++) {
+    mat[N*i + j][N*(i-1) + j] = Int(1);
+  }
+}
+mat = mat.pow(t);
+cout << mat[e-1][s-1] << nl;

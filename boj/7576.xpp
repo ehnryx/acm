@@ -1,3 +1,4 @@
+__main__:
 int n, m;
 cin >> m >> n;
 vector g(n+2, vector(m+2, -1));
