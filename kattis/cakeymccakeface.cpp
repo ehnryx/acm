@@ -4,8 +4,6 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
-%:include "geometry/convex_hull.h"
-
 using ll = long long;
 using ld = long double;
 
@@ -14,28 +12,38 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = point<int>;
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  for(int n; cin >> n and n; ){
-    vector<pt> p;
-    for(int i=0; i<n; i++) {
-      int a, b;
-      cin >> a >> b;
-      p.emplace_back(a, b);
-    }
-    p = convex_hull(p);
-    cout << p.size() << nl;
-    for(const auto& v : p) {
-      cout << v.real() << " " << v.imag() << nl;
+  int n, m;
+  cin >> n >> m;
+  vector<int> a(n+1), b(m+1);
+  for(int i=1; i<=n; i++) {
+    cin >> a[i];
+  }
+  for(int i=1; i<=m; i++) {
+    cin >> b[i];
+  }
+
+  unordered_map<int, int> cnt;
+  for(int i=1; i<=n; i++) {
+    for(int j=1; j<=m; j++) {
+      if(a[i] <= b[j]) {
+        cnt[b[j] - a[i]]++;
+      }
     }
   }
+
+  pair ans(1, 0);
+  for(auto [v, c] : cnt) {
+    ans = min(ans, pair(-c, v));
+  }
+  cout << ans.second << nl;
 }
 
 int main() {
   cin.tie(0)->sync_with_stdio(0);
-  cout << fixed << setprecision(0);
+  cout << fixed << setprecision(10);
 #ifdef USING_FAST_INPUT
   fast_input cin;
 #endif

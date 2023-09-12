@@ -4,8 +4,6 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
-%:include "geometry/convex_hull.h"
-
 using ll = long long;
 using ld = long double;
 
@@ -14,7 +12,22 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = point<int>;
+using pt = complex<ld>;
+
+namespace ubc {
+ld cp(const pt& a, const pt& b) { return imag(conj(a)*b); }
+inline bool cmp_lex_i(const pt& a, const pt& b) {
+  return a.imag()<b.imag()-EPS
+    ||  (a.imag()<=b.imag()+EPS && a.real()<b.real()-EPS); }
+using pol = vector<pt>;
+pol chull(pol p) {
+  sort(p.begin(), p.end(), cmp_lex_i); int top=0, bot=1, n=p.size();
+  pol ch(2*n); for (int i = 0, d = 1; i < n && i >= 0; i += d) {
+    // If no duplicates, can change <= 0 to < 0 to keep redundant points
+    while (top>bot && cp(ch[top-1]-ch[top-2], p[i]-ch[top-2])<=0) top--;
+    ch[top++] = p[i]; if (i == n-1) d = -1, bot = top;
+  } ch.resize(max(1, top-1)); return ch; }
+}
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
@@ -25,7 +38,10 @@ void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
       cin >> a >> b;
       p.emplace_back(a, b);
     }
-    p = convex_hull(p);
+    p = ubc::chull(p);
+    while(size(p) > 1 and p.front() == p.back()) {
+      p.pop_back();
+    }
     cout << p.size() << nl;
     for(const auto& v : p) {
       cout << v.real() << " " << v.imag() << nl;
