@@ -4,6 +4,8 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
+%:include "ds/rmq_linear.h"
+
 using ll = long long;
 using ld = long double;
 
@@ -12,43 +14,38 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = complex<ld>;
-
-ld cp(const pt& a, const pt& b) {
-  return imag(conj(a) * b);
-}
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
-};
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n;
-  cin >> n;
-  vector<pair<pt, int>> p;
+  int n, q;
+  cin >> n >> q;
+  vector<ll> a(n+1);
   for(int i=1; i<=n; i++) {
-    int x, y;
-    cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
+    cin >> a[i];
   }
-  sort(begin(p), end(p), pivot(0));
+  range_minimum_query_linear rmq(a);
 
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
+  while(q--) {
+    ll v;
+    int l, r;
+    cin >> v >> l >> r;
+    while(l <= r) {
+      int lo = l;
+      int hi = r+1;
+      while(lo < hi) {
+        int mid = (hi + lo) / 2;
+        if(rmq.query(l, mid) <= v) {
+          hi = mid;
+        } else {
+          lo = mid + 1;
+        }
+      }
+      if(hi > r) break;
+      v %= a[hi];
+      l = hi + 1;
     }
-    cout << " " << p[i+1].second;
+    cout << v << nl;
   }
-  cout << " " << p.back().second << nl;
 }
 
 int main() {

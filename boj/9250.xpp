@@ -1,0 +1,21 @@
+%:include "string/aho_corasick.h"
+%:include "string/to_int.h"
+__main__:
+int n;
+cin >> n;
+aho_corasick<char, to_int::lower> ac;
+for(int i=0; i<n; i++) {
+  string s;
+  cin >> s;
+  ac.add(s);
+}
+ac.build();
+int m;
+cin >> m;
+for(int i=0; i<m; i++) {
+  string s;
+  cin >> s;
+  bool found = false;
+  ac.find_all(s, [&found](...) { found = true; return false; });
+  cout << (found ? "YES" : "NO") << nl;
+}

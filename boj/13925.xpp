@@ -1,0 +1,79 @@
+%:include "ds/segment_tree.h"
+%:include "number/mod_int.h"
+%:include "utility/fast_input.h"
+
+using Int = mod_int<int(1e9+7)>;
+struct node {
+  using out_t = Int;
+  Int res, ass, add, mul;
+  int length;
+  bool flag;
+  node(Int v = 0): res(v), ass(0), add(0), mul(1), flag(false) {}
+  Int get() const { return res; }
+  void put(Int v, int t) {
+    switch(t) {
+      case 1:
+        res += v * length;
+        add += v;
+        break;
+      case 2:
+        res *= v;
+        add *= v;
+        mul *= v;
+        break;
+      case 3:
+        res = v * length;
+        add = 0;
+        mul = 1;
+        ass = v;
+        flag = true;
+        break;
+      default:
+        assert(false);
+    }
+  }
+  void push(node& l, node& r) {
+    if(flag) {
+      l.put(ass, 3);
+      r.put(ass, 3);
+      flag = false;
+    }
+    if(mul != 1) {
+      l.put(mul, 2);
+      r.put(mul, 2);
+      mul = 1;
+    }
+    if(add != 0) {
+      l.put(add, 1);
+      r.put(add, 1);
+      add = 0;
+    }
+  }
+  void pull(const node& l, const node& r) {
+    res = l.res + r.res;
+  }
+  static Int merge(Int a, Int b) { return a + b; }
+};
+
+__main__:
+int n;
+cin >> n;
+vector<Int> a(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+}
+segment_tree<node> st(a);
+
+int q;
+cin >> q;
+while(q--) {
+  int t, l, r;
+  cin >> t >> l >> r;
+  if(t == 4) {
+    cout << st.query(l, r) << nl;
+  } else {
+    int v;
+    cin >> v;
+    st.update_range(l, r, v, t);
+  }
+}

@@ -13,32 +13,22 @@ constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
 
-//#define MULTI_TEST
+#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n, k, r;
-  cin >> n >> k >> r;
-  vector<int> a(n+1);
-  for(int i=0; i<k; i++) {
-    int v;
-    cin >> v;
-    a[v] = 1;
+  int x, y, n;
+  cin >> x >> y >> n;
+  vector<int> ans = {y};
+  for(int i=1; i<n; i++) {
+    ans.push_back(ans.back() - i);
   }
-  int have = accumulate(begin(a), begin(a) + r, 0);
-  int ans = 0;
-  for(int i=r; i<=n; i++) {
-    have += a[i] - a[i-r];
-    if(have < 2) {
-      have += 1 - a[i];
-      ans += 1 - a[i];
-      a[i] = 1;
-    }
-    if(have < 2) {
-      have += 1 - a[i-1];
-      ans += 1 - a[i-1];
-      a[i-1] = 1;
-    }
+  if(ans.back() < x) {
+    return void(cout << -1 << nl);
   }
-  cout << ans << nl;
+  ans.back() = x;
+  for(int i : ans | views::reverse) {
+    cout << i << " ";
+  }
+  cout << nl;
 }
 
 int main() {

@@ -1,0 +1,44 @@
+%:include "graph/graph.h"
+__main__:
+int n, m;
+cin >> n >> m;
+graph_t g(n+1);
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  g.add_edge(a, b);
+}
+
+vector<tuple<int, int, int>> ans;
+vector<set<int>> done(n+1);
+vector<bool> vis(n+1);
+
+auto solve = [&](auto&& self, int u) -> int {
+  if(vis[u]) return 0;
+  vis[u] = true;
+  int memo = 0;
+  for(int v : g[u]) {
+    if(done[u].count(v)) continue;
+    done[v].insert(u);
+    int w = self(self, v);
+    if(w) {
+      ans.emplace_back(u, v, w);
+    } else if(memo) {
+      ans.emplace_back(memo, u, v);
+      memo = 0;
+    } else {
+      memo = v;
+    }
+  }
+  return memo;
+};
+
+for(int i=1; i<=n; i++) {
+  if(vis[i]) continue;
+  solve(solve, i);
+}
+
+cout << size(ans) << nl;
+for(auto [a, b, c] : ans) {
+  cout << a << " " << b << " " << c << nl;
+}

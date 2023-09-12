@@ -1,0 +1,80 @@
+%:include "ds/persistent_li_chao_tree.h"
+%:include "ds/segment_tree.h"
+using Tree = persistent_li_chao_tree<greater<>, ll>;
+
+struct node {
+  vector<Tree::Line> lines;
+  ll x = numeric_limits<ll>::min();
+  void put(Tree::Line v) { lines.push_back(v); }
+  void put(ll query) {
+    assert(x == numeric_limits<ll>::min());
+    x = query;
+  }
+  void pull(const node& l, const node& r) {
+    x = max(l.x, r.x);
+  }
+};
+
+__main__:
+int n;
+cin >> n;
+vector<Tree::Line> points(n+1);
+vector<bool> alive(n+1);
+vector<ll> queries;
+segment_tree<node> ranges(n+1);
+for(int i=1; i<=n; i++) {
+  int t;
+  cin >> t;
+  if(t == 1) {
+    int a, b;
+    cin >> a >> b;
+    points[i] = Tree::Line{a, b};
+    alive[i] = true;
+  } else if(t == 2) {
+    int rem;
+    cin >> rem;
+    ranges.update_range(rem, i, points[rem]);
+    alive[rem] = false;
+  } else if(t == 3) {
+    int x;
+    cin >> x;
+    queries.push_back(x);
+    ranges.update_point(i, x);
+  } else {
+    assert(false);
+  }
+}
+for(int i=1; i<=n; i++) {
+  if(alive[i]) {
+    ranges.update_range(i, n, points[i]);
+  }
+}
+
+Tree st(queries, 6e6);
+
+vector<ll> ans;
+auto solve = [&](auto&& self, int root, int i, int s, int e) -> void {
+  if(ranges[i].x == numeric_limits<ll>::min()) return;
+  vector<int> version_nodes;
+  int nr = root;
+  for(auto line : ranges[i].lines) {
+    nr = st.add_line(nr, line, version_nodes);
+  }
+  if(s == e) {
+    ans.push_back(st.query(nr, ranges[i].x));
+  } else {
+    int mid = (s + e) / 2;
+    self(self, nr, 2*i, s, mid);
+    self(self, nr, 2*i+1, mid+1, e);
+  }
+  st.free_nodes(version_nodes);
+};
+solve(solve, 0, 1, 0, ranges.length - 1);
+
+for(auto v : ans) {
+  if(v == Tree::init_line.b) {
+    cout << "EMPTY" << nl;
+  } else {
+    cout << v << nl;
+  }
+}

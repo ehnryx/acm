@@ -1,0 +1,75 @@
+#pragma GCC optimize("O3")
+#pragma GCC target("avx2,sse4")
+
+%:include "ds/segment_tree.h"
+struct node {
+  using out_t = int;
+  out_t maxv, minv, lazy, retval;
+  void put(out_t v) {
+    maxv += v;
+    minv += v;
+    lazy += v;
+    retval = maxv;
+  }
+  out_t get() const {
+    return minv;
+  }
+  void push(node& l, node& r) {
+    if(lazy) {
+      l.put(lazy);
+      r.put(lazy);
+      lazy = 0;
+    }
+    l.retval = r.retval = numeric_limits<out_t>::min();
+  }
+  void pull(const node& l, const node& r) {
+    maxv = max(l.maxv, r.maxv);
+    minv = min(l.minv, r.minv);
+    retval = max(l.retval, r.retval);
+  }
+  static out_t merge(out_t a, out_t b) { return min(a, b); }
+};
+
+__main__:
+vector<pair<int, int>> p;
+int n;
+cin >> n;
+for(int i=0; i<n; i++) {
+  int x, y;
+  cin >> x >> y;
+  p.emplace_back(x, y);
+}
+int m;
+cin >> m;
+for(int i=0; i<m; i++) {
+  int x, y;
+  cin >> x >> y;
+  p.emplace_back(x, y);
+}
+int add, sub;
+cin >> add >> sub;
+map<int, int> remap;
+vector<tuple<int, int, int>> lines;
+for(int i=0; i<n+m; i++) {
+  remap[p[i].second];
+  lines.emplace_back(p[i].first, p[i].second, (i < n ? add : -sub));
+}
+sort(begin(lines), end(lines));
+int rid = 1;
+for(auto& [_, value] : remap) {
+  value = rid++;
+}
+for(auto& [x, y, w] : lines) {
+  y = remap[y];
+  assert(0 < y and y < rid);
+}
+int ans = 0;
+for(int i=0; i<size(lines); i++) {
+  segment_tree<node> st(rid);
+  for(int j=i; j<size(lines); j++) {
+    auto [_, y, w] = lines[j];
+    st.update_range(y, rid-1, w);
+    ans = max(ans, st[1].retval - st.query_range(0, y-1));
+  }
+}
+cout << ans << nl;

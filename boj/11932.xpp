@@ -1,0 +1,86 @@
+%:include "tree/range_query_tree.h"
+%:include "ds/segment_tree.h"
+%:include "ds/segment_tree_nodes_point.h"
+using sum_tree = segment_tree<segment_tree_nodes::range_add_point_query<int>>;
+
+__main__:
+int n, m;
+cin >> n >> m;
+vector<pair<int, int>> order;
+for(int i=1; i<=n; i++) {
+  int w;
+  cin >> w;
+  order.emplace_back(w, i);
+}
+sort(begin(order), end(order));
+
+vector<vector<int>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+}
+range_query_tree<sum_tree> st(adj, 1);
+
+struct Query {
+  int a, b, lca, k, i;
+};
+vector<Query> queries;
+for(int i=0; i<m; i++) {
+  int a, b, k;
+  cin >> a >> b >> k;
+  queries.emplace_back(a, b, st.lca(a, b), k, i);
+}
+vector<int> ans(m);
+
+struct Block {
+  int li, ri;
+  vector<Query> ev;
+};
+auto solve = [&](int at, int li, int ri, const vector<Query>& ev, vector<Block>& next_layer) -> int {
+  if(li == ri) {
+    for(const auto& q : ev) {
+      ans[q.i] = order[ri].first;
+    }
+    return at;
+  }
+
+  int mid = (li + ri) / 2;
+  for(int i=at; i<=mid; i++) {
+    st.update_subtree(order[i].second, 1);
+  }
+
+  vector<Query> left, right;
+  for(const auto& q : ev) {
+    int value = st.query_up_point(q.a) + st.query_up_point(q.b) - st.query_up_point(q.lca);
+    if(st.parent[q.lca] != -1) value -= st.query_up_point(st.parent[q.lca]);
+    if(value < q.k) {
+      right.push_back(q);
+    } else {
+      left.push_back(q);
+    }
+  }
+  next_layer.emplace_back(li, mid, move(left));
+  next_layer.emplace_back(mid+1, ri, move(right));
+
+  return mid + 1;
+};
+
+vector<Block> cur_layer;
+cur_layer.emplace_back(0, size(order) - 1, move(queries));
+while(not empty(cur_layer)) {
+  vector<Block> next_layer;
+  int at = 0;
+  for(const auto& b : cur_layer) {
+    at = solve(at, b.li, b.ri, b.ev, next_layer);
+  }
+  cur_layer = move(next_layer);
+  using node_t = typename decltype(st.range_ds)::node_t;
+  auto& data = st.range_ds.data;
+  fill(begin(data), end(data), node_t());
+}
+
+for(int i=0; i<m; i++) {
+  cout << ans[i] << nl;
+}

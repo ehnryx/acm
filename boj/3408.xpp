@@ -1,0 +1,33 @@
+%:include "ds/segment_tree.h"
+%:include "ds/segment_tree_nodes_min.h"
+//%:include "ds/splay_tree.h"
+
+struct Two {
+  int one, two;
+  Two() = default;
+  void push(int v) {
+    two = one;
+    one = v;
+  }
+};
+
+#define MULTI_TEST
+__main__:
+int n;
+cin >> n;
+vector<int> a(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+}
+
+segment_tree<segment_tree_nodes::range_add_range_min<int>> st(n+1);
+map<int, Two> last;
+//splay_tree<splay_node<int, Two>> last;
+bool ok = true;
+for(int i=1; i<=n; i++) {
+  st.update_range(last[a[i]].one + 1, i, 1);
+  st.update_range(last[a[i]].two + 1, last[a[i]].one, -1);
+  last[a[i]].push(i);
+  ok &= !!st.query_range(1, i);
+}
+cout << (ok ? "non-" : "") << "boring" << nl;

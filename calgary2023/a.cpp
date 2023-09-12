@@ -4,6 +4,9 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
+%:include "geometry/lines.h"
+%:include "geometry/polygon.h"
+
 using ll = long long;
 using ld = long double;
 
@@ -12,43 +15,38 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = complex<ld>;
+using pt = point<int>;
 
-ld cp(const pt& a, const pt& b) {
-  return imag(conj(a) * b);
-}
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
+struct circle {
+  int x, y, r;
+  operator pt() const { return pt(x, y); }
 };
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n;
-  cin >> n;
-  vector<pair<pt, int>> p;
-  for(int i=1; i<=n; i++) {
+  int w, h;
+  cin >> w >> h;
+  int n, m;
+  cin >> n >> m;
+  vector<circle> c;
+  for(int i=0; i<n; i++) {
+    int x, y, r;
+    cin >> x >> y >> r;
+    c.push_back({x, y, r});
+  }
+  while(m--) {
     int x, y;
     cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
-  }
-  sort(begin(p), end(p), pivot(0));
-
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
+    vector p = { pt(x, y), pt(x, y+h), pt(x+w, y+h), pt(x+w, y) };
+    bool ok =true;
+    for(int k=0; k<n; k++) {
+      ok &= not in_polygon(p, pt(c[k]));
+      for(int i=3, j=0; j<4; i=j++) {
+        ok &= segment_point_dist(p[i], p[j], pt(c[k])) > c[k].r;
+      }
     }
-    cout << " " << p[i+1].second;
+    cout << "DOOMSLUG " << (ok ? "GO" : "STOP") << "!" << nl;
   }
-  cout << " " << p.back().second << nl;
 }
 
 int main() {

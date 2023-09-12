@@ -1,151 +1,133 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define _USE_MATH_DEFINES
 
-typedef long long ll;
-typedef long double ld;
-typedef pair<int,int> pii;
-typedef complex<ld> pt;
-typedef vector<pt> pol;
+//%:include "utility/fast_input.h"
+//%:include "utility/output.h"
 
-const char nl = '\n';
-const int INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9+7;
-const ld EPS = 1e-10;
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+using ll = long long;
+using ld = long double;
 
-////////////////////////////////////////////////////////////////////////////////
-// General 2D geometry, Polygon cutting, Point in polygon
-////////////////////////////////////////////////////////////////////////////////
-ld cp(const pt& a, const pt& b) { return imag(conj(a)*b); }
-ld dp(const pt& a, const pt& b) { return real(conj(a)*b); }
-// dist(const pt& a, const pt& b) ==> abs(a-b)
-inline bool eq(const pt &a, const pt &b) { return abs(a-b) < EPS; }
-inline ld sgn(const ld& x) { return abs(x) < EPS ? 0 : x/abs(x); }
-inline bool cmp_lex(const pt& a, const pt& b) {
-  return a.real()<b.real()-EPS||(a.real()<b.real()+EPS&&a.imag()<b.imag()-EPS);}
-inline bool cmp_lex_i(const pt& a, const pt& b) {
-  return a.imag()<b.imag()-EPS||(a.imag()<b.imag()+EPS&&a.real()<b.real()-EPS);}
-////////////////////////////////////////////////////////////////////////////////
-// 2D convex hull (TESTED SPOJ BSHEEP, UVA 11096)
-////////////////////////////////////////////////////////////////////////////////
-// Assumes nondegenerate, i.e. CH is not a line. 
-pol chull(pol p) {
-  sort(p.begin(), p.end(), cmp_lex_i); int top=0, bot=1; pol ch(2*p.size());
-  for (int i=0, d=1; i < p.size() && i >= 0; i += d) {
-  // If there are no duplicates, can change <= 0 to < 0 to keep redundant points
-    while (top > bot && cp(ch[top-1]-ch[top-2], p[i]-ch[top-2]) <= 0) top--;
-    ch[top++] = p[i]; if (i == p.size()-1) d = -1, bot = top;
-  } ch.resize(max(1, top-1)); return ch;
-} // pts returned in ccw order.
-ld poly_area(const pol &v) { ld s = 0; int n = v.size();
-  for (int i = n-1, j = 0; j < n; i = j++) s += cp(v[i], v[j]);
-  return abs(s);
+constexpr char nl = '\n';
+constexpr int MOD = 998244353;
+constexpr ld EPS = 1e-9L;
+random_device _rd; mt19937 rng(_rd());
+
+struct pt {
+  int x, y;
+  bool operator<(pt o) const { return x < o.x or (x == o.x and y < o.y); }
+  bool operator==(pt o) const { return x == o.x and y == o.y; }
+  pt operator-(pt o) const { return pt{ x - o.x, y - o.y }; }
+  friend ostream& operator<<(ostream& os, pt v) { return os << v.x << " " << v.y; }
+};
+ll cross(pt a, pt b) {
+  return (ll)a.x * b.y - (ll)a.y * b.x;
+}
+ll dot(pt a, pt b) {
+  return (ll)a.x * b.x + (ll)a.y * b.y;
 }
 
-ld tri_area(const pt& a, const pt& b, const pt& c) {
-  return cp(b-a, c-a);
+vector<pt> convex_hull(vector<pt> p) {
+  sort(begin(p), end(p));
+  int n = size(p);
+  vector<pt> h;
+  for(int i=0; i<n; i++) {
+    while(size(h)>=2 and cross(h[size(h)-2] - p[i], h[size(h)-1] - p[i]) <= 0) {
+      h.pop_back();
+    }
+    h.push_back(p[i]);
+  }
+  for(int i=n-2; i>=0; i--) {
+    while(size(h)>=2 and h.back() != p.back() and
+        cross(h[size(h)-2] - p[i], h[size(h)-1] - p[i]) <= 0) {
+      h.pop_back();
+    }
+    h.push_back(p[i]);
+  }
+  h.pop_back();
+  return h;
 }
 
-//#define FILEIO
-int main() {
-  ios::sync_with_stdio(0);
-  cin.tie(0); cout.tie(0);
-  cout << fixed << setprecision(1);
-#ifdef FILEIO
-  freopen("test.in", "r", stdin);
-  freopen("test.out", "w", stdout);
-#endif
-
+//#define MULTI_TEST
+void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
+  // start 21:00
   int n, k;
   cin >> n >> k;
-
-  int x, y;
-  vector<pt> in, out;
-  for (int i=0; i<k; i++) {
+  vector<pt> p;
+  for(int i=0; i<n; i++) {
+    int x, y;
     cin >> x >> y;
-    in.emplace_back(x,y);
-    out.emplace_back(x,y);
+    p.emplace_back(x, y);
   }
-  for (int i=k; i<n; i++) {
-    cin >> x >> y;
-    out.emplace_back(x,y);
+
+  auto outer = convex_hull(p);
+  auto inner = convex_hull(vector(begin(p), begin(p) + k));
+
+  int m = size(inner);
+  vector<ll> area(2*m);
+  for(int i=0; i<2*m; i++) {
+    int r = i < m ? i : i - m;
+    int l = r > 0 ? r-1 : m-1;
+    area[i] = cross(inner[l], inner[r]);
   }
-  in = chull(in);
-  out = chull(out);
-  ld original = poly_area(in);
-  k = in.size();
+  partial_sum(begin(area), end(area), begin(area));
+  ll base = area[m] - area[0];
 
-  ////cerr << "done convex hull, w/ area " << original << endl;
-
-  auto get_id = [&] (int i) {
-    if (i<0) return i+k;
-    else if (i<k) return i;
-    else return i-k;
+  auto left_cond = [&](int i, pt v) {
+    int pi = (i>0 ? i-1 : m-1);
+    int ni = (i+1<m ? i+1 : 0);
+    return (cross(inner[i] - v, inner[pi] - v) < 0 and
+        cross(inner[i] - v, inner[ni] - v) <= 0);
   };
 
-  vector<ld> parea(2*k, 0);
-  for (int i=1; i<2*k; i++) {
-    parea[i] = parea[i-1] + cp(in[get_id(i-1)], in[get_id(i)]);
-    //cerr << i << ": " << parea[i] << nl;
-  }
-
-  auto get_area = [&] (int a, int b) {
-    a = get_id(a);
-    b = get_id(b);
-    ld tri = cp(in[b], in[a]);
-    if (a > b) b += k;
-    return parea[b] - parea[a] + tri;
+  auto right_cond = [&](int i, pt v) {
+    int pi = (i>0 ? i-1 : m-1);
+    int ni = (i+1<m ? i+1 : 0);
+    return (cross(inner[i] - v, inner[ni] - v) > 0 and
+        cross(inner[i] - v, inner[pi] - v) >= 0);
   };
 
-  ////cerr << "done precomputing parea" << endl;
-
-  int left, right;
-  for (left = 0; left < k; left++) {
-    int i = get_id(left-1);
-    int j = get_id(left+1);
-    if (cp(in[left]-out[0], in[j]-in[left]) > 0
-      && cp(in[left]-out[0], in[i]-in[left]) >= 0) {
-      break;
+  int l = -1, r = -1;
+  for(int i=0; i<m; i++) {
+    if(left_cond(i, outer[0])) {
+      l = i;
+    }
+    if(right_cond(i, outer[0])) {
+      r = i;
     }
   }
-  for (right = 0; right < k; right++) {
-    int i = get_id(right-1);
-    int j = get_id(right+1);
-    if (cp(in[right]-out[0], in[j]-in[right]) <= 0
-      && cp(in[right]-out[0], in[i]-in[right]) < 0) {
-      break;
-    }
-  }
-  assert(left<k && right<k);
+  assert(l != -1 and r != -1);
 
-  ////cerr << "done initializing rotating callipers" << endl;
-
-  ld ans = 0;
-  for (const pt& p : out) {
-    int i, j;
-    i = get_id(left-1);
-    j = get_id(left+1);
-    while (!(cp(in[left]-p, in[j]-in[left]) > 0
-      && cp(in[left]-p, in[i]-in[left]) >= 0)) {
-      left = get_id(left+1);
-      i = get_id(left-1);
-      j = get_id(left+1);
+  ll ans = base;
+  for(int i=0; i<size(outer); i++) {
+    while(not left_cond(l, outer[i])) {
+      l = (l+1<m ? l+1 : 0);
     }
-    i = get_id(right-1);
-    j = get_id(right+1);
-    while (!(cp(in[right]-p, in[j]-in[right]) <= 0
-      && cp(in[right]-p, in[i]-in[right]) < 0)) {
-      right = get_id(right+1);
-      i = get_id(right-1);
-      j = get_id(right+1);
+    while(not right_cond(r, outer[i])) {
+      r = (r+1<m ? r+1 : 0);
     }
-    ans = max(ans, tri_area(p, in[left], in[right]) - get_area(right, left));
-    //cerr << p << " -> " << in[left] << " " << in[right];
-    //cerr << " + " << tri_area(p,in[left],in[right])-get_area(right,left) << nl;
+    ll sub = (l < r ? area[r] : area[r + m]) - area[l];
+    ll cur = base - sub + cross(inner[l], outer[i]) + cross(outer[i], inner[r]);
+    ans = max(ans, cur);
   }
-  cout << (ans+original)/2 << nl;
+
+  cout << ans / 2 << "." << (ans % 2 == 0 ? 0 : 5) << nl;
+}
+
+int main() {
+  cin.tie(0)->sync_with_stdio(0);
+  cout << fixed << setprecision(1);
+#ifdef USING_FAST_INPUT
+  fast_input cin;
+#endif
+
+  int T = 1;
+#ifdef MULTI_TEST
+  cin >> T;
+#endif
+  for(int testnum=1; testnum<=T; testnum++) {
+    solve_main(testnum, cin);
+  }
 
   return 0;
 }
+

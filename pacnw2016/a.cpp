@@ -1,42 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define _USE_MATH_DEFINES
 
-typedef long long ll;
-typedef long double ld;
-typedef pair<int,int> pii;
-typedef complex<ld> pt;
-typedef vector<pt> pol;
+//%:include "utility/fast_input.h"
+//%:include "utility/output.h"
 
-const char nl = '\n';
-const int INF = 0x3f3f3f3f;
-const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9+7;
-const ld EPS = 1e-10;
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+using ll = long long;
+using ld = long double;
+
+constexpr char nl = '\n';
+constexpr int MOD = 998244353;
+constexpr ld EPS = 1e-9L;
+random_device _rd; mt19937 rng(_rd());
 
 
-
-//#define FILEIO
-int main() {
-  ios::sync_with_stdio(0);
-  cin.tie(0); cout.tie(0);
-  cout << fixed << setprecision(10);
-#ifdef FILEIO
-  freopen("test.in", "r", stdin);
-  freopen("test.out", "w", stdout);
-#endif
-
+//#define MULTI_TEST
+void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
   string s;
   cin >> s;
-
-  int n = s.size();
-  vector<int> lis(n,INF);
-  for (int i=0; i<n; i++) {
-    *lower_bound(lis.begin(), lis.end(), s[i]) = s[i];
+  vector<char> lis(size(s), numeric_limits<char>::max());
+  for(char c : s) {
+    *lower_bound(begin(lis), end(lis), c) = c;
   }
-  int good = (lower_bound(lis.begin(), lis.end(), INF) - lis.begin());
-  cout << max(0, 26 - good) << nl;
+  int have = distance(begin(lis), lower_bound(begin(lis), end(lis), numeric_limits<char>::max()));
+  cout << 26 - have << nl;
+}
+
+int main() {
+  cin.tie(0)->sync_with_stdio(0);
+  cout << fixed << setprecision(10);
+#ifdef USING_FAST_INPUT
+  fast_input cin;
+#endif
+
+  int T = 1;
+#ifdef MULTI_TEST
+  cin >> T;
+#endif
+  for(int testnum=1; testnum<=T; testnum++) {
+    solve_main(testnum, cin);
+  }
 
   return 0;
 }

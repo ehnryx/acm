@@ -14,41 +14,43 @@ random_device _rd; mt19937 rng(_rd());
 
 using pt = complex<ld>;
 
-ld cp(const pt& a, const pt& b) {
+auto cross(const pt& a, const pt& b) {
   return imag(conj(a) * b);
 }
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
-};
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
   int n;
   cin >> n;
-  vector<pair<pt, int>> p;
-  for(int i=1; i<=n; i++) {
-    int x, y;
-    cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
+  vector<pt> p;
+  for(int i=0; i<n; i++) {
+    int a, b;
+    cin >> a >> b;
+    p.emplace_back(a, b);
   }
-  sort(begin(p), end(p), pivot(0));
 
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
+  static constexpr auto PI = acos(-1.L);
+
+  ld ans = 0;
+  for(int r=0; r<2; r++) {
+    vector<pt> stk;
+    for(int i=0; i<n; i++) {
+      while(size(stk) >= 2 and
+          (r ? -1 : 1) * cross(stk[size(stk)-1] - p[i], stk[size(stk)-2] - p[i]) <= 0) {
+        stk.pop_back();
+      }
+      if(empty(stk) or imag(p[i]) > imag(stk.back())) {
+        stk.push_back(p[i]);
+        if(size(stk) >= 2) {
+          auto cur = arg(stk[size(stk)-1] - stk[size(stk)-2]);
+          ans = max(ans, min(cur, PI-cur));
+        }
+      }
     }
-    cout << " " << p[i+1].second;
+    reverse(begin(p), end(p));
   }
-  cout << " " << p.back().second << nl;
+
+  cout << ans * 180 / PI << nl;
 }
 
 int main() {

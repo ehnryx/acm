@@ -12,43 +12,29 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = complex<ld>;
-
-ld cp(const pt& a, const pt& b) {
-  return imag(conj(a) * b);
-}
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
-};
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
   int n;
   cin >> n;
-  vector<pair<pt, int>> p;
+  vector<ll> a(n+1);
   for(int i=1; i<=n; i++) {
-    int x, y;
-    cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
+    cin >> a[i];
   }
-  sort(begin(p), end(p), pivot(0));
-
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
+  vector<ll> sum(n+1);
+  partial_sum(begin(a), end(a), begin(sum));
+  int last = n;
+  for(int i=1; i<=n; i++) {
+    if(sum[i] < i) {
+      last = i;
+      break;
     }
-    cout << " " << p[i+1].second;
   }
-  cout << " " << p.back().second << nl;
+  ll ans = 0;
+  for(int i=1; i<=last; i++) {
+    ans = max(ans, sum[i] - i + 1);
+  }
+  cout << ans << nl;
 }
 
 int main() {

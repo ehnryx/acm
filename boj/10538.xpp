@@ -1,0 +1,30 @@
+%:include "math/ntt.h"
+%:include "number/mod_int.h"
+__main__:
+int np, mp, n, m;
+cin >> np >> mp >> n >> m;
+vector<mod_int<MOD>> pattern(n * m), text(n * m);
+for(int i=0; i<np; i++) {
+  for(int j=0; j<mp; j++) {
+    char c;
+    cin >> c;
+    pattern[i * m + j] = (c == 'x' ? 1 : -1);
+  }
+}
+for(int i=0; i<n; i++) {
+  for(int j=0; j<m; j++) {
+    char c;
+    cin >> c;
+    text[i * m + j] = (c == 'x' ? 1 : -1);
+  }
+}
+reverse(begin(text), end(text));
+auto res = ntt::convolve<MOD>(pattern, text);
+int ans = 0;
+for(int i=0; i<=n-np; i++) {
+  for(int j=0; j<=m-mp; j++) {
+    int idx = n * m - 1 - (i * m + j);
+    ans += (res[idx] == np * mp);
+  }
+}
+cout << ans << nl;

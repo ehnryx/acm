@@ -1,0 +1,22 @@
+%:include "math/linear_sieve.h"
+%:include "math/fft.h"
+%:include "math/ntt.h"
+
+__main__:
+static constexpr int M = 1e6;
+vector<ll> val(M);
+linear_sieve sieve(M);
+for(auto p : sieve.primes) {
+  val[p] = 1;
+}
+//auto res = fft::convolve<double>(val, val);
+auto res = ntt::convolve<998244353>(val, val);
+
+int T;
+cin >> T;
+while(T--) {
+  int n;
+  cin >> n;
+  int ans = res[n];
+  cout << (ans + 1) / 2 << nl;
+}

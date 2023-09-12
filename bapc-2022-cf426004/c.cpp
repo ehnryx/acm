@@ -12,43 +12,30 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = complex<ld>;
-
-ld cp(const pt& a, const pt& b) {
-  return imag(conj(a) * b);
-}
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
-};
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n;
-  cin >> n;
-  vector<pair<pt, int>> p;
+  // f[i] = f[i-1] + 1 + p * (r + f[i])
+  // f[i] = (f[i-1] + 1) / (1 - p)
+  int n, t, r;
+  cin >> n >> t >> r;
+  ld p;
+  cin >> p;
+  // no save
+  vector<ld> f(n+1);
   for(int i=1; i<=n; i++) {
-    int x, y;
-    cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
+    f[i] = (f[i-1] + 1 + p * r) / (1 - p);
   }
-  sort(begin(p), end(p), pivot(0));
-
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
+  // [last save]
+  vector<ld> dp(n+1);
+  for(int s=1; s<=n; s++) {
+    dp[s] = f[s];
+    for(int i=1; i<s; i++) {
+      dp[s] = min(dp[s], dp[i] + f[s-i]);
     }
-    cout << " " << p[i+1].second;
+    dp[s] += t;
   }
-  cout << " " << p.back().second << nl;
+  cout << dp[n] << nl;
 }
 
 int main() {

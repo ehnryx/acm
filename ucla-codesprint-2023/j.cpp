@@ -12,43 +12,29 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = complex<ld>;
-
-ld cp(const pt& a, const pt& b) {
-  return imag(conj(a) * b);
-}
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
-};
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
   int n;
   cin >> n;
-  vector<pair<pt, int>> p;
-  for(int i=1; i<=n; i++) {
-    int x, y;
+  vector<tuple<ll, ld, ld>> lines;
+  for(int i=0; i<n; i++) {
+    ll x, y;
     cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
+    ld m = (ld)x/y;
+    ld b = -(ld)x*x/y;
+    lines.emplace_back(-x, m, b);
   }
-  sort(begin(p), end(p), pivot(0));
+  sort(begin(lines), end(lines));
 
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
-    }
-    cout << " " << p[i+1].second;
+  ld ans = 1e18;
+  for(int i=1; i<n; i++) {
+    auto [x1, m1, b1] = lines[i-1];
+    auto [x2, m2, b2] = lines[i];
+    if(m1 <= m2 or x1 == x2) continue;
+    ans = min(ans, (b2 - b1) / (m1 - m2));
   }
-  cout << " " << p.back().second << nl;
+  cout << ans << nl;
 }
 
 int main() {

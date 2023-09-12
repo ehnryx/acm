@@ -4,6 +4,8 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
+%:include "utility/nd_array.h"
+
 using ll = long long;
 using ld = long double;
 
@@ -12,43 +14,26 @@ constexpr int MOD = 998244353;
 constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
-using pt = complex<ld>;
 
-ld cp(const pt& a, const pt& b) {
-  return imag(conj(a) * b);
-}
-
-struct pivot {
-  const pt base;
-  pivot(pt b): base(b) {}
-  bool operator()(const auto& a, const auto& b) const {
-    return cp(a.first - base, b.first - base) > 0;
-  }
-};
-
-//#define MULTI_TEST
+#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
   int n;
   cin >> n;
-  vector<pair<pt, int>> p;
+  vector<int> a(n+1);
   for(int i=1; i<=n; i++) {
-    int x, y;
-    cin >> x >> y;
-    p.emplace_back(pt(x, y), i);
+    cin >> a[i];
   }
-  sort(begin(p), end(p), pivot(0));
+  ll ans = *max_element(begin(a) + 1, end(a));
+  if(ans <= 0) {
+    return void(cout << ans << nl);
+  }
 
-  string s;
-  cin >> s;
-  cout << p.front().second;
-  for(int i=0; i<size(s); i++) {
-    sort(begin(p) + i+1, end(p), pivot(p[i].first));
-    if(s[i] == 'R') {
-      reverse(begin(p) + i+1, end(p));
-    }
-    cout << " " << p[i+1].second;
+  nd_array<ll, 2> dp(n+1, 2);
+  for(int i=1; i<=n; i++) {
+    dp(i, 0) = dp(i-1, 1);
+    dp(i, 1) = dp(i-1, 0) + max(0, a[i]);
   }
-  cout << " " << p.back().second << nl;
+  cout << max({dp(n, 0), dp(n, 1), ans}) << nl;
 }
 
 int main() {

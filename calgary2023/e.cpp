@@ -4,7 +4,7 @@ using namespace std;
 //%:include "utility/fast_input.h"
 //%:include "utility/output.h"
 
-%:include "graph/two_sat.h"
+%:include "graph/breadth_first.h"
 
 using ll = long long;
 using ld = long double;
@@ -17,33 +17,17 @@ random_device _rd; mt19937 rng(_rd());
 
 //#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n, r, l;
-  cin >> n >> r >> l;
-  vector g(n+1, vector(n+1, -1));
-  for(int i=0; i<l; i++) {
-    int ri, ci;
-    cin >> ri >> ci;
-    g[ri][ci] = i;
+  int n, m;
+  cin >> n >> m;
+  int s, t;
+  cin >> s >> t;
+  graph_t g(n);
+  for(int i=0; i<m; i++) {
+    int a, b;
+    cin >> a >> b;
+    g.add_edge(a, b);
   }
-  two_sat sat(l);
-  for(int i=1; i<=n; i++) {
-    for(int j=1; j<=n; j++) {
-      if(g[i][j] == -1) continue;
-      for(int k=1; k<=2*r; k++) {
-        if(i+k <= n and g[i+k][j] != -1) {
-          sat.or_clause(g[i][j], true, g[i+k][j], true);
-        }
-        if(j+k <= n and g[i][j+k] != -1) {
-          sat.or_clause(g[i][j], false, g[i][j+k], false);
-        }
-      }
-    }
-  }
-  if(sat.solve()) {
-    cout << "YES" << nl;
-  } else {
-    cout << "NO" << nl;
-  }
+  cout << (breadth_first(g).run(s).dist[t] + 1) / 2 << nl;
 }
 
 int main() {

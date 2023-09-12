@@ -1,0 +1,25 @@
+%:include "ds/union_find.h"
+__main__:
+for(int n, m, k; cin >> n >> m >> k and n; ) {
+  vector<pair<int, int>> red, blue;
+  for(int i=0; i<m; i++) {
+    char c; int a, b;
+    cin >> c >> a >> b;
+    (c == 'R' ? red : blue).emplace_back(a, b);
+  }
+  union_find red_first(n+1), blue_first(n+1);
+  int total = 0;
+  int min_blue = 0;
+  int max_blue = 0;
+  for(auto [a, b] : red) {
+    total += red_first.link(a, b);
+  }
+  for(auto [a, b] : blue) {
+    if(red_first.link(a, b)) {
+      total++;
+      min_blue++;
+    }
+    max_blue += blue_first.link(a, b);
+  }
+  cout << (total == n-1 and min_blue <= k and k <= max_blue) << nl;
+}

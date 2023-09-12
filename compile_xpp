@@ -1,0 +1,14 @@
+#!/bin/bash
+
+template_name="t.cpp"
+template=~/Documents/acm/${template_name}
+name=${1/.xpp}
+base=${name/.}
+name=${base}.xpp
+file="${base/.xpp}_xpp.cpp"
+echo "compiling ${name}"
+solve_main=$(sed -n '/void solve_main(/ p' ${template})
+sed -e "/void solve_main(/{" -e "r ${name}" -e "N;d;}" ${template} \
+  | sed "/__main__:/c\\${solve_main}" \
+  > $file
+compile ${file}

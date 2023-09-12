@@ -1,0 +1,64 @@
+#pragma GCC optimize("O3")
+#pragma GCC target("avx2,sse4")
+
+%:include "ds/segment_tree.h"
+struct node {
+  using out_t = ll;
+  ll maxv, minv, lazy;
+  void put(ll v) {
+    maxv += v;
+    minv += v;
+    lazy += v;
+  }
+  ll get(int t) const {
+    return t ? maxv : minv;
+  }
+  void push(node& l, node& r) {
+    if(lazy) {
+      l.put(lazy);
+      r.put(lazy);
+      lazy = 0;
+    }
+  }
+  void pull(const node& l, const node& r) {
+    maxv = max(l.maxv, r.maxv);
+    minv = min(l.minv, r.minv);
+  }
+  static ll merge(ll a, ll b, int t) {
+    return t ? max(a, b) : min(a, b);
+  }
+};
+
+__main__:
+int n;
+cin >> n;
+map<int, int> remap;
+map<int, vector<pair<int, int>>> lines;
+for(int i=0; i<n; i++) {
+  int x, y, w;
+  cin >> x >> y >> w;
+  remap[y];
+  lines[x].emplace_back(y, w);
+}
+int rid = 1;
+for(auto& [_, value] : remap) {
+  value = rid++;
+}
+for(auto& [_, value] : lines) {
+  for(auto& [y, w] : value) {
+    y = remap[y];
+  }
+}
+ll ans = 0;
+for(auto it=begin(lines); it!=end(lines); it++) {
+  segment_tree<node> st(rid);
+  for(auto jt=it; jt!=end(lines); jt++) {
+    for(auto [y, w] : jt->second) {
+      st.update_range(y, rid-1, w);
+    }
+    for(auto [y, w] : jt->second) {
+      ans = max(ans, st.query_range(y, rid-1, 1) - st.query_range(0, y-1, 0));
+    }
+  }
+}
+cout << ans << nl;

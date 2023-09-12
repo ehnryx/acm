@@ -1,0 +1,81 @@
+%:include "ds/dynamic_hull.h"
+%:include "ds/segment_tree.h"
+
+struct Line {
+  ll m, b;
+};
+
+struct node {
+  vector<Line> lines;
+  vector<pair<int, int>> queries;
+  bool has_query = false;
+  void put(Line v) { lines.push_back(v); }
+  void put(int x, int i) { queries.emplace_back(x, i); has_query = true; }
+  void pull(const node& l, const node& r) {
+    has_query |= l.has_query or r.has_query;
+  }
+};
+
+__main__:
+int n;
+cin >> n;
+vector<Line> points(n+1);
+vector<bool> alive(n+1);
+vector<ll> queries;
+segment_tree<node> ranges(n+1);
+int qid = 0;
+for(int i=1; i<=n; i++) {
+  int t;
+  cin >> t;
+  if(t == 1) {
+    int a, b;
+    cin >> a >> b;
+    points[i] = Line{a, b};
+    alive[i] = true;
+  } else if(t == 2) {
+    int rem;
+    cin >> rem;
+    ranges.update_range(rem, i, points[rem]);
+    alive[rem] = false;
+  } else if(t == 3) {
+    int x;
+    cin >> x;
+    queries.push_back(x);
+    ranges.update_up(i, x, qid++);
+  } else {
+    assert(false);
+  }
+}
+for(int i=1; i<=n; i++) {
+  if(alive[i]) {
+    ranges.update_range(i, n, points[i]);
+  }
+}
+
+vector<ll> ans(qid, numeric_limits<ll>::min());
+auto solve = [&](auto&& self, int i, int s, int e) -> void {
+  if (not ranges[i].has_query) return;
+  if (not ranges[i].lines.empty()) {
+    dynamic_hull<ll> st;
+    for(auto [m, b] : ranges[i].lines) {
+      st.insert(m, b);
+    }
+    for(auto [x, idx] : ranges[i].queries) {
+      ans[idx] = max(ans[idx], st.query(x));
+    }
+  }
+  if(s != e) {
+    int mid = (s + e) / 2;
+    self(self, 2*i, s, mid);
+    self(self, 2*i+1, mid+1, e);
+  }
+};
+solve(solve, 1, 0, ranges.length - 1);
+
+for(auto v : ans) {
+  if(v == numeric_limits<ll>::min()) {
+    cout << "EMPTY" << nl;
+  } else {
+    cout << v << nl;
+  }
+}

@@ -2,7 +2,7 @@
 using namespace std;
 
 //%:include "utility/fast_input.h"
-//%:include "utility/output.h"
+%:include "utility/output.h"
 
 using ll = long long;
 using ld = long double;
@@ -13,32 +13,26 @@ constexpr ld EPS = 1e-9L;
 random_device _rd; mt19937 rng(_rd());
 
 
-//#define MULTI_TEST
+#define MULTI_TEST
 void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
-  int n, k, r;
-  cin >> n >> k >> r;
-  vector<int> a(n+1);
-  for(int i=0; i<k; i++) {
-    int v;
-    cin >> v;
-    a[v] = 1;
-  }
-  int have = accumulate(begin(a), begin(a) + r, 0);
-  int ans = 0;
-  for(int i=r; i<=n; i++) {
-    have += a[i] - a[i-r];
-    if(have < 2) {
-      have += 1 - a[i];
-      ans += 1 - a[i];
-      a[i] = 1;
-    }
-    if(have < 2) {
-      have += 1 - a[i-1];
-      ans += 1 - a[i-1];
-      a[i-1] = 1;
+  int x;
+  cin >> x;
+  vector<int> ans = {x};
+  for(int i=0; i<30; i++) {
+    if((x & 1<<i) and (x > 1<<i)) {
+      x -= 1<<i;
+      ans.push_back(x);
     }
   }
+  for(int i=30; i>=0; i--) {
+    if(x > 1<<i) {
+      x -= 1<<i;
+      ans.push_back(x);
+    }
+  }
+  cout << size(ans) << nl;
   cout << ans << nl;
+  assert(x == 1);
 }
 
 int main() {

@@ -1,0 +1,18 @@
+%:include "math/fft.h"
+%:include "math/linear_sieve.h"
+__main__:
+static constexpr int M = 1e6;
+linear_sieve sieve(M);
+vector<int> prime(M+1), semiprime(M+1);
+for(auto p : sieve.primes) {
+  if(2*p <= M) semiprime[2*p] = 1;
+  if(p != 2) prime[p] = 1;
+}
+auto ans = fft::convolve<double>(prime, semiprime);
+int T;
+cin >> T;
+while(T--) {
+  int n;
+  cin >> n;
+  cout << ans[n] << nl;
+}

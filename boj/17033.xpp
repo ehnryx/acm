@@ -1,0 +1,45 @@
+%:include "tree/range_query_tree.h"
+%:include "ds/segment_tree.h"
+
+struct node {
+  using out_t = int;
+  int value;
+  node() = default;
+  void put(int v) { value = v; }
+  int get() const { return value; }
+  void pull(const node& a, const node& b) {
+    value = a.value ^ b.value;
+  }
+  static int merge(int a, int b) { return a ^ b; }
+  static int default_value() { return 0; }
+};
+
+__main__:
+int n, m;
+cin >> n >> m;
+vector<int> value(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> value[i];
+}
+vector<vector<int>> adj(n+1);
+for(int i=1; i<n; i++) {
+  int a, b;
+  cin >> a >> b;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+}
+range_query_tree<segment_tree<node>> st(adj, 1);
+for(int i=1; i<=n; i++) {
+  st.update_point(i, value[i]);
+}
+
+for(int i=0; i<m; i++) {
+  int t, a, b;
+  cin >> t >> a >> b;
+  if(t == 1) {
+    st.update_point(a, b);
+  } else {
+    cout << st.query_path(decltype(st)::query_params{
+        .u=a, .v=b, .include_lca=true, .init=0, .merge=node::merge}) << nl;
+  }
+}
