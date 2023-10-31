@@ -1,0 +1,86 @@
+%:include "number/mod_int.h"
+static constexpr int MOD = 1e9 + 7;
+using Int = mod_int<MOD>;
+
+static constexpr int M = 1e6;
+
+vector<int> const& divisors(int n) {
+  static vector<vector<int>> divs = [&] {
+    vector<vector<int>> res(M+1);
+    for(int i=1; i<=M; i++) {
+      for(int j=1; j*j<=i; j++) {
+        if(i % j == 0) {
+          res[i].push_back(j);
+          if(j*j < i) res[i].push_back(i/j);
+        }
+      }
+    }
+    return res;
+  }();
+  return divs[n];
+}
+
+Int fact(int n) {
+  static vector<Int> f = [&] {
+    vector<Int> res(M+1);
+    res[0] = 1;
+    for(int i=1; i<=M; i++) {
+      res[i] = res[i-1] * i;
+    }
+    return res;
+  }();
+  return f[n];
+}
+
+Int invf(int n) {
+  static vector<Int> f = [&] {
+    vector<Int> res(M+1);
+    res[M] = Int(1) / fact(M);
+    for(int i=M; i>0; i--) {
+      res[i-1] = res[i] * i;
+    }
+    return res;
+  }();
+  return f[n];
+}
+
+Int choose(int n, int r) {
+  if(r < 0 or n < r) return Int(0);
+  return fact(n) * invf(r) * invf(n-r);
+}
+
+#define PRINT_CASE #
+__main__:
+int n, k, d;
+cin >> n >> k >> d;
+vector<int> a(n);
+for(int i=0; i<n; i++) {
+  cin >> a[i];
+}
+
+auto ddivs = set(divisors(d).begin(), divisors(d).end());
+
+vector<int> coeffs(M+1);
+for(int i=1; i<=M; i++) {
+  if(ddivs.find(i) != end(ddivs)) continue;
+  int cur = 0;
+  for(int f : divisors(i)) {
+    cur += coeffs[f];
+  }
+  coeffs[i] = 1 - cur;
+}
+
+vector<int> cnt(M+1);
+for(int i=0; i<n; i++) {
+  for(int f : divisors(a[i])) {
+    if(ddivs.find(f) != end(ddivs)) continue;
+    cnt[f] += 1;
+  }
+}
+
+Int ans = choose(n, k);
+for(int g=1; g<=M; g++) {
+  if(ddivs.find(g) != end(ddivs)) continue;
+  ans -= choose(cnt[g], k) * coeffs[g];
+}
+cout << ans * fact(k) << nl;

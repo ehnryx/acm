@@ -1,0 +1,26 @@
+#define MULTI_TEST
+__main__:
+string s;
+cin >> s;
+int first_close = s.find(')');
+int last_open = s.rfind('(');
+if(first_close == -1 or last_open == -1) {
+  cout << "YES" << nl;
+  for(int i=0; i<size(s); i++) {
+    cout << "()";
+  }
+  cout << nl;
+} else if(last_open < first_close) {
+  if(size(s) == 2) {
+    cout << "NO" << nl;
+  } else {
+    cout << "YES" << nl;
+    for(int i=0; i<size(s); i++) {
+      cout << "()";
+    }
+    cout << nl;
+  }
+} else {
+  cout << "YES" << nl;
+  cout << string(size(s), '(') << string(size(s), ')') << nl;
+}

@@ -1,0 +1,98 @@
+%:include "ds/splay_tree.h"
+
+struct Data {
+  ll cnt = 0;
+  splay_tree<splay_node<int, void>> st;
+};
+
+#define MULTI_TEST
+__main__:
+int n;
+cin >> n;
+vector<int> a(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+}
+
+auto init = make_unique<Data>();
+//for(int i=n; i>=1; i--) {
+//  init->st.insert(a[i]);
+//  init->cnt += init->st.rank(init->st.lower_bound(a[i]));
+//}
+for(int i=1; i<=n; i++) {
+  init->st.insert(a[i]);
+  init->cnt += init->st.size() - init->st.rank(init->st.upper_bound(a[i]));
+}
+multiset<ll> ans;
+ans.insert(init->cnt);
+
+map<pair<int, int>, unique_ptr<Data>> memo;
+memo.emplace(pair(1, n), move(init));
+
+vector<ll> output(n);
+for(int ii=0; ii<n; ii++) {
+  output[ii] = *ans.rbegin();
+
+  ll online_mid;
+  cin >> online_mid;
+  int mid = online_mid ^ output[ii];
+  //cerr << "GET " << mid << " = " << online_mid << " ^ " << output[ii] << endl;
+  assert(1 <= mid and mid <= n);
+
+  assert(memo.lower_bound(pair(mid+1, 0)) != begin(memo));
+  auto split = prev(memo.lower_bound(pair(mid+1, 0)));
+  auto [l, r] = split->first;
+  auto old = move(split->second);
+  memo.erase(split);
+  ans.erase(ans.find(old->cnt));
+
+  if(mid - l < r - mid) {
+    auto smaller = make_unique<Data>();
+    for(int i=mid-1; i>=l; i--) {
+      smaller->st.insert(a[i]);
+      smaller->cnt += smaller->st.rank(smaller->st.lower_bound(a[i]));
+      old->st.erase(a[i]);
+    }
+    old->st.erase(a[mid]);
+    old->cnt -= smaller->cnt;
+    old->cnt -= smaller->st.size() - smaller->st.rank(smaller->st.upper_bound(a[mid]));
+    for(int i=mid; i>=l; i--) {
+      old->cnt -= old->st.rank(old->st.lower_bound(a[i]));
+    }
+    if(l < mid) {
+      ans.insert(smaller->cnt);
+      memo.emplace(pair(l, mid-1), move(smaller));
+    }
+    if(mid < r) {
+      ans.insert(old->cnt);
+      memo.emplace(pair(mid+1, r), move(old));
+    }
+  } else {
+    auto smaller = make_unique<Data>();
+    for(int i=r; i>=mid+1; i--) {
+      smaller->st.insert(a[i]);
+      smaller->cnt += smaller->st.rank(smaller->st.lower_bound(a[i]));
+      old->st.erase(a[i]);
+    }
+    old->st.erase(a[mid]);
+    old->cnt -= smaller->cnt;
+    old->cnt -= smaller->st.rank(smaller->st.lower_bound(a[mid]));
+    for(int i=r; i>=mid; i--) {
+      old->cnt -= old->st.size() - old->st.rank(old->st.upper_bound(a[i]));
+    }
+    if(l < mid) {
+      ans.insert(old->cnt);
+      memo.emplace(pair(l, mid-1), move(old));
+    }
+    if(mid - r) {
+      ans.insert(smaller->cnt);
+      memo.emplace(pair(mid+1, r), move(smaller));
+    }
+  }
+}
+
+for(int i=0; i<n; i++) {
+  if(i) cout << " ";
+  cout << output[i];
+}
+cout << nl;

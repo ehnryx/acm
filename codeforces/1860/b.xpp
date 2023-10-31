@@ -1,0 +1,18 @@
+#define MULTI_TEST
+__main__:
+int m, k, a1, ak;
+cin >> m >> k >> a1 >> ak;
+m -= min(ak, m / k) * k;
+int rem = m % k;
+if(a1 <= rem) {
+  return void(cout << rem - a1 + m / k << nl);
+}
+a1 -= rem;
+int factor = m / k;
+int cover = a1 / k;
+if(factor <= cover) {
+  return void(cout << 0 << nl);
+}
+factor -= cover;
+a1 -= cover * k;
+cout << min(factor, factor - 1 + k - a1) << nl;

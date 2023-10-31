@@ -1,0 +1,6 @@
+#define PRINT_CASE #
+__main__:
+int s, d, k;
+cin >> s >> d >> k;
+bool ok = (s + 2*d >= k) and (2*s + 2*d >= k+1);
+cout << (ok ? "YES" : "NO") << nl;

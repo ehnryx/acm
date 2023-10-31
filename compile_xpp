@@ -1,6 +1,6 @@
 #!/bin/bash
 
-template_name="t.cpp"
+template_name="x.cpp"
 template=~/Documents/acm/${template_name}
 name=${1/.xpp}
 base=${name/.}

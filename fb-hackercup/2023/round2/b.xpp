@@ -1,0 +1,45 @@
+#define PRINT_CASE #
+__main__:
+int n;
+cin >> n;
+vector<int> all(2*n);
+map<int, vector<int>> idxs;
+for(int i=0; i<2*n; i++) {
+  cin >> all[i];
+  idxs[all[i]].push_back(i);
+}
+
+int start = -1;
+for(auto it=rbegin(idxs); it!=rend(idxs); it++) {
+  auto const& idx = it->second;
+  if(size(idx) == 1) break;  // can't have unique
+  auto gap = tuple(idx.front() - idx.back() + 2*n, idx.back(), idx.front());
+  for(int i=1; i<size(idx); i++) {
+    gap = max(gap, tuple(idx[i] - idx[i-1], idx[i-1], idx[i]));
+  }
+  if(n % 2 == 1 and it == rbegin(idxs) and get<0>(gap) == n and size(idx) == 2) {
+    continue;  // special case when n is odd
+  }
+  auto [_, s, t] = gap;
+  if(t < s) t += 2*n;
+  start = (s + t + 1) / 2;
+  if(start >= 2*n) start -= 2*n;
+  break;
+}
+if(start == -1) {
+  return void(cout << -1 << nl);
+}
+
+rotate(begin(all), begin(all) + start, end(all));
+bool ok = true;
+for(int i = 1; 2*i < n+1 and ok; i++) {
+  ok &= (all[i-1] < all[n+i-1]);
+}
+for(int i = 0; i < n; i++) {
+  ok &= (all[i] == all[2*n-1 - i]);
+}
+if(not ok) {
+  cout << -1 << nl;
+} else {
+  cout << start << nl;
+}

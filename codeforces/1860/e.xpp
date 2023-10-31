@@ -1,0 +1,56 @@
+%:include "utility/nd_array.h"
+
+__main__:
+string s;
+cin >> s;
+nd_array<vector<int>, 2> pairs(26, 26);
+for(int i=1; i<size(s); i++) {
+  pairs(s[i-1] - 'a', s[i] - 'a').push_back(i);
+}
+
+nd_array<int, 2> dist(pairs.size(), pairs.size(), numeric_limits<int>::max() / 2);
+for(int i=0; i<pairs.size(); i++) {
+  if(pairs[i].empty()) continue;
+  for(int j=0; j<i; j++) {
+    if(pairs[j].empty()) continue;
+    dist(i, j) = abs(pairs[i].back() - pairs[j].back());
+    for(int ii=0, jj=0; ii<pairs[i].size() or jj<pairs[j].size(); ) {
+      if(jj == pairs[j].size() or (ii < pairs[i].size() and pairs[i][ii] < pairs[j][jj])) {
+        if(jj < pairs[j].size()) dist(i, j) = min(dist(i, j), abs(pairs[i][ii] - pairs[j][jj]));
+        if(jj > 0) dist(i, j) = min(dist(i, j), abs(pairs[i][ii] - pairs[j][jj-1]));
+        ii++;
+      } else {
+        if(ii < pairs[i].size()) dist(i, j) = min(dist(i, j), abs(pairs[i][ii] - pairs[j][jj]));
+        if(ii > 0) dist(i, j) = min(dist(i, j), abs(pairs[i][ii-1] - pairs[j][jj]));
+        jj++;
+      }
+    }
+    dist(i, j) += 1;
+    dist(j, i) = dist(i, j);
+  }
+}
+
+for(int i=0; i<pairs.size(); i++) {
+  dist(i, i) = 1;
+}
+for(int k=0; k<pairs.size(); k++) {
+  for(int i=0; i<pairs.size(); i++) {
+    for(int j=0; j<pairs.size(); j++) {
+      dist(i, j) = min(dist(i, j), dist(i, k) + dist(k, j));
+    }
+  }
+}
+
+int n;
+cin >> n;
+for(int i=0; i<n; i++) {
+  int a, b;
+  cin >> a >> b;
+  int ans = abs(a - b);
+  int u = pairs.index(s[a-1] - 'a', s[a] - 'a');
+  int v = pairs.index(s[b-1] - 'a', s[b] - 'a');
+  for(int w=0; w<pairs.size(); w++) {
+    ans = min(ans, dist(u, w) + dist(w, v) - 1);
+  }
+  cout << ans << nl;
+}

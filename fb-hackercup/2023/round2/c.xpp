@@ -1,0 +1,65 @@
+%:include "tree/compressed_tree.h"
+%:include "tree/lca_binary_jumping.h"
+
+#define PRINT_CASE #
+__main__:
+int n;
+cin >> n;
+vector<int> parent(n+1);
+vector<vector<int>> adj(n+1);
+for(int i=2; i<=n; i++) {
+  cin >> parent[i];
+  adj[parent[i]].push_back(i);
+}
+lca_binary_jumping tree(adj, 1);
+
+vector<int> leaves(n+1);
+auto build = [&](auto&& self, int u) -> void {
+  if(empty(adj[u])) {
+    leaves[u] = 1;
+  } else {
+    for(int v : adj[u]) {
+      self(self, v);
+      leaves[u] += leaves[v];
+    }
+  }
+};
+build(build, 1);
+
+unordered_map<string, vector<int>> subtrees;
+for(int i=1; i<=n; i++) {
+  int m;
+  cin >> m;
+  for(int j=0; j<m; j++) {
+    string s;
+    cin >> s;
+    subtrees[s].push_back(i);
+  }
+}
+
+int ans = 0;
+for(auto [name, subt] : subtrees) {
+  compressed_tree ct(tree, subt);
+  vector<bool> vis(ct.size());
+  auto solve = [&](auto&& self, int u) -> int {
+    assert(not vis[u]);
+    assert(0 <= u and u < vis.size());
+    vis[u] = true;
+    int covered = 0;
+    for(auto [v, len] : ct[u]) {
+      int cur = self(self, v);
+      if(cur == -1) return -1;
+      covered += cur;
+    }
+    if(ct.given[u]) {
+      int ru = ct.vertices[u];
+      covered = min(leaves[ru], covered + 1);
+      if(covered < leaves[ru]) return -1;
+    }
+    return covered;
+  };
+  int res = solve(solve, 0);
+  ans += (res == leaves[1]);
+}
+
+cout << ans << nl;

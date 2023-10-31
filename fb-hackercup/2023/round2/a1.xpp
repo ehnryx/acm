@@ -1,0 +1,54 @@
+%:include "utility/nd_array.h"
+
+#define PRINT_CASE #
+__main__:
+int n, m;
+cin >> n >> m;
+nd_array<char, 2> g(n+2, m+2, 'B');
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    cin >> g(i, j);
+  }
+}
+
+nd_array<char, 2> vis(n+2, m+2);
+auto solve = [&](int si, int sj) {
+  set<int> all;
+  queue<pair<int, int>> bfs;
+  vis(si, sj) = true;
+  bfs.emplace(si, sj);
+  int cnt = 0;
+  while(not empty(bfs)) {
+    auto [i, j] = bfs.front();
+    bfs.pop();
+    cnt++;
+    for(auto [ni, nj] : {
+        pair(i+1, j), pair(i-1, j), pair(i, j-1), pair(i, j+1) }) {
+      if(g(ni, nj) == 'W' and not vis(ni, nj)) {
+        bfs.emplace(ni, nj);
+        vis(ni, nj) = true;
+      } else if(g(ni, nj) == '.') {
+        all.insert(g.index(ni, nj));
+      }
+    }
+  }
+  return pair(std::move(all), cnt);
+};
+
+map<int, int> breaths;
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    if(g(i, j) == 'W' and not vis(i, j)) {
+      auto [cur, group] = solve(i, j);
+      if(size(cur) == 1) {
+        breaths[*begin(cur)] += group;
+      }
+    }
+  }
+}
+
+int ans = 0;
+for(auto [_, c] : breaths) {
+  ans = max(ans, c);
+}
+cout << (ans ? "YES" : "NO") << nl;

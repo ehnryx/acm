@@ -1,0 +1,12 @@
+__main__:
+string s;
+cin >> s;
+int value = 0;
+for(int i=0; i<size(s); i++) {
+  for(int j=0; j<i; j++) {
+    if(s[i] != s[j]) {
+      value += s[i] - s[j];
+    }
+  }
+}
+cout << value << nl;

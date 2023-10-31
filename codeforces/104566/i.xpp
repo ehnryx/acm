@@ -1,0 +1,55 @@
+%:include "math/integration.h"
+
+using ld = double;
+
+ld get_tangential(ld theta, ld v) {
+  ld sinx = sin(theta);
+  return v * (sqrt(3 + sinx * sinx) - sinx);
+}
+
+ld get_time(ld theta, ld v) {
+  auto f = [](ld x) {
+    ld sinx = sin(x);
+    return 1 / (sqrt(3 + sinx * sinx) - sinx);
+  };
+  return 2 / v * integrate4<ld>(f, 0, theta, 20);
+}
+
+#define MULTI_TEST
+__main__:
+ld v, R, d;
+cin >> v >> R >> d;
+// normalize by r
+d /= R;
+v /= R;
+
+// no overtake
+ld ans = d / v;
+
+// try overtake
+ld constexpr static PI = acos((ld)-1);
+ld constexpr static EPS = 1e-9;
+
+if(d - get_time(PI, v) * v > 4 - EPS) {
+  ld l = PI / 2;
+  ld r = PI;
+  for(int i=0; i<42; i++) {
+    ld m = (l + r) / 2;
+    ld u = get_tangential(m, v);
+    ld t = get_time(m, v);
+    ld h = 2 / -cos(m);
+    ld rem = h * sin(m);
+    if(2 + h < d - (t + rem / u) * v) {
+      r = m;
+    } else {
+      l = m;
+    }
+  }
+
+  ld u = get_tangential(r, v);
+  ld t = get_time(r, v);
+  ld rem = 2 * sin(r) / -cos(r);
+  ans = min(ans, t + rem / u);
+}
+
+cout << ans << nl;

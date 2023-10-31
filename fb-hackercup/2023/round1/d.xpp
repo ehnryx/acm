@@ -1,0 +1,48 @@
+%:include "ds/segment_tree.h"
+
+constexpr ll MOD = 1e9 + 7;
+
+struct node {
+  pair<int, int> hi, lo;
+  bool flip;
+  node() = default;
+  node(pair<int, int> v): hi(v), lo(v), flip(false) {}
+  void put() {
+    hi.first = MOD - hi.first;
+    lo.first = MOD - lo.first;
+    if(hi < lo) swap(hi, lo);
+    flip = !flip;
+  }
+  void pull(node const& left, node const& right) {
+    hi = max(left.hi, right.hi);
+    lo = min(left.lo, right.lo);
+  }
+  void push(node& left, node& right) {
+    if(flip) {
+      left.put();
+      right.put();
+      flip = false;
+    }
+  }
+};
+
+#define PRINT_CASE #
+__main__:
+int n;
+cin >> n;
+vector<pair<int, int>> a(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i].first;
+  a[i].second = -i;
+}
+segment_tree<node> st(a);
+int m;
+cin >> m;
+ll ans = 0;
+for(int i=0; i<m; i++) {
+  int l, r;
+  cin >> l >> r;
+  st.update_range(l, r);
+  ans += st[1].hi.second;
+}
+cout << -ans << nl;

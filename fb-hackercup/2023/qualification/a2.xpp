@@ -1,0 +1,32 @@
+#define PRINT_CASE #
+__main__:
+ll a, b, c;
+cin >> a >> b >> c;
+// if K, want 2*A + 2*B >= K+1
+//            A + 2*B >= K
+// if A > 0: A + 2*B >= K
+// if A = 0: 2*B >= K+1
+ll ans = 0;
+// case A = 0
+{
+  ll B = c / b;
+  ll k = 2*B - 1;
+  ans = max(ans, k);
+}
+// case A > 0
+if(c >= a)
+{
+  // maximize A + 2*B -> maximize A or B
+  {
+    ll A = c / a;
+    ll k = A;
+    ans = max(ans, k);
+  }
+  {
+    ll B = (c - a) / b;
+    ll A = (c - B*b) / a;
+    ll k = A + 2*B;
+    ans = max(ans, k);
+  }
+}
+cout << ans << nl;

@@ -1,0 +1,81 @@
+%:include "tree/lca_rmq.h"
+
+#define MULTI_TEST
+__main__:
+int n, m, q;
+cin >> n >> m >> q;
+vector<char> red(n+1);
+for(int i=0; i<m; i++) {
+  int r;
+  cin >> r;
+  red[r] = true;
+}
+
+vector<vector<int>> adj(n+1);
+vector<tuple<int, int, int>> edges;
+for(int i=1; i<n; i++) {
+  int a, b, c;
+  cin >> a >> b >> c;
+  adj[a].push_back(b);
+  adj[b].push_back(a);
+  edges.emplace_back(a, b, c);
+}
+auto tree = lca_rmq(adj, 1);
+
+vector<int> weight(n+1);
+for(auto [a, b, c] : edges) {
+  if(tree.parent[a] != b) swap(a, b);
+  weight[a] = c;
+}
+
+vector<ll> dist(n+1), depth(n+1);
+auto build = [&](auto&& self, int u, ll d_to_root, ll d_to_red) -> void {
+  if(red[u]) d_to_red = 0;
+  dist[u] = d_to_red;
+  depth[u] = d_to_root;
+  for(int v : tree[u]) {
+    self(self, v, d_to_root + weight[v], d_to_red + weight[v]);
+  }
+};
+build(build, 1, 0, 0);
+
+while(q--) {
+  int qn;
+  cin >> qn;
+  ll big1 = 0, big2 = 0;
+  vector<int> verts(qn);
+  for(int i=0; i<qn; i++) {
+    cin >> verts[i];
+    if(dist[verts[i]] > big1) {
+      big2 = big1;
+      big1 = dist[verts[i]];
+    } else if(dist[verts[i]] > big2) {
+      big2 = dist[verts[i]];
+    }
+  }
+  sort(begin(verts), end(verts), [&](int u, int v) {
+      return tree.idx[u] < tree.idx[v]; });
+
+  ll lb = 0;
+  ll rb = big2;
+  while(lb < rb) {
+    ll mid = (lb + rb) / 2;
+    int left = -1, right = -1;
+    ll deepestd = 0;
+    for(int i=0; i<verts.size(); i++) {
+      if(dist[verts[i]] > mid) {
+        deepestd = max(deepestd, depth[verts[i]]);
+        if(left == -1) left = i;
+        right = i;
+      }
+    }
+    int root = tree.lca(verts[left], verts[right]);
+    ll cap = deepestd - depth[root];
+    if(cap <= mid) {
+      rb = mid;
+    } else {
+      lb = mid + 1;
+    }
+  }
+  cout << rb << nl;
+}

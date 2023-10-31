@@ -1,0 +1,27 @@
+#define MULTI_TEST
+__main__:
+int n;
+cin >> n;
+vector<pair<int, int>> order;
+for(int i=0; i<n; i++) {
+  int v;
+  cin >> v;
+  order.emplace_back(v, i);
+}
+sort(begin(order), end(order));
+
+vector<bool> win(n);
+int leftwin = n;
+int leftlose = n;
+for(auto [v, i] : order) {
+  if(i < leftwin) {
+    win[i] = true;
+    leftwin = i;
+  } else if(i < leftlose) {
+    win[i] = false;
+    leftlose = i;
+  } else {
+    win[i] = true;
+  }
+}
+cout << n - accumulate(begin(win), end(win), 0) << nl;

@@ -1,0 +1,37 @@
+#define PRINT_CASE #
+__main__:
+int n;
+cin >> n;
+vector<char> a(n+1);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+  a[i] = (a[i] == '1');
+}
+
+vector<char> pressed(n+1);
+for(int i=1; i<=n; i++) {
+  if(a[i]) {
+    pressed[i] = true;
+    for(int j=i; j<=n; j+=i) {
+      a[j] ^= 1;
+    }
+  }
+}
+int ans = accumulate(begin(pressed), end(pressed), 0);
+
+int m;
+cin >> m;
+ll total = 0;
+for(int i=0; i<m; i++) {
+  int v;
+  cin >> v;
+  if(pressed[v]) {
+    ans--;
+  } else {
+    ans++;
+  }
+  pressed[v] ^= 1;
+  total += ans;
+}
+cout << total << nl;
+assert(ans == accumulate(begin(pressed), end(pressed), 0));
