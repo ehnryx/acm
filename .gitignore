@@ -16,3 +16,4 @@ sandbox/
 
 META-INF
 .vscode
+.clangd

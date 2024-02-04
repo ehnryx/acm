@@ -1,0 +1,53 @@
+#define PRINT_CASE #
+__main__:
+int n;
+cin >> n;
+vector<vector<int>> adj(n+1);
+vector<int> parent(n+1);
+for(int i=2; i<=n; i++) {
+  cin >> parent[i];
+  adj[parent[i]].push_back(i);
+}
+
+vector<int> dp(n+1), up(n+1);
+vector<vector<pair<int, int>>> arms(n+1);
+auto solve_down = [&](auto&& self, int u) -> void {
+  for(int v : adj[u]) {
+    self(self, v);
+    dp[u] = max(dp[u], dp[v] + 1);
+    arms[u].emplace_back(dp[v] + 1, v);
+  }
+  sort(begin(arms[u]), end(arms[u]), greater<>());
+};
+auto solve_up = [&](auto&& self, int u) -> void {
+  for(int v : adj[u]) {
+    up[v] = up[u] + 1;
+    auto it = begin(arms[u]);
+    while(it != end(arms[u]) and it->second == v) it++;
+    if(it != end(arms[u])) up[v] = max(up[v], it->first + 1);
+    self(self, v);
+  }
+  if(up[u]) {
+    arms[u].emplace_back(up[u], parent[u]);
+    sort(begin(arms[u]), end(arms[u]), greater<>());
+  }
+};
+
+solve_down(solve_down, 1);
+solve_up(solve_up, 1);
+
+ll ans = 0;
+for(int ui=2; ui<=n; ui++) {
+  int u = ui;
+  int v = parent[ui];
+  if(size(arms[u]) > size(arms[v])) swap(u, v);
+  for(int i=0, j=0; i<size(arms[u]); i++) {
+    if(arms[u][i].second == v) continue;
+    if(arms[v][j].second == u) j++;
+    int maxlen = min(arms[u][i].first, arms[v][j].first);
+    ans += maxlen;
+    j++;
+  }
+}
+
+cout << ans << nl;

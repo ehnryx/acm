@@ -1,0 +1,10 @@
+__main__:
+int a, b, c;
+cin >> a >> b >> c;
+vector<int> cnt(10);
+for(char v : std::to_string(a * b * c)) {
+  cnt[v - '0']++;
+}
+for(int i=0; i<10; i++) {
+  cout << cnt[i] << nl;
+}

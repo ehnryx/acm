@@ -1,0 +1,58 @@
+%:include "tree/link_cut_tree.h"
+
+using node = simple_link_cut_node;
+
+__main__:
+int n, m;
+cin >> n >> m;
+vector<pair<int, int>> edges(m+1);
+for(int i=1; i<=m; i++) {
+  int a, b;
+  cin >> a >> b;
+  edges[i] = pair(a, b);
+}
+
+link_cut_tree<node> lct(n+1);
+
+vector<int> extent(m+1);
+for(int i=1, j=1; i<=m; i++) {
+  // add until impossible
+  while(j<=m) {
+    auto [a, b] = edges[j];
+    lct.reroot(a);
+    if(lct.find_root(b) == a) {
+      break;
+    }
+    lct.link(a, b);
+    j++;
+  }
+  extent[i] = j - 1;
+  assert(extent[i] >= i);
+  //cerr << i << " -> " << extent[i] << nl;
+
+  // remove edge i
+  lct.cut(edges[i].first, edges[i].second);
+}
+
+vector<ll> ps(m+1);
+for(int i=1; i<=m; i++) {
+  ps[i] = ps[i-1] + extent[i];
+}
+
+int q;
+cin >> q;
+for(int i=0; i<q; i++) {
+  int l, r;
+  cin >> l >> r;
+  int split = upper_bound(begin(extent) + l, end(extent), r) - begin(extent);
+  ll ans = 0;
+  if(split <= r) {
+    ans += ps[split - 1] - ps[l - 1];
+    ans += (ll)(r - split + 1) * r;
+  } else {
+    ans += ps[r] - ps[l - 1];
+  }
+  ans -= (ll)(l + r) * (r - l + 1) / 2;
+  cout << ans + (r - l + 1) << nl;
+}
+

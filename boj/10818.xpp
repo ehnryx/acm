@@ -1,0 +1,8 @@
+__main__:
+int n;
+cin >> n;
+vector<int> a(n);
+for(int& i : a) {
+  cin >> i;
+}
+cout << *min_element(begin(a), end(a)) << " " << *max_element(begin(a), end(a)) << nl;

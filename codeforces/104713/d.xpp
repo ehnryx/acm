@@ -1,0 +1,110 @@
+%:include "graph/bfs.h"
+//%:include "graph/dfs.h"
+%:include "utility/nd_array.h"
+%:include "utility/output.h"
+
+__main__:
+int n; char t;
+cin >> n >> t;
+nd_array<char, 2> g(n, n);
+for(int i=0; i<n; i++) {
+  for(int j=0; j<n; j++) {
+    cin >> g(i, j);
+  }
+}
+
+graph_t graph(n*n);
+int start = -1;
+int cnt = 0;
+for(int i=0; i<n; i++) {
+  for(int j=0; j<n; j++) {
+    if(g(i, j) != t) continue;
+    start = g.index(i, j);
+    cnt++;
+    switch(t) {
+      case 'K':
+        for(auto [ni, nj] : {
+            pair(i+1, j+1), pair(i+1, j), pair(i+1, j-1), pair(i, j+1), }) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        break;
+      case 'N':
+        for(auto [ni, nj] : {
+            pair(i+2, j+1), pair(i+2, j-1), pair(i+1, j+2), pair(i+1, j-2), }) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        break;
+      case 'R':
+        for(int ni=i-1, nj=j; ni>=0; ni--) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        for(int ni=i, nj=j-1; nj>=0; nj--) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        break;
+      case 'B':
+        for(int ni=i-1, nj=j-1; ni>=0 and nj>=0; ni--, nj--) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        for(int ni=i+1, nj=j-1; nj>=0 and ni<n; nj--, ni++) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        break;
+      case 'Q':
+        for(int ni=i-1, nj=j; ni>=0; ni--) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        for(int ni=i, nj=j-1; nj>=0; nj--) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        for(int ni=i-1, nj=j-1; ni>=0 and nj>=0; ni--, nj--) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        for(int ni=i+1, nj=j-1; nj>=0 and ni<n; nj--, ni++) {
+          if(0 <= ni and ni < n and 0 <= nj and nj < n and g(ni, nj) == t) {
+            graph.add_edge(g.index(i, j), g.index(ni, nj));
+          }
+        }
+        break;
+      default:
+        assert(false);
+    }
+  }
+}
+assert(start != -1);
+
+vector<tuple<int, int, int, int>> ans;
+auto store = [&](auto const& e) {
+  auto [sx, sy] = g.from_index(e.to);
+  auto [tx, ty] = g.from_index(e.from);
+  ans.emplace_back(sx+1, sy+1, tx+1, ty+1);
+};
+breadth_first(graph).run(start, graph_callbacks_t{.on_edge = store});
+//depth_first(graph).run(start, graph_callbacks_t{.on_edge = store});
+
+if(size(ans) == cnt - 1) {
+  cout << "YES" << nl;
+  for(auto const& v : ans | views::reverse) {
+    cout << v << nl;
+  }
+} else {
+  cout << "NO" << nl;
+}

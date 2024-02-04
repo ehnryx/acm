@@ -1,0 +1,76 @@
+%:include "ds/union_find.h"
+%:include "utility/output.h"
+#define PRINT_CASE #
+__main__:
+int n, m;
+cin >> n >> m;
+union_find dsu(n+1);
+for(int i=0; i<m; i++) {
+  int a, b;
+  cin >> a >> b;
+  dsu.link(a, b);
+}
+vector<int> vals;
+for(int i=1; i<=n; i++) {
+  if(dsu[i] == i) {
+    vals.push_back(dsu.size(i));
+  }
+}
+sort(begin(vals), end(vals), greater<>());
+
+set<vector<int>> seen;
+
+auto solve_k = [&](auto&& self, vector<int> const& sz, int i) -> bool {
+  if(i == size(vals)) return true;
+  if(not seen.insert(sz).second) return false;
+  for(int j=0; j<size(sz) and sz[j] >= vals[i]; j++) {
+    auto nsz = sz;
+    nsz[j] -= vals[i];
+    sort(begin(nsz), end(nsz), greater<>());
+    if(not nsz.back()) nsz.pop_back();
+    if(self(self, nsz, i+1)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+auto valid_k = [&](int k, int s) {
+  vector<int> sz(k, s);
+  return solve_k(solve_k, sz, 0);
+};
+
+auto solve_s = [&](auto&& self, vector<int>& cnt, int i) -> bool {
+  if(i == size(vals)) return true;
+  if(not seen.insert(cnt).second) return false;
+  for(int j=vals[i]; j<size(cnt); j++) {
+    if(not cnt[j]) continue;
+    cnt[j]--;
+    cnt[j - vals[i]]++;
+    if(self(self, cnt, i+1)) {
+      return true;
+    }
+    cnt[j]++;
+    cnt[j - vals[i]]--;
+  }
+  return false;
+};
+
+auto valid_s = [&](int k, int s) {
+  vector<int> cnt(s+1);
+  cnt[s] = k;
+  return solve_s(solve_s, cnt, 0);
+};
+
+vector<int> ans;
+for(int s=*max_element(begin(vals), end(vals)); s<=n; s++) {
+  if(n % s) continue;
+  int k = n / s;  // k groups of size s
+  seen.clear();
+  if(k <= s ? valid_k(k, s) : valid_s(k, s)) {
+  //if(valid_s(k, s)) {
+    ans.push_back(k);
+  }
+}
+reverse(begin(ans), end(ans));
+cout << ans << nl;

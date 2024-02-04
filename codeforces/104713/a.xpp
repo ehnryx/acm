@@ -1,0 +1,399 @@
+%:include "utility/nd_array.h"
+%:include "ds/union_find.h"
+
+__main__:
+int n;
+cin >> n;
+string line;
+getline(cin, line);
+nd_array<char, 2> g(n, n);
+for(int i=0; i<n; i++) {
+  getline(cin, line);
+  assert(size(line) == n);
+  for(int j=0; j<n; j++) {
+    g(i, j) = line[j];
+  }
+}
+
+static char constexpr EMPTY = ' ';
+static char constexpr SUN   = '*';
+static char constexpr BIRD  = 'v';
+static char constexpr HOUSE = '^';
+static char constexpr WTF   = '!';
+static char constexpr DRAKE = 'D';
+static char constexpr GRILL = 'G';
+static char constexpr LEFT  = '/';
+static char constexpr RIGHT = '\\';
+
+vector objects = {
+  SUN, BIRD, HOUSE, WTF, DRAKE, GRILL, LEFT, RIGHT,
+};
+
+auto valid = [n](int i, int j) {
+  return 0 <= i and i < n and 0 <= j and j < n;
+};
+
+auto is_bird = [&](int i, int j) {
+  return g(i, j) == BIRD or g(i, j) == DRAKE;
+};
+
+auto is_animal = [&](int i, int j) {
+  return g(i, j) == WTF or is_bird(i, j);
+};
+
+auto suns = [&] {
+  ll res = 0;
+
+  nd_array<char, 2> light(n, n);
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) != SUN) continue;
+      for(auto [di, dj] : {
+          pair(1, 1), pair(1, -1), pair(-1, 1), pair(-1, -1),
+          pair(1, 0), pair(-1, 0), pair(0, 1), pair(0, -1) }) {
+        for(int ni=i+di, nj=j+dj; valid(ni, nj); ni+=di, nj+=dj) {
+          light(ni, nj) = true;
+          if(g(ni, nj) != EMPTY) break;
+        }
+      }
+    }
+  }
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) == EMPTY) continue;
+      if(g(i, j) == SUN) continue; // possible typo
+      if(light(i, j)) {
+        res += 100;
+      }
+    }
+  }
+
+  return res;
+};
+
+auto birds = [&] {
+  ll res = 0;
+
+  union_find dsu(n * n);
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(not is_bird(i, j)) continue;
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(valid(ni, nj) and is_bird(ni, nj)) {
+          dsu.link(g.index(i, j), g.index(ni, nj));
+        }
+      }
+    }
+  }
+
+  // perimeter
+  vector<int> edges(n * n);
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(not is_bird(i, j)) continue;
+      int root = dsu[g.index(i, j)];
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(valid(ni, nj) and is_bird(ni, nj)) {
+          edges[root]++;
+        }
+      }
+    }
+  }
+
+  // width
+  vector<int> width(n * n);
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(not is_bird(i, j)) continue;
+      int root = dsu[g.index(i, j)];
+      for(auto [di, dj] : {
+          //pair(1, 0), pair(-1, 0), pair(0, 1), pair(0, -1) }) {
+          pair(0, 1), pair(0, -1) }) {
+        for(int ni=i, nj=j; valid(ni, nj) and is_bird(ni, nj); ni+=di, nj+=dj) {
+          int cnt = max(abs(i - ni), abs(j - nj)) + 1;
+          width[root] = max(width[root], cnt);
+        }
+      }
+    }
+  }
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(not is_bird(i, j)) continue;
+      int root = dsu[g.index(i, j)];
+      if(root != g.index(i, j)) continue;
+      int perimeter = 4 * dsu.size(root) - edges[root];
+      //cerr << "add " << i << " " << j << " -> " << perimeter << " * " << 60ll << " + " << width[root] << " * " << 500ll << nl;
+      res += perimeter * 60ll;
+      res += width[root] * 500ll;
+    }
+  }
+
+  return res;
+};
+
+auto blocks = [&] {
+  unordered_set<string> all;
+  for(int i=2; i<n; i++) {
+    for(int j=2; j<n; j++) {
+      string s;
+      s.push_back(g(i, j));
+      s.push_back(g(i, j-1));
+      s.push_back(g(i, j-2));
+      s.push_back(g(i-1, j));
+      s.push_back(g(i-1, j-1));
+      s.push_back(g(i-1, j-2));
+      s.push_back(g(i-2, j));
+      s.push_back(g(i-2, j-1));
+      s.push_back(g(i-2, j-2));
+      all.insert(s);
+    }
+  }
+  return size(all);
+};
+
+auto animals1 = [&] {
+  ll res = 0;
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(not is_animal(i, j)) continue;
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(valid(ni, nj) and g(ni, nj) == EMPTY) {
+          res += 15;
+        }
+      }
+    }
+  }
+
+  return res;
+};
+
+auto freedom = [&] {
+  ll res = 0;
+
+  union_find dsu(n * n + 1);
+  int outside = n * n;
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) != EMPTY) continue;
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(not valid(ni, nj)) {
+          dsu.link(g.index(i, j), outside);
+        } else if(g(ni, nj) == EMPTY) {
+          dsu.link(g.index(i, j), g.index(ni, nj));
+        }
+      }
+    }
+  }
+  outside = dsu[outside];
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) == EMPTY) continue;
+      bool ok = false;
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(not valid(ni, nj) or dsu[g.index(ni, nj)] == outside) {
+          ok = true;
+        }
+      }
+      if(ok) res += 7;
+    }
+  }
+
+  return res;
+};
+
+auto wtf = [&] {
+  ll res = 0;
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(not is_bird(i, j)) continue;
+      bool ok = false;
+      for(auto [di, dj] : {
+          pair(1, 2), pair(1, -2), pair(-1, 2), pair(-1, -2),
+          pair(2, 1), pair(-2, 1), pair(2, -1), pair(-2, -1), }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(valid(ni, nj) and g(ni, nj) == WTF) {
+          ok = true;
+        }
+      }
+      if(ok) res += 200;
+    }
+  }
+
+  //cerr << "wtf " << res << nl;
+  return res;
+};
+
+auto peaks = [&] {
+  ll res = 0;
+
+  vector<pair<int, int>> pks;
+  for(int i=0; i<n; i++) {
+    for(int j=1; j<n; j++) {
+      if(g(i, j-1) == LEFT and g(i, j) == RIGHT) {
+        pks.emplace_back(i, j);
+        //cerr << "PUT " << i << " " << j << nl;
+      }
+    }
+  }
+  for(int i=0; i<size(pks); i++) {
+    ll cur = 0;
+    for(int j=0; j<size(pks); j++) {
+      ll dist = abs(pks[i].first - pks[j].first) + abs(pks[i].second - pks[j].second);
+      cur = max(cur, dist);
+    }
+    //cerr << "max dist from " << pks[i].first << " " << pks[i].second << " is " << cur << nl;
+    res += cur * 50;
+  }
+
+  return res;
+};
+
+auto drake_grill = [&] {
+  ll res = 0;
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) != DRAKE) continue;
+      bool ok = false;
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(valid(ni, nj) and g(ni, nj) == GRILL) {
+          ok = true;
+        }
+      }
+      if(ok) res += 500;
+    }
+  }
+
+  return res;
+};
+
+auto frequency = [&] {
+  ll res = 0;
+
+  map<char, int> cnt;
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      cnt[g(i, j)] += 1;
+    }
+  }
+
+  int minfreq = numeric_limits<int>::max();
+  for(auto [obj, c] : cnt) {
+    if(obj == EMPTY) continue;
+    minfreq = min(minfreq, c);
+  }
+
+  // frequency
+  for(auto c : objects) {
+    if(cnt[c] == minfreq) {
+      res += cnt[c] * 10ll;
+      //cerr << "FREQ " << c << " -> " << cnt[c] << " * " << 10 << nl;
+    }
+  }
+
+  res += 1ll * cnt[WTF] * cnt[BIRD] * cnt[DRAKE];
+
+  res += 1ll * cnt[EMPTY];
+
+  res += 3ll * min(cnt[HOUSE], cnt[GRILL]);
+
+  return res;
+};
+
+auto grill_drake = [&] {
+  ll res = 0;
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) != GRILL) continue;
+      bool ok = false;
+      for(auto [di, dj] : {
+          pair(1, 0), pair(0, 1), pair(-1, 0), pair(0, -1) }) {
+        int ni = i + di;
+        int nj = j + dj;
+        if(valid(ni, nj) and g(ni, nj) == DRAKE) {
+          ok = true;
+        }
+      }
+      if(ok) res += 50;
+    }
+  }
+
+  return res;
+};
+
+auto house_up = [&] {
+  ll res = 0;
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) != EMPTY) continue;
+      for(int ni=i; ni<n; ni++) {
+        if(g(ni, j) == HOUSE) res += 10;
+        if(g(ni, j) != EMPTY) break;
+      }
+    }
+  }
+
+  return res;
+};
+
+auto house_down = [&] {
+  ll res = 0;
+
+  for(int i=0; i<n; i++) {
+    for(int j=0; j<n; j++) {
+      if(g(i, j) != EMPTY) continue;
+      for(int ni=i; ni<n; ni++) {  // possible typo
+      //for(int ni=i; ni>=0; ni--) {  // possible typo
+        if(g(ni, j) == HOUSE) res += 5;
+        if(g(ni, j) != EMPTY) break;
+      }
+    }
+  }
+
+  return res;
+};
+
+ll ans = 0;
+
+ans += suns();
+ans += birds();
+ans += house_up();
+ans += blocks();
+ans += animals1();
+ans += freedom();
+ans += wtf();
+ans += peaks();
+ans += drake_grill();
+ans += frequency();
+//ans += empty_fields(); // COVERED in freq
+//ans += animals2(); // COVERED in freq
+ans += house_down();
+ans += grill_drake();
+//ans += house_grill(); // COVERED in freq
+
+cout << ans << nl;

@@ -1,0 +1,8 @@
+#define MULTI_TEST
+__main__:
+int n; string s;
+cin >> n >> s;
+for(char c : s) {
+  cout << std::string(n, c);
+}
+cout << nl;

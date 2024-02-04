@@ -1,0 +1,11 @@
+__main__:
+int n;
+cin >> n;
+vector<int> a(n);
+for(auto& v : a) {
+  cin >> v;
+}
+sort(begin(a), end(a));
+for(int v : a) {
+  cout << v << nl;
+}

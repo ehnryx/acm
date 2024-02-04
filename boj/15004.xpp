@@ -4,6 +4,9 @@
 using Point = point<int>;
 using Circle = circle<int>;
 
+using ld = double;
+constexpr ld EPS = 1e-9;
+
 __main__:
 vector<decltype(declval<Circle>().intersect(declval<Circle>()).get_one())> p;
 for(int i=0; i<2; i++) {

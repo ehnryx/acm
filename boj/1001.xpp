@@ -1,0 +1,4 @@
+__main__:
+int a, b;
+cin >> a >> b;
+cout << a - b << nl;

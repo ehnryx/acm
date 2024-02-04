@@ -1,0 +1,27 @@
+__main__:
+int n;
+cin >> n;
+vector<int> a(n+1);
+vector<ll> ps(n+1);
+vector<vector<int>> idx(10);
+for(int i=1; i<=n; i++) {
+  cin >> a[i];
+  ps[i] = (ps[i-1] + a[i]) % 10;
+  idx[ps[i]].push_back(i);
+}
+
+vector<int> ans(n+1);
+for(int i=0; i<n; i++) {
+  auto const& v = idx[ps[i]];
+  auto other = upper_bound(begin(v), end(v), i);
+  if(other == end(v)) {
+    ans[i] = -1;
+  } else {
+    ans[i] = *other - i;
+  }
+}
+
+for(int i=0; i<n; i++) {
+  cout << ans[i] << " ";
+}
+cout << nl;

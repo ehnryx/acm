@@ -1,0 +1,76 @@
+%:include "utility/nd_array.h"
+#define PRINT_CASE #
+__main__:
+//cerr << nl;
+int n, m;
+cin >> n >> m;
+nd_array<int, 2> g(n+1, m+1);
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    cin >> g(i, j);
+  }
+}
+
+nd_array<ll, 2> before(n+2, m+2), after(n+2, m+2);
+for(int i=1; i<=n; i++) {
+  for(int j=1; j<=m; j++) {
+    if(i > 1) before(i, j) = max(before(i, j), before(i-1, j));
+    if(j > 1) before(i, j) = max(before(i, j), before(i, j-1));
+    before(i, j) += g(i, j);
+  }
+}
+for(int i=n; i>=1; i--) {
+  for(int j=m; j>=1; j--) {
+    if(i < n) after(i, j) = max(after(i, j), after(i+1, j));
+    if(j < m) after(i, j) = max(after(i, j), after(i, j+1));
+    after(i, j) += g(i, j);
+  }
+}
+
+static auto constexpr big = numeric_limits<ll>::max() / 4;
+nd_array<ll, 2> vcal(n+1, m+1, big), htal(n+1, m+1, big);  // [i][j]
+vcal(1, m) = htal(1, m) = 0;
+for(int d=1; d<=n+m-2; d++) {
+  for(int i=1; i<=n; i++) {
+    int j = i - 1 - d + m;
+    if(j < 1 or m < j) continue;
+    // verticals
+    {
+      ll cur = max(
+          before(i - 1, j - 1) + after(i, j + 1),
+          before(i - 1, j - 1) + after(i + 1, j));
+      for(int ii = i - 1; ii >= 1; ii--) {
+        vcal(i, j) = min(vcal(i, j),
+            max({
+              cur,
+              htal(ii, j),
+              before(ii - 1, j) + after(i + 1, j),
+            }));
+        //cerr << " v UPD " << vcal(i, j) << " = " << cur << " " << htal(ii, j) << " " << before(ii-1,j) << "+" << after(i+1, j) << nl;
+        cur = max(cur, before(ii, j - 1) + after(ii, j + 1));
+      }
+    }
+    // horizontals
+    {
+      ll cur = max(
+          before(i - 1, j) + after(i + 1, j + 1),
+          before(i, j - 1) + after(i + 1, j + 1));
+      for (int jj = j + 1; jj <= m; jj++) {
+        htal(i, j) = min(htal(i, j),
+            max({
+              cur,
+              vcal(i, jj),
+              before(i, j - 1) + after(i, jj + 1),
+            }));
+        //cerr << " h UPD " << htal(i, j) << " = " << cur << " " << vcal(i, jj) << " " << before(i, j-1) << "+" << after(i, jj+1) << nl;
+        cur = max(cur, before(i - 1, jj) + after(i + 1, jj));
+      }
+    }
+
+    //cerr << "AT " << i << " " << j << nl;
+    //cerr << "   " << vcal(i, j) << " " << htal(i, j) << endl;
+    //cerr << endl;
+  }
+}
+
+cout << min(vcal(n, 1), htal(n, 1)) << nl;

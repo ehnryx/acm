@@ -1,0 +1,121 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//%:include "utility/fast_input.h"
+//%:include "utility/output.h"
+
+%:include "ds/splay_tree.h"
+
+using ll = long long;
+using ld = long double;
+
+constexpr char nl = '\n';
+constexpr int MOD = 998244353;
+constexpr ld EPS = 1e-9L;
+random_device _rd; mt19937 rng(_rd());
+
+struct node : splay_node_base<node, void, int> {
+  int cnt; bool alive;
+  node() = default;
+  node(int i): splay_node_base<node, void, int>(i), cnt(1), alive(true) {}
+  void pull() {
+    cnt = left->cnt + right->cnt + alive;
+  }
+  void mark_dead() {
+    alive = false;
+    pull();
+  }
+};
+
+//#define MULTI_TEST
+void solve_main([[maybe_unused]] int testnum, [[maybe_unused]] auto& cin) {
+  int n;
+  cin >> n;
+  splay_tree<node> st;
+  vector<unsigned> init(n);
+  for(int i=0; i<n; i++) {
+    cin >> init[i];
+    st.push_back(i);
+  }
+
+  int real_size = n;
+  auto find_kth = [&](int idx) {
+    if(idx == real_size) return st.nil;
+    auto x = st.root;
+    while(true) {
+      if(idx < x->left->cnt) {
+        x = x->left;
+      } else if(idx < x->left->cnt + x->alive) {
+        break;
+      } else {
+        idx -= x->left->cnt + x->alive;
+        x = x->right;
+      }
+    }
+    return st.splay(x);
+  };
+
+  int m;
+  cin >> m;
+  vector<tuple<int, unsigned, unsigned, unsigned>> queries;
+  for(int i=0; i<m; i++) {
+    int t;
+    cin >> t;
+    if(t == 1) {
+      int idx; unsigned v;
+      cin >> idx >> v;
+      queries.emplace_back(t, idx, v, 0);
+      auto x = find_kth(idx);
+      st.insert_node_before(x, st.new_node(i + n));
+      real_size++;
+    } else if(t == 2) {
+      int idx;
+      cin >> idx;
+      queries.emplace_back(t, idx, 0, 0);
+      auto x = find_kth(idx);
+      x->mark_dead();
+      real_size--;
+    } else if(t == 3) {
+      int idx; unsigned v;
+      cin >> idx >> v;
+      queries.emplace_back(t, idx, v, 0);
+    } else if(t == 4) {
+      int l, r, k;
+      cin >> l >> r >> k;
+      queries.emplace_back(t, l, r, k);
+    }
+    //cerr << "TREE: "; for(auto it=st.begin(); it!=st.end(); it++){
+      //cerr << it->value << ":" << it->alive << " ";} //cerr << endl;
+  }
+
+  vector<int> remap(n+m);
+  {
+    int i = 0;
+    for(auto it = st.begin(); it != st.end(); it++, i++) {
+      remap[it->value] = i;
+    }
+  }
+
+
+  // now actually solve the problem
+  // sqrt decomposition to allow visiting every node ?
+  // TODO UNFINISHED
+}
+
+int main() {
+  cin.tie(0)->sync_with_stdio(0);
+  cout << fixed << setprecision(10);
+#ifdef USING_FAST_INPUT
+  fast_input cin;
+#endif
+
+  int T = 1;
+#ifdef MULTI_TEST
+  cin >> T;
+#endif
+  for(int testnum=1; testnum<=T; testnum++) {
+    solve_main(testnum, cin);
+  }
+
+  return 0;
+}

@@ -1,0 +1,4 @@
+__main__:
+for(string s; cin >> s and s != "0"; ) {
+  cout << (s == string(rbegin(s), rend(s)) ? "yes" : "no") << nl;
+}
